@@ -1,0 +1,238 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import securesocial.core.UsernamePasswordProvider
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
+
+@scripts = {
+    <script src="@routes.Assets.at("js/account.js")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Messages("exchange.account.info.title")</div>
+                <div class="panel-body">
+                    <p id="acct-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pgp-add-modal" tabindex="-1" role="dialog" aria-labelledby="pgp-add-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">@Messages("pgp.add.title")</h4>
+                </div>
+                <div class="modal-body">
+
+                    <p>@Messages("pgp.purpose")</p>
+
+                    <form role="form">
+                        <div class="from-group">
+                            <label for="password" class="control-label">@Messages("terminology.password")</label>
+                            <input class="form-control password" name="password" type="password"/>
+                        </div>
+                        <div class="from-group code-group">
+                            <label for="code" class="control-label">@Messages("terminology.code")</label>
+                            <input class="form-control code" name="code" type="text"/>
+                        </div>
+                        <div class="from-group">
+                            <label for="pgpkey" class="control-label">@Messages("terminology.pgp_public_key")</label>
+                            <textarea class="form-control pgpkey" name="pgpkey"></textarea>
+                        </div>
+                        <!-- this hack makes sure that the submit event is triggered when you press enter -->
+                        <input type="submit" class="hidden"/>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("terminology.cancel")</button>
+                    <button type="button" class="btn btn-primary">@Messages("pgp.add.title")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pgp-remove-modal" tabindex="-1" role="dialog" aria-labelledby="pgp-remove-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">@Messages("pgp.remove.title")</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form role="form">
+                        <div class="from-group">
+                            <label for="password" class="control-label">@Messages("terminology.password")</label>
+                            <input class="form-control password" name="password" type="password"/>
+                        </div>
+                        <div class="from-group code-group">
+                            <label for="code" class="control-label">@Messages("terminology.code")</label>
+                            <input class="form-control code" name="code" type="text"/>
+                        </div>
+                        <!-- this hack makes sure that the submit event is triggered when you press enter -->
+                        <input type="submit" class="hidden"/>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("terminology.cancel")</button>
+                    <button type="button" class="btn btn-primary">@Messages("pgp.remove.title")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tfa-enable-modal" tabindex="-1" role="dialog" aria-labelledby="tfa-enable-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tfa-disable-modal" tabindex="-1" role="dialog" aria-labelledby="tfa-disable-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="tfa-disable-modal">@Messages("tfa.off.title")</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("terminology.cancel")</button>
+                    <button type="button" class="btn btn-primary">@Messages("tfa.off.title")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script id="totp-otps-template" type="text/x-handlebars-template">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="tfa-enable-modal">@Messages("tfa.on.title")</h4>
+        </div>
+        <div class="modal-body">
+            <p class="text-justify">@Messages("tfa.otps.explanation")</p>
+            <div class="center-block"><ol>{{#otps}}<li>{{.}}</li>{{/otps}}</ol></div>
+        <div class="modal-footer">
+            <nav>
+                <ul class="pager">
+                    <div class="pull-left">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("terminology.cancel")</button>
+                    </div>
+                    <li class="next"><a id="tfa-printing-complete" href="#">@Messages("tfa.codes.next") <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </script>
+
+    <script id="totp-secret-template" type="text/x-handlebars-template">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="tfa-enable-modal">@Messages("tfa.on.title")</h4>
+        </div>
+        <div class="modal-body">
+
+            <p class="text-justify">@Messages("tfa.google.explanation")</p>
+            <div class="center-block qr-code" id="tfa-enable-qr"></div>
+            <div class="small text-center">{{secret}}</div>
+            <form role="form">
+                <div class="from-group">
+                    <label for="code" class="control-label">@Messages("terminology.code")</label>
+                    <input class="form-control code" name="code" type="text"/>
+                </div>
+                <div class="from-group">
+                    <label for="password" class="control-label">@Messages("terminology.password")</label>
+                    <input class="form-control password" name="password" type="password"/>
+                </div>
+                <!-- this hack makes sure that the submit event is triggered when you press enter -->
+                <input type="submit" class="hidden"/>
+            </form>
+            </div>
+
+        <div class="modal-footer">
+            <nav>
+                <ul class="pager">
+                    <li class="previous"><a id="tfa-printing-incomplete" href="#"><span aria-hidden="true">&larr;</span> @Messages("tfa.codes.prev")</a></li>
+                    <li class="pull-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@Messages("terminology.cancel")</button>
+                        <button type="button" class="btn btn-primary">@Messages("tfa.on.title")</button>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </script>
+
+    <script id="turn-off-tfa-template" type="text/x-handlebars-template">
+        <p class="text-justify">@Messages("tfa.off.explanation")</p>
+        <form role="form">
+            <div class="from-group">
+                <label for="code" class="control-label">@Messages("terminology.code")</label>
+                <input class="form-control code" name="code" type="text"/>
+            </div>
+            <div class="from-group">
+                <label for="password" class="control-label">@Messages("terminology.password")</label>
+                <input class="form-control password" name="password" type="password"/>
+            </div>
+            <!-- this hack makes sure that the submit event is triggered when you press enter -->
+            <input type="submit" class="hidden"/>
+        </form>
+    </script>
+
+
+    <script id="acct-info-template" type="text/x-handlebars-template">
+        <p>@Messages("terminology.email"): {{email}}</p>
+        <!--<p>@Messages("terminology.verificationLevel"): {{verification}}</p>-->
+
+        <p>
+            {{#onMailingList}}
+            <p>@Messages("exchange.account.mailinglist"): @Messages("terminology.on")</p>
+            <button type="submit" class="btn btn-default" id="turnoff-emails">@Messages("emails.off.title")</button>
+            {{/onMailingList}}
+            {{^onMailingList}}
+            <p>@Messages("exchange.account.mailinglist"): @Messages("terminology.off")</p>
+            <button type="submit" class="btn btn-default" id="turnon-emails">@Messages("emails.on.title")</button>
+            {{/onMailingList}}
+        </p>
+
+        <p>
+            {{#TFAEnabled}}
+                <p>@Messages("exchange.account.tfa_login"): @Messages("terminology.on")</p>
+                <button type="submit" class="btn btn-danger" id="turnoff-tfa">@Messages("tfa.off.title")</button>
+            {{/TFAEnabled}}
+            {{^TFAEnabled}}
+                <p>@Messages("exchange.account.tfa_login"): @Messages("terminology.off")</p>
+                <button type="submit" class="btn btn-primary" id="turnon-tfa">@Messages("tfa.on.title")</button>
+            {{/TFAEnabled}}
+        </p>
+
+        <p>
+            <a href="@controllers.routes.PasswordChange.page().absoluteURL(UsernamePasswordProvider.sslEnabled)" class="btn btn-default">
+                @Messages("auth.passwordChange.title")
+            </a>
+        </p>
+
+        <p>
+            {{#pgp}}
+            <p>@Messages("terminology.pgp_public_key"):</p>
+            <pre>{{.}}</pre>
+            <button type="submit" class="btn btn-danger" id="turnoff-pgp">@Messages("pgp.remove.title")</button>
+            {{/pgp}}
+            {{^pgp}}
+            <p>@Messages("terminology.pgp_public_key"): @Messages("terminology.none")</p>
+            <button type="submit" class="btn btn-primary" id="turnon-pgp">@Messages("pgp.add.title")</button>
+            {{/pgp}}
+        </p>
+
+    </script>
+}

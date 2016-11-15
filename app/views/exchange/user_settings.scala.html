@@ -1,0 +1,23 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import securesocial.core.UsernamePasswordProvider
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
+
+@scripts = {
+
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Messages("exchange.account.info.title")</div>
+                <div class="panel-body">
+                    <p id="acct-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

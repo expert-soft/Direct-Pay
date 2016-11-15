@@ -1,0 +1,53 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                                          controllers.Application.index
+GET         /messages.js                               controllers.Application.jsMessages
+
+# Exchange pages
+GET         /account                                   controllers.Application.account
+GET         /wallet                                    controllers.Application.wallet
+GET         /user_settings                             controllers.Application.user_settings
+
+# Route for changing the language cookie
+GET         /chlang/:lang                              controllers.Application.chlang(lang)
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                              controllers.Assets.at(path="/public", file)
+
+# APIv1
+GET         /iapi/1                                     controllers.IAPI.APIv1.index
+GET         /iapi/1/balance                             controllers.IAPI.APIv1.balance
+GET         /iapi/1/user                                controllers.IAPI.APIv1.user
+POST        /iapi/1/turnoff_tfa                         controllers.IAPI.APIv1.turnOffTFA
+POST        /iapi/1/turnon_tfa                          controllers.IAPI.APIv1.turnOnTFA
+POST        /iapi/1/turnoff_emails                      controllers.IAPI.APIv1.turnOffEmails
+POST        /iapi/1/turnon_emails                       controllers.IAPI.APIv1.turnOnEmails
+POST        /iapi/1/gen_totp_secret                     controllers.IAPI.APIv1.genTOTPSecret
+POST        /iapi/1/remove_pgp                          controllers.IAPI.APIv1.removePgp
+POST        /iapi/1/add_pgp                             controllers.IAPI.APIv1.addPgp
+
+
+# Login page
+GET         /login                                     controllers.LoginPage.login
+GET         /tfa_totp                                  controllers.LoginPage.tfaTOTP
+GET         /logout                                    controllers.LoginPage.logout
+
+# User Registration and password handling 
+GET         /signup                                    controllers.Registration.startSignUp
+POST        /signup                                    controllers.Registration.handleStartSignUp
+GET         /signup/:token                             controllers.Registration.signUp(token)
+POST        /signup/:token                             controllers.Registration.handleSignUp(token)
+GET         /reset                                     controllers.Registration.startResetPassword
+POST        /reset                                     controllers.Registration.handleStartResetPassword
+GET         /reset/:token                              controllers.Registration.resetPassword(token)
+POST        /reset/:token                              controllers.Registration.handleResetPassword(token)
+GET         /password                                  controllers.PasswordChange.page
+POST        /password                                  controllers.PasswordChange.handlePasswordChange
+
+# Providers entry points
+POST        /authenticate                              controllers.ProviderController.loginPost
+POST        /tfa                                       controllers.ProviderController.tfaPost
+GET         /not-authorized                            controllers.ProviderController.notAuthorized

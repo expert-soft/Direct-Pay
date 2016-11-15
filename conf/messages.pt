@@ -1,0 +1,693 @@
+hello=Coming soon...
+about.text=TODO
+
+terminology.version=Versão
+terminology.selectacurrencypair=Selecione um par de moedas
+terminology.vote.cancelvote=Cancela voto
+terminology.vote.givevote=Vote
+terminology.faq.question=Questão
+terminology.faq.answer=Resposta
+terminology.vote.totalvotes=Total
+terminology.show=Mostra
+terminology.fullscreen=Tela Cheia
+terminology.off=desligado
+terminology.on=ligado
+terminology.none=nenhum
+terminology.market=Mercado
+terminology.amount=Quantidade
+terminology.bought=Comprado
+terminology.sold=Vendido
+terminology.bid=Comprar
+terminology.ask=Vender
+terminology.buysell=Compar/Vender
+terminology.balance=Saldo
+terminology.currency=Moeda
+terminology.price_units=Unidade de Preço
+terminology.hold=Hold
+terminology.email=Email
+terminology.price=Preço
+terminology.login=Login
+terminology.signup=Resgistrar
+terminology.logout=Sair
+terminology.time=Tempo
+terminology.created=Criado
+terminology.value=Valor
+terminology.type=Tipo
+terminology.cancel=Cancelar
+terminology.edit=Editar
+terminology.password=Senha
+terminology.password2=Confirmação de Senha
+terminology.fee=Taxa
+terminology.log_type=Tipo de Evento
+terminology.ipv4=Endereço IPv4
+terminology.ipv6=Endereço IPv6
+terminology.ip=Endereço IP
+terminology.available=Disponível
+terminology.total=Total
+terminology.code=Autenticação de Dois Passos
+terminology.language=Idioma
+tfa.google.explanation=Fotograde o código QR com seu aplicativo Autenticador Google ou digite o código abaixo em seu telefone. Depois digite abaixo o código gerado pelo Autenticador Google para confirmar que você importou o código corretamente.
+tfa.otps.explanation=Antes de configurar a autenticação de dois passos, escreva em papel os seguintes códigos ou os imprima. Você pode usar cada linha uma única vez ao invés da usual autenticação em dois passos.
+tfa.codes.next=Eu imprimi (ou copiei em papel) os códigos.
+tfa.codes.prev=Espere! Eu ainda não imprimi os códigos!
+terminology.pgp_public_key=Chave pública PGP
+terminology.address=Endereço
+terminology.requested=Solicitado
+terminology.status=Status
+terminology.note=Observação
+terminology.banner=Buscamos sempre atender a todas as solicitações. Os emails são respondidos na ordem em que são recebidos. Nosso time de atendimento ao cliente o atenderá o mais breve possível.
+terminology.contacts=Contato
+form.legal_name=Nome completo
+form.first_name=Nome
+form.last_name=Último sobrenome
+form.middle_name=Nomes do meio
+form.address=Endereço
+form.city=Cidade
+form.state=Estado
+form.zip=CEP
+form.country=País
+form.telephone=Número de Telefone
+error.date=Por favor, entre uma data válida.
+emails.off.title=Remover da lista de email
+emails.on.title=Subescrever na lista de email
+pgp.remove.title=Remover chave PGP
+pgp.add.title=Adicionar chave PGP
+pgp.purpose=Esta chave será usada para criptografar todos emails enviados a você.
+withdrawal.confirm.success=Falha de confirmação da retirada. Revise o link selecionado.
+withdrawal.confirm.fail=Retirada rejeitada.
+withdrawal.reject.success=Falha em rejeitar a retirada. Revise o link selecionado.
+withdrawal.reject.fail=Failed to reject withdrawal. Double check the link you clicked on.
+		
+help.one_way=Qualquer porção de sua ordem que não seja imediatamente executada é livre de taxas.
+
+text.password.advice=Dica: Use senha generada computacionalmente e armazene-a em gerenciadores de senha ou escreva em papel.
+		
+terminology.verificationLevel=Nível de Verificação
+		
+tfa.off.explanation=Digite abaixo seu código de autenticação de 2 passos para confirmar a solicitação para desligar a autenticação de dois passos. Isto deixa sua conta mais vulnerável a ataques.
+		
+auth.login.forgotPassword=Limpar Senha
+		
+exchange.account.id=ID
+exchange.account.info.title=Informações de Conta
+exchange.account.actions.title=Ações
+exchange.account.tfa_login=Autenticação de dois passos para Login
+exchange.account.tfa_withdrawal=Autenticação de dois passos para Retiradas
+exchange.account.tfa_type=Tipo de Autenticação de dois passos
+exchange.account.mailinglist=Receber notícias sobre novos recursos e mudanças em Crypto-Trade
+auth.signup.mailinglist=Receber notícias sobre novos recursos e mudanças em Crypto-Trade
+auth.signup.tos.title=Termos de Serviço
+auth.signup.tos.body=A plataforma e seu operador não são responsáveis por perdas de fundos. Isto inclui (mas não limitado a) perdas decorrentes de comprometimento da segurança de conta, de servidor ou de falhas no código de programação. O usuário é responsável por garantir a segurança de seu computador contra malware ou invasão. É recomendado que não sejam armazenadas na plataforma de negociação moedas virtuais que não estejam sendo efetivamente negociadas.
+auth.signup.tos.accept=Aceito os termos e condições
+		
+exchange.account.api_reference.title=Referencia API
+exchange.account.api_reference.public=Público
+exchange.account.api_reference.ticker=Relógio
+exchange.account.api_reference.recent_trades=Negociações Recentes
+exchange.account.api_reference.order_book=Livro de Ordens
+exchange.account.api_reference.order_all_book=Book all orders
+exchange.account.api_reference.authenticated=Autenticada
+exchange.account.api_reference.buy=Comprar
+exchange.account.api_reference.sell=Vender
+exchange.account.api_reference.cancel_order=Cancelar Ordem
+exchange.account.api_reference.list_orders=Lista de Ordens
+exchange.account.api_reference.trade_history=Histórico de Negociações
+exchange.account.api_reference.list_balance=Lista Balanço
+exchange.account.api_reference.type_info=Valores com "" são texto editável. Campos em itálico são opcionais.
+exchange.account.api_reference.example=Exemplo com cURL
+exchange.account.api_reference.addresses=Wallet address
+		
+exchange.account.api_keys.title=Chaves API
+exchange.account.api_keys.api_key=Chave API
+exchange.account.api_keys.comment=Comentário
+exchange.account.api_keys.trading=Negociação
+exchange.account.api_keys.trade_history=Histórico de Negociação
+exchange.account.api_keys.list_balance=Lista Balanço
+exchange.account.api_keys.permissions=Permissões
+exchange.account.api_keys.delete=Apagar
+exchange.account.api_keys.delete.modal.title=Apagar Chaves de permissão API
+exchange.account.api_keys.save=Salvar
+exchange.account.api_keys.save.modal.title=Salvar Chaves de permissão API
+		
+exchange.account.api_keys.button.add=Adicionar Chave de permissão API
+		
+tfa.on.title=Habilitar 2FA (autenticação de 2 passos)
+tfa.off.title=Desabilitar 2FA (autenticação de 2 passos)
+tfa.submit.title=Enviar
+
+auth.error.invalidtoken=Invalid token.
+auth.error.twofactorauthnotconfigured=Two factor auth not configured.
+auth.error.pleaseloginfirst=Please log in first.
+
+auth.login.signup=Registre-se
+		
+chrome.language=Idioma
+chrome.language.en=English
+chrome.language.es=Español
+chrome.language.pl=Polski
+chrome.language.pt=Português
+chrome.language.ru=Русский
+chrome.login=Login
+chrome.signup=Registre-se
+chrome.logout=Sair
+chrome.gotodashboard=Ir para Painel de Negociações
+		
+chrome.exchange.navigation.node.title=Informações de Moedas
+chrome.exchange.node.symbol=Símbolo
+chrome.exchange.node.status=Status
+chrome.exchange.node.staking=Staking
+chrome.exchange.node.staking.on=On
+chrome.exchange.node.staking.off=Off
+chrome.exchange.node.block=Bloco
+chrome.exchange.node.progress=Progress
+chrome.exchange.node.connection=Conexão
+chrome.exchange.node.status.active=Ativa
+chrome.exchange.node.status.maintenance=Manutenção
+chrome.exchange.node.lastblock=Último Bloco
+chrome.exchange.node.peers=Peers
+chrome.exchange.node.listnodes=Peers list:
+		
+chrome.navigation.about.title=Sobre
+chrome.exchange.navigation.admin.title=Painel de Administrador
+chrome.exchange.navigation.admin.editor.title=News editor
+chrome.exchange.navigation.dashboard.title=Painel de Controle
+chrome.exchange.navigation.dashboard.label=Painel de Controle
+chrome.exchange.navigation.exchange.title=Negociações
+chrome.exchange.navigation.exchange.label=Negociações
+chrome.exchange.navigation.depositwithdraw.title=Gerenciamento de Fundos
+chrome.exchange.navigation.depositwithdraw.label=Saldo
+chrome.exchange.navigation.deposit.label=Depósito
+chrome.exchange.navigation.withdraw.label=Retirada
+chrome.exchange.navigation.history.title=Histórico de Conta
+chrome.exchange.navigation.history.label=Histórico
+chrome.exchange.navigation.account.title=Configurações de Conta
+chrome.exchange.navigation.account.label=Conta
+chrome.exchange.navigation.faq.title=FAQ
+chrome.exchange.navigation.news.title=News
+chrome.exchange.navigation.gs.title=Passo a Passo
+chrome.exchange.navigation.contact.title=Contate-nos
+chrome.exchange.navigation.about.title=Sobre nós
+chrome.exchange.navigation.vote.title=Votação
+chrome.exchange.navigation.blockexplorer.title=Block Explorer
+chrome.exchange.navigation.usersettings.title=Configurações de Usuário
+chrome.exchange.navigation.usersettings.label=Configurações de Usuário
+		
+chrome.exchange.navigation.usersettings.currencysettings.title=Configurações de Moedas
+chrome.exchange.navigation.usersettings.marketssettings.title=Configurações de Mercados
+
+chrome.exchange.navigation.openorders.title=Open orders
+chrome.exchange.navigation.tradingstatistics.title=Trading statistics
+chrome.exchange.navigation.systemcontrol.title=System control
+
+chrome.navigation.compliance.title=Compliance
+chrome.navigation.security.title=Segurança
+chrome.navigation.privacy.title=Privacidade
+		
+exchange.openbids.title=Ordens de Compra
+exchange.openasks.title=Ordens de Venda
+exchange.recenttrades.title=Negociações Recentes
+exchange.pendingtrades.title=Suas Ordens Pendentes
+		
+depositwithdraw.withdraw.title=Retirada
+depositwithdraw.withdraw.button=Retirada
+depositwithdraw.transfer.button=Transfer funds
+depositwithdraw.withdraw.address=Endereço
+depositwithdraw.deposit.title=Depósito
+depositwithdraw.deposit.usd.instructions=Atenção: Todos os depósitos não pagos serão deletados após 3 dias.
+depositwithdraw.deposit.eur.instructions=Atenção: Todos os depósitos não pagos serão deletados após 3 dias.
+depositwithdraw.deposit.rub.instructions=Atenção: Todos os depósitos não pagos serão deletados após 3 dias.
+depositwithdraw.deposit.current_address=Endereço de depósito:
+depositwithdraw.deposit.past_addresses=Endereço anterior:
+depositwithdraw.pending.withdraw.title=Retiradas Pendentes
+depositwithdraw.withdraw.usd.instructions=O processamento do pagamento é feito através do sistema Payeer.
+depositwithdraw.withdraw.eur.instructions=O processamento do pagamento é feito através do sistema Payeer.
+depositwithdraw.withdraw.rub.instructions=O processamento do pagamento é feito através do sistema Payeer.
+depositwithdraw.deposit.info=Nota: Depósitos estarão visíveis após uma confirmação de rede! Mineração diretamente para um endereço de depósito (por exemplo P2Pool, Eligius, etc.) não serão reconhecidos.
+depositwithdraw.withdraw.info=Nota: Retiradas são processadas periodicamente e podem atraser uma hora ou mais.
+depositwithdraw.pending.deposit.title=Depósitos Pendentes
+depositwithdraw.deposit.fees=Taxas de Depósito
+depositwithdraw.deposit.requiredConfirms=Depósitos serão creditados pouco depois de
+depositwithdraw.deposit.confirms=confirmações
+depositwithdraw.withdraw.fees=Taxas de Retirada
+depositwithdraw.withdraw.limit.min=Retirada Mínima
+depositwithdraw.withdraw.limit.max=Retirada Diária Máxima
+depositwithdraw.withdraw.modal.confirmwithdrawal=Confirme retirada
+depositwithdraw.withdraw.modal.areyousurewithdraw=Você tem certeza que deseja retirar
+depositwithdraw.withdraw.modal.to=para
+depositwithdraw.withdraw.modal.andreceive=e receber
+depositwithdraw.withdraw.modal.afterthewithdrawalfeeof=depois da taxa de retirada de
+depositwithdraw.withdraw.modal.requestwithdrawal=Solicitar Retirada
+depositwithdraw.deposit.modal.confirmdeposit=Confirmar depósito
+depositwithdraw.deposit.modal.areyousurethatyouwanttodeposit=Você tem certeza que deseja depositar
+deposit.confirm.success=Depósito confirmado.
+deposit.confirm.fail=Depósito falhou.
+deposit.confirm.alreadyconfirmed=Depósito já confirmado.
+		
+history.depositwithdrawhistory.title=Histórico de Depósitos/Retiradas
+history.depositwithdrawhistory.confirmation=Conf.
+history.tradehistory.title=Histórico de Negociações
+history.login.title=Histórico de Acessos
+history.tradehistory.transaction=Transação
+history.tradehistory.dataisnotavailable=Data is not available
+history.tradehistory.sucsessfuly=Sucsessfuly
+history.tradehistory.cancelled=Cancelada
+		
+account.fakemoney=Dinheiro Falso
+account.fakemoney.add=Adicionar Fundos
+account.fakemoney.subtract=Subtrair Fundos
+		
+		
+		
+### SecureSocial stuff		
+		
+# Login page		
+auth.login.title=Login
+auth.login.accessDenied=Acesso negado. Por favor proceda o Login.
+auth.login.errorLoggingIn=Erro ocorrido durante Login. Por favor tente novamente.
+auth.login.here=aqui
+auth.login.invalidCredentials=As credenciais informadas não são válidas.
+		
+# Sign up page		
+auth.signup.title=Registro
+auth.signup.email1=Email
+auth.signup.email2=Digite o Email novamente
+auth.signup.password1=Senha (mínimo 12 caracteres)
+auth.signup.password2=Confirmação de Senha
+auth.signup.createAccount=Criar Conta
+auth.signup.cancel=Cancelar
+auth.signup.passwordsDoNotMatch=Senha não confere
+auth.signup.pgpKeyInvalid=Falha para aprovar chave PGP
+auth.signup.thankYouCheckEmail=Obrigado. Por favor verifique seu email para mais instruções
+auth.signup.invalidLink=O link utilizado não é válido
+auth.signup.signUpDone=Obrigado por registrar-se. Você agora pode executar Login
+auth.signup.invalidPassword=Entre pelo menos {0} caracteres
+auth.signup.pgp=Chave PGP (se você tem uma)
+auth.signup.language=Idioma
+auth.signup.errors.emailsdonotmatch=Emails não conferem
+		
+# Password reset		
+auth.password.title=Reinicializar Senha
+auth.password.passwordUpdated=Sua senha foi atualizada com sucesso
+auth.password.reset=Reinicializar Senha
+auth.password.error=Houve problemas ao modificar sua senha. Por favor, tente novamente
+auth.password.crack_time=Tempo de Quebra
+		
+# Password change		
+auth.passwordChange.title=Modificar Senha
+auth.passwordChange.currentPassword=Senha Atual
+auth.passwordChange.newPassword1=Nova Senha (mínimo de 12 caracteres)
+auth.passwordChange.newPassword2=Confirmação de Senha
+auth.passwordChange.changeButton=Mudar
+auth.passwordChange.invalidPassword=Senha Inválida
+auth.passwordChange.ok=Sua senha foi modificada com sucesso
+auth.passwordChange.okButton=OK
+		
+# Not authorized page		
+auth.notAuthorized.title=Não Autorizado
+auth.notAuthorized.message=Você não é autorizado a acessar esta página
+		
+#		
+auth.loginRequired=Você precisa fazer Login para acessar esta página.
+		
+# Mails		
+#		
+mails.sendWithdrawalConfirmEmail.subject=Confirme retirada
+mails.sendAlreadyRegisteredEmail.subject=Instruções de registro
+mails.sendSignUpEmail.subject=Instruções de registro
+mails.welcomeEmail.subject=Bem vindo
+mails.passwordResetEmail.subject=Instruções de reinicialização de senha
+mails.passwordResetOk.subject=Confirmação de modificação de senha
+		
+mails.greeting=Olá,
+mails.signature.start=Atenciosamente,
+mails.signature.from=Time de {0}
+mails.signature.notice={0} nunca envia emails HTML. Se você vir imagens, cores ou estilização de texto nos emails supostamente enviados por nós, encaminhe-os para o nosso time de segurança: {1}.
+		
+mails.sendWithdrawalConfirmEmail.body.confirm=Por favor confirme que você solicitou a retirada de {0} {1} para {2} clicando no link abaixo:
+mails.sendWithdrawalConfirmEmail.body.reject=Se você não requisitou a retirada, por favor siga o link abaixo para cancelar a operação:
+mails.sendAlreadyRegisteredEmail.body=Você tentou registrar-se mas uma conta com este nome de usuário já existe. Se você não se lembra da senha, por favor acesse este link para reiniciá-la.
+mails.sendSignUpEmail.body=Por favor siga este link para completar seu registro.
+mails.welcomeEmail.body=Sua conta foi criada. Clique aqui para acessar:
+mails.passwordResetEmail.body=Por favor siga este link para redefinir sua senha.
+mails.passwordResetOk.body=Sua senha foi atualizada. Por favor acesse sua conta usando sua nova senha clicando aqui.
+		
+# API error messages		
+		
+messages.api.error.invalidpair=Par inválido
+messages.api.error.failedtoparseinput=Falha em processar entrada.
+messages.api.error.nonsufficientfunds=Saldo insuficiente.
+messages.api.error.amountmustbeatleast=Quantia deve ser pelo menos %s.
+messages.api.error.tradingsuspendedon=Negociação suspensa em %s/%s.
+messages.api.error.thepriceandamountmustbepositive=O preço e quantidade precisam ser positivos.
+messages.api.error.failedtoplaceask=Falha em processar ordem de venda.
+messages.api.error.failedtoplacebid=Falha em processar ordem de compra.
+messages.api.error.failedtocancelorder=Falha em executar cancelamento da ordem.
+		
+messages.api.error.failedtoturnofftwofactorauth=Falha em desligar autenticação de dois passos.
+messages.api.error.failedtoaddtomailinglist=Falha em adicionar à lista de distribuição.
+messages.api.error.failedtoremovefrommailinglist=Falha em remover da lista de distribuição.
+messages.api.error.twofactorauthenticationisalready=Autenticação de dois passos já habilitada.
+messages.api.error.failedtoturnontwofactorauth=Falha em habilitar autenticação de dois passos.
+messages.api.error.failedtoaddpgpkey=Falha em adicionar chave PGP. Confira sua senha e código de autenticação de dois passos (se você tiver).
+messages.api.error.failedtoaddpgpkeynovalid=Falha em adicionar chave PGP. Não foi identificada chave válida no texto inserido.
+messages.api.error.failedtoremovepgpkey=Falha em remover chave PGP. Confira sua senha e código de autenticação de dois passos (se você tiver).
+messages.api.error.failedtoupdateapikey=Falha na atualização da chave API.
+messages.api.error.failedtodisableapikey=Falha em desabilitar a chave API.
+messages.api.error.wrongtwofactorauthcode=Código de autenticação de dois passos inválido.
+messages.api.error.failedtowithdraw=Falha na retirada.
+messages.api.error.invalidaddress=Endereço inválido.
+messages.api.error.failedtoupdatevotelist=Falha ao atualizar lista de votação.
+messages.api.error.failedtoupdatemarketsettings=Falha em atualizar as Configurações de Mercado.
+messages.api.error.failedtoupdateusersettings=Falha em atualizar as Configurações de Usuário.
+messages.api.error.notallowed=Não permitido.
+messages.api.error.usernotexist=The user does not exist.
+
+# Tickers		
+		
+bigtickers.Last=Últ.
+bigtickers.Low=Mín.
+bigtickers.High=Máx.
+bigtickers.Vol=Vol.
+		
+# zxvbn		
+		
+zxvbn.instant=instantâneo
+zxvbn.minute=minuto
+zxvbn.minute1=minutos
+zxvbn.minutes=minutos
+zxvbn.hour=hora
+zxvbn.hour1=horas
+zxvbn.hours=horas
+zxvbn.day=dia
+zxvbn.day1=dias
+zxvbn.days=dias
+zxvbn.month=mês
+zxvbn.month1=meses
+zxvbn.months=meses
+zxvbn.year=ano
+zxvbn.year1=anos
+zxvbn.years=anos
+zxvbn.centurie=século
+zxvbn.centurie1=séculos
+zxvbn.centuries=séculos
+		
+# datatables		
+		
+datatables.entries=entradas
+datatables.show=Mostrar
+datatables.search=Procurar
+datatables.showing=Mostrando
+datatables.to=para
+datatables.of=de
+datatables.s=_
+datatables.nomatchingrecordsfound=Não foram encontrados registros
+datatables.first=Primeiro
+datatables.previous=Prévio
+datatables.next=Próximo
+datatables.last=Último
+datatables.nodataavailableintable=Não há dados disponíveis na tabela
+datatables.noentriestoshow=Nenhuma ocorrência para mostrar
+datatables.filteringfrom=filtrando de
+datatables.all=Todos
+		
+# Meta errors		
+		
+metaerrors.badrequest=Erro: Requisição errada
+metaerrors.clienterror=Erro: Erro no Cliente
+metaerrors.servererror=Erro: Erro no Servidor
+metaerrorserror.notfound=Erro: Não encontrado
+		
+# Java API error messages		
+		
+# Trade & History		
+		
+java.api.messages.trade.apierror=Erro de API
+java.api.messages.trade.tradecancelled=Negociação cancelada.
+java.api.messages.trade.tradecancelledsuccessfully=Negociação cancelada com sucesso.
+java.api.messages.trade.buyorder=Ordem de Compra
+java.api.messages.trade.sellorder=Ordem de Venda
+java.api.messages.trade.placed=colocada.
+java.api.messages.trade.partiallyfilled=parcialmente executada.
+java.api.messages.trade.filled=executada.
+java.api.messages.trade.market=Mercado:
+java.api.messages.trade.amount=Quantidade:
+java.api.messages.trade.remains=Restante:
+java.api.messages.trade.sell=Venda
+java.api.messages.trade.buy=Compra
+java.api.messages.trade.per=por
+java.api.messages.trade.volume=Volume
+java.api.messages.trade.last=Último
+java.api.messages.trade.low=Mínimo
+java.api.messages.trade.high=Máximo
+java.api.messages.trade.close=Fechamento
+java.api.messages.trade.vol=Vol
+java.api.messages.trade.open=Abertura
+		
+# Account		
+		
+java.api.messages.account.mailinglistsubscription=Subscrição na lista de distribuição
+java.api.messages.account.mailinglistsubscriptionturnedoff=Subscrição na lista de distribuição ativada
+java.api.messages.account.mailinglistsubscriptionturnedon=Subscrição na lista de distribuição desativada
+java.api.messages.account.pgpkeyadded=Chave PGP adicionada
+java.api.messages.account.pgpkeyaddedemailswillnowbeencrypted=Chave PGP adicionada. Emails serão a partir de agora encriptados.
+java.api.messages.account.pgpkeyremoved=Chave PGP removida.
+java.api.messages.account.pgpkeyremovedemailswillnolongerbeencrypted=Chave PGP removida. Emails não serão mais encriptados.
+java.api.messages.account.twofactorauthentication=Autenticação de dois passos
+java.api.messages.account.twofactorauthenticationturnedon=Autenticação de dois passos ativada.
+java.api.messages.account.twofactorauthenticationturnedoff=Autenticação de dois passos desativada.
+java.api.messages.account.apikeyadded=Chave API adicionada
+java.api.messages.account.apikeyaddedsuccessfully=Chave API adicionada com sucesso.
+java.api.messages.account.apikeydisabled=Chave API desabilitada.
+java.api.messages.account.apikeydisabledsuccessfully=Chave API desabilitada com sucesso.
+java.api.messages.account.apikeyupdated=Chave API atualizada.
+java.api.messages.account.apikeyupdatedsuccessfully=Chave API atualizada com sucesso.
+		
+# User Settings		
+		
+java.api.messages.usersettings.usersettingsupdated=Configurações de usuário atualizadas.
+java.api.messages.usersettings.usersettingsfor=Configurações de usuário para
+java.api.messages.usersettings.marketsettingsupdated=Configurações de mercado atualizadas.
+java.api.messages.usersettings.marketettingsfor=Configurações de mercado para
+java.api.messages.successfully=com sucesso
+usersettings.currency.enable=Show all
+usersettings.currency.disable=Hide all
+usersettings.tradesettings.tradebot=Enable
+usersettings.tradesettings.type=Type
+usersettings.tradesettings.price=Price
+usersettings.tradesettings.total=Total
+usersettings.tradesettings.buyatthemarket=Buy at the market
+usersettings.tradesettings.sellatthemarket=Sell at the market
+usersettings.tradesettings.buyataprice=Buy at a price
+usersettings.tradesettings.sellataprice=Sell at a price
+usersettings.tradesettings.addtradekey=Add trade key
+usersettings.tradesettings.title=Settings trading bot
+		
+# User Vote		
+		
+java.api.messages.vote.usersettingsupdated=Configurações de votação atualizadas.
+java.api.messages.vote.youvotedfor=Você votou para
+		
+# DepositWithdraw & History		
+		
+java.api.messages.depositwithdraw.notgenerated=Não criado ainda...
+java.api.messages.depositwithdraw.pending=Pendente
+java.api.messages.depositwithdraw.checkemail=Confira email
+java.api.messages.depositwithdraw.addressrequired=Endereço requerido.
+java.api.messages.depositwithdraw.withdrawalrequested=Retirada solicitada.
+java.api.messages.depositwithdraw.pleasecheckyouremail=Por favor cheque seu email para confirmar esta retirada.
+java.api.messages.depositwithdraw.deposit=Depósito
+java.api.messages.depositwithdraw.withdrawal=Retirada.
+java.api.messages.depositwithdraw.amountrequired=Quantidade necessária.
+java.api.messages.depositwithdraw.nonsufficientfunds=Non-sufficient funds.
+java.api.messages.depositwithdraw.depositrequested=Depósito solicitado
+java.api.messages.depositwithdraw.pleasecheckyouremailtoconfirmthisdeposit=Por favor cheque seu email para confirmar estae depósito.
+depositwithdraw.deposit.button=Depósito
+depositwithdraw.withdraw.modal.cancel=Cancelar
+depositwithdraw.deposit.modal.requestdeposit=Requisitar depósito
+
+java.api.messages.copy.succsses=The address is successfully copied to the clipboard.
+java.api.messages.copy.error=The address is not copied to the clipboard.\
+
+# Password form		
+		
+java.api.messages.passform.pleaseenterapassword=Por favor informe a senha.
+java.api.messages.passform.passwordnotlongenough=Tamanho da senha insuficiente.
+java.api.messages.passform.passwordsdontmatch=Senhas não conferem.
+		
+# user interface		
+		
+sum_box.label=Estatísticas Instantâneas
+sum_box.registeredusers=Usuários
+sum_box.onlineusers=Usuários online
+sum_box.openorders=Ordens abertas
+sum_box.totalorders=Número total de ordens
+		
+# Get started		
+		
+getstarted.all=All
+		
+getstarted.signup=Registre-se
+getstarted.chooselanguage=Escolha o idioma
+getstarted.clickonthetabregistration=Selecione a aba "Registre-se"
+getstarted.enteryouremailaddress=Digite o seu endereço de email
+getstarted.choosesecuritypassword=Escolha uma senha de segurança
+		
+getstarted.managefunds=Depósito
+getstarted.clickonthetabmanagefunds=Clique na aba "Gerenciar Fundos"
+getstarted.findcurrency=Encontre uma moeda
+getstarted.Transferfundstoaspecifiedaddress=Transfira fundos para o endereço especificado
+getstarted.afterconfirming=Depois de espera que deposite fundos
+		
+getstarted.withdraw=Retirada
+getstarted.entertheaddressandthenumberof=Entre o endereço e número de
+getstarted.confirmwithdraw=Confirme a retirada
+		
+getstarted.trade=Negociação
+getstarted.clickonthetabexchange=Clique na aba "Exchange"
+getstarted.market=Selecione mercado
+getstarted.selectthetypeoforder=Selecione o tipo de ordem
+getstarted.enteraprice=Entre o preço e quantidade
+		
+# Contact		
+		
+contact.customers=Clientes
+contact.commercialoffers=Ofertas comerciais
+		
+# About		
+		
+about.info=Crypto-Trade permite a negociação de crypt-moedas entre usuários e mantém fundos para assegurar as contas e prover um serviço rápido e confiável. O que é Crypto-Trade?
+about.whatisit=What is the Crypto-Trade?
+
+# PaySystem
+
+PaySystem.deposit=Transfer of funds to the crypto-trade.net
+PaySystem.withdraw=Withdrawal from the crypto-trade.net
+
+# Notifications
+
+notifications.dashboard.title=Attention!
+notifications.dashboard.text=You can change the settings for the display currency by clicking on the
+notifications.dashboard.link=link
+
+notifications.dashboard.tfa.title=Attention!
+notifications.dashboard.tfa.text=We recommend that you enable two-factor authentication, you can do this by clicking on
+notifications.dashboard.tfa.link=link
+
+# Pay system
+
+paysystem.success.heading=Your payment received successfully!!!
+paysystem.success.body=In a few minutes the funds will be available on your Deposit.
+paysystem.error.heading=During payment processing errors occurred!!!
+paysystem.error.body=Please contact the administrator.
+
+# Tooltip
+
+tooltip.interactiveassistant=Interactive assistant.
+tooltip.pleaseenteryouremail=Please enter your email.
+tooltip.pleaseentertheemailagain=Please enter the email again.
+tooltip.pleaseselectalanguage=Please select a language.
+tooltip.pleaseenteryourpassword=Please enter your password.
+tooltip.login=Log in.
+tooltip.pleasechoosethecurrencypair=Please choose the currency pair.
+tooltip.pleaseentertheprice=Please enter the price.
+
+# Block explorer
+
+blockexplorer.cryptocurrency=Crypto currency
+blockexplorer.transactionhash=Transaction Hash
+blockexplorer.detail=Detail
+blockexplorer.time=Time
+blockexplorer.locktime=Lock Time
+blockexplorer.confirmations=Confirmations
+blockexplorer.block=Block
+blockexplorer.hexdata=Hex Data
+blockexplorer.inputs=Inputs
+blockexplorer.Inputtransaction=Input Transaction
+blockexplorer.txid=TX ID
+blockexplorer.txoutput=TX Output
+blockexplorer.txsequence=TX Sequence
+blockexplorer.scriptsigasm=Script Sig (ASM)
+blockexplorer.scriptsighex=Script Sig (HEX)
+blockexplorer.outputs=Outputs
+blockexplorer.outputtransaction=Output Transaction
+blockexplorer.txvalue=TX Value
+blockexplorer.txtype=TX Type
+blockexplorer.requiredsigs=Required Sigs
+blockexplorer.scriptpubkeyasm=Script Pub Key (ASM)
+blockexplorer.scriptpubkeyhex=Script Pub Key (HEX)
+blockexplorer.address=Address
+blockexplorer.summary=Summary
+blockexplorer.size=Size
+blockexplorer.bits=Bits
+blockexplorer.difficulty=Difficulty
+blockexplorer.timestamp=Timestamp
+blockexplorer.transactions=Transactions
+blockexplorer.hashes=Hashes
+blockexplorer.hash=Hash
+blockexplorer.previousblock=Previous Block
+blockexplorer.nextblock=Next Block
+blockexplorer.merkleroot=Merkle Root
+
+# Wallets status
+
+wallets.status.maintenance=Maintenance
+wallets.status.nopeers=No active peers
+wallets.status.nosync=Not synchronized
+wallets.status.ok=OK
+wallets.status.status=Status
+
+#News
+
+news.editor.button.addnews=Add news
+news.editor.button.edit=Edit
+news.editor.created=Created
+news.editor.style=Style
+news.editor.icon=Icon
+news.editor.color=Color
+news.editor.title=Title
+news.editor.body=Body
+news.editor.news=News
+
+#Chat
+
+chat.title=Chat
+chat.generalchat=General chat
+chat.usersOnline=Online users
+chat.main=Main
+chat.typeyourmessage=Type your message
+chat.nikname=Nikname
+chat.changenikname=Nick change
+chat.changeniknamesuccessful=Change nickname is successful, please log out and then log into the system.
+chat.userexists=User exists.
+
+#Trading statistics
+
+tradingstatistics.pair=Pair
+tradingstatistics.volume=Volume
+tradingstatistics.open=Open
+tradingstatistics.high=High
+tradingstatistics.low=Low
+tradingstatistics.close=Close
+
+#System control
+
+systemcontrol.rebootallsettings=Reboot all settings
+systemcontrol.run=Run
+
+
+#Dashboard
+
+dashboard.modal.title=Select an action for:
+dashboard.modal.gototrading=Go to trading:
+
+#Bootstrap
+
+bootstrap.title=Bootstrap for:
+bootstrap.date=Date:
+bootstrap.filesize=File size:
+bootstrap.download=Download
+bootstrap.gb=GB
+bootstrap.mb=MB
+bootstrap.bytes=bytes
+bootstrap.byte=byte
+bootstrap.zirobyte=0 byte
