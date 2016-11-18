@@ -37,6 +37,10 @@ var API;
             return $.get(iapi_prefix+'balance', 'json');
         }),
 
+        user_name_info: APIWrap(function() {
+            return $.get(iapi_prefix+'user_name_info', 'json');
+        }),
+
         user: APIWrap(function() {
             return $.get(iapi_prefix+'user', 'json');
         }),

@@ -37,4 +37,13 @@ class EngineModel(val db: String = "default") {
     ).toMap
   }
 
+  def UserNameINFO(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_user_name_info($uid)"""().map(row => (
+      row[String]("name"),
+      row[String]("surname"),
+      row[String]("middle_name"),
+      row[String]("prefix")
+      )).toList
+  }
+
 }

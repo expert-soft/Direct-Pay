@@ -6,7 +6,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
 
 @scripts = {
-
+    <script src="@routes.Assets.at("js/user_settings.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
@@ -20,4 +20,13 @@
             </div>
         </div>
     </div>
+
+    <script id="user-info-template" type="text/x-handlebars-template">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </script>
 }
