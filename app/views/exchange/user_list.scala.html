@@ -1,0 +1,49 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import securesocial.core.UsernamePasswordProvider
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
+
+@scripts = {
+    <script src="@routes.Assets.at("js/user_list.js")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Messages("exchange.account.info.title")</div>
+                <div class="panel-body">
+                    <p id="user-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="user-info-template" type="text/x-handlebars-template">
+    <div class="panel-heading">@Messages("terminology.contacts")</div>
+        <table id="table_users" class="table table-striped responsive">
+            <thead>
+                <tr>
+                    <th width="25%">@Messages("form.first_name")</th>
+                    <th width="25%">@Messages("form.first_name")</th>
+                    <th width="25%">@Messages("form.last_name")</th>
+                    <th width="20%">@Messages("form.middle_name")</th>
+                    <th width="30%">@Messages("form.first_name")</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each this}}
+                <tr id="{{id}}">
+                    <td width="25%">{{email}}</td>
+                    <td width="25%">{{name}}</td>
+                    <td width="25%">{{surname}}</td>
+                    <td width="20%">{{middle_name}}</td>
+                    <td width="30%">{{prefix}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </script>
+}

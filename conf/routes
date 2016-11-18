@@ -10,6 +10,7 @@ GET         /messages.js                               controllers.Application.j
 GET         /account                                   controllers.Application.account
 GET         /wallet                                    controllers.Application.wallet
 GET         /user_settings                             controllers.Application.user_settings
+GET         /user_list                                 controllers.Application.user_list
 
 # Route for changing the language cookie
 GET         /chlang/:lang                              controllers.Application.chlang(lang)
@@ -21,6 +22,8 @@ GET         /assets/*file                              controllers.Assets.at(pat
 GET         /iapi/1                                     controllers.IAPI.APIv1.index
 GET         /iapi/1/balance                             controllers.IAPI.APIv1.balance
 GET         /iapi/1/user                                controllers.IAPI.APIv1.user
+GET         /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
+GET         /iapi/1/user_list                           controllers.IAPI.APIv1.user_list
 POST        /iapi/1/turnoff_tfa                         controllers.IAPI.APIv1.turnOffTFA
 POST        /iapi/1/turnon_tfa                          controllers.IAPI.APIv1.turnOnTFA
 POST        /iapi/1/turnoff_emails                      controllers.IAPI.APIv1.turnOffEmails
@@ -28,7 +31,7 @@ POST        /iapi/1/turnon_emails                       controllers.IAPI.APIv1.t
 POST        /iapi/1/gen_totp_secret                     controllers.IAPI.APIv1.genTOTPSecret
 POST        /iapi/1/remove_pgp                          controllers.IAPI.APIv1.removePgp
 POST        /iapi/1/add_pgp                             controllers.IAPI.APIv1.addPgp
-POST        /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
+
 
 
 

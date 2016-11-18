@@ -747,18 +747,37 @@ begin
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
+-- noinspection SqlNoDataSourceInspection
 create or replace function
 get_user_name_info (
   a_id bigint,
   out name varchar(256),
   out surname varchar(256),
   out middle_name varchar(256),
-  out prefix varchar(16),
+  out prefix varchar(16)
 ) returns setof record as $$
 begin
   return query select uf.name, uf.surname, uf.middle_name, uf.prefix
   from users_name_info uf
   where user_id = a_id;;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+create or replace function
+get_user_list (
+  out id bigint,
+  out created timestamp(3),
+  out email varchar(256),
+  out active bool,
+  out name varchar(256),
+  out surname varchar(256),
+  out middle_name varchar(256),
+  out prefix varchar(16)
+) returns setof record as $$
+begin
+  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name,  ui.prefix
+  from users u
+  left join users_name_info ui on u.id = ui.user_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
