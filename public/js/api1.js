@@ -41,6 +41,10 @@ var API;
             return $.get(iapi_prefix+'user_name_info', 'json');
         }),
 
+        user_list: APIWrap(function() {
+            return $.get(iapi_prefix+'user_list', 'json');
+        }),
+
         user: APIWrap(function() {
             return $.get(iapi_prefix+'user', 'json');
         }),

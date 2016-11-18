@@ -4,7 +4,7 @@ $(function(){
 
     function reload(){
         API.user_name_info().success(function(data){
-            user_name_info = JSON.parse(data);
+            user_name_info = data[0];
 
             user_name_info.name = user_name_info.name;
             user_name_info.surname = user_name_info.surname;

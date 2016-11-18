@@ -43,7 +43,21 @@ class EngineModel(val db: String = "default") {
       row[String]("surname"),
       row[String]("middle_name"),
       row[String]("prefix")
-      )).toList
+    )).toList
+  }
+
+  def UserList() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_user_list()"""().map(row => (
+      row[Long]("id"),
+      row[DateTime]("created"),
+      row[String]("email"),
+      row[Boolean]("active"),
+      row[Option[String]]("name").getOrElse("N/A"),
+      row[Option[String]]("surname").getOrElse("N/A"),
+      row[Option[String]]("middle_name").getOrElse("N/A"),
+      row[Option[String]]("prefix").getOrElse("N/A")
+
+    )).toList
   }
 
 }

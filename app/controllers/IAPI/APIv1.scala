@@ -66,6 +66,23 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
+  def user_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val user_list_info = globals.engineModel.UserList()
+    Ok(Json.toJson(user_list_info.map({ c =>
+      Json.obj(
+        "id" -> c._1,
+        "created" -> c._2,
+        "email" -> c._3,
+        "active" -> c._4,
+        "name" -> c._5,
+        "surname" -> c._6,
+        "middle_name" -> c._7,
+        "prefix" -> c._8
+      )
+    })
+    ))
+  }
+
   def user = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     Ok(Json.toJson(request.user))
   }

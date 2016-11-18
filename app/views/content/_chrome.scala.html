@@ -75,6 +75,7 @@
                 @if(loggedIn){
                     @navItem(routes.Application.wallet().url, "credit-card", Messages("chrome.exchange.navigation.dashboard.title"))
                     @navItem(routes.Application.user_settings().url, "floppy-disk", Messages("chrome.exchange.navigation.dashboard.title"))
+                    @navItem(routes.Application.user_list().url, "home", Messages("chrome.exchange.navigation.dashboard.title"))
                     @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.account.title"))
                 } else {
                     <li class="loggedout"><a href="@controllers.routes.Registration.startSignUp().absoluteURL(UsernamePasswordProvider.sslEnabled)">@Messages("chrome.signup")</a></li>
