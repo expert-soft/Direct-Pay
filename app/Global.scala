@@ -35,7 +35,8 @@ package object globals {
 
       insert into users(id, email) values (0, '');
       insert into balances (user_id, currency) select 0, currency from currencies;
-      select create_user('a2terminator@mail.ru', 'papa852456mama', true, null, 'en');
+      select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en');
+      select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en');
       commit;
       """.execute()
       })

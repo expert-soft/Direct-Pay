@@ -28,6 +28,8 @@ POST        /iapi/1/turnon_emails                       controllers.IAPI.APIv1.t
 POST        /iapi/1/gen_totp_secret                     controllers.IAPI.APIv1.genTOTPSecret
 POST        /iapi/1/remove_pgp                          controllers.IAPI.APIv1.removePgp
 POST        /iapi/1/add_pgp                             controllers.IAPI.APIv1.addPgp
+POST        /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
+
 
 
 # Login page

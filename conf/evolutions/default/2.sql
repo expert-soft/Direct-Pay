@@ -747,6 +747,21 @@ begin
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
+create or replace function
+get_user_name_info (
+  a_id bigint,
+  out name varchar(256),
+  out surname varchar(256),
+  out middle_name varchar(256),
+  out prefix varchar(16),
+) returns setof record as $$
+begin
+  return query select uf.name, uf.surname, uf.middle_name, uf.prefix
+  from users_name_info uf
+  where user_id = a_id;;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
 # --- !Downs
 
 drop function if exists create_user (varchar(256), text, bool) cascade;
