@@ -167,6 +167,21 @@ chrome.exchange.node.lastblock=Last block
 chrome.exchange.node.peers=Peers
 chrome.exchange.node.listnodes=Peers list:
 
+directpay.navigation.converttocrypto.title=Convert to crypto
+directpay.navigation.sendfunds.title=Send Funds
+directpay.navigation.receivefunds.title=Receive Funds
+directpay.navigation.converttofiat.title=Convert to R$
+directpay.navigation.personalinfo.title=Personal info
+directpay.navigation.automation.title=Automatic Orders
+directpay.navigation.twofactorsecurity.title=2FA Security
+directpay.navigation.support.title=Support
+directpay.navigation.contact.title=Contact
+directpay.navigation.terms.title=Terms and Contract
+directpay.navigation.admin.adminpanel.title=Admin Panel
+directpay.navigation.admin.management.title=Management
+directpay.navigation.admin.users.title=List of Users
+directpay.navigation.admin.orders.title=List of Orders
+
 chrome.navigation.about.title=About
 chrome.exchange.navigation.admin.title=Admin Panel
 chrome.exchange.navigation.admin.editor.title=News editor

@@ -78,9 +78,61 @@
                 <!-- exchange links -->
                 <ul class="nav navbar-nav">
                     @navItem(routes.Application.wallet().url, "credit-card", Messages("chrome.exchange.navigation.dashboard.title"))
-                    @navItem(routes.Application.user_settings().url, "floppy-disk", Messages("chrome.exchange.navigation.dashboard.title"))
-                    @navItem(routes.Application.user_list().url, "home", Messages("chrome.exchange.navigation.dashboard.title"))
-                    @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.account.title"))
+                    @navItem(routes.Application.user_settings().url, "floppy-disk", Messages("chrome.exchange.navigation.withdraw.label"))
+
+                    <li class="dropdown" id="Fundsfat-menu">
+                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="fundsdrop">
+                            @Messages("chrome.exchange.navigation.depositwithdraw.title")
+                            <span class="caret"></span>
+                        </a>
+                        <ul aria-labelledby="fundsdrop" class="dropdown-menu">
+                            @navItem(routes.Application.account().url, "credit-card", Messages("chrome.exchange.navigation.deposit.label"))
+                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.converttocrypto.title"))
+                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.sendfunds.title"))
+                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.receivefunds.title"))
+                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.converttofiat.title"))
+                            @navItem(routes.Application.account().url, "credit-card", Messages("chrome.exchange.navigation.withdraw.label"))
+                        </ul>
+                    </li>
+
+                    <li class="dropdown" id="Accountfat-menu">
+                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="accountdrop">
+                            @Messages("chrome.exchange.navigation.account.title")
+                            <span class="caret"></span>
+                        </a>
+                        <ul aria-labelledby="accountdrop" class="dropdown-menu">
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.personalinfo.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.automation.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.history.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.twofactorsecurity.title"))
+                        </ul>
+                    </li>
+
+                    <li class="dropdown" id="Supportfat-menu">
+                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="supportdrop">
+                            @Messages("directpay.navigation.support.title")
+                            <span class="caret"></span>
+                        </a>
+                        <ul aria-labelledby="supportdrop" class="dropdown-menu">
+                            @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.about.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.faq.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.contact.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.terms.title"))
+                        </ul>
+                    </li>
+
+                    <li class="dropdown" id="Adminfat-menu">
+                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="admindrop">
+                            @Messages("directpay.navigation.admin.adminpanel.title")
+                            <span class="caret"></span>
+                        </a>
+                        <ul aria-labelledby="admindrop" class="dropdown-menu">
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.admin.management.title"))
+                            @navItem(routes.Application.user_list().url, "user", Messages("directpay.navigation.admin.users.title"))
+                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.admin.orders.title"))
+                        </ul>
+                    </li>
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
