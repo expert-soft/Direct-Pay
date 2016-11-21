@@ -77,7 +77,7 @@
             <div class="navbar-collapse collapse">
                 <!-- exchange links -->
                 <ul class="nav navbar-nav">
-                    @navItem(routes.Application.wallet().url, "credit-card", Messages("chrome.exchange.navigation.dashboard.title"))
+                    @navItem(routes.Application.wallet().url, "home", Messages("chrome.exchange.navigation.dashboard.title"))
                     @navItem(routes.Application.user_settings().url, "floppy-disk", Messages("chrome.exchange.navigation.withdraw.label"))
 
                     <li class="dropdown" id="Fundsfat-menu">
@@ -86,12 +86,13 @@
                             <span class="caret"></span>
                         </a>
                         <ul aria-labelledby="fundsdrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "credit-card", Messages("chrome.exchange.navigation.deposit.label"))
-                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.converttocrypto.title"))
-                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.sendfunds.title"))
-                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.receivefunds.title"))
-                            @navItem(routes.Application.account().url, "credit-card", Messages("directpay.navigation.converttofiat.title"))
-                            @navItem(routes.Application.account().url, "credit-card", Messages("chrome.exchange.navigation.withdraw.label"))
+                            @navItem(routes.Application.account().url, "plus-sign", Messages("chrome.exchange.navigation.deposit.label"))
+                            @navItem(routes.Application.account().url, "random", Messages("directpay.navigation.converttocrypto.title"))
+                            @navItem(routes.Application.account().url, "upload", Messages("directpay.navigation.sendfunds.title"))
+                            <li role="separator" class="divider"></li>
+                            @navItem(routes.Application.account().url, "download", Messages("directpay.navigation.receivefunds.title"))
+                            @navItem(routes.Application.account().url, "random", Messages("directpay.navigation.converttofiat.title"))
+                            @navItem(routes.Application.account().url, "minus-sign", Messages("chrome.exchange.navigation.withdraw.label"))
                         </ul>
                     </li>
 
@@ -102,9 +103,9 @@
                         </a>
                         <ul aria-labelledby="accountdrop" class="dropdown-menu">
                             @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.personalinfo.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.automation.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.history.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.twofactorsecurity.title"))
+                            @navItem(routes.Application.account().url, "flash", Messages("directpay.navigation.automation.title"))
+                            @navItem(routes.Application.history().url, "list", Messages("chrome.exchange.navigation.history.title"))
+                            @navItem(routes.Application.account().url, "screenshot", Messages("directpay.navigation.twofactorsecurity.title"))
                         </ul>
                     </li>
 
@@ -114,10 +115,10 @@
                             <span class="caret"></span>
                         </a>
                         <ul aria-labelledby="supportdrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.about.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.faq.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.contact.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.terms.title"))
+                            @navItem(routes.Application.account().url, "star", Messages("chrome.exchange.navigation.about.title"))
+                            @navItem(routes.Application.account().url, "question-sign", Messages("chrome.exchange.navigation.faq.title"))
+                            @navItem(routes.Application.account().url, "earphone", Messages("directpay.navigation.contact.title"))
+                            @navItem(routes.Application.account().url, "book", Messages("directpay.navigation.terms.title"))
                         </ul>
                     </li>
 
@@ -127,9 +128,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul aria-labelledby="admindrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.admin.management.title"))
+                            @navItem(routes.Application.account().url, "eye-open", Messages("directpay.navigation.admin.management.title"))
                             @navItem(routes.Application.user_list().url, "user", Messages("directpay.navigation.admin.users.title"))
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.admin.orders.title"))
+                            @navItem(routes.Application.account().url, "book", Messages("directpay.navigation.admin.orders.title"))
                         </ul>
                     </li>
 
