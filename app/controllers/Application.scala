@@ -44,6 +44,10 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.user_list(request.user))
   }
 
+  def history = SecuredAction { implicit request =>
+    Ok(views.html.exchange.history(request.user))
+  }
+
   def wallet = SecuredAction { implicit request =>
     Ok(views.html.exchange.dashboard(request.user))
   }

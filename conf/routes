@@ -11,6 +11,7 @@ GET         /account                                   controllers.Application.a
 GET         /wallet                                    controllers.Application.wallet
 GET         /user_settings                             controllers.Application.user_settings
 GET         /user_list                                 controllers.Application.user_list
+GET         /history                                   controllers.Application.history
 
 # Route for changing the language cookie
 GET         /chlang/:lang                              controllers.Application.chlang(lang)
