@@ -144,7 +144,7 @@
 
 .nav-sm .nav.child_menu li.active,
 .nav-sm .nav.side-menu li.active-sm {
-  border-right: 5px solid #1ABB9C; }
+  border-right: 5px solid #57b; }
 
 .nav-sm ul.nav.child_menu ul,
 .nav-sm .nav.side-menu li.active-sm ul ul {
@@ -153,7 +153,7 @@
   background: none; }
 
 .nav-sm > .nav.side-menu > li.active-sm > a {
-  color: #1ABB9C !important; }
+  color: #57b !important; }
 
 .nav-sm .nav.side-menu li a i.toggle-up {
   display: none !important; }
@@ -200,21 +200,22 @@
   margin-top: 10px; }
 
 .profile_pic {
-  width: 35%;
+  width: 70px;
+  height: 70px;
   float: left; }
 
 .img-circle.profile_img {
-  width: 70%;
+  width: 80%;
+  height: 80%;
   background: #fff;
-  margin-left: 15%;
+  margin: 0;
   z-index: 1000;
   position: inherit;
-  margin-top: 20px;
   border: 1px solid rgba(52, 73, 94, 0.44);
-  padding: 4px; }
+  padding: 20px 20px; }
 
 .profile_info {
-  padding: 25px 10px 10px;
+  padding: 5px 10px 15px 10px;
   width: 65%;
   float: left; }
 
@@ -240,7 +241,7 @@
   margin: 10px 0 0; }
 
 .profile.img_2 .profile_info {
-  padding: 15px 10px 0;
+  padding: 10px 10px 0;
   width: 100%;
   margin-bottom: 10px;
   float: left; }
@@ -589,9 +590,14 @@ a:hover, a:focus {
 .nav.child_menu {
   display: none; }
 
-.nav.child_menu li:hover,
 .nav.child_menu li.active {
-  background-color: rgba(255, 255, 255, 0.06); }
+  background: linear-gradient(#027, #327), #0600b4; }
+
+.nav li li.current-page:hover {
+  background: linear-gradient(#049, #549), #0600b4; }
+
+.nav.child_menu li:hover {
+  background-color: rgba(255, 255, 255, 0.15); }
 
 .nav.child_menu li {
   padding-left: 36px; }
@@ -635,20 +641,29 @@ a:hover, a:focus {
   padding: 13px 15px 12px; }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
-  border-right: 5px solid #1ABB9C; }
+  border-right: 5px solid #57b; }
 
 .nav li.current-page {
-  background: rgba(255, 255, 255, 0.05); }
+  background: linear-gradient(#027, #327), #0600b4; }
+
+.nav li.current-page:hover {
+  background: linear-gradient(#049, #549), #0600b4; }
 
 .nav li li li.current-page {
   background: none; }
 
-.nav li li.current-page a {
+.nav li li.current-page a:hover {
   color: #fff; }
+
+.nav.side-menu > li:hover {
+  background-color: rgba(255, 255, 255, 0.15); }
+
+.nav.side-menu > li.active:hover {
+  background: none; }
 
 .nav.side-menu > li.active > a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-  background: linear-gradient(#c2000d, #00b514), #0600b4;
+  background: rgba(255, 255, 255, 0.05);
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0; }
 
 .navbar-brand, .navbar-nav > li > a {
@@ -747,7 +762,7 @@ a:hover, a:focus {
   line-height: 30px; }
 
 .main_menu_side {
-  padding: 0; }
+  padding: 120px 0; }
 
 .bs-docs-sidebar .nav > li > a {
   display: block;
