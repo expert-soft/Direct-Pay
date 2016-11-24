@@ -167,6 +167,8 @@ chrome.exchange.node.lastblock=Last block
 chrome.exchange.node.peers=Peers
 chrome.exchange.node.listnodes=Peers list:
 
+directpay.terminology.applicationname=Direct Pay
+directpay.terminology.companyname=DirectPay International
 directpay.navigation.converttocrypto.title=Convert to crypto
 directpay.navigation.sendfunds.title=Send Funds
 directpay.navigation.receivefunds.title=Receive Funds
@@ -176,7 +178,7 @@ directpay.navigation.automation.title=Automatic Orders
 directpay.navigation.twofactorsecurity.title=2FA Security
 directpay.navigation.support.title=Support
 directpay.navigation.contact.title=Contact
-directpay.navigation.terms.title=Terms and Contract
+directpay.navigation.terms.title=Terms & Contract
 directpay.navigation.admin.adminpanel.title=Admin Panel
 directpay.navigation.admin.management.title=Management
 directpay.navigation.admin.users.title=List of Users

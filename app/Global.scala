@@ -31,15 +31,28 @@ package object globals {
       delete from users_address_info;
       delete from users;
 
-      select currency_insert('BRL',1);
+      select currency_insert('Real',1);
+      select currency_insert('BRL-crypto',1);
+      select currency_insert('Euro',1);
+      select currency_insert('crypto-EUR',1);
+      select currency_insert('US dollar',1);
+      select currency_insert('US-eletron',1);
 
       insert into users(id, email) values (0, '');
       insert into balances (user_id, currency) select 0, currency from currencies;
       select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en');
       select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en');
+      select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
+      select create_user('test@gmail.com', 'pass02', true, null, 'en');
+      select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
+      select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
+
       insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Marcelo', 'Boczko', '', 'Mr.' from users where email='mboczko@yahoo.com'
       insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Yura', 'Mitrofanov', '', 'Mr.' from users where email='a2terminator@mail.ru'
-
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Test-Surname', 'Tes-middle', 'Mr.' from users where email='test@hotmail.ru'
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Sur', '', 'Ms.' from users where email='test@gmail.com'
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestBR', 'sobrenome', '', 'Mr.' from users where email='test@yahoo.com.br'
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestRU', 'skovsky', '', 'Mr.' from users where email='testru@gmail.ru'
       commit;
       """.execute()
       })

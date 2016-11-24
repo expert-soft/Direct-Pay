@@ -16,13 +16,12 @@
             <title>@title - @play.api.Play.current.configuration.getString("application.name")</title>
         }
 
-        <!-- bootstrap 3.0.2 -->
-        <link href="@routes.Assets.at("css/bootstrap.css")" rel="stylesheet" type="text/css" />
-        <!-- Bootstrap theme -->
-        <link href="@routes.Assets.at("css/bootstrap-theme.css")" rel="stylesheet" type="text/css" />
-
-        <!-- non-theme styles -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/main.css")">
+        <!-- Bootstrap -->
+        <link href="@routes.Assets.at("css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+        <!-- Font Awesome -->
+        <link href="@routes.Assets.at("css/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+        <!-- Custom Theme Style -->
+        <link href="@routes.Assets.at("css/custom.css")" rel="stylesheet" type="text/css" />
 
         @styles
 
@@ -33,7 +32,7 @@
           <script src="@routes.Assets.at("js/vendor/respond.min.js")"></script>
         <![endif]-->
     </head>
-    <body role="document">
+    <body class="nav-md">
 
         @content
 
@@ -44,6 +43,8 @@
         <script src="@routes.Assets.at("js/common.js")"></script>
         <script src="@routes.Assets.at("js/api1.js")"></script>
         <script type="text/javascript" src="@routes.Application.jsMessages()"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="@routes.Assets.at("js/vendor/custom.min.js")"></script>
         @scripts
     </body>
 </html>

@@ -1,6 +1,7 @@
 @(title: String, icon: String= "", scripts: Html = Html(""), styles: Html = Html(""))(content: Html)(implicit request: RequestHeader, messages: Messages)
 @import securesocial.core.UsernamePasswordProvider
 @import play.api.Play.current
+@import controllers.LangControll.GetLangFromCookies
 
 @navItem(url: String, icon: String, title:String) = {
 @if(request.path==url) {
@@ -44,6 +45,10 @@
 </li>
 }
 
+@getlang() = {
+@GetLangFromCookies(request.cookies)
+}
+
 @exchangeStyles = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/jquery.pnotify.default.css")">
 }
@@ -56,106 +61,122 @@
 
 @_global_chrome(title, Html(scripts + exchangeScripts.body), Html(styles + exchangeStyles.body)) {
 
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-exchange navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                    <!-- Sidebar toggle button-->
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a id="logo" href="@routes.Application.index()" class="navbar-brand">
-                    <span class="fa fa-rocket"></span>
-                    <span class="logo-text">@play.api.Play.current.configuration.getString("application.name")</span>
-                    <span style="display: none" class="logo-text-icon">@play.api.Play.current.configuration.getString("application.name")</span>
-                </a>
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><i class="fa fa-play"></i> <span> @Messages("directpay.terminology.applicationname")</span></a>
+                    </div>
+                    <div class="profile">
+                        <div class="profile_info">
+                            <span>connected to</span>
+                            <h2>Partner</h2>
+                        </div>
+                        <div class="profile_pic">
+                            <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                    </div>
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a href="@routes.Application.wallet().url"><i class="fa fa-money"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
+                                <li><a href="@routes.Application.user_settings().url"><i class="fa fa-question-circle-o"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
+                                <li><a href="@routes.Application.account().url"><i class="fa fa-key"></i> @Messages("directpay.navigation.twofactorsecurity.title") </a></li>
+                                <li><a href="@routes.Application.user_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.users.title") </a></li>
+                                <li><a href="@routes.Application.signup().url"><i class="fa fa-edit"></i> @Messages("_chrome.signup") </a></li>
+                                <li><a><i class="fa fa-usd"></i> @Messages("chrome.exchange.navigation.dashboard.title") <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html"><i class="fa fa-plus"></i> @Messages("chrome.exchange.navigation.deposit.label") </a></li>
+                                        <li><a href="index2.html"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
+                                        <li><a href="index3.html"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>
+                                        <li><a href="index.html"><i class="fa fa-download"></i> @Messages("directpay.navigation.receivefunds.title") </a></li>
+                                        <li><a href="index2.html"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title") </a></li>
+                                        <li><a href="index3.html"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label") </a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-edit"></i> @Messages("chrome.exchange.navigation.account.title") <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html"><i class="fa fa-user"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
+                                        <li><a href="index.html"><i class="fa fa-flash"></i> @Messages("directpay.navigation.automation.title") </a></li>
+                                        <li><a href="@routes.Application.history().url"><i class="fa fa-list"></i> @Messages("chrome.exchange.navigation.history.label") </a></li>
+                                        <li><a href="@routes.Application.account().url"><i class="fa fa-key"></i> @Messages("directpay.navigation.twofactorsecurity.title") </a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-info"></i> @Messages("directpay.navigation.support.title") <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html"><i class="fa fa-cubes"></i> @Messages("chrome.navigation.about.title") </a></li>
+                                        <li><a href="index.html"><i class="fa fa-question-circle"></i> @Messages("chrome.exchange.navigation.faq.title") </a></li>
+                                        <li><a href="index.html"><i class="fa fa-book"></i> @Messages("directpay.navigation.terms.title") </a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html"><i class="fa fa-globe"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
+                                        <li><a href="@routes.Application.user_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.users.title") </a></li>
+                                        <li><a href="index.html"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orders.title") </a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-flag"></i>  @Messages("terminology.language")<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @for(lang <- Lang.availables) {
+                                            @navItemLang("/chlang/".concat(lang.code.toString), routes.Assets.at("img/flags/")+lang.language.concat(".png"), Messages("chrome.language."++ lang.language.toString))
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
             </div>
-
-            <div class="navbar-collapse collapse">
-                <!-- exchange links -->
-                <ul class="nav navbar-nav">
-                    @navItem(routes.Application.wallet().url, "home", Messages("chrome.exchange.navigation.dashboard.title"))
-                    @navItem(routes.Application.user_settings().url, "floppy-disk", Messages("chrome.exchange.navigation.withdraw.label"))
-
-                    <li class="dropdown" id="Fundsfat-menu">
-                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="fundsdrop">
-                            @Messages("chrome.exchange.navigation.depositwithdraw.title")
-                            <span class="caret"></span>
-                        </a>
-                        <ul aria-labelledby="fundsdrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "plus-sign", Messages("chrome.exchange.navigation.deposit.label"))
-                            @navItem(routes.Application.account().url, "random", Messages("directpay.navigation.converttocrypto.title"))
-                            @navItem(routes.Application.account().url, "upload", Messages("directpay.navigation.sendfunds.title"))
-                            <li role="separator" class="divider"></li>
-                            @navItem(routes.Application.account().url, "download", Messages("directpay.navigation.receivefunds.title"))
-                            @navItem(routes.Application.account().url, "random", Messages("directpay.navigation.converttofiat.title"))
-                            @navItem(routes.Application.account().url, "minus-sign", Messages("chrome.exchange.navigation.withdraw.label"))
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive">
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                @for(lang <- Lang.availables) {
+                                    @navItemLang("/chlang/".concat(lang.code.toString), routes.Assets.at("img/flags/")+lang.language.concat(".png"), Messages("chrome.language."++ lang.language.toString))
+                                }
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-
-                    <li class="dropdown" id="Accountfat-menu">
-                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="accountdrop">
-                            @Messages("chrome.exchange.navigation.account.title")
-                            <span class="caret"></span>
-                        </a>
-                        <ul aria-labelledby="accountdrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "user", Messages("directpay.navigation.personalinfo.title"))
-                            @navItem(routes.Application.account().url, "flash", Messages("directpay.navigation.automation.title"))
-                            @navItem(routes.Application.history().url, "list", Messages("chrome.exchange.navigation.history.title"))
-                            @navItem(routes.Application.account().url, "screenshot", Messages("directpay.navigation.twofactorsecurity.title"))
-                        </ul>
-                    </li>
-
-                    <li class="dropdown" id="Supportfat-menu">
-                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="supportdrop">
-                            @Messages("directpay.navigation.support.title")
-                            <span class="caret"></span>
-                        </a>
-                        <ul aria-labelledby="supportdrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "star", Messages("chrome.exchange.navigation.about.title"))
-                            @navItem(routes.Application.account().url, "question-sign", Messages("chrome.exchange.navigation.faq.title"))
-                            @navItem(routes.Application.account().url, "earphone", Messages("directpay.navigation.contact.title"))
-                            @navItem(routes.Application.account().url, "book", Messages("directpay.navigation.terms.title"))
-                        </ul>
-                    </li>
-
-                    <li class="dropdown" id="Adminfat-menu">
-                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="admindrop">
-                            @Messages("directpay.navigation.admin.adminpanel.title")
-                            <span class="caret"></span>
-                        </a>
-                        <ul aria-labelledby="admindrop" class="dropdown-menu">
-                            @navItem(routes.Application.account().url, "eye-open", Messages("directpay.navigation.admin.management.title"))
-                            @navItem(routes.Application.user_list().url, "user", Messages("directpay.navigation.admin.users.title"))
-                            @navItem(routes.Application.account().url, "book", Messages("directpay.navigation.admin.orders.title"))
-                        </ul>
-                    </li>
-
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" id="fat-menu">
-                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="langdrop">
-                            @Messages("terminology.language")
-                            <span class="caret"></span>
-                        </a>
-                        <ul aria-labelledby="langdrop" class="dropdown-menu">
-                            @for(lang <- Lang.availables) {
-                                @navItemLang("/chlang/".concat(lang.code.toString), routes.Assets.at("img/flags/")+lang.language.concat(".png"), Messages("chrome.language."++ lang.language.toString))
-                            }
-                        </ul>
-                    </li>
-                    <li><a href="@controllers.routes.LoginPage.logout().absoluteURL(UsernamePasswordProvider.sslEnabled)">@Messages("chrome.logout")</a></li>
-                </ul>
+                    </nav>
+                </div>
             </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @content
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    @Messages("directpay.terminology.companyname")
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
         </div>
-    </nav>
 
-    <div class="container" role="main">
-        @content
     </div>
 }
 
