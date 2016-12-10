@@ -11,6 +11,7 @@ GET         /account                                   controllers.Application.a
 GET         /wallet                                    controllers.Application.wallet
 GET         /user_settings                             controllers.Application.user_settings
 GET         /user_list                                 controllers.Application.user_list
+GET         /orders_list                               controllers.Application.orders_list
 GET         /history                                   controllers.Application.history
 
 # Route for changing the language cookie
@@ -24,6 +25,9 @@ GET         /iapi/1                                     controllers.IAPI.APIv1.i
 GET         /iapi/1/balance                             controllers.IAPI.APIv1.balance
 GET         /iapi/1/user                                controllers.IAPI.APIv1.user
 GET         /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
+GET         /iapi/1/country                             controllers.IAPI.APIv1.country
+GET         /iapi/1/country_docs                        controllers.IAPI.APIv1.country_docs
+GET         /iapi/1/banks_list                          controllers.IAPI.APIv1.banks_list
 GET         /iapi/1/user_list                           controllers.IAPI.APIv1.user_list
 POST        /iapi/1/turnoff_tfa                         controllers.IAPI.APIv1.turnOffTFA
 POST        /iapi/1/turnon_tfa                          controllers.IAPI.APIv1.turnOnTFA

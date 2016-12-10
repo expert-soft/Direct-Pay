@@ -46,6 +46,61 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
+  def country() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from country"""().map(row => (
+      row[String]("country_code"),
+      row[String]("country_name"),
+      row[String]("country_local_name"),
+      row[String]("site_name"),
+      row[String]("site_url1"),
+      row[String]("site_url2"),
+      row[String]("language_name"),
+      row[String]("language_code"),
+      row[String]("currency_symbol"),
+      row[String]("currency_code"),
+      row[String]("currency_crypto"),
+      row[String]("currency_name"),
+      row[String]("currency_name_plural"),
+      row[BigDecimal]("currency_approximate_value"),
+      row[BigDecimal]("critical_value")
+    )).toList
+  }
+
+  def country_docs() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from country_docs"""().map(row => (
+      row[String]("doc1_name"),
+      row[Boolean]("doc1_required"),
+      row[Boolean]("doc1_ispicture"),
+      row[String]("doc1_format"),
+      row[String]("doc2_name"),
+      row[Boolean]("doc2_required"),
+      row[Boolean]("doc2_ispicture"),
+      row[String]("doc2_format"),
+      row[String]("doc3_name"),
+      row[Boolean]("doc3_required"),
+      row[Boolean]("doc3_ispicture"),
+      row[String]("doc3_format"),
+      row[String]("doc4_name"),
+      row[Boolean]("doc4_required"),
+      row[Boolean]("doc4_ispicture"),
+      row[String]("doc4_format"),
+      row[String]("doc5_name"),
+      row[Boolean]("doc5_required"),
+      row[Boolean]("doc5_ispicture"),
+      row[String]("doc5_format")
+
+    )).toList
+  }
+
+  def BanksList() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from banks()"""().map(row => (
+      row[String]("country_code"),
+      row[String]("bank_code"),
+      row[String]("bank_name")
+
+    )).toList
+  }
+
   def UserList() = DB.withConnection(db) { implicit c =>
     SQL"""select * from get_user_list()"""().map(row => (
       row[Long]("id"),
