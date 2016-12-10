@@ -10,9 +10,12 @@ GET         /messages.js                               controllers.Application.j
 GET         /account                                   controllers.Application.account
 GET         /wallet                                    controllers.Application.wallet
 GET         /user_settings                             controllers.Application.user_settings
+GET         /history                                   controllers.Application.history
+
+# Administrator's pages
 GET         /user_list                                 controllers.Application.user_list
 GET         /orders_list                               controllers.Application.orders_list
-GET         /history                                   controllers.Application.history
+
 
 # Route for changing the language cookie
 GET         /chlang/:lang                              controllers.Application.chlang(lang)

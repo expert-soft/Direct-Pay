@@ -196,6 +196,17 @@ create table banks (
 --     appearance_color4 varchar(32),
 --     appearance_color5 varchar(32),
 
+create table orders (
+    order_id bigint not null,
+    user_id bigint not null,
+    country_id int not null,
+    user_email varchar(256) not null,
+    type varchar(4) not null,
+    creation int not null, -- timestamp(3) not null,
+    primary key (order_id)
+);
+
+
 # --- !Downs
 drop table if exists balances cascade;
 drop table if exists currencies cascade;
@@ -203,6 +214,7 @@ drop table if exists tokens cascade;
 drop table if exists country cascade;
 drop table if exists country_docs cascade;
 drop table if exists banks cascade;
+drop table if exists orders cascade;
 drop table if exists users cascade;
 drop table if exists users_name_info cascade;
 drop table if exists users_address_info cascade;

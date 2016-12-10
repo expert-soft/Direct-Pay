@@ -189,6 +189,7 @@ directpay.navigation.admin.userslist.title=List of Users
 directpay.navigation.admin.orderslist.title=List of Orders
 
 directpay.admin.orderslist.openorders.title=Open Orders
+directpay.admin.orderslist.ordersfromsearch.title=Result from search:
 
 directpay.usersettings.browsebutton=Browse
 directpay.usersettings.selectpictureofdocument=Select picture of the document

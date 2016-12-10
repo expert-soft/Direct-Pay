@@ -101,6 +101,18 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
+  def OrderList() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from orders()"""().map(row => (
+      row[Long]("order_id"),
+      row[Long]("user_id"),
+      row[Long]("country_id"),
+      row[String]("user_email"),
+      row[String]("type"),
+      row[Long]("creation")
+
+    )).toList
+  }
+
   def UserList() = DB.withConnection(db) { implicit c =>
     SQL"""select * from get_user_list()"""().map(row => (
       row[Long]("id"),
