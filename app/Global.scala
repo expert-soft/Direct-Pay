@@ -73,6 +73,7 @@ package object globals {
       insert into orders (order_id, user_id, country_id, user_email, type, creation) select 1, 852, 55, 'mboczko@yahoo.com', 'RFW', 1;
       insert into orders (order_id, user_id, country_id, user_email, type, creation) select 2, 852, 55, 'mboczko@yahoo.com', 'D', 2;
       insert into orders (order_id, user_id, country_id, user_email, type, creation) select 3, 881, 1, 'test@gmail.com', 'W', 3;
+      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 4, 881, 1, 'test@gmail.com', 'D', 5;
 
       commit;
       """.execute()

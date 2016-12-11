@@ -142,8 +142,6 @@ $(function(){
             $('#user-reg-two').html(user_reg_template_two(reg_info));
         });
 
-
-
         API.banks_list().success(function(data){
             banks_info = data[0];
 
