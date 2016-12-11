@@ -24,69 +24,17 @@
             </div>
         </div>
     </div>
-    <script id="user-info-template" type="text/x-handlebars-template">
-        <div class="form-group">
 
-            <span class="label label-default">{{name}}</span>
-            <span class="label label-default">{{surname}}</span>
-            <span class="label label-default">{{middle_name}}</span>
-            <span class="label label-default">{{prefix}}</span>
-
-            <span class="label label-default">{{country_code}}</span>
-            <span class="label label-default">{{country_name}}</span>
-            <span class="label label-default">{{country_local_name}}</span>
-            <span class="label label-default">{{site_name}}</span>
-            <span class="label label-default">{{site_url1}}</span>
-            <span class="label label-default">{{site_url2}}</span>
-
-            <span class="label label-default">{{language_name}}</span>
-            <span class="label label-default">{{language_code}}</span>
-            <span class="label label-default">{{currency_symbol}}</span>
-            <span class="label label-default">{{currency_code}}</span>
-            <span class="label label-default">{{currency_crypto}}</span>
-            <span class="label label-default">{{currency_name}}</span>
-            <span class="label label-default">{{currency_name_plural}}</span>
-            <span class="label label-default">{{currency_approximate_value}}</span>
-            <span class="label label-default">{{critical_value}}</span>
-
-            <span class="label label-default">{{doc1_name}}</span>
-            <span class="label label-default">{{doc1_required}}</span>
-            <span class="label label-default">{{doc1_ispicture}}</span>
-            <span class="label label-default">{{doc1_format}}</span>
-            <span class="label label-default">{{doc2_name}}</span>
-            <span class="label label-default">{{doc2_required}}</span>
-            <span class="label label-default">{{doc2_ispicture}}</span>
-            <span class="label label-default">{{doc2_format}}</span>
-            <span class="label label-default">{{doc3_name}}</span>
-            <span class="label label-default">{{doc3_required}}</span>
-            <span class="label label-default">{{doc3_ispicture}}</span>
-            <span class="label label-default">{{doc3_format}}</span>
-            <span class="label label-default">{{doc4_name}}</span>
-            <span class="label label-default">{{doc4_required}}</span>
-            <span class="label label-default">{{doc4_ispicture}}</span>
-            <span class="label label-default">{{doc4_format}}</span>
-            <span class="label label-default">{{doc5_name}}</span>
-            <span class="label label-default">{{doc5_required}}</span>
-            <span class="label label-default">{{doc5_ispicture}}</span>
-            <span class="label label-default">{{doc5_format}}</span>
-
-
-
-
-        </div>
-    </script>
-
-        <!-- page content -->
-        <div class="">
-            <div class="page-title">
-                <div class="title_left">
-                    <h3>Registration Page</h3>
-                </div>
+    <!-- page content -->
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Registration Page</h3>
             </div>
-            <div class="clearfix"></div>
+        </div>
 
+        <div class="clearfix"></div>
             <div class="row">
-
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
@@ -109,11 +57,9 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                        <p id="user-reg"></p>
-                            <script id="user-reg-template" type="text/x-handlebars-template">
-                                <!-- Beginning of the form -->
-                             <h2>Form Wizard</h2>
-                                <!-- Tabs -->
+                            <!-- Beginning of the form -->
+                            <h2>Form Wizard</h2>
+                            <!-- Tabs -->
                             <div id="wizard_verticle" class="form_wizard wizard_verticle">
                                 <ul class="list-unstyled wizard_steps">
                                     <li>
@@ -132,16 +78,12 @@
                                         </a>
                                     </li>
                                 </ul>
-
-                                    <!-- step 1 - Account Info -->
+                                <!-- step 1 - Account Info -->
                                 <div id="step-1">
                                     <form class="form-horizontal form-label-left">
                                         <span class="section">@Messages("directpay.usersettings.step1.title")</span>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3" for="name">@Messages("directpay.usersettings.fullname.item") <span class="required">*</span></label>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="first-name" name="first-name" value="{{name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="mid-name" name="mid-name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="last-name" name="last-name" value="{{surname}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+                                            <p id="user-reg-one"></p>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3" for="email">@Messages("directpay.usersettings.email.item") <span class="required">*</span></label>
@@ -159,7 +101,7 @@
                                         <p>@Messages("directpay.usersettings.step1.explanation1")</p>
                                     </form>
                                 </div>
-                                    <!-- step 2 - Personal Info -->
+                                <!-- step 2 - Personal Info -->
                                 <div id="step-2">
                                     <form class="form-horizontal form-label-left">
                                         <span class="section">@Messages("directpay.usersettings.step2.title")</span>
@@ -167,122 +109,18 @@
                                             <label class="control-label col-md-3 col-sm-3" for="country">@Messages("directpay.usersettings.country.item")</label>
                                             <div class="col-md-3 col-sm-3 col-xs-3"><input type="text" id="country" name="country" title="@Messages("directpay.usersettings.country.title")"  disabled="disabled" value="{{country_name}}" class="form-control col-md-7 col-xs-12"></div>
                                         </div>
-
-                            {{#if doc1_required}}
-                                {{#if doc1_ispicture}}
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="doc1">{{doc1_name}} <span class="required">*</span></label>
-                                            <div class="col-sm-6">
-                                                <div class="input-group"><input type="text" class="form-control" id="doc1" name="doc1" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                {{else}}
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3" for="doc1">{{doc1_name}} <span class="required">*</span></label>
-                                            <div class="col-md-5 col-sm-5"><input type="text" id="doc1" name="doc1" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
-                                        </div>
-                                {{/if}}
-                            {{/if}}
-
-                            {{#if doc2_required}}
-                                {{#if doc2_ispicture}}
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="doc2">{{doc2_name}} <span class="required">*</span></label>
-                                            <div class="col-sm-6">
-                                                <div class="input-group"><input type="text" class="form-control" id="doc2" name="doc2" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                {{else}}
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3" for="doc2">{{doc2_name}} <span class="required">*</span></label>
-                                            <div class="col-md-5 col-sm-5"><input type="text" id="doc2" name="doc2" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc2_format}}'"></div>
-                                        </div>
-                                {{/if}}
-                            {{/if}}
-                            {{#if doc3_required}}
-                                {{#if doc3_ispicture}}
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="doc3">{{doc3_name}} <span class="required">*</span></label>
-                                            <div class="col-sm-6">
-                                                <div class="input-group"><input type="text" class="form-control" id="doc3" name="doc3" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                {{else}}
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3" for="doc3">{{doc3_name}} <span class="required">*</span></label>
-                                            <div class="col-md-5 col-sm-5"><input type="text" id="doc3" name="doc3" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc3_format}}'"></div>
-                                        </div>
-                                {{/if}}
-                            {{/if}}
-                            {{#if doc4_required}}
-                                {{#if doc4_ispicture}}
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="doc4">{{doc4_name}} <span class="required">*</span></label>
-                                            <div class="col-sm-6">
-                                                <div class="input-group"><input type="text" class="form-control" id="doc4" name="doc4" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                {{else}}
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3" for="doc4">{{doc4_name}} <span class="required">*</span></label>
-                                            <div class="col-md-5 col-sm-5"><input type="text" id="doc4" name="doc4" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc4_format}}'"></div>
-                                        </div>
-                                {{/if}}
-                            {{/if}}
-                            {{#if doc5_required}}
-                                {{#if doc5_ispicture}}
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="doc5">{{doc5_name}} <span class="required">*</span></label>
-                                            <div class="col-sm-6">
-                                                <div class="input-group"><input type="text" class="form-control" id="doc5" name="doc5" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                {{else}}
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3" for="doc5">{{doc5_name}} <span class="required">*</span></label>
-                                            <div class="col-md-5 col-sm-5"><input type="text" id="doc5" name="doc5" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc5_format}}'"></div>
-                                        </div>
-                                {{/if}}
-                            {{/if}}
-                                        <div class="divider-dashed"></div>
-                                        <p>@Messages("directpay.usersettings.step2.explanation1")</p>
-                                        <p>@Messages("directpay.usersettings.step2.explanation2")</p>
+                                        <p id="user-reg-two"></p>
                                     </form>
                                 </div>
-                                    <!-- step 3 - Financial Connections -->
+                                <!-- step 3 - Financial Connections -->
                                 <div id="step-3">
                                     <form class="form-horizontal form-label-left">
                                         <span class="section">@Messages("directpay.usersettings.step3.title")</span>
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                                             <div class="col-md-4 col-sm-4 col-xs-12">
-                                                <select class="form-control" id="bank" title="@Messages("directpay.usersettings.bank.title")">
-                                                    <option value="000">@Messages("directpay.usersettings.notselected")</option>
-                                                    <option value="001 - Banco do Brasil">##001 - Banco do Brasil</option>
-                                                    <option value="029 - Banerj">029 - Banerj</option>
-                                                    <option value="033 - Santander">033 - Santander</option>
-                                                    <option value="104 - Caixa Econômica Federal">104 - Caixa Econômica Federal</option>
-                                                    <option value="237 - Bradesco">237 - Bradesco</option>
-                                                    <option value="318 - BMG">318 - BMG</option>
-                                                    <option value="341 - Itaú Unibanco">341 - Itaú Unibanco</option>
-                                                    <option value="366 - Société Générale">366 - Société Générale</option>
-                                                    <option value="399 - HSBC">399 - HSBC</option>
-                                                    <option value="422 - Safra">422 - Safra</option>
-                                                    <option value="487 - Deutsche Bank">487 - Deutsche Bank</option>
-                                                    <option value="505 - Credit Suisse">505 - Credit Suisse</option>
-                                                    <option value="600 - Luso Brasileiro">600 - Luso Brasileiro</option>
-                                                    <option value="623 - Panamericano">623 - Panamericano</option>
-                                                    <option value="745 - Citibank">745 - Citibank</option>
+                                                <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
+
                                                 </select>
                                             </div>
                                         </div>
@@ -317,15 +155,172 @@
                                     </form>
                                 </div>
                             </div>
-                            </script>
-                                <!-- End of form -->
-
-
+                            <!-- End of form -->
                         </div>
                     </div>
                 </div>
             </div>
+    </div>
+    <!-- /page content -->
+
+    <script id="user-reg-one-template" type="text/x-handlebars-template">
+        <label class="control-label col-md-3 col-sm-3" for="name">@Messages("directpay.usersettings.fullname.item") <span class="required">*</span></label>
+        <div class="col-md-3 col-sm-3"><input type="text" id="first-name" name="first-name" value="{{name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+        <div class="col-md-3 col-sm-3"><input type="text" id="mid-name" name="mid-name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
+        <div class="col-md-3 col-sm-3"><input type="text" id="last-name" name="last-name" value="{{surname}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+    </script>
+
+    <script id="user-reg-two-template" type="text/x-handlebars-template">
+    {{#if doc1_required}}
+    {{#if doc1_ispicture}}
+    <div class="form-group">
+    <label class="col-sm-3 control-label" for="doc1">{{doc1_name}} <span class="required">*</span></label>
+    <div class="col-sm-6">
+    <div class="input-group"><input type="text" class="form-control" id="doc1" name="doc1" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
+    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+    </div>
+    </div>
+    </div>
+    {{else}}
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3" for="doc1">{{doc1_name}} <span class="required">*</span></label>
+        <div class="col-md-5 col-sm-5"><input type="text" id="doc1" name="doc1" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+    </div>
+    {{/if}}
+    {{/if}}
+
+    {{#if doc2_required}}
+    {{#if doc2_ispicture}}
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="doc2">{{doc2_name}} <span class="required">*</span></label>
+        <div class="col-sm-6">
+            <div class="input-group"><input type="text" class="form-control" id="doc2" name="doc2" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
+                <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+            </div>
         </div>
-        <!-- /page content -->
+    </div>
+    {{else}}
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3" for="doc2">{{doc2_name}} <span class="required">*</span></label>
+        <div class="col-md-5 col-sm-5"><input type="text" id="doc2" name="doc2" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc2_format}}'"></div>
+    </div>
+    {{/if}}
+    {{/if}}
+    {{#if doc3_required}}
+    {{#if doc3_ispicture}}
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="doc3">{{doc3_name}} <span class="required">*</span></label>
+        <div class="col-sm-6">
+            <div class="input-group"><input type="text" class="form-control" id="doc3" name="doc3" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
+                <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3" for="doc3">{{doc3_name}} <span class="required">*</span></label>
+        <div class="col-md-5 col-sm-5"><input type="text" id="doc3" name="doc3" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc3_format}}'"></div>
+    </div>
+    {{/if}}
+    {{/if}}
+    {{#if doc4_required}}
+    {{#if doc4_ispicture}}
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="doc4">{{doc4_name}} <span class="required">*</span></label>
+        <div class="col-sm-6">
+            <div class="input-group"><input type="text" class="form-control" id="doc4" name="doc4" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
+                <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3" for="doc4">{{doc4_name}} <span class="required">*</span></label>
+        <div class="col-md-5 col-sm-5"><input type="text" id="doc4" name="doc4" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc4_format}}'"></div>
+    </div>
+    {{/if}}
+    {{/if}}
+    {{#if doc5_required}}
+    {{#if doc5_ispicture}}
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="doc5">{{doc5_name}} <span class="required">*</span></label>
+        <div class="col-sm-6">
+            <div class="input-group"><input type="text" class="form-control" id="doc5" name="doc5" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
+                <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3" for="doc5">{{doc5_name}} <span class="required">*</span></label>
+        <div class="col-md-5 col-sm-5"><input type="text" id="doc5" name="doc5" title="@Messages("directpay.usersettings.documentrequired.title")" required="required" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '{{doc5_format}}'"></div>
+    </div>
+    {{/if}}
+    {{/if}}
+    <div class="divider-dashed"></div>
+    <p>@Messages("directpay.usersettings.step2.explanation1")</p>
+    <p>@Messages("directpay.usersettings.step2.explanation2")</p>
+    </script>
+
+    <script id="user-info-template" type="text/x-handlebars-template">
+
+    <div class="form-group">
+
+    <span class="label label-default">{{name}}</span>
+    <span class="label label-default">{{surname}}</span>
+    <span class="label label-default">{{middle_name}}</span>
+    <span class="label label-default">{{prefix}}</span>
+
+    <span class="label label-default">{{country_code}}</span>
+    <span class="label label-default">{{country_name}}</span>
+    <span class="label label-default">{{country_local_name}}</span>
+    <span class="label label-default">{{site_name}}</span>
+    <span class="label label-default">{{site_url1}}</span>
+    <span class="label label-default">{{site_url2}}</span>
+
+    <span class="label label-default">{{language_name}}</span>
+    <span class="label label-default">{{language_code}}</span>
+    <span class="label label-default">{{currency_symbol}}</span>
+    <span class="label label-default">{{currency_code}}</span>
+    <span class="label label-default">{{currency_crypto}}</span>
+    <span class="label label-default">{{currency_name}}</span>
+    <span class="label label-default">{{currency_name_plural}}</span>
+    <span class="label label-default">{{currency_approximate_value}}</span>
+    <span class="label label-default">{{critical_value}}</span>
+
+    <span class="label label-default">{{doc1_name}}</span>
+    <span class="label label-default">{{doc1_required}}</span>
+    <span class="label label-default">{{doc1_ispicture}}</span>
+    <span class="label label-default">{{doc1_format}}</span>
+    <span class="label label-default">{{doc2_name}}</span>
+    <span class="label label-default">{{doc2_required}}</span>
+    <span class="label label-default">{{doc2_ispicture}}</span>
+    <span class="label label-default">{{doc2_format}}</span>
+    <span class="label label-default">{{doc3_name}}</span>
+    <span class="label label-default">{{doc3_required}}</span>
+    <span class="label label-default">{{doc3_ispicture}}</span>
+    <span class="label label-default">{{doc3_format}}</span>
+    <span class="label label-default">{{doc4_name}}</span>
+    <span class="label label-default">{{doc4_required}}</span>
+    <span class="label label-default">{{doc4_ispicture}}</span>
+    <span class="label label-default">{{doc4_format}}</span>
+    <span class="label label-default">{{doc5_name}}</span>
+    <span class="label label-default">{{doc5_required}}</span>
+    <span class="label label-default">{{doc5_ispicture}}</span>
+    <span class="label label-default">{{doc5_format}}</span>
+
+
+
+
+    </div>
+    </script>
+
+    <script id="banks-template" type="text/x-handlebars-template">
+        <select class="form-control" title="@Messages("directpay.usersettings.bank.title")">
+            {{#each .}}
+                <option value="{{bank_code}}">{{bank_code}}-{{bank_name}}</option>
+            {{/each}}
+        </select>
+    </script>
 
 }

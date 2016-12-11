@@ -187,9 +187,17 @@ directpay.navigation.admin.adminpanel.title=Admin Panel
 directpay.navigation.admin.management.title=Management
 directpay.navigation.admin.userslist.title=List of Users
 directpay.navigation.admin.orderslist.title=List of Orders
+directpay.navigation.actions.title=Actions Overview
 
 directpay.admin.orderslist.openorders.title=Open Orders
 directpay.admin.orderslist.ordersfromsearch.title=Result from search:
+directpay.admin.orderslist.orderID=Order ID
+directpay.admin.orderslist.doc=doc
+terminology.action=Action
+terminology.name=Name
+terminology.comment=Comment
+terminology.revision=Revision
+terminology.executed=Executed
 
 directpay.usersettings.browsebutton=Browse
 directpay.usersettings.selectpictureofdocument=Select picture of the document

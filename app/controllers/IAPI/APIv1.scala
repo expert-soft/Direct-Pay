@@ -84,7 +84,11 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "currency_name" -> c._12,
         "currency_name_plural" -> c._13,
         "currency_approximate_value" -> c._14.bigDecimal.toPlainString,
-        "critical_value" -> c._15.bigDecimal.toPlainString
+        "critical_value" -> c._15.bigDecimal.toPlainString,
+        "working_bank_1" -> c._16,
+        "working_bank_2" -> c._17,
+        "working_bank_3" -> c._18,
+        "working_bank_4" -> c._19
 
       /*
              "fee_global" -> c._16,

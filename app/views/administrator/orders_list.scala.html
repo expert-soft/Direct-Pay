@@ -21,6 +21,7 @@
         </div>
     </div>
 
+
 <script id="orders-info-template" type="text/x-handlebars-template">
     <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
     <table id="table_users" class="table table-striped responsive">
@@ -48,30 +49,30 @@
     </table>
 </script>
 
-</script>
 
 
+<hr>
 
 
     <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
     <table id="table_orders" class="table table-striped responsive">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>UserID</th>
-                <th>Name</th>
-                <th>CPF</th>
-                <th>Total</th>
-                <th>Bank</th>
-                <th>Agency</th>
-                <th>Account</th>
-                <th>Fee</th>
-                <th>Time Req.</th>
-                <th>Value</th>
-                <th>Comment</th>
-                <th>doc</th>
-                <th>App.</th>
+                <th>@Messages("directpay.admin.orderslist.orderID")</th>
+                <th>@Messages("terminology.type")</th>
+                <th>@Messages("terminology.email")</th>
+                <th>@Messages("terminology.name")</th>
+                <th>##Doc1</th>
+                <th>@Messages("directpay.usersettings.bank.item")</th>
+                <th>@Messages("directpay.usersettings.bankagency.item")</th>
+                <th>@Messages("directpay.usersettings.bankaccount.item")</th>
+                <th>@Messages("terminology.requested")</th>
+                <th>@Messages("terminology.fee")</th>
+                <th>@Messages("terminology.created")</th>
+                <th>@Messages("terminology.value")</th>
+                <th>@Messages("terminology.comment")</th>
+                <th>@Messages("directpay.admin.orderslist.doc")</th>
+                <th>@Messages("terminology.action")</th>
             </tr>
         </thead>
         <tbody>
@@ -81,14 +82,14 @@
                 <td><a href="#">cabreuATwere.csd</a></td>
                 <td>Carlos Henrique Abreu</td>
                 <td>321.787.433-24</td>
-                <td>1900.00</td>
                 <td>001</td>
                 <td></td>
                 <td></td>
+                <td>1900.00</td>
                 <td>0.00</td>
                 <td>03-aug 19:36:14</td>
-                <td><input name="value37" type="text" value="1900.00" style="width: 90px;"></td>
-                <td><input name="comment39" type="text"></td>
+                <td><input name="value40" type="text" value="1900.00" style="width: 90px;"></td>
+                <td><input name="comment40" type="text"></td>
                 <td><a href="./">upload</a></td>
                 <td><a href="./"><img src="./DirectSupportFiles/ok.gif" title="confirm order OK"></a> <a href="./"><img src="./DirectSupportFiles/reject.gif" title="reject order"></a></td>
             </tr>
@@ -105,7 +106,7 @@
                 <td></td>
                 <td>03-aug 19:25:00</td>
                 <td></td>
-                <td><input name="comment38" type="text"></td>
+                <td><input name="comment39" type="text"></td>
                 <td><a href="./">doc1</a></td>
                 <td><a href="./"><img src="./DirectSupportFiles/ok.gif" title="confirm order OK"></a> <a href="./"><img src="./DirectSupportFiles/reject.gif" title="reject order"></a></td>
             </tr>
@@ -115,14 +116,14 @@
                 <td><a href="#">erqwsqewqerATdsqwqef.csd</a></td>
                 <td>Ademar lourenco</td>
                 <td>555.988.090-78</td>
-                <td>700.00</td>
                 <td>001</td>
                 <td>2322-X</td>
                 <td>453210-7</td>
+                <td>700.00</td>
                 <td>10.06</td>
                 <td class="smallfail">03-aug 16:32:09</td>
-                <td><input name="value37" type="text" value="689.94" style="width: 90px;"></td>
-                <td><input name="comment37" type="text"></td>
+                <td><input name="value38" type="text" value="689.94" style="width: 90px;"></td>
+                <td><input name="comment38" type="text"></td>
                 <td><a href="./">upload</a></td>
                 <td><a href="./"><img src="./DirectSupportFiles/ok.gif" title="confirm order OK"></a> <a href="./"><img src="./DirectSupportFiles/reject.gif" title="reject order"></a></td>
             </tr>
@@ -134,17 +135,17 @@
     <table id="table_orders" class="table table-striped responsive">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>UserID</th>
-                <th>Total</th>
-                <th>Fee</th>
-                <th>Time Exec.</th>
-                <th>Value</th>
-                <th>Comment</th>
-                <th>doc</th>
-                <th>Revise</th>
+                <th>@Messages("directpay.admin.orderslist.orderID")</th>
+                <th>@Messages("terminology.type")</th>
+                <th>@Messages("terminology.status")</th>
+                <th>@Messages("terminology.email")</th>
+                <th>@Messages("terminology.requested")</th>
+                <th>@Messages("terminology.fee")</th>
+                <th>@Messages("terminology.executed")</th>
+                <th>@Messages("terminology.value")</th>
+                <th>@Messages("terminology.comment")</th>
+                <th>@Messages("directpay.admin.orderslist.doc")</th>
+                <th>@Messages("terminology.revision")</th>
             </tr>
         </thead>
         <tbody>

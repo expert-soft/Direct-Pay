@@ -138,6 +138,10 @@ create table country (
     currency_name_plural varchar(32) not null,
     currency_approximate_value numeric(23,8) default 0 not null,
     critical_value numeric(23,8) default 0 not null,
+    working_bank_1 varchar(128) not null,
+    working_bank_2 varchar(128),
+    working_bank_3 varchar(128),
+    working_bank_4 varchar(128),
     primary key (country_id)
 );
 

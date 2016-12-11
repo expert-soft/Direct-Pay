@@ -62,7 +62,11 @@ class EngineModel(val db: String = "default") {
       row[String]("currency_name"),
       row[String]("currency_name_plural"),
       row[BigDecimal]("currency_approximate_value"),
-      row[BigDecimal]("critical_value")
+      row[BigDecimal]("critical_value"),
+      row[String]("working_bank_1"),
+      row[String]("working_bank_2"),
+      row[String]("working_bank_3"),
+      row[String]("working_bank_4")
     )).toList
   }
 
@@ -93,7 +97,7 @@ class EngineModel(val db: String = "default") {
   }
 
   def BanksList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from banks()"""().map(row => (
+    SQL"""select * from banks"""().map(row => (
       row[String]("country_code"),
       row[String]("bank_code"),
       row[String]("bank_name")
@@ -102,7 +106,7 @@ class EngineModel(val db: String = "default") {
   }
 
   def OrderList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from orders()"""().map(row => (
+    SQL"""select * from orders"""().map(row => (
       row[Long]("order_id"),
       row[Long]("user_id"),
       row[Long]("country_id"),
