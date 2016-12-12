@@ -1,8 +1,6 @@
 $(function(){
 
     var user_info_template = Handlebars.compile($("#user-info-template").html());
-    var user_reg_template_one = Handlebars.compile($("#user-reg-one-template").html());
-    var user_reg_template_two = Handlebars.compile($("#user-reg-two-template").html());
     var banks_template = Handlebars.compile($("#banks-template").html());
 
     function reload(){
@@ -85,14 +83,19 @@ $(function(){
      function reload_reg(){
 
         API.user_name_info().success(function(data){
+            var user_reg_template_one = Handlebars.compile($("#user-reg-one-template").html());
             reg_info = data[0];
             reg_info.name = data[0].name;
             reg_info.surname = data[0].surname;
             reg_info.middle_name = data[0].middle_name;
             reg_info.prefix = data[0].prefix;
+            $('#user-reg-one').html(user_reg_template_one(reg_info));
+        });
 
-            API.country().success(function(data){
-
+        API.country().success(function(data){
+                var user_reg_template_two = Handlebars.compile($("#user-reg-two-template").html());
+                var user_reg_template_three = Handlebars.compile($("#user-reg-three-template").html());
+                reg_info = data[0];
                 reg_info.country_code = data[0].country_code;
                 reg_info.country_name = data[0].country_name;
                 reg_info.country_local_name = data[0].country_local_name;
@@ -112,9 +115,11 @@ $(function(){
                 reg_info.working_bank_2 = data[0].working_bank_2;
                 reg_info.working_bank_3 = data[0].working_bank_3;
                 reg_info.working_bank_4 = data[0].working_bank_4;
-
-                API.country_docs().success(function(data){
-
+                $('#user-reg-two').html(user_reg_template_two(reg_info));
+                $('#user-reg-three').html(user_reg_template_three(reg_info));
+        });
+         API.country_docs().success(function(data){
+                var user_reg_template_two = Handlebars.compile($("#user-reg-two-template").html());
                 reg_info.doc1_name = data[0].doc1_name;
                 reg_info.doc1_required = data[0].doc1_required;
                 reg_info.doc1_ispicture = data[0].doc1_ispicture;
@@ -135,12 +140,9 @@ $(function(){
                 reg_info.doc5_required = data[0].doc5_required;
                 reg_info.doc5_ispicture = data[0].doc5_ispicture;
                 reg_info.doc5_format = data[0].doc5_format;
-            });
+                $('#user-reg-two').html(user_reg_template_two(reg_info));
             });
 
-            $('#user-reg-one').html(user_reg_template_one(reg_info));
-            $('#user-reg-two').html(user_reg_template_two(reg_info));
-        });
 
         API.banks_list().success(function(data){
             banks_info = data[0];

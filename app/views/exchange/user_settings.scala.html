@@ -107,7 +107,7 @@
                                         <span class="section">@Messages("directpay.usersettings.step2.title")</span>
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3" for="country">@Messages("directpay.usersettings.country.item")</label>
-                                            <div class="col-md-3 col-sm-3 col-xs-3"><input type="text" id="country" name="country" title="@Messages("directpay.usersettings.country.title")"  disabled="disabled" value="{{country_name}}" class="form-control col-md-7 col-xs-12"></div>
+                                            <p id="user-reg-three"></p>
                                         </div>
                                         <p id="user-reg-two"></p>
                                     </form>
@@ -168,6 +168,10 @@
         <div class="col-md-3 col-sm-3"><input type="text" id="first-name" name="first-name" value="{{name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
         <div class="col-md-3 col-sm-3"><input type="text" id="mid-name" name="mid-name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
         <div class="col-md-3 col-sm-3"><input type="text" id="last-name" name="last-name" value="{{surname}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+    </script>
+
+    <script id="user-reg-three-template" type="text/x-handlebars-template">
+        <div class="col-md-3 col-sm-3 col-xs-3"><input type="text" id="country" name="country" title="@Messages("directpay.usersettings.country.title")"  disabled="disabled" value="{{country_name}}" class="form-control col-md-7 col-xs-12"></div>
     </script>
 
     <script id="user-reg-two-template" type="text/x-handlebars-template">
