@@ -1,0 +1,351 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import securesocial.core.UsernamePasswordProvider
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
+
+@scripts = {
+    <script src="@routes.Assets.at("../../../../public/js/orders_list.js")"></script>
+}
+
+@exchange._chrome(Messages("directpay.admin.orderslist.openorders.title"), "order", scripts) {
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
+                <div class="panel-body">
+                    <p id="order-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script id="orders-info-template" type="text/x-handlebars-template">
+    <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
+    <table id="table_users" class="table table-striped responsive">
+        <thead>
+            <tr>
+                <th width="25%">@Messages("form.first_name")</th>
+                <th width="25%">@Messages("form.first_name")</th>
+                <th width="25%">@Messages("form.last_name")</th>
+                <th width="20%">@Messages("form.middle_name")</th>
+                <th width="30%">@Messages("form.first_name")</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#each this}}
+        <tr id="{{order_id}}">
+                <td width="20%">{{order_id}}</td>
+                <td width="20%">{{user_id}}</td>
+                <td width="20%">{{country_id}}</td>
+                <td width="20%">{{user_email}}</td>
+                <td width="20%">{{type}}</td>
+                <td width="20%">{{creation}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+
+
+
+<hr>
+
+
+    <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
+    <table id="table_orders" class="table table-striped responsive">
+        <thead>
+            <tr>
+                <th>@Messages("directpay.admin.orderslist.orderID")</th>
+                <th>@Messages("terminology.type")</th>
+                <th>@Messages("terminology.email")</th>
+                <th>@Messages("terminology.name")</th>
+                <th>##Doc1</th>
+                <th>@Messages("directpay.usersettings.bank.item")</th>
+                <th>@Messages("directpay.usersettings.bankagency.item")</th>
+                <th>@Messages("directpay.usersettings.bankaccount.item")</th>
+                <th>@Messages("terminology.requested")</th>
+                <th>@Messages("terminology.fee")</th>
+                <th>@Messages("terminology.created")</th>
+                <th>@Messages("terminology.value")</th>
+                <th>@Messages("terminology.comment")</th>
+                <th>@Messages("directpay.admin.orderslist.doc")</th>
+                <th>@Messages("terminology.action")</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>40</td>
+                <td class="bgn_green">DCS</td>
+                <td><a href="#">cabreuATwere.csd</a></td>
+                <td>Carlos Henrique Abreu</td>
+                <td>321.787.433-24</td>
+                <td>001</td>
+                <td></td>
+                <td></td>
+                <td>1900.00</td>
+                <td>0.00</td>
+                <td>03-aug 19:36:14</td>
+                <td><input name="value40" type="text" value="1900.00" style="width: 90px;"></td>
+                <td><input name="comment40" type="text"></td>
+                <td><a href="./">upload</a></td>
+                <td><a href="./"><img src="./DirectSupportFiles/ok.gif" title="confirm order OK"></a> <a href="./"><img src="./DirectSupportFiles/reject.gif" title="reject order"></a></td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td class="bgn_blue">V</td>
+                <td><a href="#">jjjjjjjjATrte.csd</a></td>
+                <td>Julio Castanheira</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>03-aug 19:25:00</td>
+                <td></td>
+                <td><input name="comment39" type="text"></td>
+                <td><a href="./">doc1</a></td>
+                <td><a href="./"><img src="./DirectSupportFiles/ok.gif" title="confirm order OK"></a> <a href="./"><img src="./DirectSupportFiles/reject.gif" title="reject order"></a></td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td class="bgn_yellow">W</td>
+                <td><a href="#">erqwsqewqerATdsqwqef.csd</a></td>
+                <td>Ademar lourenco</td>
+                <td>555.988.090-78</td>
+                <td>001</td>
+                <td>2322-X</td>
+                <td>453210-7</td>
+                <td>700.00</td>
+                <td>10.06</td>
+                <td class="smallfail">03-aug 16:32:09</td>
+                <td><input name="value38" type="text" value="689.94" style="width: 90px;"></td>
+                <td><input name="comment38" type="text"></td>
+                <td><a href="./">upload</a></td>
+                <td><a href="./"><img src="./DirectSupportFiles/ok.gif" title="confirm order OK"></a> <a href="./"><img src="./DirectSupportFiles/reject.gif" title="reject order"></a></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
+    <table id="table_orders" class="table table-striped responsive">
+        <thead>
+            <tr>
+                <th>@Messages("directpay.admin.orderslist.orderID")</th>
+                <th>@Messages("terminology.type")</th>
+                <th>@Messages("terminology.status")</th>
+                <th>@Messages("terminology.email")</th>
+                <th>@Messages("terminology.requested")</th>
+                <th>@Messages("terminology.fee")</th>
+                <th>@Messages("terminology.executed")</th>
+                <th>@Messages("terminology.value")</th>
+                <th>@Messages("terminology.comment")</th>
+                <th>@Messages("directpay.admin.orderslist.doc")</th>
+                <th>@Messages("terminology.revision")</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>40</td>
+                <td class="bgn_green">DCS</td>
+                <td class="bgn_brown">open</td>
+                <td><a href="#">cabreuATwere.csd</a></td>
+                <td>1900.00</td>
+                <td>0.00</td>
+                <td>00:16:09 old</td>
+                <td>1900.00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td class="bgn_blue">V</td>
+                <td class="bgn_brown">open</td>
+                <td><a href="#">jjjjjjjjATrte.csd</a></td>
+                <td></td>
+                <td></td>
+                <td>01:24:59 old</td>
+                <td></td>
+                <td></td>
+                <td><a href="">doc1</a></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td class="bgn_yellow">W</td>
+                <td class="bgn_brown">open</td>
+                <td><a href="#">erqwsqewqerAtdsqwqef.csd</a></td>
+                <td>700.00</td>
+                <td>10.06</td>
+                <td class="smallfail">05:43:02 too old</td>
+                <td>689.94</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td class="bgn_green">D</td>
+                <td class="bgn_yellow">changed</td>
+                <td><a href="#">rtttATgmail.com</a></td>
+                <td class="bigfail">470.00</td>
+                <td>0.00</td>
+                <td>03-aug-2016 07:56:01</td>
+                <td>460.00</td>
+                <td>value declared wrong. bank confirmed 460</td>
+                <td><a href="">doc</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td class="bgn_green">D</td>
+                <td>OK</td>
+                <td><a href="#">asoaresAThotmail.com</a></td>
+                <td>17500.00</td>
+                <td>0.00</td>
+                <td>03-aug-2016 07:29:00</td>
+                <td class="important">17500.00</td>
+                <td>Deposit confirmed 03-aug</td>
+                <td><a href="">doc1</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td class="bgn_green">D</td>
+                <td class="bgn_red">Reject</td>
+                <td><a href="#">rtttATgmail.com</a></td>
+                <td>270.00</td>
+                <td>0.00</td>
+                <td>03-aug-2016 07:14:04</td>
+                <td>0.00</td>
+                <td>doc not ok, bank not ok</td>
+                <td><a href="">doc</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td class="bgn_brown">R</td>
+                <td>OK</td>
+                <td><a href="#">wewwewAThotmail.com</a></td>
+                <td>623.05</td>
+                <td>0.00</td>
+                <td>02-aug-2016 22:20:40</td>
+                <td>623.05</td>
+                <td>key1 = 7TyjAikU0</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td class="bgn_yellow">W</td>
+                <td class="bgn_red">Reject</td>
+                <td><a href="#">yyyATgmail.com</a></td>
+                <td>340.00</td>
+                <td>8.84</td>
+                <td>02-aug-2016 22:11:15</td>
+                <td>0.00</td>
+                <td>Rejected. Missing documentation</td>
+                <td></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td class="bgn_yellow">RFW</td>
+                <td>OK</td>
+                <td><a href="#">trrrteAThotmail.com</a></td>
+                <td>500.00</td>
+                <td>9.00</td>
+                <td>02-aug-2016 15:29:48</td>
+                <td>491.00</td>
+                <td>With executed from BB / key1 = 9rTg43DcX0</td>
+                <td><a href="">doc</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td class="bgn_green">DCS</td>
+                <td>OK</td>
+                <td><a href="#">asoaresAThotmail.com</a></td>
+                <td>1290.00</td>
+                <td>0.00</td>
+                <td>02-aug-2016 14:13:43</td>
+                <td>1290.00</td>
+                <td>OK 02-aug / key1 = 9oI88KlplP0</td>
+                <td><a href="">doc</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td class="bgn_blue">V</td>
+                <td>OK</td>
+                <td><a href="#">errereATrte.csd</a></td>
+                <td></td>
+                <td></td>
+                <td>01-aug-2016 17:58:21</td>
+                <td></td>
+                <td>DOC OK comp. res.</td>
+                <td><a href="">doc2</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>F</td>
+                <td>OK</td>
+                <td><a href="#">erqwsqewqerATdsqwqef.csd</a></td>
+                <td>560.00</td>
+                <td>0.56</td>
+                <td>01-aug-2016 05:19:07</td>
+                <td>559.44</td>
+                <td>against coin issuer 0.99900</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td class="bgn_brown">S</td>
+                <td>OK</td>
+                <td><a href="#">erqwsqewqerATsqwqef.csd</a></td>
+                <td>2320.00</td>
+                <td>0.00</td>
+                <td>01-aug-2016 00:49:32</td>
+                <td>2320.00</td>
+                <td>key1=fgtR4ed9E</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td>C</td>
+                <td>OK</td>
+                <td><a href="#">erqwsqewqerATdsqwqef.csd</a></td>
+                <td>2320.00</td>
+                <td>0.00</td>
+                <td>01-aug-2016 00:48:17</td>
+                <td>2320.00</td>
+                <td>against coin issuer 1.00000</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td class="bgn_green">D</td>
+                <td>OK</td>
+                <td><a href="#">erqwsqewqerATdsqwqef.csd</a></td>
+                <td>2320.00</td>
+                <td>0.00</td>
+                <td>01-aug-2016 00:12:07</td>
+                <td>2320.00</td>
+                <td>OK at 30-jul</td>
+                <td><a href="">doc1</a></td>
+                <td><a href=""><img src="./DirectSupportFiles/text-revise.gif" title="Revise order"></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+}

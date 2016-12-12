@@ -30,16 +30,21 @@ package object globals {
       delete from users_name_info;
       delete from users_address_info;
       delete from users;
+      delete from country;
+      delete from country_docs;
+      delete from banks;
+      delete from orders;
 
-      select currency_insert('Real',1);
-      select currency_insert('BRL-crypto',1);
-      select currency_insert('Euro',1);
-      select currency_insert('crypto-EUR',1);
-      select currency_insert('US dollar',1);
-      select currency_insert('US-eletron',1);
+      select currency_insert('BRL',1);
+      select currency_insert('BRLc',2);
+      select currency_insert('EUR',3);
+      select currency_insert('EURc',4);
+      select currency_insert('USD',5);
+      select currency_insert('USDc',6);
 
       insert into users(id, email) values (0, '');
       insert into balances (user_id, currency) select 0, currency from currencies;
+
       select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en');
       select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en');
       select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
@@ -47,17 +52,38 @@ package object globals {
       select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
       select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
 
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Marcelo', 'Boczko', '', 'Mr.' from users where email='mboczko@yahoo.com'
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Yura', 'Mitrofanov', '', 'Mr.' from users where email='a2terminator@mail.ru'
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Test-Surname', 'Tes-middle', 'Mr.' from users where email='test@hotmail.ru'
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Sur', '', 'Ms.' from users where email='test@gmail.com'
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestBR', 'sobrenome', '', 'Mr.' from users where email='test@yahoo.com.br'
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestRU', 'skovsky', '', 'Mr.' from users where email='testru@gmail.ru'
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Marcelo', 'Boczko', 'Simao', 'Mr.' from users where email='mboczko@yahoo.com';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Yura', 'Mitrofanov', '', 'Mr.' from users where email='a2terminator@mail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Test-Surname', 'Tes-middle', 'Mr.' from users where email='test@hotmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Sur', '', 'Ms.' from users where email='test@gmail.com';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestBR', 'sobrenome', '', 'Mr.' from users where email='test@yahoo.com.br';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestRU', 'skovsk', '', 'Mr.' from users where email='testru@gmail.ru';
+
+      insert into country (country_id, country_code, country_name, country_local_name, site_name, site_url1, site_url2, language_name, language_code, currency_symbol, currency_code, currency_crypto, currency_name, currency_name_plural, currency_approximate_value, critical_value, working_bank_1, working_bank_2, working_bank_3, working_bank_4) select 1, 'us', 'United States', 'United States', 'Direct Pay', 'www.localsite.com', 'www.altsite.com', 'English', 'en', 'U&', 'USD', 'USD-cry', 'dollar', 'dollars', 1, 5000, 'Citibank account 54646', 'Bank of Boston, account 45342', '', '';
+      insert into country (country_id, country_code, country_name, country_local_name, site_name, site_url1, site_url2, language_name, language_code, currency_symbol, currency_code, currency_crypto, currency_name, currency_name_plural, currency_approximate_value, critical_value, working_bank_1, working_bank_2, working_bank_3, working_bank_4) select 55, 'br', 'Brazil', 'Brasil', 'Direct Pay', 'www.localsite.com.br', 'www.altsite.com.br', 'Portugues', 'pt', 'U&', 'BRL', 'BRL-cry', 'real', 'reais', 0.3, 5000, 'Itaú Unibanco, agência 7777-0, cc 9840-5 (Direct Trade ltd)', 'Banco do Brasil, agência 9999-0, cc 78876-9 (Direct Trade ltd)', 'Bradesco, agência 8888-0, cc 4321-9 (Alternative acount)', '';
+
+      insert into country_docs (country_id, doc1_name, doc1_required, doc1_ispicture, doc1_format, doc2_name, doc2_required, doc2_ispicture, doc2_format, doc3_name, doc3_required, doc3_ispicture, doc3_format, doc4_name, doc4_required, doc4_ispicture, doc4_format, doc5_name, doc5_required, doc5_ispicture, doc5_format) select 1, 'Social Security', true, false, '', 'ID / Passport', true, true, '', 'Address Prove', true, true, '', 'Phone', true, false, '(999) 99999-9999', 'doc5', false, false, '';
+      insert into country_docs (country_id, doc1_name, doc1_required, doc1_ispicture, doc1_format, doc2_name, doc2_required, doc2_ispicture, doc2_format, doc3_name, doc3_required, doc3_ispicture, doc3_format, doc4_name, doc4_required, doc4_ispicture, doc4_format, doc5_name, doc5_required, doc5_ispicture, doc5_format) select 55, 'CPF', true, false, '999.999.999-99', 'RG / Passaporte', true, true, '', 'Address Prove', true, true, '', 'Phone', true, false, '(99) 99999-9999', 'doc5', false, false, '';
+
+      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 1, 55, 'br', '001', 'Banco do Brasil';
+      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 2, 55, 'br', '237', 'Bradesco';
+      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 3, 1, 'us', 'BoA21', 'Bank of America';
+      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 4, 1, 'us', 'LB02', 'Lehmann Brothers';
+
+      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 1, 852, 55, 'mboczko@yahoo.com', 'RFW', 1;
+      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 2, 852, 55, 'mboczko@yahoo.com', 'D', 2;
+      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 3, 881, 1, 'test@gmail.com', 'W', 3;
+      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 4, 881, 1, 'test@gmail.com', 'D', 5;
+
       commit;
       """.execute()
+
+        // fee_global_owner, fee_local_owner, fee_global_deposit_percent, fee_local_deposit_percent, fee_local_deposit_nominal, fee_global_withdrawal_percent, fee_local_withdrawal_percent, fee_local_withdrawal_nominal, fee_global_send_percent, fee_local_send_percent, fee_global_tofiat_percent, fee_local_tofiat_percent, fee_local_doc_verification, appearance_pic1, appearance_pic2, appearance_color1, appearance_color2, appearance_color3, appearance_color4, appearance_color5
+        // 'a2terminator@mail.ru', 'mboczko@yahoo.com', 0, 0, 0, 0.1, 0.1, 8.5, 0, 0, 0.05, 0.05, 0, './img/logo_br1.png', './img/logo_br2.png', '#883399', '#883399', '#883399', '#883399', '#883399';
       })
     }
   } catch {
+
     // XXX: any kind of error in the SQL above will cause this cryptic exception:
     // org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
     case error: Throwable => Logger.error(error.toString)

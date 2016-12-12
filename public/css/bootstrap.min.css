@@ -182,6 +182,7 @@ optgroup {
 }
 
 table {
+    font-size: 11px;
     border-spacing: 0;
     border-collapse: collapse
 }
@@ -2725,15 +2726,18 @@ th {
 }
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-    padding: 4px 8px;
+    padding: 4px 6px;
     line-height: 1.42857143;
-    vertical-align: top;
+    vertical-align: middle;
     border-top: 1px solid #ddd
 }
 
 .table > thead > tr > th {
     vertical-align: bottom;
-    border-bottom: 2px solid #ddd
+    border-bottom: 2px solid #ddd;
+    background-color: #ccc;
+    color: black;
+    font-size: 12px
 }
 
 .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
@@ -2765,7 +2769,7 @@ th {
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #f9f9f9
+    background-color: #fff
 }
 
 .table-hover > tbody > tr:hover {
@@ -2827,6 +2831,41 @@ table td[class*=col-], table th[class*=col-] {
 .table-responsive {
     min-height: .01%;
     overflow-x: auto
+}
+
+.table > tbody > tr > td.bgn_red {
+    background-color: #fcc
+}
+
+.table > tbody > tr > td.bgn_blue {
+    background-color: #bbf
+}
+
+.table > tbody > tr > td.bgn_yellow {
+    background-color: #ffa
+}
+
+.table > tbody > tr > td.bgn_green {
+    background-color: #bfb
+}
+
+.table > tbody > tr > td.bgn_brown {
+    background-color: #fec
+}
+
+.table > tbody > tr > td.important {
+    color: #00e;
+    font-weight: bold;
+}
+
+.table > tbody > tr > td.smallfail {
+    color: #e00;
+}
+
+.table > tbody > tr > td.bigfail {
+    background-color: #fcc;
+    color: #e00;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 767px) {

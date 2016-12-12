@@ -821,3 +821,5 @@ drop function if exists delete_expired_totp_blacklist_tokens () cascade;
 drop function if exists new_log (bigint, text, varchar(256), text, text, inet, text) cascade;
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
 drop function if exists balance (bigint, text) cascade;
+drop function if exists get_user_name_info(bigint) cascade;
+drop function if exists get_user_list() cascade;
