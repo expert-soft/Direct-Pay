@@ -1,0 +1,128 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@scripts = {
+    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
+
+
+
+    <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")</h3>
+        </div>
+    </div>
+    <div class="normal-text">
+        <p>@Messages("directpay.deposit.explanation1"):</p>
+
+        <table id="table_working_banks" class="table table-striped responsive">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.bank")</th>
+                    <th>@Messages("terminology.agency")</th>
+                    <th>@Messages("terminology.account")</th>
+                    <th>@Messages("terminology.info")</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if(globals.country_working_bank1_name != "") {
+                <tr>
+                    <td>@globals.country_working_bank1_name</td>
+                    <td>@globals.country_working_bank1_agency</td>
+                    <td>@globals.country_working_bank1_account</td>
+                    <td>@globals.country_working_bank1_reference</td>
+                </tr>
+            }
+            @if(globals.country_working_bank2_name != "") {
+                <tr>
+                    <td>@globals.country_working_bank2_name</td>
+                    <td>@globals.country_working_bank2_agency</td>
+                    <td>@globals.country_working_bank2_account</td>
+                    <td>@globals.country_working_bank2_reference</td>
+                </tr>
+            }
+            @if(globals.country_working_bank3_name != "") {
+                <tr>
+                    <td>@globals.country_working_bank3_name</td>
+                    <td>@globals.country_working_bank3_agency</td>
+                    <td>@globals.country_working_bank3_account</td>
+                    <td>@globals.country_working_bank3_reference</td>
+                </tr>
+            }
+            @if(globals.country_working_bank4_name != "") {
+                <tr>
+                    <td>@globals.country_working_bank4_name</td>
+                    <td>@globals.country_working_bank4_agency</td>
+                    <td>@globals.country_working_bank4_account</td>
+                    <td>@globals.country_working_bank4_reference</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <br>
+    </div>
+
+
+
+
+        <!-- Start of form -->
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>@Messages("directpay.deposit.submitdepositreceipt")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3">
+                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("terminology.value")">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="doc1">@Messages("directpay.deposit.depositreceipt") <span class="required">*</span></label>
+                            <div class="col-sm-6">
+                                <div class="input-group"><input type="text" class="form-control" id="doc1" name="doc1" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
+                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+                                </div>
+                            </div>
+                        </div>
+                        <p>@Messages("directpay.deposit.explanation2")</p>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">@Messages("terminology.submit")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <!-- End of form -->
+
+
+
+
+
+
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.deposit.disclaimer1")</p>
+        <p>@Messages("directpay.deposit.disclaimer2")</p>
+    </div>
+    <div class="clearfix"></div>
+    <!-- /page content -->
+
+
+
+}

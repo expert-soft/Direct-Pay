@@ -1,0 +1,101 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@scripts = {
+    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
+
+
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-random"> &nbsp;</i> @Messages("terminology.convertto") @globals.country_currency_crypto</h3>
+        </div>
+    </div>
+    <div class="normal-text">
+        <p>@Messages("directpay.ccrypto.explanation1", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+        <p></p>
+    </div>
+
+
+    <div id="balance" class="panel panel-default">
+        <script id="balance-template" type="text/x-handlebars-template">
+            <div class="panel-heading">@Messages("terminology.balance")</div>
+            <table id="table_balance" class="table table-striped responsive">
+                <thead>
+                    <tr>
+                        <th width="25%">@Messages("terminology.currency")</th>
+                        <th width="25%">@Messages("terminology.total")</th>
+                        <th class="hidden-xs" width="20%">@Messages("terminology.hold")</th>
+                        <th width="30%">@Messages("terminology.available")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each this}}
+                    <tr id="currency={{currency}}">
+                        <td width="25%"><a class="show-menu" href="#" currency-id="{{currency}}"><img src="@routes.Assets.at("img/{{currency}}.png")" height="20px" width="20px"> {{currency}}</td>
+                        <td width="25%">{{amount}}</td>
+                        <td class="hidden-xs" width="20%">{{hold}}</td>
+                        <td width="30%">{{available}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </script>
+    </div>
+
+
+
+
+
+
+
+        <!-- Start of form -->
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2> @Messages("terminology.convertto") @globals.country_currency_crypto</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3">
+                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("directpay.ccrypto.valuetobeconverted")">
+                            </div>
+                        </div>
+                        <p>@Messages("directpay.ccrypto.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">@Messages("terminology.convert")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <!-- End of form -->
+
+
+
+
+
+
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.ccrypto.disclaimer1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+    </div>
+    <div class="clearfix"></div>
+        <!-- /page content -->
+
+}

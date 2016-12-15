@@ -437,7 +437,9 @@ body {
 .page-title {
   width: 100%;
   height: 65px;
-  padding: 10px 0; }
+  padding: 10px 0;
+  color: #467; /* before was no color */
+}
 
 .page-title .title_left {
   width: 45%;
@@ -456,10 +458,13 @@ body {
   margin: 10px 0; }
 
 .fixed_height_320 {
-  height: 320px; }
+    height: 320px; }
 
 .fixed_height_390 {
   height: 390px; }
+
+.fixed_height_250 {
+    height: 250px; }
 
 .fixed_height_200 {
   height: 200px; }
@@ -925,7 +930,9 @@ h2 {
 .x_title {
   border-bottom: 2px solid #E6E9ED;
   padding: 1px 5px 6px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  color: #467; /* before was no color */
+}
 
 .x_title .filter {
   width: 40%;
@@ -937,7 +944,9 @@ h2 {
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap; }
+  white-space: nowrap;
+  color: #467; /* before was no color */
+}
 
 .x_title h2 small {
   margin-left: 10px; }

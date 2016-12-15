@@ -121,85 +121,6 @@ create table balances (
     primary key (user_id, currency)
 );
 
-create table country (
-    country_id int not null,
-    country_code varchar(4) not null,
-    country_name varchar(32) not null,
-    country_local_name varchar(32),
-    site_name varchar(32) not null,
-    site_url1 varchar(128) not null,
-    site_url2 varchar(128),
-    language_name varchar(32) not null,
-    language_code varchar(4),
-    currency_symbol varchar(4),
-    currency_code varchar(8) not null,
-    currency_crypto varchar(32) not null,
-    currency_name varchar(32) not null,
-    currency_name_plural varchar(32) not null,
-    currency_approximate_value numeric(23,8) default 0 not null,
-    critical_value numeric(23,8) default 0 not null,
-    working_bank_1 varchar(128) not null,
-    working_bank_2 varchar(128),
-    working_bank_3 varchar(128),
-    working_bank_4 varchar(128),
-    primary key (country_id)
-);
-
-create table country_docs (
-    country_id int not null,
-    doc1_name varchar(32),
-    doc1_required boolean not null,
-    doc1_ispicture boolean not null,
-    doc1_format varchar(32),
-    doc2_name varchar(32),
-    doc2_required boolean not null,
-    doc2_ispicture boolean not null,
-    doc2_format varchar(32),
-    doc3_name varchar(32),
-    doc3_required boolean not null,
-    doc3_ispicture boolean not null,
-    doc3_format varchar(32),
-    doc4_name varchar(32),
-    doc4_required boolean not null,
-    doc4_ispicture boolean not null,
-    doc4_format varchar(32),
-    doc5_name varchar(32),
-    doc5_required boolean not null,
-    doc5_ispicture boolean not null,
-    doc5_format varchar(32),
-    primary key (country_id)
-);
-
-create table banks (
-    bank_id int not null,
-    country_id int not null,
-    country_code varchar(4) not null,
-    bank_code varchar(8) not null,
-    bank_name varchar(32) not null,
-    primary key (bank_id, country_id)
-);
---     fee_global" varchar(256) not null,
---     fee_local" varchar(256) not null,
---     fee_global_deposit_percent numeric(7,3) default 0 not null,
---     fee_local_deposit_percent numeric(7,3) default 0 not null,
---     fee_local_deposit_nominal numeric(7,3) default 0 not null,
---     fee_global_withdrawal_percent numeric(7,3) default 0 not null,
---     fee_local_withdrawal_percent numeric(7,3) default 0 not null,
---     fee_local_withdrawal_nominal numeric(7,3) default 0 not null,
---     fee_global_send_percent numeric(7,3) default 0 not null,
---     fee_local_send_percent numeric(7,3) default 0 not null,
---     fee_global_tofiat_percent numeric(7,3) default 0 not null,
---     fee_local_tofiat_percent numeric(7,3) default 0 not null,
---     fee_local_doc_verification numeric(23,8) default 0 not null,
---
---     appearance_pic1 varchar(256) not null,
---     appearance_pic2 varchar(256) not null,
---     appearance_color1 varchar(32),
---     appearance_color2 varchar(32),
---     appearance_color3 varchar(32),
---     appearance_color4 varchar(32),
---     appearance_color5 varchar(32),
-
 create table orders (
     order_id bigint not null,
     user_id bigint not null,
@@ -215,9 +136,6 @@ create table orders (
 drop table if exists balances cascade;
 drop table if exists currencies cascade;
 drop table if exists tokens cascade;
-drop table if exists country cascade;
-drop table if exists country_docs cascade;
-drop table if exists banks cascade;
 drop table if exists orders cascade;
 drop table if exists users cascade;
 drop table if exists users_name_info cascade;

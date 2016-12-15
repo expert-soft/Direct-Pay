@@ -9,6 +9,118 @@ import usertrust.{ UserTrustModel, UserTrustService }
 import anorm._
 
 package object globals {
+
+  /* Country Regional Settings */
+  val country_code = Play.current.configuration.getString("country.country_code").getOrElse("Not Set")
+  val country_name = Play.current.configuration.getString("country.country_name").getOrElse("Not Set")
+  val country_system_name = Play.current.configuration.getString("country.country_system_name").getOrElse("Not Set")
+  val country_site_name = Play.current.configuration.getString("country.country_site_name").getOrElse("Not Set")
+  val country_site_url1 = Play.current.configuration.getString("country.country_site_url1").getOrElse("Not Set")
+  val country_currency_symbol = Play.current.configuration.getString("country.country_currency_symbol").getOrElse("Not Set")
+  val country_currency_code = Play.current.configuration.getString("country.country_currency_code").getOrElse("Not Set")
+  val country_currency_crypto = Play.current.configuration.getString("country.country_currency_crypto").getOrElse("Not Set")
+  val country_currency_name = Play.current.configuration.getString("country.country_currency_name").getOrElse("Not Set")
+  val country_currency_name_plural = Play.current.configuration.getString("country.country_currency_name_plural").getOrElse("Not Set")
+  val country_critical_value1 = Play.current.configuration.getInt("country.country_critical_value1").getOrElse(0)
+  val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)
+  val country_doc1_name = Play.current.configuration.getString("country.country_doc1_name").getOrElse("Not Set")
+  val country_doc1_required = Play.current.configuration.getBoolean("country.country_doc1_required").getOrElse(false)
+  val country_doc1_ispicture = Play.current.configuration.getBoolean("country.country_doc1_ispicture").getOrElse(false)
+  val country_doc1_format = Play.current.configuration.getString("country.country_doc1_format").getOrElse("")
+  val country_doc2_name = Play.current.configuration.getString("country.country_doc2_name").getOrElse("Not Set")
+  val country_doc2_required = Play.current.configuration.getBoolean("country.country_doc2_required").getOrElse(false)
+  val country_doc2_ispicture = Play.current.configuration.getBoolean("country.country_doc2_ispicture").getOrElse(false)
+  val country_doc2_format = Play.current.configuration.getString("country.country_doc2_format").getOrElse("")
+  val country_doc3_name = Play.current.configuration.getString("country.country_doc3_name").getOrElse("Not Set")
+  val country_doc3_required = Play.current.configuration.getBoolean("country.country_doc3_required").getOrElse(false)
+  val country_doc3_ispicture = Play.current.configuration.getBoolean("country.country_doc3_ispicture").getOrElse(false)
+  val country_doc3_format = Play.current.configuration.getString("country.country_doc3_format").getOrElse("")
+  val country_doc4_name = Play.current.configuration.getString("country.country_doc4_name").getOrElse("Not Set")
+  val country_doc4_required = Play.current.configuration.getBoolean("country.country_doc4_required").getOrElse(false)
+  val country_doc4_ispicture = Play.current.configuration.getBoolean("country.country_doc4_ispicture").getOrElse(false)
+  val country_doc4_format = Play.current.configuration.getString("country.country_doc4_format").getOrElse("")
+  val country_doc5_name = Play.current.configuration.getString("country.country_doc5_name").getOrElse("Not Set")
+  val country_doc5_required = Play.current.configuration.getBoolean("country.country_doc5_required").getOrElse(false)
+  val country_doc5_ispicture = Play.current.configuration.getBoolean("country.country_doc5_ispicture").getOrElse(false)
+  val country_doc5_format = Play.current.configuration.getString("country.country_doc5_format").getOrElse("")
+  val country_working_bank1_name = Play.current.configuration.getString("country.country_working_bank1_name").getOrElse("Not Set")
+  val country_working_bank1_agency = Play.current.configuration.getString("country.country_working_bank1_agency").getOrElse("Not Set")
+  val country_working_bank1_account = Play.current.configuration.getString("country.country_working_bank1_account").getOrElse("Not Set")
+  val country_working_bank1_reference = Play.current.configuration.getString("country.country_working_bank1_reference").getOrElse("Not Set")
+  val country_working_bank2_name = Play.current.configuration.getString("country.country_working_bank2_name").getOrElse("Not Set")
+  val country_working_bank2_agency = Play.current.configuration.getString("country.country_working_bank2_agency").getOrElse("Not Set")
+  val country_working_bank2_account = Play.current.configuration.getString("country.country_working_bank2_account").getOrElse("Not Set")
+  val country_working_bank2_reference = Play.current.configuration.getString("country.country_working_bank2_reference").getOrElse("Not Set")
+  val country_working_bank3_name = Play.current.configuration.getString("country.country_working_bank3_name").getOrElse("Not Set")
+  val country_working_bank3_agency = Play.current.configuration.getString("country.country_working_bank3_agency").getOrElse("Not Set")
+  val country_working_bank3_account = Play.current.configuration.getString("country.country_working_bank3_account").getOrElse("Not Set")
+  val country_working_bank3_reference = Play.current.configuration.getString("country.country_working_bank3_reference").getOrElse("Not Set")
+  val country_working_bank4_name = Play.current.configuration.getString("country.country_working_bank4_name").getOrElse("Not Set")
+  val country_working_bank4_agency = Play.current.configuration.getString("country.country_working_bank4_agency").getOrElse("Not Set")
+  val country_working_bank4_account = Play.current.configuration.getString("country.country_working_bank4_account").getOrElse("Not Set")
+  val country_working_bank4_reference = Play.current.configuration.getString("country.country_working_bank4_reference").getOrElse("Not Set")
+  val country_bank1_code = Play.current.configuration.getString("country.country_bank1_code").getOrElse("Not Set")
+  val country_bank1_name = Play.current.configuration.getString("country.country_bank1_name").getOrElse("Not Set")
+  val country_bank2_code = Play.current.configuration.getString("country.country_bank2_code").getOrElse("Not Set")
+  val country_bank2_name = Play.current.configuration.getString("country.country_bank2_name").getOrElse("Not Set")
+  val country_bank3_code = Play.current.configuration.getString("country.country_bank3_code").getOrElse("Not Set")
+  val country_bank3_name = Play.current.configuration.getString("country.country_bank3_name").getOrElse("Not Set")
+  val country_bank4_code = Play.current.configuration.getString("country.country_bank4_code").getOrElse("Not Set")
+  val country_bank4_name = Play.current.configuration.getString("country.country_bank4_name").getOrElse("Not Set")
+  val country_bank5_code = Play.current.configuration.getString("country.country_bank5_code").getOrElse("Not Set")
+  val country_bank5_name = Play.current.configuration.getString("country.country_bank5_name").getOrElse("Not Set")
+  val country_bank6_code = Play.current.configuration.getString("country.country_bank6_code").getOrElse("Not Set")
+  val country_bank6_name = Play.current.configuration.getString("country.country_bank6_name").getOrElse("Not Set")
+  val country_bank7_code = Play.current.configuration.getString("country.country_bank7_code").getOrElse("Not Set")
+  val country_bank7_name = Play.current.configuration.getString("country.country_bank7_name").getOrElse("Not Set")
+  val country_bank8_code = Play.current.configuration.getString("country.country_bank8_code").getOrElse("Not Set")
+  val country_bank8_name = Play.current.configuration.getString("country.country_bank8_name").getOrElse("Not Set")
+  val country_bank9_code = Play.current.configuration.getString("country.country_bank9_code").getOrElse("Not Set")
+  val country_bank9_name = Play.current.configuration.getString("country.country_bank9_name").getOrElse("Not Set")
+  val country_bank10_code = Play.current.configuration.getString("country.country_bank10_code").getOrElse("Not Set")
+  val country_bank10_name = Play.current.configuration.getString("country.country_bank10_name").getOrElse("Not Set")
+  val country_bank11_code = Play.current.configuration.getString("country.country_bank11_code").getOrElse("Not Set")
+  val country_bank11_name = Play.current.configuration.getString("country.country_bank11_name").getOrElse("Not Set")
+  val country_bank12_code = Play.current.configuration.getString("country.country_bank12_code").getOrElse("Not Set")
+  val country_bank12_name = Play.current.configuration.getString("country.country_bank12_name").getOrElse("Not Set")
+  val country_bank13_code = Play.current.configuration.getString("country.country_bank13_code").getOrElse("Not Set")
+  val country_bank13_name = Play.current.configuration.getString("country.country_bank13_name").getOrElse("Not Set")
+  val country_bank14_code = Play.current.configuration.getString("country.country_bank14_code").getOrElse("Not Set")
+  val country_bank14_name = Play.current.configuration.getString("country.country_bank14_name").getOrElse("Not Set")
+  val country_bank15_code = Play.current.configuration.getString("country.country_bank15_code").getOrElse("Not Set")
+  val country_bank15_name = Play.current.configuration.getString("country.country_bank15_name").getOrElse("Not Set")
+  val country_bank16_code = Play.current.configuration.getString("country.country_bank16_code").getOrElse("Not Set")
+  val country_bank16_name = Play.current.configuration.getString("country.country_bank16_name").getOrElse("Not Set")
+  val country_bank17_code = Play.current.configuration.getString("country.country_bank17_code").getOrElse("Not Set")
+  val country_bank17_name = Play.current.configuration.getString("country.country_bank17_name").getOrElse("Not Set")
+  val country_bank18_code = Play.current.configuration.getString("country.country_bank18_code").getOrElse("Not Set")
+  val country_bank18_name = Play.current.configuration.getString("country.country_bank18_name").getOrElse("Not Set")
+  val country_bank19_code = Play.current.configuration.getString("country.country_bank19_code").getOrElse("Not Set")
+  val country_bank19_name = Play.current.configuration.getString("country.country_bank19_name").getOrElse("Not Set")
+  val country_bank20_code = Play.current.configuration.getString("country.country_bank20_code").getOrElse("Not Set")
+  val country_bank20_name = Play.current.configuration.getString("country.country_bank20_name").getOrElse("Not Set")
+  val country_global_administrator = Play.current.configuration.getString("country.country_global_administrator").getOrElse("Not Set")
+  val country_local_administrator = Play.current.configuration.getString("country.country_local_administrator").getOrElse("Not Set")
+  val country_fee_local_doc_verification = Play.current.configuration.getDouble("country.country_fee_local_doc_verification").getOrElse(0)
+  val country_fee_global_deposit_percent = Play.current.configuration.getDouble("country.country_fee_global_deposit_percent").getOrElse(0)
+  val country_fee_local_deposit_percent = Play.current.configuration.getDouble("country.country_fee_local_deposit_percent").getOrElse(0)
+  val country_fee_local_deposit_nominal = Play.current.configuration.getDouble("country.country_fee_local_deposit_nominal").getOrElse(0)
+  val country_fee_global_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_global_withdrawal_percent").getOrElse(0)
+  val country_fee_local_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_local_withdrawal_percent").getOrElse(0)
+  val country_fee_local_withdrawal_nominal_workbank = Play.current.configuration.getDouble("country.country_fee_local_withdrawal_nominal_workbank").getOrElse(0)
+  val country_fee_local_withdrawal_nominal_notworkbank = Play.current.configuration.getDouble("country.country_fee_local_withdrawal_nominal_notworkbank").getOrElse(0)
+  val country_fee_global_send_percent = Play.current.configuration.getDouble("country.country_fee_global_send").getOrElse(0)
+  val country_fee_local_send = Play.current.configuration.getDouble("country.country_fee_local_send").getOrElse(0)
+  val country_fee_global_tofiat = Play.current.configuration.getDouble("country.country_fee_global_tofiat").getOrElse(0)
+  val country_fee_local_tofiat = Play.current.configuration.getDouble("country.country_fee_local_tofiat").getOrElse(0)
+  val country_appearance_pic1 = Play.current.configuration.getString("country.appearance_pic1").getOrElse("Not Set")
+  val country_appearance_pic2 = Play.current.configuration.getString("country.appearance_pic2").getOrElse("Not Set")
+  val country_appearance_color1 = Play.current.configuration.getString("country.appearance_color1").getOrElse("Not Set")
+  val country_appearance_color2 = Play.current.configuration.getString("country.appearance_color2").getOrElse("Not Set")
+  val country_appearance_color3 = Play.current.configuration.getString("country.appearance_color3").getOrElse("Not Set")
+  val country_appearance_color4 = Play.current.configuration.getString("country.appearance_color4").getOrElse("Not Set")
+  val country_appearance_color5 = Play.current.configuration.getString("country.appearance_color5").getOrElse("Not Set")
+
   val masterDB = "default"
   val masterDBWallet = "wallet"
   val masterDBTrusted = "trust"
@@ -30,9 +142,6 @@ package object globals {
       delete from users_name_info;
       delete from users_address_info;
       delete from users;
-      delete from country;
-      delete from country_docs;
-      delete from banks;
       delete from orders;
 
       select currency_insert('BRL',1);
@@ -59,16 +168,6 @@ package object globals {
       insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestBR', 'sobrenome', '', 'Mr.' from users where email='test@yahoo.com.br';
       insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestRU', 'skovsk', '', 'Mr.' from users where email='testru@gmail.ru';
 
-      insert into country (country_id, country_code, country_name, country_local_name, site_name, site_url1, site_url2, language_name, language_code, currency_symbol, currency_code, currency_crypto, currency_name, currency_name_plural, currency_approximate_value, critical_value, working_bank_1, working_bank_2, working_bank_3, working_bank_4) select 1, 'us', 'United States', 'United States', 'Direct Pay', 'www.localsite.com', 'www.altsite.com', 'English', 'en', 'U&', 'USD', 'USD-cry', 'dollar', 'dollars', 1, 5000, 'Citibank account 54646', 'Bank of Boston, account 45342', '', '';
-      insert into country (country_id, country_code, country_name, country_local_name, site_name, site_url1, site_url2, language_name, language_code, currency_symbol, currency_code, currency_crypto, currency_name, currency_name_plural, currency_approximate_value, critical_value, working_bank_1, working_bank_2, working_bank_3, working_bank_4) select 55, 'br', 'Brazil', 'Brasil', 'Direct Pay', 'www.localsite.com.br', 'www.altsite.com.br', 'Portugues', 'pt', 'U&', 'BRL', 'BRL-cry', 'real', 'reais', 0.3, 5000, 'Itaú Unibanco, agência 7777-0, cc 9840-5 (Direct Trade ltd)', 'Banco do Brasil, agência 9999-0, cc 78876-9 (Direct Trade ltd)', 'Bradesco, agência 8888-0, cc 4321-9 (Alternative acount)', '';
-
-      insert into country_docs (country_id, doc1_name, doc1_required, doc1_ispicture, doc1_format, doc2_name, doc2_required, doc2_ispicture, doc2_format, doc3_name, doc3_required, doc3_ispicture, doc3_format, doc4_name, doc4_required, doc4_ispicture, doc4_format, doc5_name, doc5_required, doc5_ispicture, doc5_format) select 1, 'Social Security', true, false, '', 'ID / Passport', true, true, '', 'Address Prove', true, true, '', 'Phone', true, false, '(999) 99999-9999', 'doc5', false, false, '';
-      insert into country_docs (country_id, doc1_name, doc1_required, doc1_ispicture, doc1_format, doc2_name, doc2_required, doc2_ispicture, doc2_format, doc3_name, doc3_required, doc3_ispicture, doc3_format, doc4_name, doc4_required, doc4_ispicture, doc4_format, doc5_name, doc5_required, doc5_ispicture, doc5_format) select 55, 'CPF', true, false, '999.999.999-99', 'RG / Passaporte', true, true, '', 'Address Prove', true, true, '', 'Phone', true, false, '(99) 99999-9999', 'doc5', false, false, '';
-
-      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 1, 55, 'br', '001', 'Banco do Brasil';
-      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 2, 55, 'br', '237', 'Bradesco';
-      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 3, 1, 'us', 'BoA21', 'Bank of America';
-      insert into banks (bank_id, country_id, country_code, bank_code, bank_name) select 4, 1, 'us', 'LB02', 'Lehmann Brothers';
 
       insert into orders (order_id, user_id, country_id, user_email, type, creation) select 1, 852, 55, 'mboczko@yahoo.com', 'RFW', 1;
       insert into orders (order_id, user_id, country_id, user_email, type, creation) select 2, 852, 55, 'mboczko@yahoo.com', 'D', 2;

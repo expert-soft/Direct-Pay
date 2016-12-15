@@ -41,18 +41,6 @@ var API;
             return $.get(iapi_prefix+'user_name_info', 'json');
         }),
 
-        country: APIWrap(function() {
-            return $.get(iapi_prefix+'country', 'json');
-        }),
-
-        country_docs: APIWrap(function() {
-            return $.get(iapi_prefix+'country_docs', 'json');
-        }),
-
-        banks_list: APIWrap(function() {
-            return $.get(iapi_prefix+'banks_list', 'json');
-        }),
-
         orders_list: APIWrap(function() {
             return $.get(iapi_prefix+'orders_list', 'json');
         }),

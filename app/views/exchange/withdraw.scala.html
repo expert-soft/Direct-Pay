@@ -1,0 +1,126 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@scripts = {
+    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
+
+    <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-minus"> &nbsp;</i> @Messages("directpay.navigation.withdraw.title")</h3>
+        </div>
+    </div>
+    <div class="normal-text">
+        <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
+        <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
+    </div>
+
+
+    <div id="balance" class="panel panel-default">
+        <script id="balance-template" type="text/x-handlebars-template">
+            <div class="panel-heading">@Messages("terminology.yourfunds"):</div>
+            <table id="table_balance" class="table table-striped responsive">
+                <thead>
+                    <tr>
+                        <th width="25%">@Messages("terminology.currency")</th>
+                        <th width="25%">@Messages("terminology.total")</th>
+                        <th class="hidden-xs" width="20%">@Messages("terminology.hold")</th>
+                        <th width="30%">@Messages("terminology.available")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each this}}
+                    <tr id="currency={{currency}}">
+                        <td width="25%"><a class="show-menu" href="#" currency-id="{{currency}}"><img src="@routes.Assets.at("img/{{currency}}.png")" height="20px" width="20px"> {{currency}}</td>
+                        <td width="25%">{{amount}}</td>
+                        <td class="hidden-xs" width="20%">{{hold}}</td>
+                        <td width="30%">{{available}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </script>
+    </div>
+
+
+
+
+
+
+
+    <!-- Start of form -->
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>@Messages("directpay.withdraw.requestwithdrawal")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    ## put a remark if documentation incomplete<br>
+                    <form id="form1" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3">
+                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("terminology.value")">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.bank")</label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
+                                    <option value="001 - Banco do Brasil">001 - Banco do Brasil</option>
+                                    <option value="029 - Banerj">029 - Banerj</option>
+                                    <option value="033 - Santander">033 - Santander</option>
+                                    <option value="104 - Caixa Econômica Federal">104 - Caixa Econômica Federal</option>
+                                    <option value="237 - Bradesco">237 - Bradesco</option>
+                                    <option value="318 - BMG">318 - BMG</option>
+                                    <option value="341 - Itaú Unibanco">341 - Itaú Unibanco</option>
+                                    <option value="366 - Société Générale">366 - Société Générale</option>
+                                    <option value="399 - HSBC">399 - HSBC</option>
+                                    <option value="422 - Safra">422 - Safra</option>
+                                    <option value="487 - Deutsche Bank">487 - Deutsche Bank</option>
+                                    <option value="505 - Credit Suisse">505 - Credit Suisse</option>
+                                    <option value="600 - Luso Brasileiro">600 - Luso Brasileiro</option>
+                                    <option value="623 - Panamericano">623 - Panamericano</option>
+                                    <option value="745 - Citibank">745 - Citibank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3" for="agency">@Messages("terminology.agency")</label>
+                            <div class="col-md-3 col-sm-3"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3" for="account">@Messages("terminology.account")</label>
+                            <div class="col-md-3 col-sm-3"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
+                        </div>
+                        <p>@Messages("directpay.withdraw.explanation3", globals.country_currency_symbol)</p>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">@Messages("directpay.navigation.withdraw.title")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of form -->
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.withdraw.disclaimer1")</p>
+        <p>@Messages("directpay.withdraw.disclaimer2")</p>
+        <p>@Messages("directpay.withdraw.disclaimer3")</p>
+    </div>
+    <div class="clearfix"></div>
+    <!-- /page content -->
+
+}
