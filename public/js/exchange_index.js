@@ -12,4 +12,17 @@ $(function(){
         });
     }
     show_balance();
+
+    function showHide() {
+        if (document.getElementById('optionAutomatic').checked) {
+            document.getElementById('manual_operations').style.display = 'none';
+            document.getElementById('automatic_operations').style.display = 'block';
+        } else {
+            document.getElementById('manual_operations').style.display = 'block';
+            document.getElementById('automatic_operations').style.display = 'none';
+        }
+    }
+
+    showHide();
+
 });

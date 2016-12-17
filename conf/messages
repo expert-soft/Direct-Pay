@@ -215,6 +215,7 @@ terminology.disclaimer=Disclaimer
 terminology.yourfunds=Your Funds
 terminology.convertto=Convert to
 
+
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
 directpay.deposit.explanation1=Deposit must be in cash or bank transfer from your own personal bank account to one of the following bank accounts
@@ -241,8 +242,13 @@ directpay.cfiat.valuetobeconverted=Value to be converted
 directpay.cfiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at the form below.
 directpay.cfiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
 directpay.cfiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1} . The conversion rate is guaranteed not to be lower than 0.99.
-
-
+directpay.depositsend.depositconvertandsend=Deposit, Convert and Send
+directpay.receivewithdraw.receiveconvertandwithdraw=Receive, Convert and Withdraw
+directpay.dashboard.explanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be converted and withdrawed to your bank account, with no need to request it at {0}.
+directpay.dashboard.explanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
+directpay.dashboard.chooseoptions=Choose at the options below to understand how would be the operations.
+directpay.dashboard.optionautomatic=Option Automatic
+directpay.dashboard.optionmanual=Option Manual
 
 
 directpay.usersettings.browsebutton=Browse

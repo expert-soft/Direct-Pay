@@ -69,12 +69,7 @@
                                 <form class="form-horizontal form-label-left">
                                     <span class="section">@Messages("directpay.usersettings.step1.title")</span>
                                     <div class="form-group">
-                                        <script id="user-reg-one-template" type="text/x-handlebars-template">
-                                            <label class="control-label col-md-3 col-sm-3" for="name">@Messages("directpay.usersettings.fullname.item") <span class="required">*</span></label>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="first-name" name="first-name" value="{{name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="mid-name" name="mid-name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="last-name" name="last-name" value="{{surname}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
-                                        </script>
+                                        <p id="user-reg-one"></p>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3" for="email">@Messages("directpay.usersettings.email.item") <span class="required">*</span></label>
@@ -260,5 +255,11 @@
     </div>
     </script>
 
+    <script id="user-reg-one-template" type="text/x-handlebars-template">
+    <label class="control-label col-md-3 col-sm-3" for="name">@Messages("directpay.usersettings.fullname.item") <span class="required">*</span></label>
+    <div class="col-md-3 col-sm-3"><input type="text" id="first-name" name="first-name" value="{{name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+    <div class="col-md-3 col-sm-3"><input type="text" id="mid-name" name="mid-name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
+    <div class="col-md-3 col-sm-3"><input type="text" id="last-name" name="last-name" value="{{surname}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+    </script>
 
 }

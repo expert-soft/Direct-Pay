@@ -2777,7 +2777,7 @@ th {
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #fff
+    background-color: #e8e8e8
 }
 
 .table-hover > tbody > tr:hover {
