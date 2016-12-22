@@ -138,12 +138,12 @@
                 <div class="nav_menu">
                     <nav>
                         <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            <a id="menu_toggle"><i class="fa fa-bars" title="@Messages("##expand_menu")"></i></a>
                         </div>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive">
+                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive" title="@Messages("terminology.language")">
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 @for(lang <- Lang.availables) {

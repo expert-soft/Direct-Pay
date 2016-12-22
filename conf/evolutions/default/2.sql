@@ -763,6 +763,7 @@ begin
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
+
 create or replace function
 get_user_list (
   out id bigint,
@@ -780,6 +781,38 @@ begin
   left join users_name_info ui on u.id = ui.user_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+
+create or replace function
+get_orders_list (
+  out order_id bigint,
+  out user_id bigint,
+  out country_id int,
+  out order_type varchar(4),
+  out status varchar(4),
+  out partner varchar(128),
+  out created timestamp(3),
+  out currency varchar(8),
+  out initial_value numeric(23,8),
+  out total_fee numeric(23,8),
+  out doc1 varchar(128),
+  out doc2 varchar(128),
+  out bank varchar(128),
+  out agency varchar(16),
+  out account varchar(16),
+  out closed timestamp(3),
+  out closed_by bigint,
+  out closed_value numeric(23,8),
+  out comment varchar(128),
+  out key1 varchar(32),
+  out key2 varchar(32)
+) returns setof record as $$
+begin
+  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_by, o.closed_value, o.comment, o.key1, o.key2
+  from orders o;;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
 
 # --- !Downs
 
@@ -823,3 +856,4 @@ drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascad
 drop function if exists balance (bigint, text) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
 drop function if exists get_user_list() cascade;
+drop function if exists get_orders_list() cascade;

@@ -6,7 +6,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
 
 @scripts = {
-    <script src="@routes.Assets.at("../../../../public/js/user_list.js")"></script>
+    <script src="@routes.Assets.at("js/user_list.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
@@ -291,7 +291,7 @@
     </div>
 
     <script id="user-info-template" type="text/x-handlebars-template">
-    <div class="panel-heading">@Messages("terminology.contacts")</div>
+        <div class="panel-heading">@Messages("terminology.contacts")</div>
         <table id="table_users" class="table table-striped responsive">
             <thead>
                 <tr>

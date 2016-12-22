@@ -66,16 +66,31 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
-  def order_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val order_list_info = globals.engineModel.OrderList()
-    Ok(Json.toJson(order_list_info.map({ c =>
+  def orders_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val orders_list_info = globals.engineModel.OrderList()
+    Ok(Json.toJson(orders_list_info.map({ c =>
       Json.obj(
         "order_id" -> c._1,
         "user_id" -> c._2,
         "country_id" -> c._3,
-        "user_email" -> c._4,
-        "type" -> c._5,
-        "creation" -> c._6
+        "order_type" -> c._4,
+        "status" -> c._5,
+        "partner" -> c._6,
+        "created" -> c._7,
+        "currency" -> c._8,
+        "initial_value" -> c._9,
+        "total_fee" -> c._10,
+        "doc1" -> c._11,
+        "doc2" -> c._12,
+        "bank" -> c._13,
+        "agency" -> c._14,
+        "account" -> c._15,
+        "closed" -> c._16,
+        "closed_by" -> c._17,
+        "closed_value" -> c._18,
+        "comment" -> c._19,
+        "key1" -> c._20,
+        "key2" -> c._21
       )
     })
     ))

@@ -41,7 +41,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   }
 
   def user_list = SecuredAction { implicit request =>
-    Ok(views.html.exchange.user_list(request.user))
+    Ok(views.html.administrator.user_list(request.user))
   }
 
   def orders_list = SecuredAction { implicit request =>
@@ -49,7 +49,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   }
 
   def history = SecuredAction { implicit request =>
-    Ok(views.html.administrator.history(request.user))
+    Ok(views.html.exchange.history(request.user))
   }
 
   def deposit = SecuredAction { implicit request =>

@@ -36,6 +36,7 @@ GET         /iapi/1/balance                             controllers.IAPI.APIv1.b
 GET         /iapi/1/user                                controllers.IAPI.APIv1.user
 GET         /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
 GET         /iapi/1/user_list                           controllers.IAPI.APIv1.user_list
+GET         /iapi/1/orders_list                         controllers.IAPI.APIv1.orders_list
 POST        /iapi/1/turnoff_tfa                         controllers.IAPI.APIv1.turnOffTFA
 POST        /iapi/1/turnon_tfa                          controllers.IAPI.APIv1.turnOnTFA
 POST        /iapi/1/turnoff_emails                      controllers.IAPI.APIv1.turnOffEmails

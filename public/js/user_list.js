@@ -1,5 +1,4 @@
 $(function(){
-
     var user_info_template = Handlebars.compile($("#user-info-template").html());
 
     function reload(){
@@ -15,9 +14,8 @@ $(function(){
                 data[i].middle_name = data[i].middle_name;
                 data[i].prefix = data[i].prefix;
             }
-
-                $('#user-info').html(user_info_template(data));
-            });
+            $('#user-info').html(user_info_template(data));
+        });
     }
     reload();
 });

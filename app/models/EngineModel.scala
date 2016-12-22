@@ -46,18 +46,6 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def OrderList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from orders"""().map(row => (
-      row[Long]("order_id"),
-      row[Long]("user_id"),
-      row[Long]("country_id"),
-      row[String]("user_email"),
-      row[String]("type"),
-      row[Long]("creation")
-
-    )).toList
-  }
-
   def UserList() = DB.withConnection(db) { implicit c =>
     SQL"""select * from get_user_list()"""().map(row => (
       row[Long]("id"),
@@ -69,6 +57,32 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("middle_name").getOrElse("N/A"),
       row[Option[String]]("prefix").getOrElse("N/A")
 
+    )).toList
+  }
+
+  def OrderList() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_orders_list()"""().map(row => ( //See 2.sql at lines 787 and 848
+      row[Long]("order_id"),
+      row[Long]("user_id"),
+      row[Long]("country_id"),
+      row[String]("order_type"),
+      row[String]("status"),
+      row[String]("partner"),
+      row[DateTime]("created"),
+      row[String]("currency"),
+      row[BigDecimal]("initial_value"),
+      row[BigDecimal]("total_fee"),
+      row[String]("doc1"),
+      row[String]("doc2"),
+      row[String]("bank"),
+      row[String]("agency"),
+      row[String]("account"),
+      row[DateTime]("closed"),
+      row[Long]("closed_by"),
+      row[BigDecimal]("closed_value"),
+      row[String]("comment"),
+      row[String]("key1"),
+      row[String]("key2")
     )).toList
   }
 

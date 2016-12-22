@@ -168,21 +168,19 @@ package object globals {
       insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestBR', 'sobrenome', '', 'Mr.' from users where email='test@yahoo.com.br';
       insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestRU', 'skovsk', '', 'Mr.' from users where email='testru@gmail.ru';
 
-
-      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 1, 852, 55, 'mboczko@yahoo.com', 'RFW', 1;
-      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 2, 852, 55, 'mboczko@yahoo.com', 'D', 2;
-      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 3, 881, 1, 'test@gmail.com', 'W', 3;
-      insert into orders (order_id, user_id, country_id, user_email, type, creation) select 4, 881, 1, 'test@gmail.com', 'D', 5;
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 1, 1, 55, 'RFW', 'O', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 4566.9808, 0, './withdrawals/67564544_dec-2016_doc1', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 2, 1, 55, 'D', 'O', '', '2016-12-22 01:18:59.842', 'Rsif', 74.98, 0, './receipts/902354643533_dec-2016_2', '', '237', '', '', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 3, 3, 1, 'W', 'O', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 320, 0.55, './receipts/doc1_9023724243', '', '001', '', '', '2016-12-22 01:18:59.842', 12121, 319.45, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 4, 4, 1, 'D', 'OK', '', '2016-12-22 01:18:59.842', 'Rsif', 320, 0.55, './receipts/9023724243_dec-2016_1', '', '001', '', '', '2016-12-22 01:18:59.842', 121212, 319.45, 'bank OK, receipt OK', '', '';
 
       commit;
       """.execute()
-
-        // fee_global_owner, fee_local_owner, fee_global_deposit_percent, fee_local_deposit_percent, fee_local_deposit_nominal, fee_global_withdrawal_percent, fee_local_withdrawal_percent, fee_local_withdrawal_nominal, fee_global_send_percent, fee_local_send_percent, fee_global_tofiat_percent, fee_local_tofiat_percent, fee_local_doc_verification, appearance_pic1, appearance_pic2, appearance_color1, appearance_color2, appearance_color3, appearance_color4, appearance_color5
-        // 'a2terminator@mail.ru', 'mboczko@yahoo.com', 0, 0, 0, 0.1, 0.1, 8.5, 0, 0, 0.05, 0.05, 0, './img/logo_br1.png', './img/logo_br2.png', '#883399', '#883399', '#883399', '#883399', '#883399';
       })
     }
   } catch {
+    /*
 
+*/
     // XXX: any kind of error in the SQL above will cause this cryptic exception:
     // org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
     case error: Throwable => Logger.error(error.toString)
