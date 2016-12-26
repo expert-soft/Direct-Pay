@@ -3673,7 +3673,8 @@ fieldset {
   margin: 0;
   padding: 0;
   border: 0 solid #CCC;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  overflow-y: hidden; }
 
 .wizard_horizontal ul.wizard_steps {
   display: table;
@@ -3737,8 +3738,8 @@ fieldset {
 
 .wizard_verticle .stepContainer {
   width: 80%;
-  float: left;
-  padding: 0 10px; }
+ /* float: left; */
+  padding: 0px; }
 
 .actionBar {
   width: 100%;

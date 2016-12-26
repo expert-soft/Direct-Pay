@@ -60,7 +60,17 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "name" -> c._1,
         "surname" -> c._2,
         "middle_name" -> c._3,
-        "prefix" -> c._4
+        "prefix" -> c._4,
+        "doc1" -> c._5,
+        "doc2" -> c._6,
+        "doc3" -> c._7,
+        "doc4" -> c._8,
+        "doc5" -> c._9,
+        "bank" -> c._10,
+        "agency" -> c._11,
+        "account" -> c._12,
+        "automatic" -> c._13,
+        "partner" -> c._14
       )
     })
     ))
@@ -80,17 +90,19 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "currency" -> c._8,
         "initial_value" -> c._9,
         "total_fee" -> c._10,
-        "doc1" -> c._11,
-        "doc2" -> c._12,
-        "bank" -> c._13,
-        "agency" -> c._14,
-        "account" -> c._15,
-        "closed" -> c._16,
-        "closed_by" -> c._17,
-        "closed_value" -> c._18,
-        "comment" -> c._19,
-        "key1" -> c._20,
-        "key2" -> c._21
+        "net_value" -> c._11,
+        "doc1" -> c._12,
+        "doc2" -> c._13,
+        "bank" -> c._14,
+        "agency" -> c._15,
+        "account" -> c._16,
+        "closed_value" -> c._17,
+        "comment" -> c._18,
+        "email" -> c._19,
+        "first_name" -> c._20,
+        "middle_name" -> c._21,
+        "surname" -> c._22
+
       )
     })
     ))

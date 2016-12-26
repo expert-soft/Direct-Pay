@@ -754,12 +754,23 @@ get_user_name_info (
   out name varchar(256),
   out surname varchar(256),
   out middle_name varchar(256),
-  out prefix varchar(16)
+  out prefix varchar(16),
+  out doc1 varchar(256),
+  out doc2 varchar(256),
+  out doc3 varchar(256),
+  out doc4 varchar(256),
+  out doc5 varchar(256),
+  out bank varchar (16),
+  out agency varchar (16),
+  out account varchar (16),
+  out automatic boolean,
+  out partner varchar (64)
 ) returns setof record as $$
-begin
-  return query select uf.name, uf.surname, uf.middle_name, uf.prefix
+ begin
+  return query select uf.name, uf.surname, uf.middle_name, uf.prefix, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.automatic, uc.partner
   from users_name_info uf
-  where user_id = a_id;;
+  left join users_connections uc on uc.user_id = uf.user_id
+  where uf.user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
@@ -776,7 +787,7 @@ get_user_list (
   out prefix varchar(16)
 ) returns setof record as $$
 begin
-  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name,  ui.prefix
+  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.prefix
   from users u
   left join users_name_info ui on u.id = ui.user_id;;
 end;;
@@ -795,21 +806,25 @@ get_orders_list (
   out currency varchar(8),
   out initial_value numeric(23,8),
   out total_fee numeric(23,8),
+  out net_value numeric(23,8),
   out doc1 varchar(128),
   out doc2 varchar(128),
   out bank varchar(128),
   out agency varchar(16),
   out account varchar(16),
   out closed timestamp(3),
-  out closed_by bigint,
   out closed_value numeric(23,8),
   out comment varchar(128),
-  out key1 varchar(32),
-  out key2 varchar(32)
+  out email varchar(256),
+  out first_name varchar(256),
+  out middle_name varchar(256),
+  out surname varchar(256)
 ) returns setof record as $$
 begin
-  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_by, o.closed_value, o.comment, o.key1, o.key2
-  from orders o;;
+  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.initial_value - o.total_fee as net_value, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_value, o.comment, u.email, un.name, un.middle_name, un.surname
+  from orders o
+  left join users u on o.user_id = u.id
+  left join users_name_info un on o.user_id = un.user_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 

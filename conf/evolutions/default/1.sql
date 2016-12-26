@@ -30,18 +30,22 @@ create table users_name_info (
     surname varchar(256) not null,
     middle_name varchar(256),
     prefix varchar(16),
+    doc1 varchar(256),
+    doc2 varchar(256),
+    doc3 varchar(256),
+    doc4 varchar(256),
+    doc5 varchar(256),
     foreign key (user_id) references users(id),
     primary key (user_id)
 );
 
-create table users_address_info (
+create table users_connections (
     user_id bigint not null,
-    country varchar(256) not null,
-    address varchar(256) not null,
-    city varchar(256) not null,
-    state varchar(256) not null,
-    zip varchar(8) not null,
-    type varchar(16) not null,
+    bank varchar(16),
+    agency varchar(16),
+    account varchar(16),
+    automatic boolean not null,
+    partner varchar(64),
     foreign key (user_id) references users(id),
     primary key (user_id)
 );
@@ -126,7 +130,7 @@ create table orders (
     user_id bigint not null,
     country_id int not null,
     order_type varchar(4) not null,
-    status varchar(4) not null,
+    status varchar(2) not null,
     partner varchar(128),
     created timestamp(3) default current_timestamp not null,
     currency varchar(8) not null,
@@ -143,6 +147,7 @@ create table orders (
     comment varchar(128),
     key1 varchar(32),
     key2 varchar(32),
+    foreign key (user_id) references users(id),
     primary key (order_id)
 );
 
@@ -154,7 +159,7 @@ drop table if exists tokens cascade;
 drop table if exists orders cascade;
 drop table if exists users cascade;
 drop table if exists users_name_info cascade;
-drop table if exists users_address_info cascade;
+drop table if exists users_connections cascade;
 drop table if exists users_passwords cascade;
 drop table if exists users_api_keys cascade;
 drop table if exists users_backup_otps cascade;

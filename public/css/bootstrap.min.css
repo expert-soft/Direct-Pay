@@ -2841,6 +2841,18 @@ table td[class*=col-], table th[class*=col-] {
     overflow-x: auto
 }
 
+.table > tbody > tr > td.center_bold, td.bgn_red, td.bgn_blue, td.bgn_yellow, td.bgn_green, td.bgn_brown {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    text-color: #000;
+}
+
+
+.table > tbody > tr > td.right_bold {
+    text-align: right;
+}
+
 .table > tbody > tr > td.bgn_red {
     background-color: #fcc
 }

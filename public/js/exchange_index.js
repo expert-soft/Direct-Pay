@@ -15,15 +15,20 @@ $(function(){
 
 
     function showHide() {
-        if (document.getElementById('optionAutomatic').checked) {
-            document.getElementById('manual_operations').style.display = 'none';
-            document.getElementById('automatic_operations').style.display = 'block';
-        } else {
-            document.getElementById('manual_operations').style.display = 'block';
-            document.getElementById('automatic_operations').style.display = 'none';
+        if ($("input[name='optionsAutomaticManual']:checked").val() == 'optionAutomatic') {
+            $('#manual_operations').hide();
+            $('#automatic_operations').show();
+        }
+        if ($("input[name='optionsAutomaticManual']:checked").val() == 'optionManual') {
+            $('#manual_operations').show();
+            $('#automatic_operations').hide();
         }
     }
 
+    $(document).ready(function () {
+        $("input[name='optionsAutomaticManual']").change(function () {
+            showHide();
+        });
+    });
     showHide();
-
 });

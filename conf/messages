@@ -168,9 +168,7 @@ chrome.exchange.node.peers=Peers
 chrome.exchange.node.listnodes=Peers list:
 
 directpay.terminology.applicationname=Direct Pay
-directpay.terminology.companyname=DirectPay International
 directpay.terminology.partner=Partner
-directpay.terminology.partner.cryptotrade=Crypto-Trade.net
 directpay.terminology.connectedto=connected to
 
 directpay.navigation.deposit.title=Deposit
@@ -195,6 +193,16 @@ directpay.admin.orderslist.openorders.title=Open Orders
 directpay.admin.orderslist.ordersfromsearch.title=Result from search:
 directpay.admin.orderslist.orderID=Order ID
 directpay.admin.orderslist.doc=doc
+directpay.admin.orderslist.ok=OK
+directpay.admin.orderslist.acceptorder=Accept Order
+directpay.admin.orderslist.reject=Reject
+directpay.admin.orderslist.rejectorder=Reject Order
+directpay.admin.orderslist.status.OK=OK
+directpay.admin.orderslist.status.Op=Open
+directpay.admin.orderslist.status.Ch=Changed
+directpay.admin.orderslist.status.Rj=Rejected
+
+directpay.admin.userslist.userID=User ID
 
 terminology.action=Action
 terminology.name=Name
@@ -234,6 +242,10 @@ directpay.send.valuetobesent=Value to be sent
 directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred.
 directpay.send.explanation2=Maximum amount that can be transferred is ## sum of crypto and R$ available. ##fees and calculated net transfer.
 directpay.send.disclaimer1=When you send your {0} to a partner, responsibility of your funds are also transferred to the partner. Once partner confirms transfer complete, Direct Pay no longer is responsible nor have access to the amount transferred.
+directpay.receive.explanation1=To receive funds from a partner, you should enter the partner system and request your funds to be withdrawed to {0}.
+directpay.receive.linkstopartners=Links to Partners:
+
+
 directpay.ccrypto.valuetobeconverted=Value to be converted
 directpay.ccrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
 directpay.ccrypto.explanation2=Convertion rate is {0} 1.00 <=> ##1.00000 {1}. This operation pays ## % fees, what would result in ##calculated amount.
@@ -249,6 +261,8 @@ directpay.dashboard.explanation2=On the other hand, if you deal with more than o
 directpay.dashboard.chooseoptions=Choose at the options below to understand how would be the operations.
 directpay.dashboard.optionautomatic=Option Automatic
 directpay.dashboard.optionmanual=Option Manual
+
+directpay.general.expandcontractsidemenu=Expand or contract side menu
 
 
 directpay.usersettings.browsebutton=Browse

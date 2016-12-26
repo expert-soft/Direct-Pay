@@ -42,7 +42,17 @@ class EngineModel(val db: String = "default") {
       row[String]("name"),
       row[String]("surname"),
       row[String]("middle_name"),
-      row[String]("prefix")
+      row[String]("prefix"),
+      row[Option[String]]("doc1").getOrElse("N/A"),
+      row[Option[String]]("doc2").getOrElse("N/A"),
+      row[Option[String]]("doc3").getOrElse("N/A"),
+      row[Option[String]]("doc4").getOrElse("N/A"),
+      row[Option[String]]("doc5").getOrElse("N/A"),
+      row[Option[String]]("bank").getOrElse("N/A"),
+      row[Option[String]]("agency").getOrElse("N/A"),
+      row[Option[String]]("account").getOrElse("N/A"),
+      row[Boolean]("automatic"),
+      row[Option[String]]("partner").getOrElse("N/A")
     )).toList
   }
 
@@ -72,17 +82,19 @@ class EngineModel(val db: String = "default") {
       row[String]("currency"),
       row[BigDecimal]("initial_value"),
       row[BigDecimal]("total_fee"),
+      row[BigDecimal]("net_value"),
       row[String]("doc1"),
       row[String]("doc2"),
       row[String]("bank"),
       row[String]("agency"),
       row[String]("account"),
-      row[DateTime]("closed"),
-      row[Long]("closed_by"),
       row[BigDecimal]("closed_value"),
       row[String]("comment"),
-      row[String]("key1"),
-      row[String]("key2")
+      row[String]("email"),
+      row[String]("first_name"),
+      row[String]("middle_name"),
+      row[String]("surname")
+
     )).toList
   }
 

@@ -13,7 +13,7 @@ package object globals {
   /* Country Regional Settings */
   val country_code = Play.current.configuration.getString("country.country_code").getOrElse("Not Set")
   val country_name = Play.current.configuration.getString("country.country_name").getOrElse("Not Set")
-  val country_system_name = Play.current.configuration.getString("country.country_system_name").getOrElse("Not Set")
+  val country_system_name = Play.current.configuration.getString("country.country_system_name").getOrElse("Direct-Pay")
   val country_site_name = Play.current.configuration.getString("country.country_site_name").getOrElse("Not Set")
   val country_site_url1 = Play.current.configuration.getString("country.country_site_url1").getOrElse("Not Set")
   val country_currency_symbol = Play.current.configuration.getString("country.country_currency_symbol").getOrElse("Not Set")
@@ -23,6 +23,8 @@ package object globals {
   val country_currency_name_plural = Play.current.configuration.getString("country.country_currency_name_plural").getOrElse("Not Set")
   val country_critical_value1 = Play.current.configuration.getInt("country.country_critical_value1").getOrElse(0)
   val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)
+  val country_partner1 = Play.current.configuration.getString("country.country_partner1").getOrElse("Not Set")
+  val country_partner1_url = Play.current.configuration.getString("country.country_partner1_url").getOrElse("Not Set")
   val country_doc1_name = Play.current.configuration.getString("country.country_doc1_name").getOrElse("Not Set")
   val country_doc1_required = Play.current.configuration.getBoolean("country.country_doc1_required").getOrElse(false)
   val country_doc1_ispicture = Play.current.configuration.getBoolean("country.country_doc1_ispicture").getOrElse(false)
@@ -140,7 +142,7 @@ package object globals {
       delete from balances;
       delete from currencies;
       delete from users_name_info;
-      delete from users_address_info;
+      delete from users_connections;
       delete from users;
       delete from orders;
 
@@ -154,6 +156,7 @@ package object globals {
       insert into users(id, email) values (0, '');
       insert into balances (user_id, currency) select 0, currency from currencies;
 
+      select create_user('a', 'a', true, null, 'en');
       select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en');
       select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en');
       select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
@@ -161,17 +164,32 @@ package object globals {
       select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
       select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
 
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Marcelo', 'Boczko', 'Simao', 'Mr.' from users where email='mboczko@yahoo.com';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Yura', 'Mitrofanov', '', 'Mr.' from users where email='a2terminator@mail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Test-Surname', 'Tes-middle', 'Mr.' from users where email='test@hotmail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'Test', 'Sur', '', 'Ms.' from users where email='test@gmail.com';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestBR', 'sobrenome', '', 'Mr.' from users where email='test@yahoo.com.br';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix) select id, 'TestRU', 'skovsk', '', 'Mr.' from users where email='testru@gmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Marcelo', 'Boczko', 'Simão', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='mboczko@yahoo.com';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Yura', 'Mitrofanov', '', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='a2terminator@mail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Test', 'Test-Surname', 'Tes-middle', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='test@hotmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Test', 'Sur', '', 'Ms.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='test@gmail.com';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'TestBR', 'sobrenome', '', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='test@yahoo.com.br';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'TestRU', 'skovsk', '', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='testru@gmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Aaaaa', 'SurA', 'MidA', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='a';
 
-      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 1, 1, 55, 'RFW', 'O', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 4566.9808, 0, './withdrawals/67564544_dec-2016_doc1', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
-      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 2, 1, 55, 'D', 'O', '', '2016-12-22 01:18:59.842', 'Rsif', 74.98, 0, './receipts/902354643533_dec-2016_2', '', '237', '', '', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
-      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 3, 3, 1, 'W', 'O', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 320, 0.55, './receipts/doc1_9023724243', '', '001', '', '', '2016-12-22 01:18:59.842', 12121, 319.45, '', '', '';
-      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 4, 4, 1, 'D', 'OK', '', '2016-12-22 01:18:59.842', 'Rsif', 320, 0.55, './receipts/9023724243_dec-2016_1', '', '001', '', '', '2016-12-22 01:18:59.842', 121212, 319.45, 'bank OK, receipt OK', '', '';
+      insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='a'), '237', 'Agency A', 'Account A', true, 'Crypto-Trade.net';
+      insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='mboczko@yahoo.com'), '001', 'Agency B', 'Account B', false, 'Crypto-Trade.net';
+      insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='a2terminator@mail.ru'), '341', '8788-X', '677.789-9', false, 'Crypto-Trade.net';
+      insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='test@yahoo.com.br'), '237', '65665', '00685343-0', true, '';
+      insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='testru@gmail.ru'), '341', '352323-c', '67345-9', false, '';
+
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 1, (select id from users where email='mboczko@yahoo.com'), 55, 'RFW', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 34566.9808, 0, './withdrawals/67564544_dec-2016_doc1', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 2, (select id from users where email='a2terminator@mail.ru'), 55, 'D', 'Op', '', '2016-12-22 01:18:59.842', 'Rsif', 74.98, 0, './receipts/902354643533_dec-2016_2', '', '237', '', '', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 3, (select id from users where email='mboczko@yahoo.com'), 1, 'W', 'Rj', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'USD', 320, 0.55, './receipts/doc1_9023724243', '', '001', '', '', '2016-12-22 01:18:59.842', 12121, 319.45, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 4, (select id from users where email='mboczko@yahoo.com'), 1, 'DCS', 'OK', '', '2016-12-22 01:18:59.842', 'USD', 620, 1.55, './receipts/9023724243_dec-2016_1', '', '001', '', '', '2016-12-22 01:18:59.842', 121212, 319.45, 'bank OK, receipt OK', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 5, (select id from users where email='testru@gmail.ru'), 55, 'S', 'Op', '', '2016-12-22 01:18:59.842', 'Rsif', 20.03, 0.05, './receipts/doc1_9023724243', '', '001', '', '', '2016-12-22 01:18:59.842', 12121, 19.45, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 6, (select id from users where email='testru@gmail.ru'), 55, 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 320, 0.55, './receipts/9023724243_dec-2016_1', '', '001', '', '', '2016-12-22 01:18:59.842', 121212, 319.45, 'bank OK, receipt OK', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 7, (select id from users where email='mboczko@yahoo.com'), 1, 'D', 'OK', '', '2016-12-22 01:18:59.842', 'USD', 7654.90, 43.15, './receipts/9023724243_dec-2016_1', '', '001', '', '', '2016-12-22 01:18:59.842', 121212, 319.45, 'bank OK, receipt OK', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 8, (select id from users where email='testru@gmail.ru'), 1, 'V', 'Op', '', '2016-12-22 01:18:59.842', 'USD', 327, 0.56, './receipts/doc1_9023724243', '', '001', '', '', '2016-12-22 01:18:59.842', 12121, 319.45, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 9, (select id from users where email='test@yahoo.com.br'), 55, 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 37870.98, 655.55, './receipts/9023724243_dec-2016_1', '', '001', '', '', '2016-12-22 01:18:59.842', 121212, 37619.45, 'bank OK, receipt OK', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 10, (select id from users where email='test@yahoo.com.br'), 55, 'D', 'Ch', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 78.00, 0, './receipts/9023724243_dec-2016_1', '', '341', '', '', '2016-12-22 01:18:59.842', 121212, 780, 'value declared wrong. confirmed at bank 780', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 11, (select id from users where email='a'), 55, 'RFW', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 566.1011, 5.98, './withdrawals/67564544_dec-2016_doc1', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 12, (select id from users where email='a'), 55, 'D', 'Op', '', '2016-12-22 01:18:59.842', 'Rsif', 813.05, 0, './receipts/902354643533_dec-2016_2', '', '237', '', '', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
 
       commit;
       """.execute()
@@ -179,6 +197,8 @@ package object globals {
     }
   } catch {
     /*
+
+
 
 */
     // XXX: any kind of error in the SQL above will cause this cryptic exception:

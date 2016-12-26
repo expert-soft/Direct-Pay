@@ -4461,7 +4461,7 @@ fieldset {
 
 .wizard_verticle .stepContainer {
     width: 80%;
-    float: left;
+/*    float: left; */
     padding: 0 10px
 }
 

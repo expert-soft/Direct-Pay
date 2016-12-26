@@ -37,7 +37,6 @@ To be Created:<br>
 
 
 
-
     <div class="page-title">
         <div class="title_left">
             <h3>Actions Page</h3>
@@ -50,12 +49,12 @@ To be Created:<br>
     <div class="col-md-9 col-sm-9 col-xs-12">
         <div class="radio">
             <label>
-                <input type="radio" checked="" alue="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange=showHide();> @Messages("directpay.dashboard.optionautomatic")
+                <input type="radio" checked="" value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.dashboard.optionautomatic")
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" checked="checked" value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange=showHide();> @Messages("directpay.dashboard.optionmanual")
+                <input type="radio" checked="checked" value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.dashboard.optionmanual")
             </label>
         </div>
     </div>
@@ -108,7 +107,11 @@ To be Created:<br>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
+                    <p>@Messages("directpay.receive.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.receive.linkstopartners")</p>
+                    @if(globals.country_partner1 != "") {
+                        <style> #box_partner1 { border-radius: 5px; background: #88e; font-size: 20px; text-color: #fff; v-align: center; text-align: center; padding: 20px; margin: 10px; height: 40px; }</style>
+                        <a href="@globals.country_partner1_url"><p id="box_partner1">@globals.country_partner1</p></a> }
                     <a href="@routes.Application.receive().url">@Messages("directpay.navigation.receivefunds.title") </a>
                 </div>
             </div>
