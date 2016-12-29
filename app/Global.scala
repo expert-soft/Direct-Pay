@@ -101,20 +101,16 @@ package object globals {
   val country_bank19_name = Play.current.configuration.getString("country.country_bank19_name").getOrElse("Not Set")
   val country_bank20_code = Play.current.configuration.getString("country.country_bank20_code").getOrElse("Not Set")
   val country_bank20_name = Play.current.configuration.getString("country.country_bank20_name").getOrElse("Not Set")
-  val country_global_administrator = Play.current.configuration.getString("country.country_global_administrator").getOrElse("Not Set")
   val country_local_administrator = Play.current.configuration.getString("country.country_local_administrator").getOrElse("Not Set")
-  val country_fee_local_doc_verification = Play.current.configuration.getDouble("country.country_fee_local_doc_verification").getOrElse(0)
-  val country_fee_global_deposit_percent = Play.current.configuration.getDouble("country.country_fee_global_deposit_percent").getOrElse(0)
-  val country_fee_local_deposit_percent = Play.current.configuration.getDouble("country.country_fee_local_deposit_percent").getOrElse(0)
-  val country_fee_local_deposit_nominal = Play.current.configuration.getDouble("country.country_fee_local_deposit_nominal").getOrElse(0)
-  val country_fee_global_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_global_withdrawal_percent").getOrElse(0)
-  val country_fee_local_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_local_withdrawal_percent").getOrElse(0)
-  val country_fee_local_withdrawal_nominal_workbank = Play.current.configuration.getDouble("country.country_fee_local_withdrawal_nominal_workbank").getOrElse(0)
-  val country_fee_local_withdrawal_nominal_notworkbank = Play.current.configuration.getDouble("country.country_fee_local_withdrawal_nominal_notworkbank").getOrElse(0)
-  val country_fee_global_send_percent = Play.current.configuration.getDouble("country.country_fee_global_send").getOrElse(0)
-  val country_fee_local_send = Play.current.configuration.getDouble("country.country_fee_local_send").getOrElse(0)
-  val country_fee_global_tofiat = Play.current.configuration.getDouble("country.country_fee_global_tofiat").getOrElse(0)
-  val country_fee_local_tofiat = Play.current.configuration.getDouble("country.country_fee_local_tofiat").getOrElse(0)
+  val country_global_administrator = Play.current.configuration.getString("country.country_global_administrator").getOrElse("Not Set")
+  val country_fees_global_percentage = Play.current.configuration.getDouble("country.country_fees_global_percentage").getOrElse(0)
+  val country_nominal_fee_doc_verification = Play.current.configuration.getDouble("country.country_fee_local_doc_verification").getOrElse(0)
+  val country_nominal_fee_withdrawal_workbank = Play.current.configuration.getDouble("country.country_nominal_fee_withdrawal_workbank ").getOrElse(0)
+  val country_nominal_fee_withdrawal_notworkbank = Play.current.configuration.getDouble("country.country_nominal_fee_withdrawal_notworkbank").getOrElse(0)
+  val country_fee_deposit_percent = Play.current.configuration.getDouble("country.country_fee_deposit_percent").getOrElse(0)
+  val country_fee_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_withdrawal_percent").getOrElse(0)
+  val country_fee_send_percent = Play.current.configuration.getDouble("country.country_fee_send_percent").getOrElse(0)
+  val country_fee_tofiat_percent = Play.current.configuration.getDouble("country.country_fee_tofiat_percent").getOrElse(0)
   val country_appearance_pic1 = Play.current.configuration.getString("country.appearance_pic1").getOrElse("Not Set")
   val country_appearance_pic2 = Play.current.configuration.getString("country.appearance_pic2").getOrElse("Not Set")
   val country_appearance_color1 = Play.current.configuration.getString("country.appearance_color1").getOrElse("Not Set")
@@ -147,11 +143,11 @@ package object globals {
       delete from orders;
 
       select currency_insert('BRL',1);
-      select currency_insert('BRLc',2);
+      select currency_insert('BRL-crypto',2);
       select currency_insert('EUR',3);
-      select currency_insert('EURc',4);
+      select currency_insert('EUR-crypto',4);
       select currency_insert('USD',5);
-      select currency_insert('USDc',6);
+      select currency_insert('USD-crypto',6);
 
       insert into users(id, email) values (0, '');
       insert into balances (user_id, currency) select 0, currency from currencies;
@@ -164,13 +160,13 @@ package object globals {
       select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
       select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
 
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Marcelo', 'Boczko', 'Simão', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='mboczko@yahoo.com';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Yura', 'Mitrofanov', '', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='a2terminator@mail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Test', 'Test-Surname', 'Tes-middle', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='test@hotmail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Test', 'Sur', '', 'Ms.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='test@gmail.com';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'TestBR', 'sobrenome', '', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='test@yahoo.com.br';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'TestRU', 'skovsk', '', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='testru@gmail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, prefix, doc1, doc2, doc3, doc4, doc5) select id, 'Aaaaa', 'SurA', 'MidA', 'Mr.', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5' from users where email='a';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Boczko', 'Simão', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', true, true, true, true, false from users where email='mboczko@yahoo.com';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', 'Mitrofanov', '', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Test-Surname', 'Tes-middle', '', '', '', '', '', false, false, false, false, false from users where email='test@hotmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Sur', '', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', false, false, false, true, false from users where email='test@gmail.com';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestBR', 'sobrenome', '', '', 'doc2', 'doc3', 'doc4', '', false, false, false, true, false from users where email='test@yahoo.com.br';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestRU', 'skovsk', '', 'doc1', 'doc2', '', 'doc4', 'doc5', true, true, true, true, false from users where email='testru@gmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Aaaaa', 'SurA', 'MidA', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', true, true, true, true, false from users where email='a';
 
       insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='a'), '237', 'Agency A', 'Account A', true, 'Crypto-Trade.net';
       insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='mboczko@yahoo.com'), '001', 'Agency B', 'Account B', false, 'Crypto-Trade.net';

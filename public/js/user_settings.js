@@ -8,7 +8,6 @@ $(function(){
             reg_info.name = data[0].name;
             reg_info.surname = data[0].surname;
             reg_info.middle_name = data[0].middle_name;
-            reg_info.prefix = data[0].prefix;
             reg_info.doc1 = data[0].doc1;
             reg_info.doc2 = data[0].doc2;
             reg_info.doc3 = data[0].doc3;

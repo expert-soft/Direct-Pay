@@ -33,10 +33,6 @@ var API;
     };
     API = {
 
-        balance: APIWrap(function() {
-            return $.get(iapi_prefix+'balance', 'json');
-        }),
-
         user_name_info: APIWrap(function() {
             return $.get(iapi_prefix+'user_name_info', 'json');
         }),
@@ -45,8 +41,12 @@ var API;
             return $.get(iapi_prefix+'orders_list', 'json');
         }),
 
-        user_list: APIWrap(function() {
-            return $.get(iapi_prefix+'user_list', 'json');
+        users_list: APIWrap(function() {
+            return $.get(iapi_prefix+'users_list', 'json');
+        }),
+
+        balance: APIWrap(function() {
+            return $.get(iapi_prefix+'balance', 'json');
         }),
 
         user: APIWrap(function() {

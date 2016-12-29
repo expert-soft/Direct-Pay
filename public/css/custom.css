@@ -457,17 +457,20 @@ body {
 .page-title .title_right .pull-right {
   margin: 10px 0; }
 
+.fixed_height_200 {
+  height: 200px; }
+
+.fixed_height_280 {
+    height: 280px; }
+
 .fixed_height_320 {
-    height: 320px; }
+  height: 320px; }
+
+.fixed_height_340 {
+  height: 340px; }
 
 .fixed_height_390 {
   height: 390px; }
-
-.fixed_height_250 {
-    height: 250px; }
-
-.fixed_height_200 {
-  height: 200px; }
 
 .overflow_hidden {
   overflow: hidden; }
@@ -946,6 +949,8 @@ h2 {
   overflow: hidden;
   white-space: nowrap;
   color: #467; /* before was no color */
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .x_title h2 small {

@@ -8,7 +8,7 @@ grant select on play_evolutions to public;
 revoke create on schema public from public;
 
 create table currencies (
-    currency varchar(8) not null primary key,
+    currency varchar(16) not null primary key,
     position int not null -- used for displaying
 );
 
@@ -26,15 +26,19 @@ create unique index unique_lower_email on users (lower(email));
 
 create table users_name_info (
     user_id bigint not null,
-    name varchar(256) not null,
-    surname varchar(256) not null,
-    middle_name varchar(256),
-    prefix varchar(16),
+    name varchar(64) not null,
+    surname varchar(128) not null,
+    middle_name varchar(128),
     doc1 varchar(256),
     doc2 varchar(256),
     doc3 varchar(256),
     doc4 varchar(256),
     doc5 varchar(256),
+    ver1 boolean not null,
+    ver2 boolean not null,
+    ver3 boolean not null,
+    ver4 boolean not null,
+    ver5 boolean not null,
     foreign key (user_id) references users(id),
     primary key (user_id)
 );
@@ -114,7 +118,7 @@ create index tokens_expiration_idx on tokens(expiration desc);
 
 create table balances (
     user_id bigint not null,
-    currency varchar(8) not null,
+    currency varchar(16) not null,
     balance numeric(23,8) default 0 not null,
     hold numeric(23,8) default 0 not null,
     constraint positive_balance check(balance >= 0),

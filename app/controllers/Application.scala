@@ -40,8 +40,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.user_settings(request.user))
   }
 
-  def user_list = SecuredAction { implicit request =>
-    Ok(views.html.administrator.user_list(request.user))
+  def users_list = SecuredAction { implicit request =>
+    Ok(views.html.administrator.users_list(request.user))
   }
 
   def orders_list = SecuredAction { implicit request =>

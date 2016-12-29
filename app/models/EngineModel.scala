@@ -21,7 +21,7 @@ import play.api.db.DB
 import play.api.Play.current
 import anorm.SqlParser._
 import org.joda.time.DateTime
-import securesocial.core.Token
+import securesocial.core.{ SocialUser, Token }
 import play.api.libs.json.Json
 import java.sql.Timestamp
 
@@ -31,18 +31,11 @@ class EngineModel(val db: String = "default") {
 
   // regular apis
 
-  def balance(uid: Option[Long], apiKey: Option[String]) = DB.withConnection(db) { implicit c =>
-    SQL"""select * from balance($uid, $apiKey)"""().map(row =>
-      row[String]("currency") -> (row[BigDecimal]("amount"), row[BigDecimal]("hold"))
-    ).toMap
-  }
-
   def UserNameINFO(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
     SQL"""select * from get_user_name_info($uid)"""().map(row => (
       row[String]("name"),
       row[String]("surname"),
       row[String]("middle_name"),
-      row[String]("prefix"),
       row[Option[String]]("doc1").getOrElse("N/A"),
       row[Option[String]]("doc2").getOrElse("N/A"),
       row[Option[String]]("doc3").getOrElse("N/A"),
@@ -56,8 +49,8 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def UserList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from get_user_list()"""().map(row => (
+  def UsersList() = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_users_list()"""().map(row => (
       row[Long]("id"),
       row[DateTime]("created"),
       row[String]("email"),
@@ -65,7 +58,11 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("name").getOrElse("N/A"),
       row[Option[String]]("surname").getOrElse("N/A"),
       row[Option[String]]("middle_name").getOrElse("N/A"),
-      row[Option[String]]("prefix").getOrElse("N/A")
+      row[Option[String]]("doc1").getOrElse("N/A"),
+      row[Option[String]]("doc2").getOrElse("N/A"),
+      row[Option[String]]("doc3").getOrElse("N/A"),
+      row[Option[String]]("doc4").getOrElse("N/A"),
+      row[Option[String]]("doc5").getOrElse("N/A")
 
     )).toList
   }
@@ -96,6 +93,12 @@ class EngineModel(val db: String = "default") {
       row[String]("surname")
 
     )).toList
+  }
+
+  def balance(uid: Option[Long], apiKey: Option[String]) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from balance($uid, $apiKey)"""().map(row =>
+      row[String]("currency") -> (row[BigDecimal]("amount"), row[BigDecimal]("hold"))
+    ).toMap
   }
 
 }

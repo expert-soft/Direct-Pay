@@ -718,7 +718,7 @@ create or replace function
 balance (
   a_uid bigint,
   a_api_key text,
-  out currency varchar(8),
+  out currency varchar(16),
   out pos integer,
   out amount numeric(23,8),
   out hold numeric(23,8)
@@ -751,10 +751,9 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 create or replace function
 get_user_name_info (
   a_id bigint,
-  out name varchar(256),
-  out surname varchar(256),
-  out middle_name varchar(256),
-  out prefix varchar(16),
+  out name varchar(64),
+  out surname varchar(128),
+  out middle_name varchar(128),
   out doc1 varchar(256),
   out doc2 varchar(256),
   out doc3 varchar(256),
@@ -767,7 +766,7 @@ get_user_name_info (
   out partner varchar (64)
 ) returns setof record as $$
  begin
-  return query select uf.name, uf.surname, uf.middle_name, uf.prefix, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.automatic, uc.partner
+  return query select uf.name, uf.surname, uf.middle_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.automatic, uc.partner
   from users_name_info uf
   left join users_connections uc on uc.user_id = uf.user_id
   where uf.user_id = a_id;;
@@ -776,18 +775,23 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 
 create or replace function
-get_user_list (
+get_users_list (
   out id bigint,
   out created timestamp(3),
   out email varchar(256),
   out active bool,
-  out name varchar(256),
-  out surname varchar(256),
-  out middle_name varchar(256),
-  out prefix varchar(16)
+  out name varchar(64),
+  out surname varchar(128),
+  out middle_name varchar(128),
+  out doc1 varchar(256),
+  out doc2 varchar(256),
+  out doc3 varchar(256),
+  out doc4 varchar(256),
+  out doc5 varchar(256),
+  out ver1 boolean
 ) returns setof record as $$
 begin
-  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.prefix
+  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1
   from users u
   left join users_name_info ui on u.id = ui.user_id;;
 end;;
@@ -803,7 +807,7 @@ get_orders_list (
   out status varchar(4),
   out partner varchar(128),
   out created timestamp(3),
-  out currency varchar(8),
+  out currency varchar(16),
   out initial_value numeric(23,8),
   out total_fee numeric(23,8),
   out net_value numeric(23,8),
@@ -825,6 +829,40 @@ begin
   from orders o
   left join users u on o.user_id = u.id
   left join users_name_info un on o.user_id = un.user_id;;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+
+create or replace function
+balance (
+  a_uid bigint,
+  a_api_key text,
+  out currency varchar(16),
+  out pos integer,
+  out amount numeric(23,8),
+  out hold numeric(23,8)
+) returns setof record as $$
+declare
+  a_user_id bigint;;
+begin
+  if a_uid = 0 then
+    raise 'User id 0 is not allowed to use this function.';;
+  end if;;
+
+  if a_api_key is not null then
+    select user_id into a_user_id from users_api_keys
+    where api_key = a_api_key and active = true and list_balance = true;;
+  else
+    a_user_id := a_uid;;
+  end if;;
+
+  if a_user_id is null then
+    return;;
+  end if;;
+
+  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold from currencies c
+  left outer join balances b on c.currency = b.currency and user_id = a_user_id
+  order by c.position asc;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
@@ -870,5 +908,6 @@ drop function if exists new_log (bigint, text, varchar(256), text, text, inet, t
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
 drop function if exists balance (bigint, text) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
-drop function if exists get_user_list() cascade;
+drop function if exists get_users_list() cascade;
 drop function if exists get_orders_list() cascade;
+drop function if exists get_balance_by_id_and_currency(bigint, text, text) cascade;

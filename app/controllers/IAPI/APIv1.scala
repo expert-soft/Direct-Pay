@@ -41,18 +41,6 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     Ok(Json.obj())
   }
 
-  def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val balances = globals.engineModel.balance(Some(request.user.id), None)
-    Ok(Json.toJson(balances.map({ c =>
-      Json.obj(
-        "currency" -> c._1,
-        "amount" -> c._2._1.bigDecimal.toPlainString,
-        "hold" -> c._2._2.bigDecimal.toPlainString
-      )
-    })
-    ))
-  }
-
   def user_name_info = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     val user_info = globals.engineModel.UserNameINFO(Some(request.user.id))
     Ok(Json.toJson(user_info.map({ c =>
@@ -60,17 +48,16 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "name" -> c._1,
         "surname" -> c._2,
         "middle_name" -> c._3,
-        "prefix" -> c._4,
-        "doc1" -> c._5,
-        "doc2" -> c._6,
-        "doc3" -> c._7,
-        "doc4" -> c._8,
-        "doc5" -> c._9,
-        "bank" -> c._10,
-        "agency" -> c._11,
-        "account" -> c._12,
-        "automatic" -> c._13,
-        "partner" -> c._14
+        "doc1" -> c._4,
+        "doc2" -> c._5,
+        "doc3" -> c._6,
+        "doc4" -> c._7,
+        "doc5" -> c._8,
+        "bank" -> c._9,
+        "agency" -> c._10,
+        "account" -> c._11,
+        "automatic" -> c._12,
+        "partner" -> c._13
       )
     })
     ))
@@ -107,9 +94,9 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     })
     ))
   }
-  def user_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val user_list_info = globals.engineModel.UserList()
-    Ok(Json.toJson(user_list_info.map({ c =>
+  def users_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val users_list_info = globals.engineModel.UsersList()
+    Ok(Json.toJson(users_list_info.map({ c =>
       Json.obj(
         "id" -> c._1,
         "created" -> c._2,
@@ -118,7 +105,23 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "name" -> c._5,
         "surname" -> c._6,
         "middle_name" -> c._7,
-        "prefix" -> c._8
+        "doc1" -> c._8,
+        "doc2" -> c._9,
+        "doc3" -> c._10,
+        "doc4" -> c._11,
+        "doc5" -> c._12
+      )
+    })
+    ))
+  }
+
+  def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val balances = globals.engineModel.balance(Some(request.user.id), None)
+    Ok(Json.toJson(balances.map({ c =>
+      Json.obj(
+        "currency" -> c._1,
+        "amount" -> c._2._1.bigDecimal.toPlainString,
+        "hold" -> c._2._2.bigDecimal.toPlainString
       )
     })
     ))

@@ -5,10 +5,44 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
-    <div id="balance" class="panel panel-default">
-        <script id="balance-template" type="text/x-handlebars-template">
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-tasks"> &nbsp;</i> @Messages("chrome.exchange.navigation.dashboard.title")</h3>
+        </div>
+    </div>
+
+    Issues:<br>
+    1 - getting balance for user for two specific currencies (globals.country_currency_code and globals.country_currency_crypto)<br>
+    I see you did balance function with lots of protection and I did not know if better is to construct a new function and redo protection or using yours.<br>
+
+    2 - I need from table users_name_info the boolean information ver1. Database updated, but something happens at EngineModel that I can not take it. (users list)<br><br>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div  id="balance" class="x_panel">
+                <script id="balance-template" type="text/x-handlebars-template">
+                    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
+                    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+                    <div class="x_title"><h2>@Messages("terminology.balance")</h2><div class="clearfix"></div></div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.overview.userfundsposition")</p>
+                        <ul>
+                            <li>@globals.country_currency_symbol: {{amount_fiat}}, {{available_fiat}}, {{hold_fiat}}</li>
+                            <li>@globals.country_currency_crypto: {{amount_crypto}}, {{available_crypto}}, {{hold_crypto}}</li>
+                        </ul>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="balance2" class="panel panel-default">
+        <script id="balance2-template" type="text/x-handlebars-template">
             <div class="panel-heading">@Messages("terminology.balance")</div>
-            <table id="table_balance" class="table table-striped responsive">
+            <table id="table_balance" class="table table-striped responsive jambo_table bulk_action">
                 <thead>
                     <tr>
                         <th width="25%">@Messages("terminology.currency")</th>
@@ -31,30 +65,23 @@
         </script>
     </div>
 
-To be Created:<br>
-    list of pending actions <br>
-    partners (addvertisement and link)<br>
 
 
 
-    <div class="page-title">
-        <div class="title_left">
-            <h3>Actions Page</h3>
-        </div>
-    </div>
-    <p>@Messages("directpay.dashboard.explanation1", globals.country_system_name,  globals.country_currency_crypto)</p>
-    <p>@Messages("directpay.dashboard.explanation2")</p>
-    <p>@Messages("directpay.dashboard.chooseoptions")</p>
+
+    <p>@Messages("directpay.overview.explanation1", globals.country_system_name,  globals.country_currency_crypto)</p>
+    <p>@Messages("directpay.overview.explanation2")</p>
+    <p>@Messages("directpay.overview.chooseoptions")</p>
 
     <div class="col-md-9 col-sm-9 col-xs-12">
         <div class="radio">
             <label>
-                <input type="radio" checked="" value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.dashboard.optionautomatic")
+                <input type="radio" checked="" value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.overview.optionautomatic")
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" checked="checked" value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.dashboard.optionmanual")
+                <input type="radio" checked="checked" value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.overview.optionmanual")
             </label>
         </div>
     </div>
@@ -62,83 +89,101 @@ To be Created:<br>
 
     <div class="row" id="manual_operations">
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_390">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> @Messages("chrome.exchange.navigation.deposit.label")</h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> &nbsp; @Messages("chrome.exchange.navigation.deposit.label")</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="@routes.Application.deposit().url">@Messages("chrome.exchange.navigation.deposit.label") </a>
+                    <p>@Messages("directpay.overview.deposit.explanation1", globals.country_system_name) @Messages("directpay.deposit.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
+                    <p>@Messages("directpay.overview.deposit.explanation2")</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.deposit().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.depositpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_390">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttocrypto.title") </h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="@routes.Application.ccrypto().url">@Messages("directpay.navigation.converttocrypto.title") </a></li>
+                    <p>@Messages("directpay.ccrypto.explanation1")</p>
+                    <p>@Messages("directpay.ccrypto.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.ccrypto().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_390">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-upload"></i> @Messages("directpay.send.sendtopartner") </h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.send.sendtopartner") </h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="@routes.Application.send().url">@Messages("directpay.send.sendtopartner") </a>
+                    <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
+                    <p>@Messages("directpay.send.explanation2", globals.country_currency_crypto)</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.send().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.sendpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_390">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> @Messages("directpay.navigation.receivefunds.title") </h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.navigation.receivefunds.title") </h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.receive.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.overview.receive.explanation1", globals.country_system_name)</p>
                     <p>@Messages("directpay.receive.linkstopartners")</p>
                     @if(globals.country_partner1 != "") {
-                        <style> #box_partner1 { border-radius: 5px; background: #88e; font-size: 20px; text-color: #fff; v-align: center; text-align: center; padding: 20px; margin: 10px; height: 40px; }</style>
+                        <style> #box_partner1 { border-radius: 5px; background: #9af; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
                         <a href="@globals.country_partner1_url"><p id="box_partner1">@globals.country_partner1</p></a> }
-                    <a href="@routes.Application.receive().url">@Messages("directpay.navigation.receivefunds.title") </a>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.receive().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.receivepage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_390">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title")</h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttofiat.title")</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="@routes.Application.cfiat().url">@Messages("directpay.navigation.converttofiat.title")</a>
+                    <p>@Messages("directpay.cfiat.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                    <p>@Messages("directpay.cfiat.explanation2", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.cfiat().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_390">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label")</h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-minus"></i> &nbsp; @Messages("chrome.exchange.navigation.withdraw.label")</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="@routes.Application.withdraw().url">@Messages("chrome.exchange.navigation.withdraw.label")</a>
+                    <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
+                    <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
+                    <p>@Messages("directpay.withdraw.explanation3", globals.country_currency_symbol)</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.withdraw().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.withdrawpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,27 +192,35 @@ To be Created:<br>
 
     <div class="row" id="automatic_operations">
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_340">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i> @Messages("directpay.depositsend.depositconvertandsend")</h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i> &nbsp; @Messages("directpay.depositsend.depositconvertandsend")</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="routes.Application.depositsend().url">@Messages("directpay.depositsend.depositconvertandsend") </a>
+                    <p>@Messages("directpay.depositsend.explanation1", globals.country_currency_crypto)</p>
+                    <p>@Messages("directpay.depositsend.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                    <p>@Messages("directpay.depositsend.explanation3")</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.deposit().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.depositsend") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel fixed_height_250">
+            <div class="x_panel fixed_height_340">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> @Messages("directpay.receivewithdraw.receiveconvertandwithdraw") </h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> &nbsp; @Messages("directpay.receivewithdraw.receiveconvertandwithdraw") </h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>Content</p>
-                    <a href="routes.Application.receivewithdraw().url">@Messages("directpay.receivewithdraw.receiveconvertandwithdraw") </a></li>
+                    <p>@Messages("directpay.receivewithdraw.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                    <p>@Messages("directpay.receivewithdraw.explanation2", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                    <p>@Messages("directpay.receivewithdraw.explanation3")</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <a href="@routes.Application.withdraw().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.receivewithdraw") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                    </div>
                 </div>
             </div>
         </div>

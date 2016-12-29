@@ -20,7 +20,7 @@ GET         /withdraw                                  controllers.Application.w
 GET         /automatic                                 controllers.Application.automatic
 
 # Administrator's pages
-GET         /user_list                                 controllers.Application.user_list
+GET         /users_list                                controllers.Application.users_list
 GET         /orders_list                               controllers.Application.orders_list
 
 
@@ -32,11 +32,11 @@ GET         /assets/*file                              controllers.Assets.at(pat
 
 # APIv1
 GET         /iapi/1                                     controllers.IAPI.APIv1.index
-GET         /iapi/1/balance                             controllers.IAPI.APIv1.balance
 GET         /iapi/1/user                                controllers.IAPI.APIv1.user
 GET         /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
-GET         /iapi/1/user_list                           controllers.IAPI.APIv1.user_list
+GET         /iapi/1/users_list                          controllers.IAPI.APIv1.users_list
 GET         /iapi/1/orders_list                         controllers.IAPI.APIv1.orders_list
+GET         /iapi/1/balance                             controllers.IAPI.APIv1.balance
 POST        /iapi/1/turnoff_tfa                         controllers.IAPI.APIv1.turnOffTFA
 POST        /iapi/1/turnon_tfa                          controllers.IAPI.APIv1.turnOnTFA
 POST        /iapi/1/turnoff_emails                      controllers.IAPI.APIv1.turnOffEmails
