@@ -1,44 +1,29 @@
 $(function(){
     var template = Handlebars.compile($("#balance-template").html());
-    var amount_fiat;
-    var available_fiat;
-    var hold_fiat;
-    var amount_crypto;
-    var available_crypto;
-    var hold_crypto;
 
     function show_balance(){
+        sum_money = 0;
         API.balance().success(function(balances){
-            var specificbalances;
             for (var i = 0; i < balances.length; i++) {
                 balances[i].available = zerosToSpaces(Number(balances[i].amount) - Number(balances[i].hold));
                 balances[i].amount = zerosToSpaces(balances[i].amount);
                 balances[i].hold = zerosToSpaces(balances[i].hold);
 
                 if(balances[i].currency == $('#hidden_currency_code').val()) {
-                    alert(balances[i].amount);
-                    specificbalances.amount_fiat = balances[i].amount;
-                    specificbalances.available_fiat = balances[i].available;
-                    specificbalances.hold_fiat = balances[i].hold;
-                    alert(balances[i].amount);
+                    $("#available_fiat").html(balances[i].available);
+                    $("#hold_fiat").html(balances[i].hold);
+                    sum_money += parseFloat(balances[i].amount);
                 }
                 if(balances[i].currency == $('#hidden_currency_crypto').val()) {
-                    alert(balances[i].amount);
-                    specificbalances.amount_crypto = balances[i].amount;
-                    specificbalances.available_crypto = balances[i].available;
-                    specificbalances.hold_crypto = balances[i].hold;
+                    $("#amount_crypto").html(balances[i].amount);
+                    sum_money += parseFloat(balances[i].amount);
                 }
-
+                $("#amount_total").html(sum_money);
             }
             $('#balance').html(template(balances));
-            $('#balance').html(template(specificbalances));
         });
     }
     show_balance();
-
-    function show_wallet(){
-
-    }
 
     function showHide() {
         if ($("input[name='optionsAutomaticManual']:checked").val() == 'optionAutomatic') {
@@ -51,12 +36,19 @@ $(function(){
         }
     }
 
+
     $(document).ready(function () {
-        show_wallet();
         $("input[name='optionsAutomaticManual']").change(function () {
             showHide();
         });
+
+        $("#btn1").click(function(){
+            $("#test1").text("Hello world!");
+        });
+        $("#btn2").click(function(){
+            $("#test2").html("<b>Hello world!</b>");
+        });
+
     });
     showHide();
-    show_wallet();
 });

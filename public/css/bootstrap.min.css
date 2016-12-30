@@ -21,6 +21,33 @@ body {
     font-size: 11px
 }
 
+.table-wallet  {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 8px;
+    vertical-align: middle;
+}
+.table-wallet  > td {
+    border=1px solid black;
+}
+.wallet_destak {
+    text-align: center;
+    font-size: 23px;
+    color: #000;
+}
+.wallet_destak_icon {
+    font-size: 50px;
+    vertical-align: top;
+    color: #ccc;
+}
+.wallet_destak_sum {
+    text-align: center;
+    font-size: 23px;
+    border-top: 3px solid #555;
+    color: #000;
+}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
     display: block
 }
