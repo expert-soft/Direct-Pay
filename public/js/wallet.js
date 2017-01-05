@@ -9,12 +9,11 @@ $(function(){
                 balances[i].amount = zerosToSpaces(balances[i].amount);
                 balances[i].hold = zerosToSpaces(balances[i].hold);
 
-                if(balances[i].currency == $('#hidden_currency_code').val()) {
+                if(balances[i].is_fiat == "true") {
                     $("#available_fiat").html(balances[i].available);
                     $("#hold_fiat").html(balances[i].hold);
                     sum_money += parseFloat(balances[i].amount);
-                }
-                if(balances[i].currency == $('#hidden_currency_crypto').val()) {
+                } else {
                     $("#amount_crypto").html(balances[i].amount);
                     sum_money += parseFloat(balances[i].amount);
                 }

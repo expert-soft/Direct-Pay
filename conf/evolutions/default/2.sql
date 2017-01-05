@@ -721,7 +721,8 @@ balance (
   out currency varchar(16),
   out pos integer,
   out amount numeric(23,8),
-  out hold numeric(23,8)
+  out hold numeric(23,8),
+  out is_fiat bool
 ) returns setof record as $$
 declare
   a_user_id bigint;;
@@ -741,7 +742,7 @@ begin
     return;;
   end if;;
 
-  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold from currencies c
+  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, c.is_fiat from currencies c
   left outer join balances b on c.currency = b.currency and user_id = a_user_id
   order by c.position asc;;
 end;;
@@ -840,7 +841,8 @@ balance (
   out currency varchar(16),
   out pos integer,
   out amount numeric(23,8),
-  out hold numeric(23,8)
+  out hold numeric(23,8),
+  out is_fiat bool
 ) returns setof record as $$
 declare
   a_user_id bigint;;
@@ -860,7 +862,7 @@ begin
     return;;
   end if;;
 
-  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold from currencies c
+  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, c.is_fiat from currencies c
   left outer join balances b on c.currency = b.currency and user_id = a_user_id
   order by c.position asc;;
 end;;

@@ -9,7 +9,8 @@ revoke create on schema public from public;
 
 create table currencies (
     currency varchar(16) not null primary key,
-    position int not null -- used for displaying
+    position int not null,
+    is_fiat bool default false not null
 );
 
 create table users (

@@ -142,12 +142,12 @@ package object globals {
       delete from users;
       delete from orders;
 
-      select currency_insert('BRL',1);
-      select currency_insert('BRL-crypto',2);
-      select currency_insert('EUR',3);
-      select currency_insert('EUR-crypto',4);
-      select currency_insert('USD',5);
-      select currency_insert('USD-crypto',6);
+      select currency_insert('BRL', 1, true);
+      select currency_insert('BRL-crypto', 2, false);
+      select currency_insert('EUR', 3, true);
+      select currency_insert('EUR-crypto', 4, false);
+      select currency_insert('USD', 5, true);
+      select currency_insert('USD-crypto', 6, false);
 
       insert into users(id, email) values (0, '');
       insert into balances (user_id, currency) select 0, currency from currencies;

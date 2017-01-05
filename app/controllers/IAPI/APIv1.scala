@@ -121,7 +121,8 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Json.obj(
         "currency" -> c._1,
         "amount" -> c._2._1.bigDecimal.toPlainString,
-        "hold" -> c._2._2.bigDecimal.toPlainString
+        "hold" -> c._2._2.bigDecimal.toPlainString,
+        "is_fiat" -> c._2._3
       )
     })
     ))
