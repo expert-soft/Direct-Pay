@@ -95,8 +95,8 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def balance(uid: Option[Long], apiKey: Option[String]) = DB.withConnection(db) { implicit c =>
-    SQL"""select * from balance($uid, $apiKey)"""().map(row =>
+  def balance(uid: Option[Long], apiKey: Option[String], fiat: String, crypto: String) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from balance($uid, $apiKey, $fiat, $crypto)"""().map(row =>
       row[String]("currency") -> (row[BigDecimal]("amount"), row[BigDecimal]("hold"), row[Boolean]("is_fiat"))
     ).toMap
   }

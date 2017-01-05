@@ -718,6 +718,8 @@ create or replace function
 balance (
   a_uid bigint,
   a_api_key text,
+  a_fiat varchar(16),
+  a_crypto varchar(16),
   out currency varchar(16),
   out pos integer,
   out amount numeric(23,8),
@@ -744,6 +746,7 @@ begin
 
   return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, c.is_fiat from currencies c
   left outer join balances b on c.currency = b.currency and user_id = a_user_id
+  where c.currency = a_fiat or c.currency = a_crypto
   order by c.position asc;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
@@ -834,41 +837,6 @@ end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
 
-create or replace function
-balance (
-  a_uid bigint,
-  a_api_key text,
-  out currency varchar(16),
-  out pos integer,
-  out amount numeric(23,8),
-  out hold numeric(23,8),
-  out is_fiat bool
-) returns setof record as $$
-declare
-  a_user_id bigint;;
-begin
-  if a_uid = 0 then
-    raise 'User id 0 is not allowed to use this function.';;
-  end if;;
-
-  if a_api_key is not null then
-    select user_id into a_user_id from users_api_keys
-    where api_key = a_api_key and active = true and list_balance = true;;
-  else
-    a_user_id := a_uid;;
-  end if;;
-
-  if a_user_id is null then
-    return;;
-  end if;;
-
-  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, c.is_fiat from currencies c
-  left outer join balances b on c.currency = b.currency and user_id = a_user_id
-  order by c.position asc;;
-end;;
-$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
-
-
 # --- !Downs
 
 drop function if exists create_user (varchar(256), text, bool) cascade;
@@ -908,7 +876,7 @@ drop function if exists totp_token_is_blacklisted (bigint, bigint) cascade;
 drop function if exists delete_expired_totp_blacklist_tokens () cascade;
 drop function if exists new_log (bigint, text, varchar(256), text, text, inet, text) cascade;
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
-drop function if exists balance (bigint, text) cascade;
+drop function if exists balance (bigint, text, varchar(16), varchar(16)) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
 drop function if exists get_users_list() cascade;
 drop function if exists get_orders_list() cascade;
