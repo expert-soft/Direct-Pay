@@ -190,7 +190,11 @@ terminology.receive=Receive
 terminology.info=Info
 terminology.disclaimer=Disclaimer
 terminology.yourfunds=Your Funds
-terminology.yourwallet=Your Wallet
+terminology.wallet.yourwallet=Your Wallet
+terminology.wallet.available=Available
+terminology.wallet.onhold=On Hold
+terminology.wallet.crypto=Crypto
+terminology.wallet.total=Total
 terminology.convertto=Convert to
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
@@ -253,7 +257,8 @@ directpay.overview.receive.explanation1=To receive funds from a partner, you sho
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
 directpay.deposit.explanation1=Deposit must be in cash or bank transfer from your own personal bank account (daily maximum deposit is {0} {1}) to one of the following bank accounts
-directpay.deposit.explanation2=Picture of the receipt must be clear and prefectly readable and exactly the same declared. Otherwise, your funds may be kept on hold or refused.
+directpay.deposit.explanation2=After doing the bank deposit you must submit the deposit receipt to verification:
+directpay.deposit.explanation3=Picture of the receipt must be clear and prefectly readable and exactly the same declared. Otherwise, your funds may be kept on hold or refused.
 directpay.deposit.disclaimer1=To be sure your deposit to be recognized, keed your personal information complete and up to date, do the deposit in cash or from your own bank account and submit a clear picture of your bank receipt.
 directpay.deposit.disclaimer2=Deposits made at banking working time are processed in few minutes after effective bank confirmation (max = 3 hours). Deposits made out of banking work time are subject to specific verification and can be delayed. If you have trouble to have your deposit recognized, please contact eu.euateumesmo.com.
 directpay.withdraw.requestwithdrawal=Request a Withdrawal

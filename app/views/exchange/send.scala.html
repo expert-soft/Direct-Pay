@@ -1,7 +1,7 @@
 @(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
 
 @scripts = {
-    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
 }
 
 @exchange._chrome(Messages("terminology.send"), "dashboard", scripts) {
@@ -15,38 +15,36 @@
         <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
     </div>
 
+        <!-- Wallet -->
+    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
+    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
     <div class="clearfix"></div>
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div id="balance" class="x_panel">
-                <div class="x_title"><h2>@Messages("terminology.receive")</h2><div class="clearfix"></div></div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div  id="wallet" class="x_panel">
+                <div class="x_title">
+                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
                 <div class="x_content">
-                    <script id="balance-template" type="text/x-handlebars-template">
-                    <div class="panel-heading">@Messages("terminology.balance")</div>
-                    <table id="table_balance" class="table table-striped responsive">
-                        <thead>
-                            <tr>
-                                <th width="25%">@Messages("terminology.currency")</th>
-                                <th width="25%">@Messages("terminology.total")</th>
-                                <th class="hidden-xs" width="20%">@Messages("terminology.hold")</th>
-                                <th width="30%">@Messages("terminology.available")</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {{#each this}}
-                            <tr id="currency={{currency}}">
-                                <td width="25%"><a class="show-menu" href="#" currency-id="{{currency}}"><img src="@routes.Assets.at("img/{{currency}}.png")" height="20px" width="20px"> {{currency}}</td>
-                                <td width="25%">{{amount}}</td>
-                                <td class="hidden-xs" width="20%">{{hold}}</td>
-                                <td width="30%">{{available}}</td>
-                            </tr>
-                        {{/each}}
-                        </tbody>
+                    <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
+                    <table id="table_wallet" class="table-wallet">
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
-                </script>
+                    <p>Texto.</p>
+                </div>
             </div>
         </div>
     </div>
+    <div id="balance">
+        <script id="balance-template" type="text/x-handlebars-template"></script>
+    </div>
+        <!-- end of Wallet -->
+
+
 
         <!-- Start of form -->
     <div class="clearfix"></div>
@@ -64,7 +62,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("directpay.terminology.partner")</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                     <option value="00">@Messages("directpay.usersettings.notselected")</option>

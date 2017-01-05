@@ -1,7 +1,7 @@
 @(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
 
 @scripts = {
-    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
@@ -16,38 +16,34 @@
         <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
     </div>
 
+        <!-- Wallet -->
+    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
+    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
     <div class="clearfix"></div>
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div id="balance" class="x_panel">
-                <div class="x_title"><h2>@Messages("terminology.yourfunds"):</h2><div class="clearfix"></div></div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div  id="wallet" class="x_panel">
+                <div class="x_title">
+                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
                 <div class="x_content">
-                    <script id="balance-template" type="text/x-handlebars-template">
-                        <table id="table_balance" class="table table-striped responsive">
-                            <thead>
-                                <tr>
-                                    <th width="25%">@Messages("terminology.currency")</th>
-                                    <th width="25%">@Messages("terminology.total")</th>
-                                    <th class="hidden-xs" width="20%">@Messages("terminology.hold")</th>
-                                    <th width="30%">@Messages("terminology.available")</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {{#each this}}
-                                <tr id="currency={{currency}}">
-                                    <td width="25%"><a class="show-menu" href="#" currency-id="{{currency}}"><img src="@routes.Assets.at("img/{{currency}}.png")" height="20px" width="20px"> {{currency}}</td>
-                                    <td width="25%">{{amount}}</td>
-                                    <td class="hidden-xs" width="20%">{{hold}}</td>
-                                    <td width="30%">{{available}}</td>
-                                </tr>
-                            {{/each}}
-                            </tbody>
-                        </table>
-                    </script>
+                    <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
+                    <table id="table_wallet" class="table-wallet">
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
+                    </table>
+                    <p>Texto.</p>
                 </div>
             </div>
         </div>
     </div>
+    <div id="balance">
+        <script id="balance-template" type="text/x-handlebars-template"></script>
+    </div>
+        <!-- end of Wallet -->
 
 
 
@@ -71,24 +67,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.bank")</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input type="hidden" id="hidden_bank" value="{{bank}}"></input>
                                 <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
-                                    <option value="001 - Banco do Brasil">001 - Banco do Brasil</option>
-                                    <option value="029 - Banerj">029 - Banerj</option>
-                                    <option value="033 - Santander">033 - Santander</option>
-                                    <option value="104 - Caixa Econômica Federal">104 - Caixa Econômica Federal</option>
-                                    <option value="237 - Bradesco">237 - Bradesco</option>
-                                    <option value="318 - BMG">318 - BMG</option>
-                                    <option value="341 - Itaú Unibanco">341 - Itaú Unibanco</option>
-                                    <option value="366 - Société Générale">366 - Société Générale</option>
-                                    <option value="399 - HSBC">399 - HSBC</option>
-                                    <option value="422 - Safra">422 - Safra</option>
-                                    <option value="487 - Deutsche Bank">487 - Deutsche Bank</option>
-                                    <option value="505 - Credit Suisse">505 - Credit Suisse</option>
-                                    <option value="600 - Luso Brasileiro">600 - Luso Brasileiro</option>
-                                    <option value="623 - Panamericano">623 - Panamericano</option>
-                                    <option value="745 - Citibank">745 - Citibank</option>
+                                    <option value="0">@Messages("directpay.usersettings.notselected")</option>
+                                    @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
+                                    @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
+                                    @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
+                                    @if(globals.country_bank4_code != "") { <option value="@globals.country_bank4_code">@globals.country_bank4_code - @globals.country_bank4_name</option> }
+                                    @if(globals.country_bank5_code != "") { <option value="@globals.country_bank5_code">@globals.country_bank5_code - @globals.country_bank5_name</option> }
+                                    @if(globals.country_bank6_code != "") { <option value="@globals.country_bank6_code">@globals.country_bank6_code - @globals.country_bank6_name</option> }
+                                    @if(globals.country_bank7_code != "") { <option value="@globals.country_bank7_code">@globals.country_bank7_code - @globals.country_bank7_name</option> }
+                                    @if(globals.country_bank8_code != "") { <option value="@globals.country_bank8_code">@globals.country_bank8_code - @globals.country_bank8_name</option> }
+                                    @if(globals.country_bank9_code != "") { <option value="@globals.country_bank9_code">@globals.country_bank9_code - @globals.country_bank9_name</option> }
+                                    @if(globals.country_bank10_code != "") { <option value="@globals.country_bank10_code">@globals.country_bank10_code - @globals.country_bank10_name</option> }
+                                    @if(globals.country_bank11_code != "") { <option value="@globals.country_bank11_code">@globals.country_bank11_code - @globals.country_bank11_name</option> }
+                                    @if(globals.country_bank12_code != "") { <option value="@globals.country_bank12_code">@globals.country_bank12_code - @globals.country_bank12_name</option> }
+                                    @if(globals.country_bank13_code != "") { <option value="@globals.country_bank13_code">@globals.country_bank13_code - @globals.country_bank13_name</option> }
+                                    @if(globals.country_bank14_code != "") { <option value="@globals.country_bank14_code">@globals.country_bank14_code - @globals.country_bank14_name</option> }
+                                    @if(globals.country_bank15_code != "") { <option value="@globals.country_bank15_code">@globals.country_bank15_code - @globals.country_bank15_name</option> }
+                                    @if(globals.country_bank16_code != "") { <option value="@globals.country_bank16_code">@globals.country_bank16_code - @globals.country_bank16_name</option> }
+                                    @if(globals.country_bank17_code != "") { <option value="@globals.country_bank17_code">@globals.country_bank17_code - @globals.country_bank17_name</option> }
+                                    @if(globals.country_bank18_code != "") { <option value="@globals.country_bank18_code">@globals.country_bank18_code - @globals.country_bank18_name</option> }
+                                    @if(globals.country_bank19_code != "") { <option value="@globals.country_bank19_code">@globals.country_bank19_code - @globals.country_bank19_name</option> }
+                                    @if(globals.country_bank20_code != "") { <option value="@globals.country_bank20_code">@globals.country_bank20_code - @globals.country_bank20_name</option> }
                                 </select>
                             </div>
                         </div>

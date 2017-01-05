@@ -711,7 +711,7 @@ a:hover, a:focus {
 }
 
 .navbar-right {
-    margin-right: 0
+    /*margin-right: 0*/
 }
 
 .top_nav .navbar-right {
@@ -2117,6 +2117,7 @@ h4.graph_title {
     border-radius: 5px;
     background-clip: padding-box;
     background: #FFF;
+    padding: 12px;                  /* added by me */
     transition: all 300ms ease-in-out
 }
 

@@ -37,7 +37,10 @@ $(function(){
                 else
                     data[i].class_type = "class=center_bold";
 
-                data[i].class_value = "class=right_bold";
+                if (data[i].initial_value > 15000) //value must be taken from country-configs
+                    data[i].class_value = "class=smallfail";
+                else if (data[i].initial_value > 1000) //value must be taken from country-configs
+                    data[i].class_value = "class=important";
 
             }
             $('#orders-open').html(orders_open_template(data));
