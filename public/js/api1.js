@@ -33,32 +33,20 @@ var API;
     };
     API = {
 
-        balance: APIWrap(function() {
-            return $.get(iapi_prefix+'balance', 'json');
-        }),
-
         user_name_info: APIWrap(function() {
             return $.get(iapi_prefix+'user_name_info', 'json');
-        }),
-
-        country: APIWrap(function() {
-            return $.get(iapi_prefix+'country', 'json');
-        }),
-
-        country_docs: APIWrap(function() {
-            return $.get(iapi_prefix+'country_docs', 'json');
-        }),
-
-        banks_list: APIWrap(function() {
-            return $.get(iapi_prefix+'banks_list', 'json');
         }),
 
         orders_list: APIWrap(function() {
             return $.get(iapi_prefix+'orders_list', 'json');
         }),
 
-        user_list: APIWrap(function() {
-            return $.get(iapi_prefix+'user_list', 'json');
+        users_list: APIWrap(function() {
+            return $.get(iapi_prefix+'users_list', 'json');
+        }),
+
+        balance: APIWrap(function() {
+            return $.get(iapi_prefix+'balance', 'json');
         }),
 
         user: APIWrap(function() {

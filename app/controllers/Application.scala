@@ -40,8 +40,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.user_settings(request.user))
   }
 
-  def user_list = SecuredAction { implicit request =>
-    Ok(views.html.exchange.user_list(request.user))
+  def users_list = SecuredAction { implicit request =>
+    Ok(views.html.administrator.users_list(request.user))
   }
 
   def orders_list = SecuredAction { implicit request =>
@@ -50,6 +50,34 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
 
   def history = SecuredAction { implicit request =>
     Ok(views.html.exchange.history(request.user))
+  }
+
+  def deposit = SecuredAction { implicit request =>
+    Ok(views.html.exchange.deposit(request.user))
+  }
+
+  def ccrypto = SecuredAction { implicit request =>
+    Ok(views.html.exchange.ccrypto(request.user))
+  }
+
+  def send = SecuredAction { implicit request =>
+    Ok(views.html.exchange.send(request.user))
+  }
+
+  def receive = SecuredAction { implicit request =>
+    Ok(views.html.exchange.receive(request.user))
+  }
+
+  def cfiat = SecuredAction { implicit request =>
+    Ok(views.html.exchange.cfiat(request.user))
+  }
+
+  def withdraw = SecuredAction { implicit request =>
+    Ok(views.html.exchange.withdraw(request.user))
+  }
+
+  def automatic = SecuredAction { implicit request =>
+    Ok(views.html.exchange.automatic(request.user))
   }
 
   def wallet = SecuredAction { implicit request =>

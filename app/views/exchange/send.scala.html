@@ -1,0 +1,102 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@scripts = {
+    <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
+}
+
+@exchange._chrome(Messages("terminology.send"), "dashboard", scripts) {
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-upload"> &nbsp;</i> @Messages("directpay.send.sendtopartner")</h3>
+        </div>
+    </div>
+    <div class="normal-text">
+        <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
+    </div>
+
+        <!-- Wallet -->
+    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
+    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div  id="wallet" class="x_panel">
+                <div class="x_title">
+                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
+                    <table id="table_wallet" class="table-wallet">
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
+                    </table>
+                    <p>Texto.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="balance">
+        <script id="balance-template" type="text/x-handlebars-template"></script>
+    </div>
+        <!-- end of Wallet -->
+
+
+
+        <!-- Start of form -->
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title"><h2>@Messages("directpay.send.sendtopartner")</h2><div class="clearfix"></div></div>
+                <div class="x_content">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_crypto) <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3">
+                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("directpay.send.valuetobesent")">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
+                                    <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                    <option value="@globals.country_partner1">@globals.country_partner1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p>@Messages("directpay.send.explanation2")</p>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">@Messages("terminology.send")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <!-- End of form -->
+
+
+
+
+
+
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.send.disclaimer1", globals.country_currency_crypto)</p>
+    </div>
+    <div class="clearfix"></div>
+        <!-- /page content -->
+
+}

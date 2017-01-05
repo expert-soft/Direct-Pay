@@ -1,0 +1,142 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import securesocial.core.UsernamePasswordProvider
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
+
+@scripts = {
+    <script src="@routes.Assets.at("js/users_list.js")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-user"> &nbsp;</i> @Messages("directpay.navigation.admin.userslist.title")</h3>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div id="users_list" class="x_panel">
+                <div class="x_title"><h2>@Messages("directpay.navigation.admin.userslist.title")</h2><div class="clearfix"></div></div>
+                <div class="x_content">
+                    <p id="users-list"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="users-list-template" type="text/x-handlebars-template">
+        <table id="table_users_list" class="table table-striped responsive jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.email")</th>
+                    <th>@Messages("terminology.name")</th>
+                    <th>@globals.country_currency_symbol</th>
+                    <th>@globals.country_currency_crypto</th>
+                    @if(globals.country_doc1_required) { <th>@globals.country_doc1_name</th> }
+                    @if(globals.country_doc2_required) { <th>@globals.country_doc2_name</th> }
+                    @if(globals.country_doc3_required) { <th>@globals.country_doc3_name</th> }
+                    @if(globals.country_doc4_required) { <th>@globals.country_doc4_name</th> }
+                    @if(globals.country_doc5_required) { <th>@globals.country_doc5_name</th> }
+                </tr>
+            </thead>
+            <tbody>
+            {{#each this}}
+                <tr id="{{id}}">
+                    <td>{{email}}</td>
+                    <td>{{name}} {{middle_name}} {{surname}}</td>
+                    <td>34.98</td>
+                    <td>769.00897</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">{{doc1}}</a>} else {{doc1}} <br> {{checked1}} </td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">{{doc2}}</a>} else {{doc2}} <br> {{checked2}} </td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">{{doc3}}</a>} else {{doc3}} <br> {{checked3}} </td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">{{doc4}}</a>} else {{doc4}} <br> {{checked4}} </td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">{{doc5}}</a>} else {{doc5}} <br> {{checked5}} </td> }
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+
+<hr>
+
+        <table id="table_users" class="table table-striped responsive jambo_table bulk_action">
+            <tbody>
+                <tr>
+                    <td><a href="#">\dfgeraAtoimf</a></td>
+                    <td>Julio Franco</td>
+                    <td>850.00</td>
+                    <td>13.98788</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
+                </tr>
+                <tr>
+                    <td><a href="#">edgfbaAtoerbaaeaervbf</a></td>
+                    <td>Rodrigo Augusto Fortes</td>
+                    <td>528.98</td>
+                    <td>0.61221</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
+                </tr>
+                <tr>
+                    <td><a href="#">avervATervbf</a></td>
+                    <td>Jorge Emanoel Ribeiro</td>
+                    <td class="bgn_yellow">88090.63</td>
+                    <td>155.98211</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a> <i class="fa fa-check"></i>} else {555.666.777.888-99  <i class="fa fa-check"></i>}</td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a> <i class="fa fa-check"></i>} else {fgfghf  <i class="fa fa-check"></i>}</td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a> <i class="fa fa-check"></i>} else {fghf  <i class="fa fa-check"></i>}</td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a> <i class="fa fa-check"></i>} else {(15) 3305-3384 <i class="fa fa-check"></i>}</td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a> <i class="fa fa-check"></i>} else {fh <i class="fa fa-check"></i>}</td> }
+                </tr>
+                <tr>
+                    <td><a href="#">fhnrsATv53v</a></td>
+                    <td>Eduardo</td>
+                    <td>33.56</td>
+                    <td>699.09988</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a> <i class="fa fa-eye-open"></i>} else {555.666.777.888-99  <i class="fa fa-eye-open"></i>}</td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a> <i class="fa fa-eye-open"></i>} else {fgfghf  <i class="fa fa-eye-open"></i>}</td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a> <i class="fa fa-check"></i>} else {fghf  <i class="fa fa-check"></i>}</td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a> <i class="fa fa-eye-open"></i>} else {(15) 3305-3384 <i class="fa fa-eye-open"></i>}</td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a> <i class="fa fa-check"></i>} else {fh <i class="fa fa-check"></i>}</td> }
+                </tr>
+                <tr>
+                    <td><a href="#">edgfbaAtovbf</a></td>
+                    <td>Lucia Marques da Costa</td>
+                    <td>766.90</td>
+                    <td>0.00000</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
+                </tr>
+                <tr>
+                    <td><a href="#">edgfbaAtove4ervbf</a></td>
+                    <td>Robson Wnaderley</td>
+                    <td>1330.00</td>
+                    <td>0.56432</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
+                </tr>
+            </tbody>
+        </table>
+    </script>
+
+
+
+
+
+}

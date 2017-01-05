@@ -1,0 +1,130 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@scripts = {
+    <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-minus"> &nbsp;</i> @Messages("directpay.navigation.withdraw.title")</h3>
+        </div>
+    </div>
+    <div class="normal-text">
+        <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
+        <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
+    </div>
+
+        <!-- Wallet -->
+    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
+    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div  id="wallet" class="x_panel">
+                <div class="x_title">
+                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
+                    <table id="table_wallet" class="table-wallet">
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
+                    </table>
+                    <p>Texto.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="balance">
+        <script id="balance-template" type="text/x-handlebars-template"></script>
+    </div>
+        <!-- end of Wallet -->
+
+
+
+
+
+
+    <!-- Start of form -->
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div id="withdraw" class="x_panel">
+                <div class="x_title"><h2>@Messages("directpay.withdraw.requestwithdrawal")</h2><div class="clearfix"></div></div>
+                <div class="x_content">
+                    ## put a remark if documentation incomplete<br>
+                    <form id="form1" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3">
+                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("terminology.value")">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input type="hidden" id="hidden_bank" value="{{bank}}"></input>
+                                <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
+                                    <option value="0">@Messages("directpay.usersettings.notselected")</option>
+                                    @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
+                                    @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
+                                    @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
+                                    @if(globals.country_bank4_code != "") { <option value="@globals.country_bank4_code">@globals.country_bank4_code - @globals.country_bank4_name</option> }
+                                    @if(globals.country_bank5_code != "") { <option value="@globals.country_bank5_code">@globals.country_bank5_code - @globals.country_bank5_name</option> }
+                                    @if(globals.country_bank6_code != "") { <option value="@globals.country_bank6_code">@globals.country_bank6_code - @globals.country_bank6_name</option> }
+                                    @if(globals.country_bank7_code != "") { <option value="@globals.country_bank7_code">@globals.country_bank7_code - @globals.country_bank7_name</option> }
+                                    @if(globals.country_bank8_code != "") { <option value="@globals.country_bank8_code">@globals.country_bank8_code - @globals.country_bank8_name</option> }
+                                    @if(globals.country_bank9_code != "") { <option value="@globals.country_bank9_code">@globals.country_bank9_code - @globals.country_bank9_name</option> }
+                                    @if(globals.country_bank10_code != "") { <option value="@globals.country_bank10_code">@globals.country_bank10_code - @globals.country_bank10_name</option> }
+                                    @if(globals.country_bank11_code != "") { <option value="@globals.country_bank11_code">@globals.country_bank11_code - @globals.country_bank11_name</option> }
+                                    @if(globals.country_bank12_code != "") { <option value="@globals.country_bank12_code">@globals.country_bank12_code - @globals.country_bank12_name</option> }
+                                    @if(globals.country_bank13_code != "") { <option value="@globals.country_bank13_code">@globals.country_bank13_code - @globals.country_bank13_name</option> }
+                                    @if(globals.country_bank14_code != "") { <option value="@globals.country_bank14_code">@globals.country_bank14_code - @globals.country_bank14_name</option> }
+                                    @if(globals.country_bank15_code != "") { <option value="@globals.country_bank15_code">@globals.country_bank15_code - @globals.country_bank15_name</option> }
+                                    @if(globals.country_bank16_code != "") { <option value="@globals.country_bank16_code">@globals.country_bank16_code - @globals.country_bank16_name</option> }
+                                    @if(globals.country_bank17_code != "") { <option value="@globals.country_bank17_code">@globals.country_bank17_code - @globals.country_bank17_name</option> }
+                                    @if(globals.country_bank18_code != "") { <option value="@globals.country_bank18_code">@globals.country_bank18_code - @globals.country_bank18_name</option> }
+                                    @if(globals.country_bank19_code != "") { <option value="@globals.country_bank19_code">@globals.country_bank19_code - @globals.country_bank19_name</option> }
+                                    @if(globals.country_bank20_code != "") { <option value="@globals.country_bank20_code">@globals.country_bank20_code - @globals.country_bank20_name</option> }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3" for="agency">@Messages("terminology.agency")</label>
+                            <div class="col-md-3 col-sm-3"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3" for="account">@Messages("terminology.account")</label>
+                            <div class="col-md-3 col-sm-3"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
+                        </div>
+                        <p>@Messages("directpay.withdraw.explanation3", globals.country_currency_symbol)</p>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">@Messages("directpay.navigation.withdraw.title")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of form -->
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.withdraw.disclaimer1")</p>
+        <p>@Messages("directpay.withdraw.disclaimer2")</p>
+        <p>@Messages("directpay.withdraw.disclaimer3")</p>
+    </div>
+    <div class="clearfix"></div>
+    <!-- /page content -->
+
+}

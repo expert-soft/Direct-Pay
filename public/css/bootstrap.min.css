@@ -13,6 +13,98 @@ body {
     margin: 0
 }
 
+.normal-text {
+    font-size: 13px
+}
+
+.disclaimer-text {
+    font-size: 11px
+}
+
+/* wallet style is created by me */
+.table-wallet  {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 8px;
+    vertical-align: middle;
+    color: #ccc;
+}
+.table-wallet  > td {
+    border=1px solid black;
+}
+.wallet_destak {
+    text-align: center;
+    font-size: 22px;
+    color: #000;
+}
+.wallet_crypto_name {
+    font-size: 12px;
+}
+.wallet_destak_icon {
+    color: #ccc;
+    position: absolute;
+    right: 0px;
+    top: -20px;
+    font-size: 60px;
+    z-index: 1
+}
+.wallet_destak_sum {
+    text-align: center;
+    font-size: 22px;
+    border-top: 3px solid #555;
+    color: #000;
+}
+
+/* following table styles created by me */
+.table > tbody > tr > td.center_bold, td.bgn_red, td.bgn_blue, td.bgn_yellow, td.bgn_green, td.bgn_brown {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    text-color: #000;
+}
+
+.table > tbody > tr > td.right_bold {
+    text-align: right;
+    font-weight: 700;
+}
+
+.table > tbody > tr > td.bgn_red {
+    background-color: #fcc
+}
+
+.table > tbody > tr > td.bgn_blue {
+    background-color: #bbf
+}
+
+.table > tbody > tr > td.bgn_yellow {
+    background-color: #ffa
+}
+
+.table > tbody > tr > td.bgn_green {
+    background-color: #bfb
+}
+
+.table > tbody > tr > td.bgn_brown {
+    background-color: #fec
+}
+
+.table > tbody > tr > td.important {
+    color: #00e;
+    font-weight: bold;
+}
+
+.table > tbody > tr > td.smallfail {
+    color: #e00;
+    font-weight: bold;
+}
+
+.table > tbody > tr > td.bigfail {
+    background-color: #fcc;
+    color: #e00;
+    font-weight: bold;
+}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
     display: block
 }
@@ -1487,7 +1579,8 @@ hr {
 }
 
 .h3, h3 {
-    font-size: 24px
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .h4, h4 {
@@ -2769,7 +2862,7 @@ th {
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #fff
+    background-color: #e8e8e8
 }
 
 .table-hover > tbody > tr:hover {
@@ -2831,41 +2924,6 @@ table td[class*=col-], table th[class*=col-] {
 .table-responsive {
     min-height: .01%;
     overflow-x: auto
-}
-
-.table > tbody > tr > td.bgn_red {
-    background-color: #fcc
-}
-
-.table > tbody > tr > td.bgn_blue {
-    background-color: #bbf
-}
-
-.table > tbody > tr > td.bgn_yellow {
-    background-color: #ffa
-}
-
-.table > tbody > tr > td.bgn_green {
-    background-color: #bfb
-}
-
-.table > tbody > tr > td.bgn_brown {
-    background-color: #fec
-}
-
-.table > tbody > tr > td.important {
-    color: #00e;
-    font-weight: bold;
-}
-
-.table > tbody > tr > td.smallfail {
-    color: #e00;
-}
-
-.table > tbody > tr > td.bigfail {
-    background-color: #fcc;
-    color: #e00;
-    font-weight: bold;
 }
 
 @media screen and (max-width: 767px) {
@@ -3412,7 +3470,7 @@ select[multiple].input-lg, textarea.input-lg {
 @media (min-width: 768px) {
     .form-horizontal .form-group-sm .control-label {
         padding-top: 6px;
-        font-size: 12px
+        font-size: 13px
     }
 }
 
@@ -6084,7 +6142,9 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 
 .panel-default > .panel-heading {
     color: #333;
-    background-color: #f5f5f5;
+    background-color: #eef;  /* before: #f5f5f5; */
+    font-size: 18px;
+    font-weight: 700;
     border-color: #ddd
 }
 

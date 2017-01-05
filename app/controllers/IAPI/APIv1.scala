@@ -41,18 +41,6 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     Ok(Json.obj())
   }
 
-  def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val balances = globals.engineModel.balance(Some(request.user.id), None)
-    Ok(Json.toJson(balances.map({ c =>
-      Json.obj(
-        "currency" -> c._1,
-        "amount" -> c._2._1.bigDecimal.toPlainString,
-        "hold" -> c._2._2.bigDecimal.toPlainString
-      )
-    })
-    ))
-  }
-
   def user_name_info = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     val user_info = globals.engineModel.UserNameINFO(Some(request.user.id))
     Ok(Json.toJson(user_info.map({ c =>
@@ -60,123 +48,55 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "name" -> c._1,
         "surname" -> c._2,
         "middle_name" -> c._3,
-        "prefix" -> c._4
+        "doc1" -> c._4,
+        "doc2" -> c._5,
+        "doc3" -> c._6,
+        "doc4" -> c._7,
+        "doc5" -> c._8,
+        "bank" -> c._9,
+        "agency" -> c._10,
+        "account" -> c._11,
+        "automatic" -> c._12,
+        "partner" -> c._13
       )
     })
     ))
   }
 
-  def country = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val country_info = globals.engineModel.country()
-    Ok(Json.toJson(country_info.map({ c =>
-      Json.obj(
-        "country_code" -> c._1,
-        "country_name" -> c._2,
-        "country_local_name" -> c._3,
-        "site_name" -> c._4,
-        "site_url1" -> c._5,
-        "site_url2" -> c._6,
-        "language_name" -> c._7,
-        "language_code" -> c._8,
-        "currency_symbol" -> c._9,
-        "currency_code" -> c._10,
-        "currency_crypto" -> c._11,
-        "currency_name" -> c._12,
-        "currency_name_plural" -> c._13,
-        "currency_approximate_value" -> c._14.bigDecimal.toPlainString,
-        "critical_value" -> c._15.bigDecimal.toPlainString,
-        "working_bank_1" -> c._16,
-        "working_bank_2" -> c._17,
-        "working_bank_3" -> c._18,
-        "working_bank_4" -> c._19
-
-      /*
-             "fee_global" -> c._16,
-             "fee_local" -> c._17,
-             "fee_global_deposit_percent" -> c._18,
-             "fee_local_deposit_percent" -> c._19,
-             "fee_local_deposit_nominal" -> c._20,
-             "fee_global_withdrawal_percent" -> c._21,
-             "fee_local_withdrawal_percent" -> c._22,
-             "fee_local_withdrawal_nominal" -> c._23,
-             "fee_global_send_percent" -> c._24,
-             "fee_local_send_percent" -> c._25,
-             "fee_global_tofiat_percent" -> c._26,
-             "fee_local_tofiat_percent" -> c._27,
-             "fee_local_doc_verification" -> c._28,
-
-             "appearance_pic1" -> c._29,
-             "appearance_pic2" -> c._30,
-             "appearance_color1" -> c._31,
-             "appearance_color2" -> c._32,
-             "appearance_color3" -> c._33,
-             "appearance_color4" -> c._34,
-             "appearance_color5" -> c._35,
-
-           */
-      )
-    })
-    ))
-  }
-
-  def country_docs = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val country_docs = globals.engineModel.country_docs()
-    Ok(Json.toJson(country_docs.map({ c =>
-      Json.obj(
-        "doc1_name" -> c._1,
-        "doc1_required" -> c._2,
-        "doc1_ispicture" -> c._3,
-        "doc1_format" -> c._4,
-        "doc2_name" -> c._5,
-        "doc2_required" -> c._6,
-        "doc2_ispicture" -> c._7,
-        "doc2_format" -> c._8,
-        "doc3_name" -> c._9,
-        "doc3_required" -> c._10,
-        "doc3_ispicture" -> c._11,
-        "doc3_format" -> c._12,
-        "doc4_name" -> c._13,
-        "doc4_required" -> c._14,
-        "doc4_ispicture" -> c._15,
-        "doc4_format" -> c._16,
-        "doc5_name" -> c._17,
-        "doc5_required" -> c._18,
-        "doc5_ispicture" -> c._19,
-        "doc5_format" -> c._20
-      )
-    })
-    ))
-  }
-
-  def banks_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val banks_list_info = globals.engineModel.BanksList()
-    Ok(Json.toJson(banks_list_info.map({ c =>
-      Json.obj(
-        "country_code" -> c._1,
-        "bank_code" -> c._2,
-        "bank_name" -> c._3
-      )
-    })
-    ))
-  }
-
-  def order_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val order_list_info = globals.engineModel.OrderList()
-    Ok(Json.toJson(order_list_info.map({ c =>
+  def orders_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val orders_list_info = globals.engineModel.OrderList()
+    Ok(Json.toJson(orders_list_info.map({ c =>
       Json.obj(
         "order_id" -> c._1,
         "user_id" -> c._2,
         "country_id" -> c._3,
-        "user_email" -> c._4,
-        "type" -> c._5,
-        "creation" -> c._6
+        "order_type" -> c._4,
+        "status" -> c._5,
+        "partner" -> c._6,
+        "created" -> c._7,
+        "currency" -> c._8,
+        "initial_value" -> c._9,
+        "total_fee" -> c._10,
+        "net_value" -> c._11,
+        "doc1" -> c._12,
+        "doc2" -> c._13,
+        "bank" -> c._14,
+        "agency" -> c._15,
+        "account" -> c._16,
+        "closed_value" -> c._17,
+        "comment" -> c._18,
+        "email" -> c._19,
+        "first_name" -> c._20,
+        "middle_name" -> c._21,
+        "surname" -> c._22
+
       )
     })
     ))
   }
-  def user_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val user_list_info = globals.engineModel.UserList()
-    Ok(Json.toJson(user_list_info.map({ c =>
+  def users_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val users_list_info = globals.engineModel.UsersList()
+    Ok(Json.toJson(users_list_info.map({ c =>
       Json.obj(
         "id" -> c._1,
         "created" -> c._2,
@@ -185,7 +105,24 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "name" -> c._5,
         "surname" -> c._6,
         "middle_name" -> c._7,
-        "prefix" -> c._8
+        "doc1" -> c._8,
+        "doc2" -> c._9,
+        "doc3" -> c._10,
+        "doc4" -> c._11,
+        "doc5" -> c._12
+      )
+    })
+    ))
+  }
+
+  def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val balances = globals.engineModel.balance(Some(request.user.id), None)
+    Ok(Json.toJson(balances.map({ c =>
+      Json.obj(
+        "currency" -> c._1,
+        "amount" -> c._2._1.bigDecimal.toPlainString,
+        "hold" -> c._2._2.bigDecimal.toPlainString,
+        "is_fiat" -> c._2._3
       )
     })
     ))

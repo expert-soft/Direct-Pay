@@ -8,8 +8,9 @@ grant select on play_evolutions to public;
 revoke create on schema public from public;
 
 create table currencies (
-    currency varchar(8) not null primary key,
-    position int not null -- used for displaying
+    currency varchar(16) not null primary key,
+    position int not null,
+    is_fiat bool default false not null
 );
 
 create table users (
@@ -26,22 +27,30 @@ create unique index unique_lower_email on users (lower(email));
 
 create table users_name_info (
     user_id bigint not null,
-    name varchar(256) not null,
-    surname varchar(256) not null,
-    middle_name varchar(256),
-    prefix varchar(16),
+    name varchar(64) not null,
+    surname varchar(128) not null,
+    middle_name varchar(128),
+    doc1 varchar(256),
+    doc2 varchar(256),
+    doc3 varchar(256),
+    doc4 varchar(256),
+    doc5 varchar(256),
+    ver1 boolean not null,
+    ver2 boolean not null,
+    ver3 boolean not null,
+    ver4 boolean not null,
+    ver5 boolean not null,
     foreign key (user_id) references users(id),
     primary key (user_id)
 );
 
-create table users_address_info (
+create table users_connections (
     user_id bigint not null,
-    country varchar(256) not null,
-    address varchar(256) not null,
-    city varchar(256) not null,
-    state varchar(256) not null,
-    zip varchar(8) not null,
-    type varchar(16) not null,
+    bank varchar(16),
+    agency varchar(16),
+    account varchar(16),
+    automatic boolean not null,
+    partner varchar(64),
     foreign key (user_id) references users(id),
     primary key (user_id)
 );
@@ -110,7 +119,7 @@ create index tokens_expiration_idx on tokens(expiration desc);
 
 create table balances (
     user_id bigint not null,
-    currency varchar(8) not null,
+    currency varchar(16) not null,
     balance numeric(23,8) default 0 not null,
     hold numeric(23,8) default 0 not null,
     constraint positive_balance check(balance >= 0),
@@ -121,92 +130,29 @@ create table balances (
     primary key (user_id, currency)
 );
 
-create table country (
-    country_id int not null,
-    country_code varchar(4) not null,
-    country_name varchar(32) not null,
-    country_local_name varchar(32),
-    site_name varchar(32) not null,
-    site_url1 varchar(128) not null,
-    site_url2 varchar(128),
-    language_name varchar(32) not null,
-    language_code varchar(4),
-    currency_symbol varchar(4),
-    currency_code varchar(8) not null,
-    currency_crypto varchar(32) not null,
-    currency_name varchar(32) not null,
-    currency_name_plural varchar(32) not null,
-    currency_approximate_value numeric(23,8) default 0 not null,
-    critical_value numeric(23,8) default 0 not null,
-    working_bank_1 varchar(128) not null,
-    working_bank_2 varchar(128),
-    working_bank_3 varchar(128),
-    working_bank_4 varchar(128),
-    primary key (country_id)
-);
-
-create table country_docs (
-    country_id int not null,
-    doc1_name varchar(32),
-    doc1_required boolean not null,
-    doc1_ispicture boolean not null,
-    doc1_format varchar(32),
-    doc2_name varchar(32),
-    doc2_required boolean not null,
-    doc2_ispicture boolean not null,
-    doc2_format varchar(32),
-    doc3_name varchar(32),
-    doc3_required boolean not null,
-    doc3_ispicture boolean not null,
-    doc3_format varchar(32),
-    doc4_name varchar(32),
-    doc4_required boolean not null,
-    doc4_ispicture boolean not null,
-    doc4_format varchar(32),
-    doc5_name varchar(32),
-    doc5_required boolean not null,
-    doc5_ispicture boolean not null,
-    doc5_format varchar(32),
-    primary key (country_id)
-);
-
-create table banks (
-    bank_id int not null,
-    country_id int not null,
-    country_code varchar(4) not null,
-    bank_code varchar(8) not null,
-    bank_name varchar(32) not null,
-    primary key (bank_id, country_id)
-);
---     fee_global" varchar(256) not null,
---     fee_local" varchar(256) not null,
---     fee_global_deposit_percent numeric(7,3) default 0 not null,
---     fee_local_deposit_percent numeric(7,3) default 0 not null,
---     fee_local_deposit_nominal numeric(7,3) default 0 not null,
---     fee_global_withdrawal_percent numeric(7,3) default 0 not null,
---     fee_local_withdrawal_percent numeric(7,3) default 0 not null,
---     fee_local_withdrawal_nominal numeric(7,3) default 0 not null,
---     fee_global_send_percent numeric(7,3) default 0 not null,
---     fee_local_send_percent numeric(7,3) default 0 not null,
---     fee_global_tofiat_percent numeric(7,3) default 0 not null,
---     fee_local_tofiat_percent numeric(7,3) default 0 not null,
---     fee_local_doc_verification numeric(23,8) default 0 not null,
---
---     appearance_pic1 varchar(256) not null,
---     appearance_pic2 varchar(256) not null,
---     appearance_color1 varchar(32),
---     appearance_color2 varchar(32),
---     appearance_color3 varchar(32),
---     appearance_color4 varchar(32),
---     appearance_color5 varchar(32),
-
 create table orders (
     order_id bigint not null,
     user_id bigint not null,
     country_id int not null,
-    user_email varchar(256) not null,
-    type varchar(4) not null,
-    creation int not null, -- timestamp(3) not null,
+    order_type varchar(4) not null,
+    status varchar(2) not null,
+    partner varchar(128),
+    created timestamp(3) default current_timestamp not null,
+    currency varchar(8) not null,
+    initial_value numeric(23,8),
+    total_fee numeric(23,8),
+    doc1 varchar(128),
+    doc2 varchar(128),
+    bank varchar(128),
+    agency varchar(16),
+    account varchar(16),
+    closed timestamp(3),
+    closed_by bigint,
+    closed_value numeric(23,8),
+    comment varchar(128),
+    key1 varchar(32),
+    key2 varchar(32),
+    foreign key (user_id) references users(id),
     primary key (order_id)
 );
 
@@ -215,13 +161,10 @@ create table orders (
 drop table if exists balances cascade;
 drop table if exists currencies cascade;
 drop table if exists tokens cascade;
-drop table if exists country cascade;
-drop table if exists country_docs cascade;
-drop table if exists banks cascade;
 drop table if exists orders cascade;
 drop table if exists users cascade;
 drop table if exists users_name_info cascade;
-drop table if exists users_address_info cascade;
+drop table if exists users_connections cascade;
 drop table if exists users_passwords cascade;
 drop table if exists users_api_keys cascade;
 drop table if exists users_backup_otps cascade;

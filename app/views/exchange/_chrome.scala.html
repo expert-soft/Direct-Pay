@@ -66,12 +66,12 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-play"></i> <span> @Messages("directpay.terminology.applicationname")</span></a>
+                        <a href="index.html" class="site_title"><i class="fa fa-play"></i> <span> @globals.country_system_name</span></a>
                     </div>
                     <div class="profile">
                         <div class="profile_info">
-                            <span>@Messages("directpay.terminology.connectedto")</span>
-                            <h2>@Messages("directpay.terminology.partner")</h2>
+                            <span>@Messages("terminology.connectedto")</span>
+                            <h2>@Messages("terminology.partner")</h2>
                         </div>
                         <div class="profile_pic">
                             <img src="images/img.jpg" alt="..." class="img-circle profile_img">
@@ -82,26 +82,29 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                <li><a href="@routes.Application.wallet().url"><i class="fa fa-money"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
-                                <li><a href="@routes.Application.user_settings().url"><i class="fa fa-question-circle-o"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
-                                <li><a href="@routes.Application.account().url"><i class="fa fa-key"></i> @Messages("directpay.navigation.twofactorsecurity.title") </a></li>
-                                <li><a href="@routes.Application.user_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
-                                <li><a href="@routes.Application.orders_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
-                                <li><a><i class="fa fa-usd"></i> @Messages("chrome.exchange.navigation.dashboard.title") <span class="fa fa-chevron-down"></span></a>
+                                <li><a href="@routes.Application.wallet().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
+                                <li><a href="@routes.Application.user_settings().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
+                                <li><a href="@routes.Application.users_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
+                                <li><a href="@routes.Application.orders_list().url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
+                                <li><a><i class="fa fa-usd"></i> @Messages("directpay.navigation.operations.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="index.html"><i class="fa fa-plus"></i> @Messages("directpay.navigation.actions.title") </a></li>
-                                        <li><a href="index.html"><i class="fa fa-plus"></i> @Messages("chrome.exchange.navigation.deposit.label") </a></li>
-                                        <li><a href="index2.html"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
-                                        <li><a href="index3.html"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>
-                                        <li><a href="index.html"><i class="fa fa-download"></i> @Messages("directpay.navigation.receivefunds.title") </a></li>
-                                        <li><a href="index2.html"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title") </a></li>
-                                        <li><a href="index3.html"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label") </a></li>
+                                    @if(true) {
+                                        <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> @Messages("directpay.navigation.deposit.title") </a></li>
+                                        <li><a href="@routes.Application.ccrypto().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
+                                        <li><a href="@routes.Application.send().url"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>
+                                        <li><a href="@routes.Application.receive().url"><i class="fa fa-download"></i> @Messages("directpay.navigation.receivefunds.title") </a></li>
+                                        <li><a href="@routes.Application.cfiat().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title", globals.country_currency_symbol) </a></li>
+                                        <li><a href="@routes.Application.withdraw().url"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label") </a></li>
+                                    <!-- here should be  else  -->
+                                        <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i>@Messages("directpay.navigation.depositsend.title") </a></li>
+                                        <li><a href="@routes.Application.withdraw().url"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> @Messages("directpay.navigation.receivewithdraw.title") </a></li>
+                                    }
+                                        <li><a href="@routes.Application.automatic().url"><i class="fa fa-flash"></i> @Messages("directpay.navigation.automatic.title") </a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-edit"></i> @Messages("chrome.exchange.navigation.account.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="@routes.Application.user_settings().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
-                                        <li><a href="index.html"><i class="fa fa-flash"></i> @Messages("directpay.navigation.automation.title") </a></li>
                                         <li><a href="@routes.Application.history().url"><i class="fa fa-list"></i> @Messages("chrome.exchange.navigation.history.label") </a></li>
                                         <li><a href="@routes.Application.account().url"><i class="fa fa-key"></i> @Messages("directpay.navigation.twofactorsecurity.title") </a></li>
                                     </ul>
@@ -115,9 +118,9 @@
                                 </li>
                                 <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="index.html"><i class="fa fa-globe"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
-                                        <li><a href="@routes.Application.user_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.users.title") </a></li>
-                                        <li><a href="index.html"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orders.title") </a></li>
+                                        <li><a href="index.html"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
+                                        <li><a href="@routes.Application.users_list().url"><i class="fa fa-book"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
+                                        <li><a href="@routes.Application.orders_list().url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-flag"></i>  @Messages("terminology.language")<span class="fa fa-chevron-down"></span></a>
@@ -139,12 +142,12 @@
                 <div class="nav_menu">
                     <nav>
                         <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            <a id="menu_toggle"><i class="fa fa-bars" title="@Messages("directpay.general.expandcontractsidemenu")"></i></a>
                         </div>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive">
+                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive" title="@Messages("getstarted.chooselanguage")">
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 @for(lang <- Lang.availables) {
@@ -171,7 +174,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    @Messages("directpay.terminology.companyname")
+                    @globals.country_system_name
                 </div>
                 <div class="clearfix"></div>
             </footer>
