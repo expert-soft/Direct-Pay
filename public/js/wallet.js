@@ -9,7 +9,7 @@ $(function(){
                 balances[i].amount = zerosToSpaces(balances[i].amount);
                 balances[i].hold = zerosToSpaces(balances[i].hold);
 
-                if(balances[i].is_fiat == "true") {
+                if(balances[i].is_fiat == true) {
                     $("#available_fiat").html(balances[i].available);
                     $("#hold_fiat").html(balances[i].hold);
                     sum_money += parseFloat(balances[i].amount);

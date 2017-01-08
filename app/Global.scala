@@ -128,6 +128,8 @@ package object globals {
       DB.withConnection(globals.masterDB)({ implicit c =>
         SQL"""
       begin;
+      delete from users_name_info;
+      delete from users_connections;
       delete from users_passwords;
       delete from users_tfa_secrets;
       delete from users_backup_otps;
@@ -136,11 +138,9 @@ package object globals {
       delete from tokens;
       delete from trusted_action_requests;
       delete from balances;
-      delete from currencies;
-      delete from users_name_info;
-      delete from users_connections;
-      delete from users;
       delete from orders;
+      delete from currencies;
+      delete from users;
 
       select currency_insert('BRL', 1, true);
       select currency_insert('BRL-crypto', 2, false);
@@ -178,14 +178,14 @@ package object globals {
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 2, (select id from users where email='a2terminator@mail.ru'), 55, 'D', 'Op', '', '2016-12-22 01:18:59.842', 'Rsif', 74.98, 0, './receipts/902354643533_dec-2016_2', '', '237', '5454-0', '4645-8', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 3, (select id from users where email='mboczko@yahoo.com'), 1, 'W', 'Rj', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '', '', 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 01:18:59.842', 12121, 0, 'bank info not correct', '', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 4, (select id from users where email='mboczko@yahoo.com'), 1, 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'USD', 620, 1.55, './receipts/9023724243_dec-2016_1', '', 'City-090', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 618.45, 'bank OK, receipt OK', 'key1 OK from CT', '';
-      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 5, (select id from users where email='testru@gmail.ru'), 55, 'S', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 20.03, 0.05, '', '', '', '', '', '', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 5, (select id from users where email='testru@gmail.ru'), 55, 'S', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 20.03, 0.05, '', '', '', '', '', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 6, (select id from users where email='testru@gmail.ru'), 55, 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 980, 0, './receipts/9023724243_dec-2016_1', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 980, 'bank OK, receipt OK', 'key1 OK from CT', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 7, (select id from users where email='mboczko@yahoo.com'), 1, 'D', 'OK', '', '2016-12-22 01:18:59.842', 'USD', 7654.90, 43.15, './receipts/9023724243_dec-2016_1', '', 'BofA', '8987-tr', '343434-098', '2016-12-22 01:18:59.842', 121212, 7611.75, 'bank OK, receipt OK', '', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 8, (select id from users where email='testru@gmail.ru'), 1, 'V', 'Op', '', '2016-12-22 01:18:59.842', 'USD', 0, 0, './docs/doc1_9023724243', '', '', '', '', '2016-12-22 01:18:59.842', 12121, 0, '', '', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 9, (select id from users where email='test@yahoo.com.br'), 55, 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 37870.98, 5.55, './receipts/9023724243_dec-2016_1', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 37865.43, 'bank OK, receipt OK', 'key1 OK from CT', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 10, (select id from users where email='test@yahoo.com.br'), 55, 'D', 'Ch', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 78.00, 0, './receipts/9023724243_dec-2016_1', '', '341', '7876', '7897', '2016-12-22 01:18:59.842', 121212, 780, 'value declared wrong. confirmed at bank 780', '', '';
       insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 11, (select id from users where email='a'), 55, 'RFW', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'Rsif', 566.1011, 5.98, './withdrawals/67564544_dec-2016_doc1', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
-      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 12, (select id from users where email='a'), 55, 'D', 'Op', '', '2016-12-22 01:18:59.842', 'Rsif', 813.05, 0, './receipts/902354643533_dec-2016_2', '', '237', '', '', '', 0, 0, '', '', '';
+      insert into orders (order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, closed_by, closed_value, comment, key1, key2) select 12, (select id from users where email='a'), 55, 'D', 'Op', '', '2016-12-22 01:18:59.842', 'Rsif', 813.05, 0, './receipts/902354643533_dec-2016_2', '', '237', '', '', '2016-12-22 01:18:59.842', 0, 0, '', '', '';
 
       commit;
       """.execute()

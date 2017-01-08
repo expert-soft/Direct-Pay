@@ -31,6 +31,7 @@ import org.postgresql.util.PSQLException
 import org.apache.commons.codec.binary.Base64.encodeBase64
 import java.security.SecureRandom
 import play.api.i18n.{ Lang, MessagesApi, I18nSupport, Messages }
+import globals._
 
 class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with securesocial.core.SecureSocial with I18nSupport {
   // Json serializable case classes have implicit definitions in their companion objects
@@ -116,7 +117,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val balances = globals.engineModel.balance(Some(request.user.id), None)
+    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.country_currency_code, globals.country_currency_crypto)
     Ok(Json.toJson(balances.map({ c =>
       Json.obj(
         "currency" -> c._1,
