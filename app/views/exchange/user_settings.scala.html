@@ -24,8 +24,8 @@
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div id="user_info" class="x_panel">
-                <div class="x_title"><h2>@Messages("exchange.account.info.title")</h2><div class="clearfix"></div></div>
+            <div id="user_info" class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title"><h2><i class="fa fa-user"></i> &nbsp; @Messages("exchange.account.info.title")</h2><div class="clearfix"></div></div>
                 <div class="x_content">
                         <!-- Beginning of the form -->
                     <p id="user-reg-one"></p>
@@ -216,7 +216,7 @@
                                         <div class="col-md-3 col-sm-3"><input type="text" id="account" value="{{account}}" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("directpay.terminology.partner")</label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
                                         <input type="hidden" name="hidden_partner1" value="@globals.country_partner1">
                                         <div class="col-md-4 col-sm-4 col-xs-12">
                                             <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
@@ -235,7 +235,7 @@
                                     <p>@Messages("directpay.usersettings.step3.explanation1")</p>
                                     <p>@Messages("directpay.usersettings.step3.explanation2")</p>
                                     <p>@Messages("directpay.usersettings.step3.explanation3")</p>
-                                    <p>@Messages("directpay.usersettings.step3.explanation4")</p>
+                                    <p>@Messages("directpay.usersettings.step3.explanation4", globals.country_system_name)</p>
                                 </form>
                             </div>
                         </div>

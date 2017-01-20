@@ -110,7 +110,12 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "doc2" -> c._9,
         "doc3" -> c._10,
         "doc4" -> c._11,
-        "doc5" -> c._12
+        "doc5" -> c._12,
+        "ver1" -> c._13,
+        "ver2" -> c._14,
+        "ver3" -> c._15,
+        "ver4" -> c._16,
+        "ver5" -> c._17
       )
     })
     ))

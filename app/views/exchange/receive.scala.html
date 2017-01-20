@@ -12,15 +12,43 @@
         </div>
     </div>
 
-        <!-- Wallet -->
-    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
-    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+
+
+
     <div class="clearfix"></div>
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div  id="wallet" class="x_panel">
+            <!-- Start of form -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
-                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.receive.receivefrompartners")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.receive.toreceivefrompartners", globals.country_system_name)</p>
+                    <p>@Messages("directpay.receive.linkstopartners")</p>
+                    @if(globals.country_partner1 != "Not Set") {
+                        <style> #box_partner1 { border-radius: 5px; background: #9af; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
+                        <a href="@globals.country_partner1_url" target="_blank"><p id="box_partner1" title="@globals.country_partner1_info - @globals.country_partner1_url">@globals.country_partner1</p></a> }
+                    @if(globals.country_partner2 != "Not Set") {
+                        <style> #box_partner2 { border-radius: 5px; background: #8f8; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
+                        <a href="@globals.country_partner2_url" target="_blank"><p id="box_partner2" title="@globals.country_partner2_info - @globals.country_partner2_url">@globals.country_partner2</p></a> }
+
+
+                </div>
+            </div>
+        </div>
+            <!-- End of form -->
+
+
+
+            <!-- Wallet -->
+        <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
+        <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
+                <div class="x_title">
+                    <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -31,15 +59,28 @@
                         <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
-                    <p>Texto.</p>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="balance">
-        <script id="balance-template" type="text/x-handlebars-template"></script>
-    </div>
-        <!-- end of Wallet -->
+        <div id="balance">
+            <script id="balance-template" type="text/x-handlebars-template"></script>
+        </div>
+            <!-- end of Wallet -->
+
+            <!-- Instructions -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="x_panel" style="@globals.country_appearance2">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.receive.explanation1", globals.country_system_name, globals.country_currency_crypto)</p>
+                </div>
+            </div>
+        </div>
+            <!-- end of Instructions -->
+
 
 
 }

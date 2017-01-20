@@ -62,7 +62,12 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("doc2").getOrElse("N/A"),
       row[Option[String]]("doc3").getOrElse("N/A"),
       row[Option[String]]("doc4").getOrElse("N/A"),
-      row[Option[String]]("doc5").getOrElse("N/A")
+      row[Option[String]]("doc5").getOrElse("N/A"),
+      row[Option[Boolean]]("ver1").getOrElse(false),
+      row[Option[Boolean]]("ver2").getOrElse(false),
+      row[Option[Boolean]]("ver3").getOrElse(false),
+      row[Option[Boolean]]("ver4").getOrElse(false),
+      row[Option[Boolean]]("ver5").getOrElse(false)
 
     )).toList
   }

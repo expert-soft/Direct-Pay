@@ -16,13 +16,13 @@ $(function(){
             showHide();
         });
 
-        $("#btn1").click(function(){
+ /*       $("#btn1").click(function(){
             $("#test1").text("Hello world!");
         });
         $("#btn2").click(function(){
             $("#test2").html("<b>Hello world!</b>");
         });
-
+*/
     });
     showHide();
 });

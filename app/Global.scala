@@ -25,6 +25,10 @@ package object globals {
   val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)
   val country_partner1 = Play.current.configuration.getString("country.country_partner1").getOrElse("Not Set")
   val country_partner1_url = Play.current.configuration.getString("country.country_partner1_url").getOrElse("Not Set")
+  val country_partner1_info = Play.current.configuration.getString("country.country_partner1_info").getOrElse("Not Set")
+  val country_partner2 = Play.current.configuration.getString("country.country_partner2").getOrElse("Not Set")
+  val country_partner2_url = Play.current.configuration.getString("country.country_partner2_url").getOrElse("Not Set")
+  val country_partner2_info = Play.current.configuration.getString("country.country_partner2_info").getOrElse("Not Set")
   val country_doc1_name = Play.current.configuration.getString("country.country_doc1_name").getOrElse("Not Set")
   val country_doc1_required = Play.current.configuration.getBoolean("country.country_doc1_required").getOrElse(false)
   val country_doc1_ispicture = Play.current.configuration.getBoolean("country.country_doc1_ispicture").getOrElse(false)
@@ -103,21 +107,21 @@ package object globals {
   val country_bank20_name = Play.current.configuration.getString("country.country_bank20_name").getOrElse("Not Set")
   val country_local_administrator = Play.current.configuration.getString("country.country_local_administrator").getOrElse("Not Set")
   val country_global_administrator = Play.current.configuration.getString("country.country_global_administrator").getOrElse("Not Set")
-  val country_fees_global_percentage = Play.current.configuration.getDouble("country.country_fees_global_percentage").getOrElse(0)
   val country_nominal_fee_doc_verification = Play.current.configuration.getDouble("country.country_fee_local_doc_verification").getOrElse(0)
   val country_nominal_fee_withdrawal_workbank = Play.current.configuration.getDouble("country.country_nominal_fee_withdrawal_workbank ").getOrElse(0)
   val country_nominal_fee_withdrawal_notworkbank = Play.current.configuration.getDouble("country.country_nominal_fee_withdrawal_notworkbank").getOrElse(0)
+  val country_fees_global_percentage = Play.current.configuration.getDouble("country.country_fees_global_percentage").getOrElse(0)
   val country_fee_deposit_percent = Play.current.configuration.getDouble("country.country_fee_deposit_percent").getOrElse(0)
   val country_fee_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_withdrawal_percent").getOrElse(0)
   val country_fee_send_percent = Play.current.configuration.getDouble("country.country_fee_send_percent").getOrElse(0)
   val country_fee_tofiat_percent = Play.current.configuration.getDouble("country.country_fee_tofiat_percent").getOrElse(0)
-  val country_appearance_pic1 = Play.current.configuration.getString("country.appearance_pic1").getOrElse("Not Set")
-  val country_appearance_pic2 = Play.current.configuration.getString("country.appearance_pic2").getOrElse("Not Set")
-  val country_appearance_color1 = Play.current.configuration.getString("country.appearance_color1").getOrElse("Not Set")
-  val country_appearance_color2 = Play.current.configuration.getString("country.appearance_color2").getOrElse("Not Set")
-  val country_appearance_color3 = Play.current.configuration.getString("country.appearance_color3").getOrElse("Not Set")
-  val country_appearance_color4 = Play.current.configuration.getString("country.appearance_color4").getOrElse("Not Set")
-  val country_appearance_color5 = Play.current.configuration.getString("country.appearance_color5").getOrElse("Not Set")
+  val country_appearance_pic1 = Play.current.configuration.getString("country.country_appearance_pic1").getOrElse("Not Set")
+  val country_appearance_pic2 = Play.current.configuration.getString("country.country_appearance_pic2").getOrElse("Not Set")
+  val country_appearance1 = Play.current.configuration.getString("country.country_appearance1").getOrElse("Not Set")
+  val country_appearance2 = Play.current.configuration.getString("country.country_appearance2").getOrElse("Not Set")
+  val country_appearance3 = Play.current.configuration.getString("country.country_appearance3").getOrElse("Not Set")
+  val country_appearance4 = Play.current.configuration.getString("country.country_appearance4").getOrElse("Not Set")
+  val country_appearance5 = Play.current.configuration.getString("country.country_appearance5").getOrElse("Not Set")
 
   val masterDB = "default"
   val masterDBWallet = "wallet"
@@ -160,13 +164,13 @@ package object globals {
       select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
       select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
 
-      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Boczko', 'Simão', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', true, true, true, true, false from users where email='mboczko@yahoo.com';
-      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', 'Mitrofanov', '', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Boczko', 'Simão', '999.090.089-98', 'docPDF.pdf', 'docPDF.pdf', '(12)99324-0988', 'doc5', true, true, true, true, false from users where email='mboczko@yahoo.com';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', 'Mitrofanov', '', '097.455.645-09', 'flagus.gif', 'flagbr.gif', '(53)30823-098', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
       insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Test-Surname', 'Tes-middle', '', '', '', '', '', false, false, false, false, false from users where email='test@hotmail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Sur', '', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', false, false, false, true, false from users where email='test@gmail.com';
-      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestBR', 'sobrenome', '', '', 'doc2', 'doc3', 'doc4', '', false, false, false, true, false from users where email='test@yahoo.com.br';
-      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestRU', 'skovsk', '', 'doc1', 'doc2', '', 'doc4', 'doc5', true, true, true, true, false from users where email='testru@gmail.ru';
-      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Aaaaa', 'SurA', 'MidA', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', true, true, true, true, false from users where email='a';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Sur', '', '566.432.789-03', 'flagbr.gif', 'flagbr.gif', '(11)32580-342', 'doc5', false, false, false, true, false from users where email='test@gmail.com';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestBR', 'sobrenome', '', '', 'flagus.gif', 'flagus.gif', '(15)99707-0000', '', false, false, false, true, false from users where email='test@yahoo.com.br';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestRU', 'skovsk', '', '343.782.121-34', 'flagbr.gif', '', '(11)95454-0993', 'doc5', true, true, true, true, false from users where email='testru@gmail.ru';
+      insert into users_name_info (user_id, name, surname, middle_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Aaaaa', 'SurA', 'MidA', '333.988.454-08', 'flagar.gif', 'flagar.gif', '(19)23240-434', 'doc5', true, true, true, true, false from users where email='a';
 
       insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='a'), '237', 'Agency A', 'Account A', true, 'Crypto-Trade.net';
       insert into users_connections (user_id, bank, agency, account, automatic, partner) select (select id from users where email='mboczko@yahoo.com'), '001', 'Agency B', 'Account B', false, 'Crypto-Trade.net';

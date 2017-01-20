@@ -74,7 +74,7 @@
                             <h2>@Messages("terminology.partner")</h2>
                         </div>
                         <div class="profile_pic">
-                            <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                            <img src="/assets/img/brUserDocs/flagar.gif" alt="## Partner Name" class="img-circle profile_img">
                         </div>
                     </div>
 
@@ -88,7 +88,8 @@
                                 <li><a href="@routes.Application.orders_list().url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
                                 <li><a><i class="fa fa-usd"></i> @Messages("directpay.navigation.operations.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                    @if(true) {
+                                        <li><a href="@routes.Application.wallet().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
+                                        @if(true) {
                                         <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> @Messages("directpay.navigation.deposit.title") </a></li>
                                         <li><a href="@routes.Application.ccrypto().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
                                         <li><a href="@routes.Application.send().url"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>
@@ -96,10 +97,9 @@
                                         <li><a href="@routes.Application.cfiat().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title", globals.country_currency_symbol) </a></li>
                                         <li><a href="@routes.Application.withdraw().url"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label") </a></li>
                                     <!-- here should be  else  -->
-                                        <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i>@Messages("directpay.navigation.depositsend.title") </a></li>
-                                        <li><a href="@routes.Application.withdraw().url"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> @Messages("directpay.navigation.receivewithdraw.title") </a></li>
+                                        <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i><i class="fa fa-upload"></i>@Messages("directpay.navigation.depositsend.title") </a></li>
+                                        <li><a href="@routes.Application.withdraw().url"><i class="fa fa-download"></i><i class="fa fa-minus"></i>@Messages("directpay.navigation.receivewithdraw.title") </a></li>
                                     }
-                                        <li><a href="@routes.Application.automatic().url"><i class="fa fa-flash"></i> @Messages("directpay.navigation.automatic.title") </a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-edit"></i> @Messages("chrome.exchange.navigation.account.title") <span class="fa fa-chevron-down"></span></a>

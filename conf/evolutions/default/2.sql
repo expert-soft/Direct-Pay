@@ -792,12 +792,17 @@ get_users_list (
   out doc3 varchar(256),
   out doc4 varchar(256),
   out doc5 varchar(256),
-  out ver1 boolean
+  out ver1 bool,
+  out ver2 bool,
+  out ver3 bool,
+  out ver4 bool,
+  out ver5 bool
 ) returns setof record as $$
 begin
-  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1
+  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1, ui.ver2, ui.ver3, ui.ver4, ui.ver5
   from users u
-  left join users_name_info ui on u.id = ui.user_id;;
+  left join users_name_info ui on u.id = ui.user_id
+  where u.id != 0;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 

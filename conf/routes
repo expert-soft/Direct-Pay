@@ -17,7 +17,6 @@ GET         /send                                      controllers.Application.s
 GET         /receive                                   controllers.Application.receive
 GET         /cfiat                                     controllers.Application.cfiat
 GET         /withdraw                                  controllers.Application.withdraw
-GET         /automatic                                 controllers.Application.automatic
 
 # Administrator's pages
 GET         /users_list                                controllers.Application.users_list
