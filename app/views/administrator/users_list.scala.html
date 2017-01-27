@@ -13,7 +13,7 @@
         <!-- page content -->
     <style>
     #image-holder {
-        width: 50px;
+        width: 300px;
         left: 300px;
 /*        height: auto;
         position: absolute;
@@ -22,8 +22,6 @@
 /*        display: none;*/
     }
     </style>
-    <a
-
 
 
 
@@ -38,13 +36,14 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div id="users_list" class="x_panel">
-                <div class="x_title"><h2>@Messages("directpay.navigation.admin.userslist.title")</h2><div class="clearfix"></div></div>
+                <div class="x_title"><h2><i class="fa fa-users"></i> @Messages("directpay.navigation.admin.userslist.title")</h2><div class="clearfix"></div></div>
                 <div class="x_content">
                     <div id="popupPic" class="overlay">
                         <div class="popup">
                             <h2><span id="popUpPictureTitle"></span></h2>
-                            <a class="close" href="#">&times;</a>
-                            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name">
+                            <div id="buttonsDiv" class="popupTopButtons"><button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="Zoom in"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="Zoom out"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp; <button id="btnApprove" type="button" class="btn btn-primary btn-xs" title="Approve document">Approve</button><button id="btnReject" type="button" class="btn btn-warning btn-xs" title="Reject document">Reject</button></div>
+                            <a class="popupClose" href="#">&times;</a>
+                            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name"><input type="hidden" id="popUpPictureDoc3" value="@globals.country_doc3_name"><input type="hidden" id="popUpPictureDoc4" value="@globals.country_doc4_name"><input type="hidden" id="popUpPictureDoc5" value="@globals.country_doc5_name">
                             <div class="content">
                                 <p>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></p>
                                 <p>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></p>
@@ -53,7 +52,8 @@
                             </div>
                         </div>
                     </div>
-                    <p id="users-list"></p> <!-- Here is the script -->
+                    <input type="hidden" id="hidden_critical_value1" value="@globals.country_critical_value1">
+                    <p id="users-list"></p> <!-- Script is called here -->
                 </div>
             </div>
         </div>
@@ -81,95 +81,20 @@
             <tbody>
             {{#each this}}
                 <tr id="{{id}}">
-                    <td>{{email}}</td>
-                    <td>{{name}} {{middle_name}} {{surname}}</td>
-                    <td>34.98</td>
-                    <td>769.00897</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a class="requestPopUp" name="{{doc1}}" href="#popupPic" user="{{name}} {{middle-name}} {{surname}}" email="{{email}}" ver="{{ver1}}" doc="1" title="{{doc1}}">{{doc1}}</a>} else { {{doc1}} }<br> <i class="{{checked1}}"></i> </td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a class="requestPopUp" name="{{doc2}}" href="#popupPic" user="{{name}} {{middle-name}} {{surname}}" email="{{email}}" ver="{{ver2}}" doc="2" title="{{doc2}}">{{doc2}}</a>} else { {{doc2}} }<br> <i class="{{checked2}}"></i> </td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a class="requestPopUp" name="{{doc3}}" href="#popupPic" user="{{name}} {{middle-name}} {{surname}}" email="{{email}}" ver="{{ver3}}" doc="3" title="{{doc3}}">{{doc3}}</a>} else { {{doc3}} }<br> <i class="{{checked3}}"></i> </td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a class="requestPopUp" name="{{doc4}}" href="#popupPic" user="{{name}} {{middle-name}} {{surname}}" email="{{email}}" ver="{{ver4}}" doc="4" title="{{doc4}}">{{doc4}}</a>} else { {{doc4}} }<br> <i class="{{checked4}}"></i> </td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a class="requestPopUp" name="{{doc5}}" href="#popupPic" user="{{name}} {{middle-name}} {{surname}}" email="{{email}}" ver="{{ver5}}" doc="5" title="{{doc5}}">{{doc5}}</a>} else { {{doc5}} }<br> <i class="{{checked5}}"></i> </td> }
+                    <td title="@Messages("directpay.admin.userslist.userID") = {{id}}">{{email}}</td>
+                    <td title="@Messages("directpay.admin.userslist.userID") = {{id}}">{{name}} {{middle_name}} {{surname}}</td>
+                    <td class="{{class_fiat}}">{{amount_fiat}}</td>
+                    <td class="{{class_crypto}}">{{amount_crypto}}</td>
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a class="requestPopUp" name="{{doc1}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver1}}" doc="1" title="{{doc1}}">{{doc1}}</a>} else { {{doc1}} }<br> <i class="{{checked1}}"></i> </td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a class="requestPopUp" name="{{doc2}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver2}}" doc="2" title="{{doc2}}">{{doc2}}</a>} else { {{doc2}} }<br> <i class="{{checked2}}"></i> </td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a class="requestPopUp" name="{{doc3}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver3}}" doc="3" title="{{doc3}}">{{doc3}}</a>} else { {{doc3}} }<br> <i class="{{checked3}}"></i> </td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a class="requestPopUp" name="{{doc4}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver4}}" doc="4" title="{{doc4}}">{{doc4}}</a>} else { {{doc4}} }<br> <i class="{{checked4}}"></i> </td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a class="requestPopUp" name="{{doc5}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver5}}" doc="5" title="{{doc5}}">{{doc5}}</a>} else { {{doc5}} }<br> <i class="{{checked5}}"></i> </td> }
                 </tr>
             {{/each}}
             </tbody>
         </table>
-
-<hr>
-
-        <table id="table_users" class="table table-striped responsive jambo_table bulk_action">
-            <tbody>
-                <tr>
-                    <td><a href="#">\dfgeraAtoimf</a></td>
-                    <td>Julio Franco</td>
-                    <td>850.00</td>
-                    <td>13.98788</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
-                </tr>
-                <tr>
-                    <td><a href="#">edgfbaAtoerbaaeaervbf</a></td>
-                    <td>Rodrigo Augusto Fortes</td>
-                    <td>528.98</td>
-                    <td>0.61221</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
-                </tr>
-                <tr>
-                    <td><a href="#">avervATervbf</a></td>
-                    <td>Jorge Emanoel Ribeiro</td>
-                    <td class="bgn_yellow">88090.63</td>
-                    <td>155.98211</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a> <i class="fa fa-check"></i>} else {555.666.777.888-99  <i class="fa fa-check"></i>}</td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a> <i class="fa fa-check"></i>} else {fgfghf  <i class="fa fa-check"></i>}</td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a> <i class="fa fa-check"></i>} else {fghf  <i class="fa fa-check"></i>}</td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a> <i class="fa fa-check"></i>} else {(15) 3305-3384 <i class="fa fa-check"></i>}</td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a> <i class="fa fa-check"></i>} else {fh <i class="fa fa-check"></i>}</td> }
-                </tr>
-                <tr>
-                    <td><a href="#">fhnrsATv53v</a></td>
-                    <td>Eduardo</td>
-                    <td>33.56</td>
-                    <td>699.09988</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a> <i class="fa fa-eye-open"></i>} else {555.666.777.888-99  <i class="fa fa-eye-open"></i>}</td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a> <i class="fa fa-eye-open"></i>} else {fgfghf  <i class="fa fa-eye-open"></i>}</td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a> <i class="fa fa-check"></i>} else {fghf  <i class="fa fa-check"></i>}</td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a> <i class="fa fa-eye-open"></i>} else {(15) 3305-3384 <i class="fa fa-eye-open"></i>}</td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a> <i class="fa fa-check"></i>} else {fh <i class="fa fa-check"></i>}</td> }
-                </tr>
-                <tr>
-                    <td><a href="#">edgfbaAtovbf</a></td>
-                    <td>Lucia Marques da Costa</td>
-                    <td>766.90</td>
-                    <td>0.00000</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
-                </tr>
-                <tr>
-                    <td><a href="#">edgfbaAtove4ervbf</a></td>
-                    <td>Robson Wnaderley</td>
-                    <td>1330.00</td>
-                    <td>0.56432</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a href="#">doc1</a>} else {555.666.777.888-99}</td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a href="#">doc2</a>} else {fgfghf}</td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a href="#">doc3</a>} else {fghf}</td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a href="#">doc4</a>} else {(15) 3305-3384}</td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a href="#">doc5</a>} else {fh}</td> }
-                </tr>
-            </tbody>
-        </table>
     </script>
-
-
 
 
 

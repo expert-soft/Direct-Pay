@@ -2,6 +2,7 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/fee_messages.js?v=1.0.0.1")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
@@ -29,14 +30,14 @@
                             <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("terminology.value")">
+                                <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation" required="required" type="text" title="@Messages("terminology.value")">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                             <div class="col-md-8 col-sm-4 col-xs-12">
                                 <input type="hidden" id="hidden_bank" value="{{bank}}"></input>
-                                <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
+                                <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
                                     <option value="0">@Messages("directpay.usersettings.notselected")</option>
                                     @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
                                     @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
@@ -69,6 +70,7 @@
                             <label class="control-label col-md-4 col-sm-3" for="account">@Messages("terminology.account")</label>
                             <div class="col-md-4 col-sm-3"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
                         </div>
+                        @if(globals.country_fee_withdrawal_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
@@ -84,13 +86,21 @@
 
 
         <!-- Wallet -->
-        <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
-        <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+        <input type="hidden" id="hidden_fees_information"
+            currency_code="@globals.country_currency_code"
+            currency_crypto="@globals.country_currency_crypto"
+            wallet_available="12.34"
+            wallet_onhold="0"
+            wallet_crypto="0"
+            wallet_total="0"
+        ></input>
+
+
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
@@ -113,12 +123,23 @@
             <div class="x_panel" style="@globals.country_appearance2">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
-                    <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.withdraw.explanation3", globals.country_currency_symbol)</p>
+                    <p>@Messages("directpay.withdraw.shortinfo1")</p>
+                    <p>@Messages("directpay.withdraw.yourmaximumwithdrawal"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_maximum_withdraw" class="calc_destak_info"></span></p>
+                    <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_destak_info">@globals.country_fee_withdrawal_percent %</span> @Messages("terminology.plus") <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_destak_info"></span>.</p>
+                    <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
+
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        <p>@Messages("directpay.withdraw.preferentialbanks"): <span id="calc_list_preferential_banks"></span>. @Messages("directpay.withdraw.yougetlowerfees").</p>
+                        <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
+                        @if(globals.country_minimum_value != 0) {
+                            <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                            <p>@Messages("directpay.withdraw.explanation3a") @globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span> @Messages("directpay.withdraw.explanation3b") @globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span>.</p>
+                        }
+                </div>
                 </div>
             </div>
         </div>

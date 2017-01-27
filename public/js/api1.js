@@ -49,6 +49,10 @@ var API;
             return $.get(iapi_prefix+'balance', 'json');
         }),
 
+        country_settings: APIWrap(function() {
+            return $.get(iapi_prefix+'country_settings', 'json');
+        }),
+
         user: APIWrap(function() {
             return $.get(iapi_prefix+'user', 'json');
         }),

@@ -24,17 +24,23 @@
                     <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.receive.receivefrompartners")</h2>
                     <div class="clearfix"></div>
                 </div>
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
                 <div class="x_content">
                     <p>@Messages("directpay.receive.toreceivefrompartners", globals.country_system_name)</p>
                     <p>@Messages("directpay.receive.linkstopartners")</p>
                     @if(globals.country_partner1 != "Not Set") {
-                        <style> #box_partner1 { border-radius: 5px; background: #9af; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
-                        <a href="@globals.country_partner1_url" target="_blank"><p id="box_partner1" title="@globals.country_partner1_info - @globals.country_partner1_url">@globals.country_partner1</p></a> }
+                        <style> #box_partner1 { border-radius: 5px; background: @globals.country_partner1_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
+                        <a href="@globals.country_partner1_url" target="_blank"><p id="box_partner1" title="@globals.country_partner1_info - @globals.country_partner1_url"><img src="/assets/img/carusel/@globals.country_partner1_picture" height="28px"> @globals.country_partner1</p></a> }
                     @if(globals.country_partner2 != "Not Set") {
-                        <style> #box_partner2 { border-radius: 5px; background: #8f8; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
-                        <a href="@globals.country_partner2_url" target="_blank"><p id="box_partner2" title="@globals.country_partner2_info - @globals.country_partner2_url">@globals.country_partner2</p></a> }
-
-
+                        <style> #box_partner2 { border-radius: 5px; background: @globals.country_partner2_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
+                        <a href="@globals.country_partner2_url" target="_blank"><p id="box_partner2" title="@globals.country_partner2_info - @globals.country_partner2_url"><img src="/assets/img/carusel/@globals.country_partner2_picture" height="28px"> @globals.country_partner2</p></a> }
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        ## Extra content
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,7 +55,7 @@
             <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
@@ -72,10 +78,13 @@
             <div class="x_panel" style="@globals.country_appearance2">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.receive.explanation1", globals.country_system_name, globals.country_currency_crypto)</p>
+                    <p>Basic Info comes here</p>
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <p>@Messages("directpay.receive.explanation1", globals.country_system_name, globals.country_currency_crypto)</p>
+                    </div>
                 </div>
             </div>
         </div>

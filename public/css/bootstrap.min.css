@@ -28,7 +28,7 @@ body {
     font-weight: 700;
     padding: 8px;
     vertical-align: middle;
-    color: #ccc;
+    color: #aaa;
 }
 .table-wallet  > td {
     border=1px solid black;
@@ -56,12 +56,25 @@ body {
     color: #000;
 }
 
+.text_additional_info {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    text-decoration: underline;
+}
+
+.calc_destak_info {
+    font-size: 15px;
+    font-weight: 700;
+    color: #000;
+}
+
 /* following table styles created by me */
 .table > tbody > tr > td.center_bold, td.bgn_red, td.bgn_blue, td.bgn_yellow, td.bgn_green, td.bgn_brown {
     text-align: center;
     font-size: 13px;
     font-weight: 700;
-    text-color: #000;
+    color: #000;
 }
 
 .table > tbody > tr > td.right_bold {

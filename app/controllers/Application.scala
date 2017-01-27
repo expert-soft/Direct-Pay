@@ -76,7 +76,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.withdraw(request.user))
   }
 
-  def wallet = SecuredAction { implicit request =>
+  def dashboard = SecuredAction { implicit request =>
     Ok(views.html.exchange.dashboard(request.user))
   }
 

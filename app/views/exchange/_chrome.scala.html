@@ -74,7 +74,7 @@
                             <h2>@Messages("terminology.partner")</h2>
                         </div>
                         <div class="profile_pic">
-                            <img src="/assets/img/brUserDocs/flagar.gif" alt="## Partner Name" class="img-circle profile_img">
+                            <img src="/assets/img/carusel/partner1.gif" alt="## Partner Name" class="img-circle profile_img">
                         </div>
                     </div>
 
@@ -82,13 +82,9 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                <li><a href="@routes.Application.wallet().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
-                                <li><a href="@routes.Application.user_settings().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
-                                <li><a href="@routes.Application.users_list().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
-                                <li><a href="@routes.Application.orders_list().url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
+                                <li><a href="@routes.Application.dashboard().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
                                 <li><a><i class="fa fa-usd"></i> @Messages("directpay.navigation.operations.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="@routes.Application.wallet().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
                                         @if(true) {
                                         <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> @Messages("directpay.navigation.deposit.title") </a></li>
                                         <li><a href="@routes.Application.ccrypto().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
@@ -119,7 +115,7 @@
                                 <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="index.html"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
-                                        <li><a href="@routes.Application.users_list().url"><i class="fa fa-book"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
+                                        <li><a href="@routes.Application.users_list().url"><i class="fa fa-users"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
                                         <li><a href="@routes.Application.orders_list().url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
                                     </ul>
                                 </li>

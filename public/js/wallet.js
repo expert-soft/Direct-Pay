@@ -10,17 +10,17 @@ $(function(){
                 balances[i].hold = zerosToSpaces(balances[i].hold);
 
                 if(balances[i].is_fiat == true) {
-                    $("#available_fiat").html(balances[i].available);
-                    $("#hold_fiat").html(balances[i].hold);
+                    $("#available_fiat").html(parseFloat(balances[i].available).toFixed(2));
+                    $("#hold_fiat").html(parseFloat(balances[i].hold).toFixed(2));
                     $("#hidden_wallet_available").val(balances[i].available);
                     $("#hidden_wallet_onhold").val(balances[i].hold);
                     sum_money += parseFloat(balances[i].amount);
                 } else {
-                    $("#amount_crypto").html(balances[i].amount);
+                    $("#amount_crypto").html(parseFloat(balances[i].amount).toFixed(2));
                     $("#hidden_wallet_crypto").val(balances[i].amount);
                     sum_money += parseFloat(balances[i].amount);
                 }
-                $("#amount_total").html(sum_money);
+                $("#amount_total").html((sum_money).toFixed(2));
                 $("#hidden_wallet_total").val(sum_money);
             }
             $('#balance').html(template(balances));

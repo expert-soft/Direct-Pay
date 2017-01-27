@@ -48,15 +48,26 @@
   font-family: Tahoma, Arial, sans-serif;
 }
 
-.popup .close {
+.popup .popupClose {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 12px;
+  transition: all 200ms;
+  font-size: 36px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.popup .popupTopButtons {
+  position: absolute;
+  top: 8px;
+  right: 50px;
+  text-align: right;
   transition: all 200ms;
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
 }
 
 .popup .close:hover {

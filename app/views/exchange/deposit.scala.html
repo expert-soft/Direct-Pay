@@ -1,7 +1,7 @@
 @(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
 
 @scripts = {
-    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("../../../public/js/dashboard.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
@@ -39,6 +39,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if(globals.country_fee_deposit_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-4">
@@ -57,12 +58,12 @@
             <div class="x_panel" style="@globals.country_appearance2">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.deposit.explanation1", globals.country_currency_symbol, globals.country_critical_value2):</p>
+                    <p>@Messages("directpay.deposit.shortinfo1"):</p>
 
-                    <table id="table_working_banks" class="table table-striped responsive">
+                    <table id="table_preferential_banks" class="table table-striped responsive">
                         <thead>
                             <tr>
                                 <th>@Messages("terminology.bank")</th>
@@ -72,43 +73,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @if(globals.country_working_bank1_name != "") {
+                        @if(globals.country_preferential_bank1_name != "") {
                             <tr>
-                                <td>@globals.country_working_bank1_name</td>
-                                <td>@globals.country_working_bank1_agency</td>
-                                <td>@globals.country_working_bank1_account</td>
-                                <td>@globals.country_working_bank1_reference</td>
+                                <td>@globals.country_preferential_bank1_name</td>
+                                <td>@globals.country_preferential_bank1_agency</td>
+                                <td>@globals.country_preferential_bank1_account</td>
+                                <td>@globals.country_preferential_bank1_reference</td>
                             </tr>
                         }
-                        @if(globals.country_working_bank2_name != "") {
+                        @if(globals.country_preferential_bank2_name != "") {
                             <tr>
-                                <td>@globals.country_working_bank2_name</td>
-                                <td>@globals.country_working_bank2_agency</td>
-                                <td>@globals.country_working_bank2_account</td>
-                                <td>@globals.country_working_bank2_reference</td>
+                                <td>@globals.country_preferential_bank2_name</td>
+                                <td>@globals.country_preferential_bank2_agency</td>
+                                <td>@globals.country_preferential_bank2_account</td>
+                                <td>@globals.country_preferential_bank2_reference</td>
                             </tr>
                         }
-                        @if(globals.country_working_bank3_name != "") {
+                        @if(globals.country_preferential_bank3_name != "") {
                             <tr>
-                                <td>@globals.country_working_bank3_name</td>
-                                <td>@globals.country_working_bank3_agency</td>
-                                <td>@globals.country_working_bank3_account</td>
-                                <td>@globals.country_working_bank3_reference</td>
+                                <td>@globals.country_preferential_bank3_name</td>
+                                <td>@globals.country_preferential_bank3_agency</td>
+                                <td>@globals.country_preferential_bank3_account</td>
+                                <td>@globals.country_preferential_bank3_reference</td>
                             </tr>
                         }
-                        @if(globals.country_working_bank4_name != "") {
+                        @if(globals.country_preferential_bank4_name != "") {
                             <tr>
-                                <td>@globals.country_working_bank4_name</td>
-                                <td>@globals.country_working_bank4_agency</td>
-                                <td>@globals.country_working_bank4_account</td>
-                                <td>@globals.country_working_bank4_reference</td>
+                                <td>@globals.country_preferential_bank4_name</td>
+                                <td>@globals.country_preferential_bank4_agency</td>
+                                <td>@globals.country_preferential_bank4_account</td>
+                                <td>@globals.country_preferential_bank4_reference</td>
                             </tr>
                         }
                         </tbody>
                     </table>
                     <br>
-                    <p>@Messages("directpay.deposit.explanation2")</p>
-                    <p>@Messages("directpay.deposit.explanation3")</p>
+                    <p>@Messages("directpay.deposit.shortinfo2", globals.country_currency_symbol, globals.country_critical_value2):</p>
+                    <p>@Messages("directpay.deposit.shortinfo3").</p>
+
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        <p>@Messages("directpay.deposit.explanation1")</p>
+                        <p>@Messages("directpay.deposit.explanation2")</p>
+                        @if(globals.country_minimum_value != 0) {
+                            <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                            <p>@Messages("directpay.withdraw.explanation3a") @globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span> @Messages("directpay.withdraw.explanation3b") @globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span>.</p>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

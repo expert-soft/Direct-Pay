@@ -1,7 +1,7 @@
 @(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
 
 @scripts = {
-    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/dashboard.js")"></script>
     <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
 }
 
@@ -12,20 +12,25 @@
             <h3><i class="fa fa-tasks"> &nbsp;</i> @Messages("chrome.exchange.navigation.dashboard.title")</h3>
         </div>
     </div>
-
+session_variable = 0;
+    <input type="button" id="update_session_value" onClick="session_variable++;"></button>
+Current value: --session_variable--
 
 
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <div class="x_panel fixed_height_320" style="@globals.country_appearance2">
+            <div class="x_panel" style="@globals.country_appearance2">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
-                    <div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.overview.explanation1", globals.country_system_name,  globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.overview.explanation2")</p>
+                    <p>Basic Info comes here</p>
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <p>@Messages("directpay.overview.explanation1", globals.country_system_name,  globals.country_currency_crypto)</p>
+                        <p>@Messages("directpay.overview.explanation2")</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,11 +41,11 @@
         <input type="hidden" id="hidden_wallet_available" value="0"></input>
         <input type="hidden" id="hidden_wallet_onhold" value="0"></input>
         <input type="hidden" id="hidden_wallet_crypto" value="0"></input>
-        <input type="text" id="hidden_wallet_total" value="@globals.country_nominal_fee_withdrawal_workbank"></input>
-        <input type="text" id="hidden_X" value="@globals.country_nominal_fee_withdrawal_workbank"></input>
+        <input type="hidden" id="hidden_wallet_total" value="@globals.country_nominal_fee_withdrawal_preferential_bank"></input>
+        <input type="hidden" id="hidden_X" value="@globals.country_nominal_fee_withdrawal_preferential_bank"></input>
         <input type="hidden" id="hidden_nominal_fee_doc_verification" value="@globals.country_nominal_fee_doc_verification"></input>
-        <input type="hidden" id="hidden_nominal_fee_withdrawal_workbank" value="@globals.country_nominal_fee_withdrawal_workbank"></input>
-        <input type="hidden" id="hidden_nominal_fee_withdrawal_notworkbank" value="@globals.country_nominal_fee_withdrawal_notworkbank"></input>
+        <input type="hidden" id="hidden_nominal_fee_withdrawal_preferential_bank" value="@globals.country_nominal_fee_withdrawal_preferential_bank"></input>
+        <input type="hidden" id="hidden_nominal_fee_withdrawal_not_preferential_bank" value="@globals.country_nominal_fee_withdrawal_not_preferential_bank"></input>
         <input type="hidden" id="hidden_fee_deposit_percent" value="@globals.country_fee_deposit_percent"></input>
         <input type="hidden" id="hidden_fee_withdrawal_percent" value="@globals.country_fee_withdrawal_percent"></input>
         <input type="hidden" id="hidden_fee_send_percent" value="@globals.country_fee_send_percent"></input>
@@ -49,7 +54,7 @@
             <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
@@ -152,9 +157,12 @@
                 <div class="x_content">
                     <p>@Messages("directpay.overview.receive.explanation1", globals.country_system_name)</p>
                     <p>@Messages("directpay.receive.linkstopartners")</p>
-                    @if(globals.country_partner1 != "") {
-                        <style> #box_partner1 { border-radius: 5px; background: #9af; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
-                        <a href="@globals.country_partner1_url"><p id="box_partner1">@globals.country_partner1</p></a> }
+                    @if(globals.country_partner1 != "Not Set") {
+                        <style> #box_partner1 { border-radius: 5px; background: @globals.country_partner1_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
+                        <a href="@globals.country_partner1_url" target="_blank"><p id="box_partner1" title="@globals.country_partner1_info - @globals.country_partner1_url"><img src="/assets/img/carusel/@globals.country_partner1_picture" height="28px"> @globals.country_partner1</p></a> }
+                    @if(globals.country_partner2 != "Not Set") {
+                        <style> #box_partner2 { border-radius: 5px; background: @globals.country_partner2_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
+                        <a href="@globals.country_partner2_url" target="_blank"><p id="box_partner2" title="@globals.country_partner2_info - @globals.country_partner2_url"><img src="/assets/img/carusel/@globals.country_partner2_picture" height="28px"> @globals.country_partner2</p></a> }
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         <a href="@routes.Application.receive().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.receivepage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>

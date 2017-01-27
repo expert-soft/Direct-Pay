@@ -196,8 +196,13 @@ terminology.wallet.available=Available
 terminology.wallet.onhold=On Hold
 terminology.wallet.crypto=Crypto
 terminology.wallet.total=Total
+terminology.calculatedfee=Calculated fee
+terminology.plus=plus
 terminology.convertto=Convert to
 terminology.instructions=Instructions
+terminology.extrainformation=Extra information
+terminology.minimizethisboard=Minimize this board
+terminology.closethisboard=Close this board
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -237,8 +242,7 @@ directpay.admin.orderslist.status.Rj=Rejected
 
 directpay.admin.userslist.userID=User ID
 
-directpay.overview.userfundsposition=Your current funds position:
-directpay.overview.explanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be converted and withdrawed to your bank account, with no need to request it at {0}.
+directpay.overview.explanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request it at {0}.
 directpay.overview.explanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
 directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
 directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
@@ -256,23 +260,40 @@ directpay.overview.receivewithdraw=Receive and Withdraw
 directpay.overview.deposit.explanation1=You can deposit funds in your account at {0} through the bank system.
 directpay.overview.deposit.explanation2=To validate your deposit, you must upload a readable picture of the receipt of deposit or transfer. Your deposits will be verified and should be credited in your account in some minutes or a few hours.
 directpay.overview.receive.explanation1=To receive funds from a partner, you should login to the partner system and there request your funds to be withdrawed to {0}.
+directpay.overview.additionalinfo=Additional Information
+directpay.overview.thisoperationdoesnotchargefees=This operation does not charge any fees
 
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
-directpay.deposit.explanation1=Deposit must be in cash or bank transfer from your own personal bank account (daily maximum deposit is {0} {1}).
-directpay.deposit.explanation2=After doing the bank deposit you must submit the deposit receipt to verification.
-directpay.deposit.explanation3=Picture of the receipt must be clear and prefectly readable and exactly the same declared. Otherwise, your funds may be kept on hold or refused.
+directpay.deposit.shortinfo1=Do your deposits to one of the following bank accounts
+directpay.deposit.shortinfo2=Deposits must be in cash or bank transfer from your own bank account (daily maximum: {0} {1})
+directpay.deposit.shortinfo3=And last step is to submit your deposit receipt at the form.
+directpay.deposit.explanation1=After doing the bank deposit you must submit the deposit receipt to verification. Analysis of the document can take few minutes till few hours.
+directpay.deposit.explanation2=Picture of the receipt must be clear and prefectly readable and exactly the same value declared. Otherwise, your funds may be kept on hold or refused.
 directpay.deposit.disclaimer1=To be sure your deposit to be recognized, keed your personal information complete and up to date, do the deposit in cash or from your own bank account and submit a clear picture of your bank receipt.
 directpay.deposit.disclaimer2=Deposits made at banking working time are processed in few minutes after effective bank confirmation (max = 3 hours). Deposits made out of banking work time are subject to specific verification and can be delayed. If you have trouble to have your deposit recognized, please contact eu.euateumesmo.com.
+
 directpay.withdraw.requestwithdrawal=Request a Withdrawal
+directpay.withdraw.preferentialbanks=Preferential banks
+directpay.withdraw.yougetlowerfees=Lower fees when withdrawal to those banks.
+directpay.withdraw.shortinfo1=Withdrawals can only be done to your personal bank account.
+directpay.withdraw.yourmaximumwithdrawal=Your maximum withdrawal
+directpay.withdraw.withdrawfee=Withdraw fee
+directpay.withdraw.extrafee1=Extra
+directpay.withdraw.extrafee2=fee if withdrawal requested to a not-preferential bank
 directpay.withdraw.explanation1=You can request the withdrawal of your money at any time, but that action will be executed following banking work time and security practices, what limits maximum daily withdrawal to {0} {1}.
 directpay.withdraw.explanation2=Also, your withdrawals are limited to your available funds, including both {0} and {1} (will be converted to {0} if needed), less the fees that apply to the operation, that depend on the amount and choosen bank.
-directpay.withdraw.explanation3=Considering the amount and bank selected, the total calculated fees is {0} ## 999.99, and your net withdraw will be {0} ##999.99.
+directpay.withdraw.explanation3a=Too small withdraw operations should be avoided. For that, if requested amount lower than
+directpay.withdraw.explanation3b= the operation will be charged extra
 directpay.withdraw.disclaimer1=Withdrawals can be requested at any time. The transfer to your banking account is usually performed in few minutes but as some banking operations need to be performed during banking work time and that can cause delays to the operation.
 directpay.withdraw.disclaimer2=User is responsible for providing adequate information and readable document copies. If information is not correct or not complete, Direct Pay will not be able to perform withdrawal operations.
 directpay.withdraw.disclaimer3=If you have any trouble with your request, please contact eu.euATeumesmo.com.
+
 directpay.send.sendtopartner=Send to Partner
 directpay.send.valuetobesent=Value to be sent
+directpay.send.shortinfo1=## Send money
+directpay.send.yourmaximumsend=The maximum amount that can be send to a partner
+directpay.send.sendfee=Sending fee
 directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred.
 directpay.send.explanation2=Maximum amount that can be transferred is ## sum of crypto and R$ available. ##fees and calculated net transfer.
 directpay.send.disclaimer1=When you send your {0} to a partner, responsibility of your funds are also transferred to the partner. Once partner confirms transfer complete, Direct Pay no longer is responsible nor have access to the amount transferred.
