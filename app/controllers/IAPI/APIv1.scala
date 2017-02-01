@@ -95,6 +95,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     })
     ))
   }
+
   def users_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     val users_list_info = globals.engineModel.UsersList()
     Ok(Json.toJson(users_list_info.map({ c =>
@@ -134,6 +135,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
+  /*
   def country_settings = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     Ok(Json.toJson(
       Json.obj(
@@ -160,6 +162,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       )
     ))
   }
+*/
 
   def user = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     Ok(Json.toJson(request.user))
@@ -247,6 +250,19 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoremovepgpkey")))
+    }
+  }
+
+  def create_order = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val country_id = 333
+    val order_type = (request.request.body \ "order_type").asOpt[String]
+    val status = (request.request.body \ "status").asOpt[String]
+    val partner = (request.request.body \ "partner").asOpt[String]
+
+    if (globals.userModel.create_order(request.user.id, country_id, order_type, status, partner)) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoturnofftwofactorauth")))
     }
   }
 }

@@ -133,6 +133,8 @@ package object globals {
   val country_appearance4 = Play.current.configuration.getString("country.country_appearance4").getOrElse("Not Set")
   val country_appearance5 = Play.current.configuration.getString("country.country_appearance5").getOrElse("Not Set")
 
+  val preference_manual_operations = Play.current.configuration.getBoolean("country.preference_manual_operations").getOrElse(true)
+
   val masterDB = "default"
   val masterDBWallet = "wallet"
   val masterDBTrusted = "trust"

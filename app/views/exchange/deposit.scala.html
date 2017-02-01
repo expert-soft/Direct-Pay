@@ -1,16 +1,28 @@
 @(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
 
 @scripts = {
-    <script src="@routes.Assets.at("../../../public/js/dashboard.js")"></script>
+    <script src="@routes.Assets.at("js/fee_messages.js?v=1.0.0.1")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
+    <input type="hidden" id="hidden_page" value="@if(globals.preference_manual_operations) {D} else {DCS}"></input>
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
             <h3><i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")</h3>
         </div>
     </div>
+
+    <input type="hidden" id="hidden_fees_information"
+    currency_code="@globals.country_currency_code"
+    currency_crypto="@globals.country_currency_crypto"
+    decimal_separator = "@globals.country_decimal_separator"
+    minimum_value = "@globals.country_minimum_value.toString"
+    critical_value1 = "@globals.country_critical_value1.toString"
+    critical_value2 = "@globals.country_critical_value2.toString"
+    fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
+    ></input>
+
 
     <div class="clearfix"></div>
     <div class="row">
@@ -28,7 +40,7 @@
                             <label class="control-label col-md-4 col-sm-3 col-xs-6">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-6" required="required" type="text" title="@Messages("terminology.value")">
+                                <input id="value" class="form-control col-md-3 col-xs-6 triggers_fee_calculation" required="required" type="text" title="@Messages("terminology.value")">
                             </div>
                         </div>
                         <div class="form-group">
@@ -39,11 +51,11 @@
                                 </div>
                             </div>
                         </div>
-                        @if(globals.country_fee_deposit_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
+                        @if(globals.country_fee_deposit_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_deposit_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">@Messages("terminology.submit")</button>
+                                <button type="submit" class="btn btn-primary triggers_submit">@Messages("terminology.submit")</button>
                             </div>
                         </div>
                     </form>
@@ -109,17 +121,20 @@
                     </table>
                     <br>
                     <p>@Messages("directpay.deposit.shortinfo2", globals.country_currency_symbol, globals.country_critical_value2):</p>
-                    <p>@Messages("directpay.deposit.shortinfo3").</p>
+                    <p>@Messages("directpay.deposit.shortinfo3")</p>
+                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.country_fee_deposit_percent %</span></p> }
 
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.deposit.explanation1")</p>
                         <p>@Messages("directpay.deposit.explanation2")</p>
-                        @if(globals.country_minimum_value != 0) {
-                            <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                            <p>@Messages("directpay.withdraw.explanation3a") @globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span> @Messages("directpay.withdraw.explanation3b") @globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span>.</p>
-                        }
-                    </div>
+                        @if(globals.country_fee_deposit_percent != 0) {
+                            @if(globals.country_minimum_value != 0) {
+                                <p>@Messages("directpay.deposit.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                                <p>@Messages("directpay.deposit.explanation3a") @globals.country_currency_symbol <span id="calc_deposit_minimum_value"></span> @Messages("directpay.deposit.explanation3b") @globals.country_currency_symbol <span id="calc_deposit_minimum_value_extra_fee"></span></p>
+                            }
+                        } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
+                        </div>
                 </div>
             </div>
         </div>

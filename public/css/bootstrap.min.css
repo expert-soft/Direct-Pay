@@ -58,14 +58,20 @@ body {
 
 .text_additional_info {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     color: #000;
     text-decoration: underline;
 }
 
 .calc_destak_info {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
+    color: #000;
+}
+
+.calc_mid_destak_info {
+    font-size: 12px;
+    font-weight: 600;
     color: #000;
 }
 

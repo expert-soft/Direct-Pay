@@ -17,8 +17,26 @@ end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
 
+
+create or replace function
+create_order (
+  a_id bigint,
+  a_country_id int,
+  a_order_type varchar(4),
+  a_status varchar(2),
+  a_partner varchar(128)
+) returns void as $$
+declare
+begin
+  insert into orders (user_id, country_id, order_type, status, partner) values (a_id, a_country_id, a_order_type, a_status, a_partner);;
+end;;
+$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
+
+
 # --- !Downs
 
 drop function if exists currency_insert(varchar(16), integer, bool) cascade;
+drop function if exists create_order(Long, integer, varchar(4), varchar(2), varchar(128)) cascade;
 
 -- security definer functions

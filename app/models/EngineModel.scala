@@ -105,5 +105,4 @@ class EngineModel(val db: String = "default") {
       row[String]("currency") -> (row[BigDecimal]("amount"), row[BigDecimal]("hold"), row[Boolean]("is_fiat"))
     ).toMap
   }
-
 }

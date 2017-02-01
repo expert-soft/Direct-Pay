@@ -273,4 +273,12 @@ class UserModel(val db: String = "default") {
       case _: Throwable => 0
     }
   }
+
+  def create_order(uid: Long, country_id: Int, order_type: Option[String], status: Option[String], partner: Option[String]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select create_order as success from create_order($uid, $country_id, $order_type, $status, $partner)
+    """().map(row =>
+      row[Boolean]("success")
+    ).head
+  }
 }

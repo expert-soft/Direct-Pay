@@ -185,7 +185,6 @@ terminology.agency=Agency
 terminology.account=Account
 terminology.submit=Submit
 terminology.convert=Convert
-terminology.submit=Submit
 terminology.send=Send
 terminology.receive=Receive
 terminology.info=Info
@@ -256,20 +255,27 @@ directpay.overview.receivepage=Receive page
 directpay.overview.withdrawpage=Withdraw page
 directpay.overview.depositsend=Deposit and Send
 directpay.overview.receivewithdraw=Receive and Withdraw
+directpay.overview.netresultvalue=Net result value
 
 directpay.overview.deposit.explanation1=You can deposit funds in your account at {0} through the bank system.
 directpay.overview.deposit.explanation2=To validate your deposit, you must upload a readable picture of the receipt of deposit or transfer. Your deposits will be verified and should be credited in your account in some minutes or a few hours.
 directpay.overview.receive.explanation1=To receive funds from a partner, you should login to the partner system and there request your funds to be withdrawed to {0}.
 directpay.overview.additionalinfo=Additional Information
 directpay.overview.thisoperationdoesnotchargefees=This operation does not charge any fees
+directpay.overview.nofeesarecharged=No fees are charged for this operation.
+directpay.overview.convertionrate=Convertion Rate
+directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of 0.99. That means you will always be able to convert your money and at a competitive rate.
 
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
 directpay.deposit.shortinfo1=Do your deposits to one of the following bank accounts
 directpay.deposit.shortinfo2=Deposits must be in cash or bank transfer from your own bank account (daily maximum: {0} {1})
-directpay.deposit.shortinfo3=And last step is to submit your deposit receipt at the form.
+directpay.deposit.shortinfo3=After that, submit your deposit receipt at this form.
+directpay.deposit.depositfee=Deposit fee
 directpay.deposit.explanation1=After doing the bank deposit you must submit the deposit receipt to verification. Analysis of the document can take few minutes till few hours.
 directpay.deposit.explanation2=Picture of the receipt must be clear and prefectly readable and exactly the same value declared. Otherwise, your funds may be kept on hold or refused.
+directpay.deposit.explanation3a=Too small deposit operations should be avoided. For that, if requested amount lower than
+directpay.deposit.explanation3b= the operation will be charged extra
 directpay.deposit.disclaimer1=To be sure your deposit to be recognized, keed your personal information complete and up to date, do the deposit in cash or from your own bank account and submit a clear picture of your bank receipt.
 directpay.deposit.disclaimer2=Deposits made at banking working time are processed in few minutes after effective bank confirmation (max = 3 hours). Deposits made out of banking work time are subject to specific verification and can be delayed. If you have trouble to have your deposit recognized, please contact eu.euateumesmo.com.
 
@@ -277,6 +283,7 @@ directpay.withdraw.requestwithdrawal=Request a Withdrawal
 directpay.withdraw.preferentialbanks=Preferential banks
 directpay.withdraw.yougetlowerfees=Lower fees when withdrawal to those banks.
 directpay.withdraw.shortinfo1=Withdrawals can only be done to your personal bank account.
+directpay.withdraw.shortinfo2=Be sure your banking data is correct! This operation can not be reverted.
 directpay.withdraw.yourmaximumwithdrawal=Your maximum withdrawal
 directpay.withdraw.withdrawfee=Withdraw fee
 directpay.withdraw.extrafee1=Extra
@@ -291,25 +298,30 @@ directpay.withdraw.disclaimer3=If you have any trouble with your request, please
 
 directpay.send.sendtopartner=Send to Partner
 directpay.send.valuetobesent=Value to be sent
-directpay.send.shortinfo1=## Send money
-directpay.send.yourmaximumsend=The maximum amount that can be send to a partner
+directpay.send.shortinfo1=Some services provided by our partners require you to send funds to them. Use this form to send {0} to the selected partner
+directpay.send.yourmaximumsend=The maximum amount that can be sent
 directpay.send.sendfee=Sending fee
-directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred.
-directpay.send.explanation2=Maximum amount that can be transferred is ## sum of crypto and R$ available. ##fees and calculated net transfer.
+directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred. Be sure to select the correct amount and partner, as this operation is not be reverted!
 directpay.send.disclaimer1=When you send your {0} to a partner, responsibility of your funds are also transferred to the partner. Once partner confirms transfer complete, Direct Pay no longer is responsible nor have access to the amount transferred.
-directpay.receive.receivefrompartners=Receive from Partners
-directpay.receive.toreceivefrompartners=To receive funds from partners you must enter Partners system and request a withdrawal to {0}.
-directpay.receive.linkstopartners=Links to Partners:
-directpay.receive.explanation1=To receive money from our partners, you must go to the partner-site and request a withdraw to {0}. Partner will send {1} and your money will be available at {0} in a few seconds.
 
-directpay.ccrypto.valuetobeconverted=Value to be converted
-directpay.ccrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
-directpay.ccrypto.explanation2=Convertion rate is {0} 1.00 <=> {2} {1}. This operation pays ## % fees, what would result in ##calculated amount.
-directpay.ccrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than 0.99.
-directpay.cfiat.valuetobeconverted=Value to be converted
-directpay.cfiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at the form below.
-directpay.cfiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
-directpay.cfiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1} . The conversion rate is guaranteed not to be lower than 0.99.
+directpay.receive.receivefrompartners=Receive from Partners
+directpay.receive.toreceivefrompartners1=After interacting with our partners, as a result of your operations, you may have funds to receive from them.
+directpay.receive.toreceivefrompartners2=To request your funds, you must enter Partners system and request a withdrawal there to {0}.
+directpay.receive.linkstopartners=Links to Partners:
+directpay.receive.explanation1=To receive money from our partners, you must go to the partner-site and request a withdraw to {0}. Partner will send {1} and it will become available at {0} in a few seconds.
+
+
+directpay.tocrypto.valuetobeconverted=Value to be converted
+directpay.tocrypto.shortinfo1=If you want to send funds to a partner you must first convert your money to {0}.
+directpay.tocrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
+directpay.tocrypto.explanation2=Convertion rate is {0} 1.00 <=> {2} {1}. This operation pays ## % fees, what would result in ##calculated amount.
+directpay.tocrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than 0.99.
+directpay.tofiat.valuetobeconverted=Value to be converted
+directpay.tofiat.shortinfo1=If you intend to withdraw your {0} funds to your bank account, you must first convert it to {1}.
+directpay.tofiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at this form.
+
+directpay.tofiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
+directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed not to be lower than 0.99.
 directpay.depositsend.depositconvertandsend=Deposit, Convert and Send
 directpay.depositsend.explanation1=When Automatic Operations is set on, your deposits will automatically trigger conversion to {0} and sending it to the selected partner.
 directpay.depositsend.explanation2=The deposit operation remains exactly the same: deposit at {0} bank account and uploading receipt. After receipt verification, the conversion and sending operations will start automatically.

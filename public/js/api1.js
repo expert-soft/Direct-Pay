@@ -49,10 +49,10 @@ var API;
             return $.get(iapi_prefix+'balance', 'json');
         }),
 
-        country_settings: APIWrap(function() {
+ /*       country_settings: APIWrap(function() {
             return $.get(iapi_prefix+'country_settings', 'json');
         }),
-
+*/
         user: APIWrap(function() {
             return $.get(iapi_prefix+'user', 'json');
         }),
@@ -113,6 +113,16 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
+        }),
+
+        create_order: APIWrap(function(country_id, order_type, status, partner) {
+            return $.ajax(iapi_prefix+'remove_pgp', {
+                type: 'POST',
+                data: JSON.stringify({country_id: country_id, order_type: order_type, status: status, partner: partner}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
         })
     };
 })();
+

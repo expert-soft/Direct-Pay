@@ -56,8 +56,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.deposit(request.user))
   }
 
-  def ccrypto = SecuredAction { implicit request =>
-    Ok(views.html.exchange.ccrypto(request.user))
+  def tocrypto = SecuredAction { implicit request =>
+    Ok(views.html.exchange.tocrypto(request.user))
   }
 
   def send = SecuredAction { implicit request =>
@@ -68,8 +68,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.receive(request.user))
   }
 
-  def cfiat = SecuredAction { implicit request =>
-    Ok(views.html.exchange.cfiat(request.user))
+  def tofiat = SecuredAction { implicit request =>
+    Ok(views.html.exchange.tofiat(request.user))
   }
 
   def withdraw = SecuredAction { implicit request =>
