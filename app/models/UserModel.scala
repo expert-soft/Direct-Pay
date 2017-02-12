@@ -254,6 +254,14 @@ class UserModel(val db: String = "default") {
     ).head
   }
 
+  def changeManualAuto(uid: Long, manualAuto: String) = DB.withConnection(db) { implicit c =>
+    SQL"""
+    select change_manualAuto as success from change_manualAuto($uid, $manualAuto)
+    """().map(row =>
+      row[Boolean]("success")
+    ).head
+  }
+
   def userPgpByEmail(email: String) = DB.withConnection(db) { implicit c =>
     SQL"""
     select * from user_pgp_by_email($email)
