@@ -30,8 +30,11 @@ import service.{ PGP, TOTPUrl }
 import org.postgresql.util.PSQLException
 import org.apache.commons.codec.binary.Base64.encodeBase64
 import java.security.SecureRandom
-import play.api.i18n.{ Lang, MessagesApi, I18nSupport, Messages }
+
+import play.api.i18n.{ I18nSupport, Lang, Messages, MessagesApi }
 import globals._
+
+import scala.collection.immutable.Range.Double
 
 class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with securesocial.core.SecureSocial with I18nSupport {
   // Json serializable case classes have implicit definitions in their companion objects
@@ -253,13 +256,28 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     }
   }
 
+  def calculate_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    if (order_type == "S") {
+      return initial_value * BigDecimal(globals.country_fee_send_percent)
+
+    } else {
+      return 7
+    }
+  }
+
   def create_order = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
-    val country_id = 333
     val order_type = (request.request.body \ "order_type").asOpt[String]
     val status = (request.request.body \ "status").asOpt[String]
     val partner = (request.request.body \ "partner").asOpt[String]
-
-    if (globals.userModel.create_order(request.user.id, country_id, order_type, status, partner)) {
+    val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
+    val total_fee: BigDecimal = calculate_fee(order_type.get, initial_value.get)
+    /*    if (globals.country_fee_send_percent != 0) {
+      val total_fee = initial_value // * globals.country_fee_send_percent / 100
+    } else {;;;;
+      val total_fee = 0
+    }
+*/
+    if (globals.userModel.create_order(request.user.id, globals.country_code, order_type, status, partner, globals.country_currency_code, initial_value, Option(total_fee))) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoturnofftwofactorauth")))

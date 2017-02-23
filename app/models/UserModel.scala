@@ -254,14 +254,6 @@ class UserModel(val db: String = "default") {
     ).head
   }
 
-  def changeManualAuto(uid: Long, manualAuto: String) = DB.withConnection(db) { implicit c =>
-    SQL"""
-    select change_manualAuto as success from change_manualAuto($uid, $manualAuto)
-    """().map(row =>
-      row[Boolean]("success")
-    ).head
-  }
-
   def userPgpByEmail(email: String) = DB.withConnection(db) { implicit c =>
     SQL"""
     select * from user_pgp_by_email($email)
@@ -282,11 +274,9 @@ class UserModel(val db: String = "default") {
     }
   }
 
-  def create_order(uid: Long, country_id: Int, order_type: Option[String], status: Option[String], partner: Option[String]) = DB.withConnection(db) { implicit c =>
+  def create_order(uid: Long, country_id: String, order_type: Option[String], status: Option[String], partner: Option[String], currency: String, initial_value: Option[BigDecimal], total_fee: Option[BigDecimal]) = DB.withConnection(db) { implicit c =>
     SQL"""
-     select create_order as success from create_order($uid, $country_id, $order_type, $status, $partner)
-    """().map(row =>
-      row[Boolean]("success")
-    ).head
+     select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${total_fee.get})
+    """.execute()
   }
 }

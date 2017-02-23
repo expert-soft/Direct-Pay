@@ -769,7 +769,7 @@ get_user_name_info (
   out automatic boolean,
   out partner varchar (64)
 ) returns setof record as $$
- begin
+begin
   return query select uf.name, uf.surname, uf.middle_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.automatic, uc.partner
   from users_name_info uf
   left join users_connections uc on uc.user_id = uf.user_id

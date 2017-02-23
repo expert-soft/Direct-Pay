@@ -1,23 +1,25 @@
-/**
- * Created by Admin on 30/01/2017.
- */
 
 $(function() {
 
     function submit_send() {
-        var country_id = 55;
-        var order_type = "S";
-        var status = "Op";
-        var partner = "Crypto-Trade.net";
-        API.create_order(country_id, order_type, status, partner).success(function () {
-            $.pnotify({
-                title: Messages("java.api.messages.account.twofactorauthentication"),
-                text: Messages("java.api.messages.account.twofactorauthenticationturnedon"),
-                styling: 'bootstrap',
-                type: 'success',
-                text_escape: true
-            });
-        })
+        if ($('#partner').val() != "00" && $('#value').val() > 0)
+        {   var order_type = "S";
+            var status = "Op";
+            var partner = $('#partner').val();
+            var initial_value = $('#value').val();
+            //alert(initial_value);
+            API.create_order(order_type, status, partner, initial_value).success(function () {
+                $.pnotify({
+                    title: Messages("java.api.messages.account.twofactorauthentication"),
+                    text: Messages("java.api.messages.account.twofactorauthenticationturnedon"),
+                    styling: 'bootstrap',
+                    type: 'success',
+                    text_escape: true
+                });
+            })
+        }
+        else
+            alert("Choose partner and value > 0");
     }
 
 

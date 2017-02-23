@@ -50,25 +50,8 @@
 }
 
 
-@navItemManualAuto(url: String, title:String) = {
-@if(request.path==url) {
-    <li class="active">
-} else {
-    <li>
-    }
-    <a href="@url">
-    @if(request.path==url){
-        <img src="@icon" height="30px" width="30px" class="submenu-title"> @title
-    } else {
-        <img src="@icon" height="30px" width="30px" class="submenu-title"> @title
-        }
-    </a>
-</li>
-}
 
-@getmanualAuto() = {
-@GetManualAutoFromCookies(request.cookies)
-}
+
 
 @exchangeStyles = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/jquery.pnotify.default.css")">
@@ -142,8 +125,6 @@
                                 </li>
                                 <li><a><i class="fa fa-flag"></i>  @Messages("terminology.manualAuto")<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        @navItemLang("/chmanualAuto/".concat(manualAuto.code.toString), Messages("chrome.language."++ lang.language.toString))
-
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-flag"></i>  @Messages("terminology.language")<span class="fa fa-chevron-down"></span></a>

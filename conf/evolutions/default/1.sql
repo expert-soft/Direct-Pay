@@ -130,10 +130,11 @@ create table balances (
     primary key (user_id, currency)
 );
 
+create sequence order_id_seq;
 create table orders (
-    order_id bigint not null,
+    order_id bigint default nextval('order_id_seq') primary key,
     user_id bigint not null,
-    country_id int not null,
+    country_id varchar(4) not null,
     order_type varchar(4) not null,
     status varchar(2) not null,
     partner varchar(128),
@@ -152,8 +153,8 @@ create table orders (
     comment varchar(128),
     key1 varchar(32),
     key2 varchar(32),
-    foreign key (user_id) references users(id),
-    primary key (order_id)
+    foreign key (currency) references currencies(currency),
+    foreign key (user_id) references users(id)
 );
 
 
@@ -173,5 +174,6 @@ drop table if exists totp_tokens_blacklist cascade;
 drop table if exists event_log cascade;
 drop table if exists withdrawal_limits cascade;
 drop table if exists trusted_action_requests cascade;
+drop sequence if exists order_id_seq cascade;
 drop sequence if exists event_log_id_seq cascade;
 drop extension pgcrypto;

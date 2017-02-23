@@ -87,13 +87,6 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Redirect(request.headers.get("referer").getOrElse("/")).withLang(Lang.get(lang).getOrElse(Lang.defaultLang))
   }
 
-  def chManualAuto(manualAuto: String) = UserAwareAction { implicit request =>
-    if (request.user.isDefined) {
-      globals.userModel.changeManualAuto(request.user.get.id, manualAuto)
-    }
-    Redirect(request.headers.get("referer").getOrElse("/")).withManualAuto(ManualAuto.get(manualAuto).getOrElse(ManualAuto.defaultManualAuto))
-  }
-
   val messages = jsMessagesFactory.all
 
   val jsMessages = Action { implicit request =>
