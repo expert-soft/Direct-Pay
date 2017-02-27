@@ -183,7 +183,7 @@
                                         <div class="col-md-4 col-sm-4 col-xs-12">
                                             <input type="hidden" id="hidden_bank" value="{{bank}}"></input>
                                             <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
-                                                <option value="0">@Messages("directpay.usersettings.notselected")</option>
+                                                <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                                 @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
                                                 @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
                                                 @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
@@ -221,7 +221,8 @@
                                         <div class="col-md-4 col-sm-4 col-xs-12">
                                             <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                                 <option value="0">@Messages("directpay.usersettings.notselected")</option>
-                                                <option value="@globals.country_partner1" {{partner1_selected}}>@globals.country_partner1</option>
+                                                @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
+                                                @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
                                             </select>
                                         </div>
                                     </div>

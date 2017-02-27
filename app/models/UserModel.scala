@@ -274,9 +274,9 @@ class UserModel(val db: String = "default") {
     }
   }
 
-  def create_order(uid: Long, country_id: String, order_type: Option[String], status: Option[String], partner: Option[String], currency: String, initial_value: Option[BigDecimal], total_fee: Option[BigDecimal]) = DB.withConnection(db) { implicit c =>
+  def create_order(uid: Long, country_id: String, order_type: Option[String], status: Option[String], partner: Option[String], currency: String, initial_value: Option[BigDecimal], total_fee: Option[BigDecimal], bank: Option[String], agency: Option[String], account: Option[String], doc1: Option[String]) = DB.withConnection(db) { implicit c =>
     SQL"""
-     select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${total_fee.get})
+     select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${total_fee.get}, ${bank}, ${agency}, ${account}, ${doc1})
     """.execute()
   }
 }

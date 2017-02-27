@@ -266,6 +266,7 @@ directpay.overview.nofeesarecharged=No fees are charged for this operation.
 directpay.overview.convertionrate=Convertion Rate
 directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of 0.99. That means you will always be able to convert your money and at a competitive rate.
 
+directpay.deposit.depositconvertsend=Deposit, Convert and Send
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
 directpay.deposit.shortinfo1=Do your deposits to one of the following bank accounts
@@ -279,6 +280,7 @@ directpay.deposit.explanation3b= the operation will be charged extra
 directpay.deposit.disclaimer1=To be sure your deposit to be recognized, keed your personal information complete and up to date, do the deposit in cash or from your own bank account and submit a clear picture of your bank receipt.
 directpay.deposit.disclaimer2=Deposits made at banking working time are processed in few minutes after effective bank confirmation (max = 3 hours). Deposits made out of banking work time are subject to specific verification and can be delayed. If you have trouble to have your deposit recognized, please contact eu.euateumesmo.com.
 
+directpay.withdraw.receiveconvertwithdraw=Receive, Convert and Withdraw
 directpay.withdraw.requestwithdrawal=Request a Withdrawal
 directpay.withdraw.preferentialbanks=Preferential banks
 directpay.withdraw.yougetlowerfees=Lower fees when withdrawal to those banks.

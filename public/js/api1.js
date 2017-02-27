@@ -115,10 +115,10 @@ var API;
             });
         }),
 
-        create_order: APIWrap(function(order_type, status, partner, initial_value) {
+        create_order: APIWrap(function(order_type, status, partner, initial_value, bank, agency, account, doc1) {
             return $.ajax(iapi_prefix+'create_order', {
                 type: 'POST',
-                data: JSON.stringify({order_type: order_type, status: status, partner: partner, initial_value: initial_value}),
+                data: JSON.stringify({order_type: order_type, status: status, partner: partner, initial_value: initial_value, bank: bank, agency: agency, account: account, doc1: doc1}),
                 dataType: 'json',
                 contentType: 'application/json'
             });

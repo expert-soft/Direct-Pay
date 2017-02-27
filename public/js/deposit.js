@@ -1,14 +1,18 @@
 
 $(function() {
 
-    function submit_send() {
+    function submit_deposit() {
         if ($('#partner').val() != "00" && $('#value').val() > 0)
-        {   var order_type = "S";
+        {   var order_type = "D";
+            var partner = '';
+            if($('#hidden_manual_auto').val() == "false") { // automatic operation
+                order_type =  "DCS";
+                partner = $('#partner').val();
+            }
             var status = "Op";
-            var partner = $('#partner').val();
+            var doc1 = $('#doc1').val();
             var initial_value = $('#value').val();
-            //alert(initial_value);
-            API.create_order(order_type, status, partner, initial_value, '', '', '', '').success(function () {
+            API.create_order(order_type, status, partner, initial_value, '', '', '', doc1).success(function () {
                 $.pnotify({
                     title: Messages("java.api.messages.account.twofactorauthentication"),
                     text: Messages("java.api.messages.account.twofactorauthenticationturnedon"),
@@ -19,10 +23,10 @@ $(function() {
             })
         }
         else
-            alert("Choose partner and value > 0");
+            alert("Choose file name and value > 0");
     }
 
     $(document).ready(function () {
     });
-    $('.triggers_submit').click(function () {submit_send()});
+    $('.triggers_submit').click(function () {submit_deposit()});
 });

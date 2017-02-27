@@ -40,7 +40,8 @@
                             <div class="col-md-8 col-sm-4 col-xs-12">
                                 <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                     <option value="00">@Messages("directpay.usersettings.notselected")</option>
-                                    <option value="@globals.country_partner1">@globals.country_partner1</option>
+                                    @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
+                                    @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
                                 </select>
                             </div>
                         </div>
@@ -103,7 +104,7 @@
                 <div class="x_content">
                     <p>@Messages("directpay.send.shortinfo1", globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.send.yourmaximumsend"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_maximum_send" class="calc_destak_info"></span></p>
-                    <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_destak_info">@globals.country_fee_send_percent %</span>} else {@Messages("directpay.overview.thisoperationdoesnotchargefees")}.</p>
+                    <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>} else {@Messages("directpay.overview.thisoperationdoesnotchargefees")}.</p>
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>

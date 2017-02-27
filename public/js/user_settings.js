@@ -18,6 +18,7 @@ $(function(){
             reg_info.account = data[0].account;
             if(data[0].automatic) {reg_info.automatic = "checked"} else {reg_info.automatic = ""}
             if(data[0].partner == $('#hidden_partner1').val()) {reg_info.partner1_selected = "selected"} else {reg_info.partner1_selected = ""}
+            if(data[0].partner == $('#hidden_partner2').val()) {reg_info.partner2_selected = "selected"} else {reg_info.partner2_selected = ""}
 
             $('#user-reg-one').html(user_reg_template_one(reg_info));
             reloadsrc();
@@ -33,9 +34,10 @@ $(function(){
                 transitionEffect: 'slide'
             });
 
-            $('.buttonNext').addClass('btn btn-primary');
             $('.buttonPrevious').addClass('btn btn-default');
-            $('.buttonFinish').addClass('btn btn-success');
+            $('.buttonNext').addClass('btn btn-default');
+            $('.buttonFinish').addClass('btn btn-primary');
+            $('.buttonFinish').addClass('triggers_submit');
         });
 
         $(document).ready(function() {
@@ -48,4 +50,42 @@ $(function(){
     }
     reloadsrc();
 
+
+    function submit_user_info() {
+        alert(66);
+        if ($('#first_name').val() != "")
+        {   var first_name = $('#first-name').val();
+            var mid_name = $('#mid-name').val();
+            var last_name = $('#last-name').val();
+            var email = $('#email').val();
+            var doc1 = $('#doc1').val();
+            var doc2 = $('#doc2').val();
+            var doc3 = $('#doc3').val();
+            var doc4 = $('#doc4').val();
+            var doc5 = $('#doc5').val();
+            var bank = $('#banks').val();
+            var agency = $('#agency').val();
+            var account = $('#account').val();
+            var partner = $('#partner').val();
+            var automatic = $('#automatic').val();
+            alert(first_name);
+/*            API.create_order(order_type, status, '', initial_value, '', '', '', '').success(function () {
+                $.pnotify({
+                    title: Messages("java.api.messages.account.twofactorauthentication"),
+                    text: Messages("java.api.messages.account.twofactorauthenticationturnedon"),
+                    styling: 'bootstrap',
+                    type: 'success',
+                    text_escape: true
+                });
+            })
+ */       }
+        else
+            alert("not submitted");
+    }
+
+    $(document).ready(function () {
+    });
+    $('.triggers_submit').click(function () {submit_user_info()});
 });
+
+

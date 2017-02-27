@@ -811,7 +811,7 @@ create or replace function
 get_orders_list (
   out order_id bigint,
   out user_id bigint,
-  out country_id int,
+  out country_id varchar(4),
   out order_type varchar(4),
   out status varchar(4),
   out partner varchar(128),

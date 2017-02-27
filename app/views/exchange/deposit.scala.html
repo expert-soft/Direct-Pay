@@ -2,6 +2,7 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/fee_messages.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/deposit.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
@@ -9,7 +10,13 @@
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
-            <h3><i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")</h3>
+            <h3>
+                @if(globals.preference_manual_operations) {
+                    <i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")
+                } else {
+                    <i class="fa fa-plus"> </i> <i class="fa fa-upload"></i> @Messages("directpay.deposit.depositconvertsend")
+                }
+            </h3>
         </div>
     </div>
 
@@ -21,6 +28,7 @@
     critical_value1 = "@globals.country_critical_value1.toString"
     critical_value2 = "@globals.country_critical_value2.toString"
     fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
+    fee_send_percent = "@globals.country_fee_send_percent.toString"
     ></input>
 
 
@@ -51,6 +59,18 @@
                                 </div>
                             </div>
                         </div>
+                        @if(!globals.preference_manual_operations) {
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
+                                        <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                        @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
+                                        @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
+                                    </select>
+                                </div>
+                            </div>
+                        }
                         @if(globals.country_fee_deposit_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_deposit_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
@@ -123,6 +143,9 @@
                     <p>@Messages("directpay.deposit.shortinfo2", globals.country_currency_symbol, globals.country_critical_value2):</p>
                     <p>@Messages("directpay.deposit.shortinfo3")</p>
                     @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.country_fee_deposit_percent %</span></p> }
+                    @if(!globals.preference_manual_operations && globals.country_fee_send_percent != 0) {
+                        <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>}.</p>
+                    }
 
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
@@ -131,7 +154,7 @@
                         @if(globals.country_fee_deposit_percent != 0) {
                             @if(globals.country_minimum_value != 0) {
                                 <p>@Messages("directpay.deposit.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                                <p>@Messages("directpay.deposit.explanation3a") @globals.country_currency_symbol <span id="calc_deposit_minimum_value"></span> @Messages("directpay.deposit.explanation3b") @globals.country_currency_symbol <span id="calc_deposit_minimum_value_extra_fee"></span></p>
+                                <p>@Messages("directpay.deposit.explanation3a") <span class="calc_mid_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value"></span></span> @Messages("directpay.deposit.explanation3b") <span class="calc_mid_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value_extra_fee"></span></span></p>
                             }
                         } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
                         </div>
