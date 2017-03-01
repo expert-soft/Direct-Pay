@@ -89,7 +89,7 @@
                                 <li><a href="@routes.Application.dashboard().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
                                 <li><a><i class="fa fa-usd"></i> @Messages("directpay.navigation.operations.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        @if(globals.preference_manual_operations) {
+                                        @if(securesocial.core.SecureSocial.currentUser.get.manual) {
                                             <li><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> @Messages("directpay.navigation.deposit.title") </a></li>
                                             <li><a href="@routes.Application.tocrypto().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
                                             <li><a href="@routes.Application.send().url"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>

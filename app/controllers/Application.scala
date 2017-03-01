@@ -87,6 +87,27 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Redirect(request.headers.get("referer").getOrElse("/")).withLang(Lang.get(lang).getOrElse(Lang.defaultLang))
   }
 
+  def uploadImage = SecuredAction(parse.multipartFormData) { implicit request =>
+    request.body.files map {
+      file =>
+        val filename = file.filename
+        val contentType = file.contentType
+        controllers.Image.saveImage(file.ref.file.getAbsolutePath, filename)
+    }
+    Ok(views.html.exchange.dashboard(request.user))
+  }
+
+  def getimage(name: String) = Action {
+    val MimeType = "image/png"
+    try {
+      val imageData: Array[Byte] = controllers.Image.getImage(name)
+      Ok(imageData).as(MimeType)
+    } catch {
+      case e: IllegalArgumentException =>
+        BadRequest("Couldn’t generate image. Error: " + e.getMessage)
+    }
+  }
+
   val messages = jsMessagesFactory.all
 
   val jsMessages = Action { implicit request =>

@@ -71,8 +71,8 @@ $(function(){
             alert(first_name);
 /*            API.create_order(order_type, status, '', initial_value, '', '', '', '').success(function () {
                 $.pnotify({
-                    title: Messages("java.api.messages.account.twofactorauthentication"),
-                    text: Messages("java.api.messages.account.twofactorauthenticationturnedon"),
+                    title: Messages("messages.api.success"),
+                    text: Messages("messages.api.success.ordercreatedsuccessfully"),
                     styling: 'bootstrap',
                     type: 'success',
                     text_escape: true
@@ -86,6 +86,42 @@ $(function(){
     $(document).ready(function () {
     });
     $('.triggers_submit').click(function () {submit_user_info()});
+
 });
 
+$('#uploadBtn1').change(function() {
+    $('#uploadFile1').val(this.value);
+    $('#uploadText1').html(this.value);
+    $('#uploadDiv1').addClass('btn-default');
+    if (this.value == "")
+        $('#uploadDiv1').addClass('btn-info');
+    else
+        $('#uploadDiv1').removeClass('btn-info');
+});
+
+$('.upload').change(function() {
+    alert(474);
+});
+
+$('#uploadBtn2').change(function() {
+    alert(44);
+    $('#uploadFile2').val(this.value);
+    $('#uploadText2').html(this.value);
+    $('#uploadDiv2').addClass('btn-default');
+    if (this.value == "")
+        $('#uploadDiv2').addClass('btn-info');
+    else
+        $('#uploadDiv2').removeClass('btn-info');
+});
+
+$('#uploadBtn3').change(function() {
+    alert(44);
+    $('#uploadFile3').val(this.value);
+    $('#uploadText3').html(this.value);
+    $('#uploadDiv3').addClass('btn-default');
+    if (this.value == "")
+        $('#uploadDiv3').addClass('btn-info');
+    else
+        $('#uploadDiv3').removeClass('btn-info');
+});
 

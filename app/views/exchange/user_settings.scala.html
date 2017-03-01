@@ -14,7 +14,35 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+<style>
+.fileUpload { position: relative; overflow: hidden; margin: 10px; }
+.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+</style>
+
         <!-- page content -->
+    <!-- example image upl -->
+<!--    <div class="panel panel-success">
+        <div class="panel-heading">Image Upload</div>
+        <div class="panel-body">
+        helper.form(action = routes.Application.uploadImage, 'enctype -> "multipart/form-data") {
+            CSRF.formField
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add files...</span>
+                <input type="file" name="pictures" id="pictures" multiple="multiple">
+            </span>
+
+            <p>
+                <input type="submit" class="btn btn-success">
+            </p>
+        }
+        </div>
+    </div>
+-->
+
+    <!-- example how read image -->
+    <img src="@routes.Application.getimage("flagar.gif")">
+
     <div class="page-title">
         <div class="title_left">
             <h3><i class="fa fa-user"> &nbsp;</i> @Messages("exchange.account.info.title")</h3>
@@ -87,12 +115,13 @@
                                     @if(globals.country_doc1_required) {
                                         @if(globals.country_doc1_ispicture) {
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label" for="doc1">@globals.country_doc1_name <span class="required">*</span></label>
-                                                <div class="col-sm-6">
-                                                    <div class="input-group"><input type="text" value="{{doc1}}" class="form-control" id="doc1" name="doc1" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                    </div>
+                                                <label class="col-sm-3 col-md-3 control-label" for="doc1">@globals.country_doc1_name <span class="required">*</span></label>
+                                                <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
+                                                <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
+                                                    <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                                    <input id="uploadBtn1" value="{{doc1}}" type="file" class="upload" />
                                                 </div>
+                                                <span id="uploadText1">{{doc1}}</span>
                                             </div>
                                         } else {
                                             <div class="form-group">
@@ -104,12 +133,13 @@
                                     @if(globals.country_doc2_required) {
                                         @if(globals.country_doc2_ispicture) {
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label" for="doc2">@globals.country_doc2_name <span class="required">*</span></label>
-                                                <div class="col-sm-6">
-                                                    <div class="input-group"><input type="text" value="{{doc2}}" class="form-control" id="doc2" name="doc2" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                    </div>
+                                                <label class="col-sm-3 col-md-3 control-label" for="doc2">@globals.country_doc2_name <span class="required">*</span></label>
+                                                <input type="hidden" id="uploadFile2" placeholder="Choose File" disabled="disabled" />
+                                                <div id="uploadDiv2" class="fileUpload btn btn-info" style="top: -6px;">
+                                                    <span id="uploadButtonCaption2" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                                    <input id="uploadBtn2" value="{{doc2}}" type="file" class="upload" />
                                                 </div>
+                                                <span id="uploadText2">{{doc2}}</span>
                                             </div>
                                         } else {
                                             <div class="form-group">
@@ -121,12 +151,13 @@
                                     @if(globals.country_doc3_required) {
                                         @if(globals.country_doc3_ispicture) {
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label" for="doc3">@globals.country_doc3_name <span class="required">*</span></label>
-                                                <div class="col-sm-6">
-                                                    <div class="input-group"><input type="text" value="{{doc3}}" class="form-control" id="doc3" name="doc3" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                    </div>
+                                                <label class="col-sm-3 col-md-3 control-label" for="doc3">@globals.country_doc3_name <span class="required">*</span></label>
+                                                <input type="hidden" id="uploadFile3" placeholder="Choose File" disabled="disabled" />
+                                                <div id="uploadDiv3" class="fileUpload btn btn-info" style="top: -6px;">
+                                                    <span id="uploadButtonCaption3" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                                    <input id="uploadBtn3" value="{{doc3}}" type="file" class="upload" />
                                                 </div>
+                                                <span id="uploadText3">{{doc3}}</span>
                                             </div>
                                         } else {
                                             <div class="form-group">
@@ -138,12 +169,13 @@
                                     @if(globals.country_doc4_required) {
                                         @if(globals.country_doc4_ispicture) {
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label" for="doc4">@globals.country_doc4_name <span class="required">*</span></label>
-                                                <div class="col-sm-6">
-                                                    <div class="input-group"><input type="text" value="{{doc4}}" class="form-control" id="doc4" name="doc4" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
-                                                    </div>
+                                                <label class="col-sm-3 col-md-3 control-label" for="doc4">@globals.country_doc4_name <span class="required">*</span></label>
+                                                <input type="hidden" id="uploadFile4" placeholder="Choose File" disabled="disabled" />
+                                                <div id="uploadDiv4" class="fileUpload btn btn-info" style="top: -6px;">
+                                                    <span id="uploadButtonCaption4" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                                    <input id="uploadBtn4" value="{{doc4}}" type="file" class="upload" />
                                                 </div>
+                                                <span id="uploadText4">{{doc4}}</span>
                                             </div>
                                         } else {
                                             <div class="form-group">
@@ -158,7 +190,7 @@
                                                 <label class="col-sm-3 control-label" for="doc5">@globals.country_doc5_name <span class="required">*</span></label>
                                                 <div class="col-sm-6">
                                                     <div class="input-group"><input type="text" value="{{doc5}}" class="form-control" id="doc5" name="doc5" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("terminology.browse")</button></span>
                                                     </div>
                                                 </div>
                                             </div>

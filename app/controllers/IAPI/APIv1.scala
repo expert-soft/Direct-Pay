@@ -269,7 +269,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     if (globals.userModel.create_order(request.user.id, globals.country_code, order_type, status, partner, globals.country_currency_code, initial_value, Option(total_fee), bank, agency, account, doc1)) {
       Ok(Json.obj())
     } else {
-      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoturnofftwofactorauth")))
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtocreateorder")))
     }
   }
 

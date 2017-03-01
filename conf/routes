@@ -46,6 +46,8 @@ POST        /iapi/1/remove_pgp                         controllers.IAPI.APIv1.re
 POST        /iapi/1/add_pgp                            controllers.IAPI.APIv1.addPgp
 
 POST        /iapi/1/create_order                       controllers.IAPI.APIv1.create_order
+POST        /docs                                      controllers.Application.uploadImage()
+GET         /images/*name                              controllers.Application.getimage(name)
 
 
 

@@ -54,7 +54,8 @@ class UserModel(val db: String = "default") {
           row[String]("language"),
           row[Boolean]("on_mailing_list"),
           row[Boolean]("tfa_enabled"),
-          row[Option[String]]("pgp")
+          row[Option[String]]("pgp"),
+          row[Boolean]("manual")
         )
       ).headOption
     }
@@ -88,15 +89,17 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("on_mailing_list"),
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
-      row[String]("language")) match {
+      row[String]("language"),
+      row[Option[Boolean]]("manual")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
           Some(on_mailing_list: Boolean),
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
-          language: String) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp))
+          language: String,
+          manual: Option[Boolean]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manual.getOrElse(false)))
         case _ =>
           None
       }
@@ -112,15 +115,17 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("on_mailing_list"),
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
-      row[Option[String]]("language")) match {
+      row[Option[String]]("language"),
+      row[Option[Boolean]]("manual")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
           Some(on_mailing_list: Boolean),
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
-          Some(language: String)) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp))
+          Some(language: String),
+          Some(manual: Boolean)) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manual))
         case _ =>
           None
       }

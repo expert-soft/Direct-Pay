@@ -15,8 +15,8 @@ $(function() {
             var account = $('#account').val();
             API.create_order(order_type, status, '', initial_value, bank, agency, account, '').success(function () {
                 $.pnotify({
-                    title: Messages("java.api.messages.account.twofactorauthentication"),
-                    text: Messages("java.api.messages.account.twofactorauthenticationturnedon"),
+                    title: Messages("messages.api.success"),
+                    text: Messages("messages.api.success.ordercreatedsuccessfully"),
                     styling: 'bootstrap',
                     type: 'success',
                     text_escape: true

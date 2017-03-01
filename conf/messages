@@ -202,6 +202,7 @@ terminology.instructions=Instructions
 terminology.extrainformation=Extra information
 terminology.minimizethisboard=Minimize this board
 terminology.closethisboard=Close this board
+terminology.browse=Browse
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -335,7 +336,6 @@ directpay.receivewithdraw.explanation3=Be sure your bank information is up to da
 
 directpay.receivewithdraw.receiveconvertandwithdraw=Receive, Convert and Withdraw
 
-directpay.usersettings.browsebutton=Browse
 directpay.usersettings.selectpictureofdocument=Select picture of the document
 directpay.usersettings.supportedfiletypes=(.gif, .jpg, .png, .pdf)
 directpay.usersettings.documentrequired.title=document number required
@@ -546,6 +546,11 @@ mails.sendSignUpEmail.body=Please follow this link to complete your registration
 mails.welcomeEmail.body=Your new account is ready. Click here to log in:
 mails.passwordResetEmail.body=Please follow this link to reset your password.
 mails.passwordResetOk.body=Your password was updated.  Please log in using your new password by clicking here.
+
+# Direct Pay API messages
+messages.api.success=Success
+messages.api.success.ordercreatedsuccessfully=Order created successfully
+messages.api.error.failedtocreateorder=Failed to create order.
 
 # API error messages
 

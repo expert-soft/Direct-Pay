@@ -12,7 +12,7 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-            @if(globals.preference_manual_operations) {
+            @if(securesocial.core.SecureSocial.currentUser.get.manual) {
                 <i class="fa fa-minus"> &nbsp;</i> @Messages("directpay.navigation.withdraw.title")
             } else {
                 <i class="fa fa-download"> </i> <i class="fa fa-minus"></i> @Messages("directpay.withdraw.receiveconvertwithdraw")
@@ -154,7 +154,7 @@
                     <p>@Messages("directpay.withdraw.shortinfo1")</p>
                     <p>@Messages("directpay.withdraw.yourmaximumwithdrawal"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_maximum_withdraw" class="calc_destak_info"></span></p>
                     <p>@Messages("directpay.withdraw.shortinfo2")</p>
-                    @if(!globals.preference_manual_operations) {
+                    @if(!securesocial.core.SecureSocial.currentUser.get.manual) {
                         <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span> <i class="fa fa-arrow-right"></i> <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
                     }
 

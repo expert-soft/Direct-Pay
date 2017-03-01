@@ -21,7 +21,8 @@ create table users (
     tfa_enabled bool default false not null,
     verification int default 0 not null,
     pgp text,
-    active bool default true not null
+    active bool default true not null,
+    manual bool default false not null
 );
 create unique index unique_lower_email on users (lower(email));
 
@@ -140,8 +141,8 @@ create table orders (
     partner varchar(128),
     created timestamp(3) default current_timestamp not null,
     currency varchar(8) not null,
-    initial_value numeric(23,8),
-    total_fee numeric(23,8),
+    initial_value numeric(23,8) default 0,
+    total_fee numeric(23,8) default 0,
     doc1 varchar(128),
     doc2 varchar(128),
     bank varchar(128),
@@ -149,7 +150,7 @@ create table orders (
     account varchar(16),
     closed timestamp(3),
     closed_by bigint,
-    closed_value numeric(23,8),
+    closed_value numeric(23,8) default 0,
     comment varchar(128),
     key1 varchar(32),
     key2 varchar(32),
@@ -157,8 +158,15 @@ create table orders (
     foreign key (user_id) references users(id)
 );
 
+create sequence image_id_seq;
+create table image (
+    id bigint default nextval('image_id_seq') primary key,
+    name varchar(256),
+    data bytea);
+
 
 # --- !Downs
+drop table if exists image cascade;
 drop table if exists balances cascade;
 drop table if exists currencies cascade;
 drop table if exists tokens cascade;
@@ -174,6 +182,7 @@ drop table if exists totp_tokens_blacklist cascade;
 drop table if exists event_log cascade;
 drop table if exists withdrawal_limits cascade;
 drop table if exists trusted_action_requests cascade;
+drop sequence if exists image_id_seq cascade;
 drop sequence if exists order_id_seq cascade;
 drop sequence if exists event_log_id_seq cascade;
 drop extension pgcrypto;
