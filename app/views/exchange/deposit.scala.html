@@ -8,14 +8,14 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
-    <input type="hidden" id="hidden_page" value="@if(globals.preference_manual_operations) {D} else {DCS}"></input>
+    <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {D} else {DCS}"></input>
         <!-- page content -->
 
 
     <div class="page-title">
         <div class="title_left">
             <h3>
-                @if(securesocial.core.SecureSocial.currentUser.get.manual) {
+                @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
                     <i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")
                 } else {
                     <i class="fa fa-plus"> </i> <i class="fa fa-upload"></i> @Messages("directpay.deposit.depositconvertsend")
@@ -70,7 +70,7 @@
                             <span id="uploadText1"></span>
                         </div>
 
-                        @if(!securesocial.core.SecureSocial.currentUser.get.manual) {
+                        @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
                                 <div class="col-md-8 col-sm-4 col-xs-12">
@@ -154,7 +154,7 @@
                     <p>@Messages("directpay.deposit.shortinfo2", globals.country_currency_symbol, globals.country_critical_value2):</p>
                     <p>@Messages("directpay.deposit.shortinfo3")</p>
                     @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.country_fee_deposit_percent %</span></p> }
-                    @if(!securesocial.core.SecureSocial.currentUser.get.manual && globals.country_fee_send_percent != 0) {
+                    @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0) {
                         <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>}.</p>
                     }
 

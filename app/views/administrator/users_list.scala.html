@@ -82,14 +82,14 @@
             {{#each this}}
                 <tr id="{{id}}">
                     <td title="@Messages("directpay.admin.userslist.userID") = {{id}}">{{email}}</td>
-                    <td title="@Messages("directpay.admin.userslist.userID") = {{id}}">{{name}} {{middle_name}} {{surname}}</td>
+                    <td title="@Messages("directpay.admin.userslist.userID") = {{id}}">{{first_name}} {{middle_name}} {{last_name}}</td>
                     <td class="{{class_fiat}}">{{amount_fiat}}</td>
                     <td class="{{class_crypto}}">{{amount_crypto}}</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a class="requestPopUp" name="{{doc1}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver1}}" doc="1" title="{{doc1}}">{{doc1}}</a>} else { {{doc1}} }<br> <i class="{{checked1}}"></i> </td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a class="requestPopUp" name="{{doc2}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver2}}" doc="2" title="{{doc2}}">{{doc2}}</a>} else { {{doc2}} }<br> <i class="{{checked2}}"></i> </td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a class="requestPopUp" name="{{doc3}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver3}}" doc="3" title="{{doc3}}">{{doc3}}</a>} else { {{doc3}} }<br> <i class="{{checked3}}"></i> </td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a class="requestPopUp" name="{{doc4}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver4}}" doc="4" title="{{doc4}}">{{doc4}}</a>} else { {{doc4}} }<br> <i class="{{checked4}}"></i> </td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a class="requestPopUp" name="{{doc5}}" href="#popupPic" user="{{name}} {{middle_name}} {{surname}}" email="{{email}}" ver="{{ver5}}" doc="5" title="{{doc5}}">{{doc5}}</a>} else { {{doc5}} }<br> <i class="{{checked5}}"></i> </td> }
+                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a class="requestPopUp" name="{{doc1}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver1}}" doc="1" title="{{doc1}}">{{doc1}}</a>} else { {{doc1}} }<br> <i class="{{checked1}}"></i> </td> }
+                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a class="requestPopUp" name="{{doc2}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver2}}" doc="2" title="{{doc2}}">{{doc2}}</a>} else { {{doc2}} }<br> <i class="{{checked2}}"></i> </td> }
+                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a class="requestPopUp" name="{{doc3}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver3}}" doc="3" title="{{doc3}}">{{doc3}}</a>} else { {{doc3}} }<br> <i class="{{checked3}}"></i> </td> }
+                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a class="requestPopUp" name="{{doc4}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver4}}" doc="4" title="{{doc4}}">{{doc4}}</a>} else { {{doc4}} }<br> <i class="{{checked4}}"></i> </td> }
+                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a class="requestPopUp" name="{{doc5}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver5}}" doc="5" title="{{doc5}}">{{doc5}}</a>} else { {{doc5}} }<br> <i class="{{checked5}}"></i> </td> }
                 </tr>
             {{/each}}
             </tbody>

@@ -49,9 +49,9 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val user_info = globals.engineModel.UserNameINFO(Some(request.user.id))
     Ok(Json.toJson(user_info.map({ c =>
       Json.obj(
-        "name" -> c._1,
-        "surname" -> c._2,
-        "middle_name" -> c._3,
+        "first_name" -> c._1,
+        "middle_name" -> c._2,
+        "last_name" -> c._3,
         "doc1" -> c._4,
         "doc2" -> c._5,
         "doc3" -> c._6,
@@ -60,8 +60,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "bank" -> c._9,
         "agency" -> c._10,
         "account" -> c._11,
-        "automatic" -> c._12,
-        "partner" -> c._13
+        "partner" -> c._12
       )
     })
     ))
@@ -92,7 +91,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "email" -> c._19,
         "first_name" -> c._20,
         "middle_name" -> c._21,
-        "surname" -> c._22
+        "last_name" -> c._22
 
       )
     })
@@ -107,9 +106,9 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "created" -> c._2,
         "email" -> c._3,
         "active" -> c._4,
-        "name" -> c._5,
-        "surname" -> c._6,
-        "middle_name" -> c._7,
+        "first_name" -> c._5,
+        "middle_name" -> c._6,
+        "last_name" -> c._7,
         "doc1" -> c._8,
         "doc2" -> c._9,
         "doc3" -> c._10,
@@ -270,6 +269,15 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtocreateorder")))
+    }
+  }
+
+  def change_manualauto = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val manualauto_mode = (request.request.body \ "manualauto_mode").asOpt[Boolean]
+    if (globals.userModel.change_manualauto(request.user.id, manualauto_mode)) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtochangemanualautomode")))
     }
   }
 

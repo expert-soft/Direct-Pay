@@ -49,10 +49,6 @@ var API;
             return $.get(iapi_prefix+'balance', 'json');
         }),
 
- /*       country_settings: APIWrap(function() {
-            return $.get(iapi_prefix+'country_settings', 'json');
-        }),
-*/
         user: APIWrap(function() {
             return $.get(iapi_prefix+'user', 'json');
         }),
@@ -122,25 +118,15 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
+        }),
+
+        change_manualauto: APIWrap(function(manualauto_mode) {
+            return $.ajax(iapi_prefix+'change_manualauto', {
+                type: 'POST',
+                data: JSON.stringify({manualauto_mode: manualauto_mode}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
         })
     };
 })();
-
-/*
- initial_value numeric(23,8),
- total_fee numeric(23,8),
- doc1 varchar(128),
- doc2 varchar(128),
- bank varchar(128),
- agency varchar(16),
- account varchar(16),
- closed timestamp(3),
- closed_by bigint,
- closed_value numeric(23,8),
- comment varchar(128),
- key1 varchar(32),
- key2 varchar(32),
- foreign key (currency) references currencies(currency),
- foreign key (user_id) references users(id)
-
- */

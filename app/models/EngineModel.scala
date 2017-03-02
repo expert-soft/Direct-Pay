@@ -33,9 +33,9 @@ class EngineModel(val db: String = "default") {
 
   def UserNameINFO(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
     SQL"""select * from get_user_name_info($uid)"""().map(row => (
-      row[String]("name"),
-      row[String]("surname"),
+      row[String]("first_name"),
       row[String]("middle_name"),
+      row[String]("last_name"),
       row[Option[String]]("doc1").getOrElse("N/A"),
       row[Option[String]]("doc2").getOrElse("N/A"),
       row[Option[String]]("doc3").getOrElse("N/A"),
@@ -44,7 +44,6 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("bank").getOrElse("N/A"),
       row[Option[String]]("agency").getOrElse("N/A"),
       row[Option[String]]("account").getOrElse("N/A"),
-      row[Boolean]("automatic"),
       row[Option[String]]("partner").getOrElse("N/A")
     )).toList
   }
@@ -55,9 +54,9 @@ class EngineModel(val db: String = "default") {
       row[DateTime]("created"),
       row[String]("email"),
       row[Boolean]("active"),
-      row[Option[String]]("name").getOrElse("N/A"),
-      row[Option[String]]("surname").getOrElse("N/A"),
+      row[Option[String]]("first_name").getOrElse("N/A"),
       row[Option[String]]("middle_name").getOrElse("N/A"),
+      row[Option[String]]("last_name").getOrElse("N/A"),
       row[Option[String]]("doc1").getOrElse("N/A"),
       row[Option[String]]("doc2").getOrElse("N/A"),
       row[Option[String]]("doc3").getOrElse("N/A"),
@@ -95,7 +94,7 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("email").getOrElse("N/A"),
       row[Option[String]]("first_name").getOrElse("N/A"),
       row[Option[String]]("middle_name").getOrElse("N/A"),
-      row[Option[String]]("surname").getOrElse("N/A")
+      row[Option[String]]("last_name").getOrElse("N/A")
     )).toList
   }
 

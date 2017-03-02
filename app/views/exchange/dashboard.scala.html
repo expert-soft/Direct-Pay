@@ -68,7 +68,6 @@
             <script id="balance-template" type="text/x-handlebars-template"></script>
         </div>
         <!-- end of Wallet -->
-
     </div>
 
     <div class="clearfix"></div>
@@ -83,12 +82,12 @@
                 </p><div class="x_content">
                     <div class="radio">
                         <label>
-                            <input type="radio" checked="" value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.overview.optionautomatic")
+                            <input type="radio" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {checked} value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.overview.optionautomatic")
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" checked="checked" value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.overview.optionmanual")
+                            <input type="radio" @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {checked} value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.overview.optionmanual")
                         </label>
                     </div>
                  </div>

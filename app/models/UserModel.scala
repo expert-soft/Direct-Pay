@@ -55,7 +55,7 @@ class UserModel(val db: String = "default") {
           row[Boolean]("on_mailing_list"),
           row[Boolean]("tfa_enabled"),
           row[Option[String]]("pgp"),
-          row[Boolean]("manual")
+          row[Boolean]("manualauto_mode")
         )
       ).headOption
     }
@@ -90,7 +90,7 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
       row[String]("language"),
-      row[Option[Boolean]]("manual")) match {
+      row[Option[Boolean]]("manualauto_mode")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
@@ -98,8 +98,8 @@ class UserModel(val db: String = "default") {
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
           language: String,
-          manual: Option[Boolean]) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manual.getOrElse(false)))
+          manualauto_mode: Option[Boolean]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode.getOrElse(false)))
         case _ =>
           None
       }
@@ -116,7 +116,7 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
       row[Option[String]]("language"),
-      row[Option[Boolean]]("manual")) match {
+      row[Option[Boolean]]("manualauto_mode")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
@@ -124,8 +124,8 @@ class UserModel(val db: String = "default") {
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
           Some(language: String),
-          Some(manual: Boolean)) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manual))
+          Some(manualauto_mode: Boolean)) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode))
         case _ =>
           None
       }
@@ -284,4 +284,11 @@ class UserModel(val db: String = "default") {
      select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${total_fee.get}, ${bank}, ${agency}, ${account}, ${doc1})
     """.execute()
   }
+
+  def change_manualauto(uid: Long, manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select change_manualauto as success from change_manualauto($uid, ${manualauto_mode.get})
+    """.execute()
+  }
+
 }

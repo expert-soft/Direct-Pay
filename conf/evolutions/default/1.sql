@@ -22,15 +22,15 @@ create table users (
     verification int default 0 not null,
     pgp text,
     active bool default true not null,
-    manual bool default false not null
+    manualauto_mode bool default false not null
 );
 create unique index unique_lower_email on users (lower(email));
 
 create table users_name_info (
     user_id bigint not null,
-    name varchar(64) not null,
-    surname varchar(128) not null,
+    first_name varchar(64) not null,
     middle_name varchar(128),
+    last_name varchar(128) not null,
     doc1 varchar(256),
     doc2 varchar(256),
     doc3 varchar(256),
@@ -50,7 +50,6 @@ create table users_connections (
     bank varchar(16),
     agency varchar(16),
     account varchar(16),
-    automatic boolean not null,
     partner varchar(64),
     foreign key (user_id) references users(id),
     primary key (user_id)

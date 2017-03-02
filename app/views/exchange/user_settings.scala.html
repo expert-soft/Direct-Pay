@@ -84,9 +84,9 @@
                                     <span class="section">@Messages("directpay.usersettings.step1.title")</span>
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3" for="name">@Messages("directpay.usersettings.fullname.item") <span class="required">*</span></label>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="first-name" name="first-name" value="{{name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="mid-name" name="mid-name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
-                                            <div class="col-md-3 col-sm-3"><input type="text" id="last-name" name="last-name" value="{{surname}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+                                            <div class="col-md-3 col-sm-3"><input type="text" id="first_name" name="first_name" value="{{first_name}}" placeholder="@Messages("directpay.usersettings.firstname.placeholder")" title="@Messages("directpay.usersettings.firstname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
+                                            <div class="col-md-3 col-sm-3"><input type="text" id="middle_name" name="middle_name" value="{{middle_name}}" placeholder="@Messages("directpay.usersettings.midname.placeholder")" title="@Messages("directpay.usersettings.midname.title")" class="form-control col-md-7 col-xs-12"></div>
+                                            <div class="col-md-3 col-sm-3"><input type="text" id="last_name" name="last_name" value="{{last_name}}" placeholder="@Messages("directpay.usersettings.lastname.placeholder")" title="@Messages("directpay.usersettings.lastname.title")" required="required" class="form-control col-md-7 col-xs-12"></div>
                                         </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3" for="email">@Messages("directpay.usersettings.email.item") <span class="required">*</span></label>
@@ -187,12 +187,13 @@
                                     @if(globals.country_doc5_required) {
                                         @if(globals.country_doc5_ispicture) {
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label" for="doc5">@globals.country_doc5_name <span class="required">*</span></label>
-                                                <div class="col-sm-6">
-                                                    <div class="input-group"><input type="text" value="{{doc5}}" class="form-control" id="doc5" name="doc5" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                                        <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("terminology.browse")</button></span>
-                                                    </div>
+                                                <label class="col-sm-3 col-md-3 control-label" for="doc5">@globals.country_doc5_name <span class="required">*</span></label>
+                                                <input type="hidden" id="uploadFile5" placeholder="Choose File" disabled="disabled" />
+                                                <div id="uploadDiv5" class="fileUpload btn btn-info" style="top: -6px;">
+                                                    <span id="uploadButtonCaption5" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                                    <input id="uploadBtn5" value="{{doc5}}" type="file" class="upload" />
                                                 </div>
+                                                <span id="uploadText5">{{doc5}}</span>
                                             </div>
                                         } else {
                                             <div class="form-group">
@@ -261,7 +262,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">@Messages("directpay.usersettings.automatic.item")</label>
                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <div class="checkbox"><label><input type="checkbox" name="automatic" title="@Messages("directpay.usersettings.automatic.title")" {{automatic}}> @Messages("directpay.usersettings.automatic.title2")</label></div>
+                                            <div class="checkbox"><label><input type="checkbox" name="automatic" title="@Messages("directpay.usersettings.automatic.title")" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { checked }> @Messages("directpay.usersettings.automatic.title2")</label></div>
                                         </div>
                                     </div>
                                     <div class="divider-dashed"></div>

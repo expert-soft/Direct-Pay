@@ -755,9 +755,9 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 create or replace function
 get_user_name_info (
   a_id bigint,
-  out name varchar(64),
-  out surname varchar(128),
+  out first_name varchar(64),
   out middle_name varchar(128),
+  out last_name varchar(128),
   out doc1 varchar(256),
   out doc2 varchar(256),
   out doc3 varchar(256),
@@ -766,11 +766,10 @@ get_user_name_info (
   out bank varchar (16),
   out agency varchar (16),
   out account varchar (16),
-  out automatic boolean,
   out partner varchar (64)
 ) returns setof record as $$
 begin
-  return query select uf.name, uf.surname, uf.middle_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.automatic, uc.partner
+  return query select uf.first_name, uf.middle_name, uf.last_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.partner
   from users_name_info uf
   left join users_connections uc on uc.user_id = uf.user_id
   where uf.user_id = a_id;;
@@ -784,9 +783,9 @@ get_users_list (
   out created timestamp(3),
   out email varchar(256),
   out active bool,
-  out name varchar(64),
-  out surname varchar(128),
+  out first_name varchar(64),
   out middle_name varchar(128),
+  out last_name varchar(128),
   out doc1 varchar(256),
   out doc2 varchar(256),
   out doc3 varchar(256),
@@ -799,7 +798,7 @@ get_users_list (
   out ver5 bool
 ) returns setof record as $$
 begin
-  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1, ui.ver2, ui.ver3, ui.ver4, ui.ver5
+  return query select u.id, u.created, u.email, u.active, ui.first_name, ui.middle_name, ui.last_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1, ui.ver2, ui.ver3, ui.ver4, ui.ver5
   from users u
   left join users_name_info ui on u.id = ui.user_id
   where u.id != 0;;
@@ -829,12 +828,12 @@ get_orders_list (
   out closed_value numeric(23,8),
   out comment varchar(128),
   out email varchar(256),
-  out first_name varchar(256),
-  out middle_name varchar(256),
-  out surname varchar(256)
+  out first_name varchar(64),
+  out middle_name varchar(128),
+  out last_name varchar(128)
 ) returns setof record as $$
 begin
-  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.initial_value - o.total_fee as net_value, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_value, o.comment, u.email, un.name, un.middle_name, un.surname
+  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.initial_value - o.total_fee as net_value, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_value, o.comment, u.email, un.first_name, un.middle_name, un.last_name
   from orders o
   left join users u on o.user_id = u.id
   left join users_name_info un on o.user_id = un.user_id;;

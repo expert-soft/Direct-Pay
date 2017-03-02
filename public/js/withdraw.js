@@ -3,11 +3,9 @@ $(function() {
 
     function submit_withdraw() {
         if ($('#banks').val() != "00" && $('#value').val() > 0 && $('#agency').val() != "" && $('#account').val() != "")
-        {   if($('#banks').val() == country_settings.preferential_bank1_code || $('#banks').val() == country_settings.preferential_bank2_code || $('#banks').val() == country_settings.preferential_bank3_code || $('#banks').val() == country_settings.preferential_bank4_code)
-                var order_type = "W"; // preferential bank
-            else
-                var order_type = "W."; // not preferential bank
-            if($('#hidden_manual_auto').val() == "false") order_type = "RF" + order_type; // automatic operation
+        {   var order_type = $('#hidden_page').val();
+            if($('#banks').val() != country_settings.preferential_bank1_code && $('#banks').val() != country_settings.preferential_bank2_code && $('#banks').val() != country_settings.preferential_bank3_code && $('#banks').val() != country_settings.preferential_bank4_code)
+                order_type = order_type + "."; // not preferential bank
             var status = "Op";
             var initial_value = $('#value').val();
             var bank = $('#banks').val();

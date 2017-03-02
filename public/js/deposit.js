@@ -3,15 +3,17 @@ $(function() {
 
     function submit_deposit() {
         if ($('#partner').val() != "00" && $('#value').val() > 0)
-        {   var order_type = "D";
+        {   var order_type = $('#hidden_page').val();
             var partner = '';
-            if($('#hidden_manual_auto').val() == "false") { // automatic operation
-                order_type =  "DCS";
+            var doc1 = 'XXX';
+            if(order_type == "DCS") { // automatic operation
                 partner = $('#partner').val();
             }
             var status = "Op";
-            var doc1 = $('#doc1').val();
+            doc1 = $('#doc1').val();
             var initial_value = $('#value').val();
+            alert (order_type);
+            //order_type, status, partner, initial_value, '', '', '', doc1);
             API.create_order(order_type, status, partner, initial_value, '', '', '', doc1).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),

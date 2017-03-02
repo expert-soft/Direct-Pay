@@ -40,10 +40,28 @@ end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
 
+create or replace function
+change_manualauto (
+  a_id bigint,
+  a_manualauto_mode bool
+) returns boolean as $$
+begin
+  if a_id = 0 then
+    raise 'User id 0 is not allowed to use this function.';;
+  end if;;
+  update users set manualauto_mode=a_manualauto_mode
+  where id=a_id;;
+  return true;;
+end;;
+$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
+
+
 
 # --- !Downs
 
 drop function if exists currency_insert(varchar(16), integer, bool) cascade;
 drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), varchar(128), varchar(8), numeric(23,8), varchar(128), varchar(16), varchar(16), varchar(128)) cascade;
+drop function if exists change_manualauto(Long, bool) cascade;
 
 -- security definer functions

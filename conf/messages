@@ -59,8 +59,8 @@ terminology.banner=We look forward to helping you with your inquiry. We respond 
 terminology.contacts=Contacts
 form.legal_name=Full Legal Name
 form.first_name=First Name
-form.last_name=Last Name
 form.middle_name=Middle Name
+form.last_name=Last Name
 form.address=Address
 form.city=City
 form.state=State
@@ -550,10 +550,12 @@ mails.passwordResetOk.body=Your password was updated.  Please log in using your 
 # Direct Pay API messages
 messages.api.success=Success
 messages.api.success.ordercreatedsuccessfully=Order created successfully
+messages.api.success.manualautomodechanged=Manual/Automatic mode changed successfully
 messages.api.error.failedtocreateorder=Failed to create order.
 
 # API error messages
 
+messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
 messages.api.error.invalidpair=Invalid pair
 messages.api.error.failedtoparseinput=Failed to parse input.
 messages.api.error.nonsufficientfunds=Non-sufficient funds.

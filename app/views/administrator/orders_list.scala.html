@@ -33,7 +33,6 @@
                                 <p>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></p>
                                 <p>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></p>
                                 <p><img id="image-holder" src="/assets/img/flags/pt.png" text-align="center"></p>
-<img src="@routes.Application.getimage("flagar.gif")">
                                 <p><span id="popUpPictureInfo3"></span></p>
                             </div>
                         </div>
@@ -120,8 +119,8 @@
                     {{#each this}}
                         <tr id="{{order_id}}">
                             <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
-                            <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{surname}}<br>{{email}}</td>
-                            <td><a class="{{popupType}}" name="{{doc1}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{surname}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                            <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{last_name}}<br>{{email}}</td>
+                            <td><a class="{{popupType}}" name="{{doc1}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
                             <td>{{bank}}, {{agency}}, {{account}}</td>
                             <td {{class_value}}>{{initial_value}}<br>{{total_fee}}</td>
                             <td>{{created}}</td>
@@ -162,13 +161,13 @@
                     <tr id="{{order_id}}">
                         <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
                         <td {{class_status}} title="@Messages("directpay.admin.orderslist.status") = {{explained_status}}">{{status}}</td>
-                        <td title="@Messages("directpay.admin.userslist.userID") = {{user_id}}, @Messages("terminology.name") = {{first_name}} {{middle_name}} {{surname}}">{{email}}</td>
+                        <td title="@Messages("directpay.admin.userslist.userID") = {{user_id}}, @Messages("terminology.name") = {{first_name}} {{middle_name}} {{last_name}}">{{email}}</td>
                         <td>{{initial_value}}</td>
                         <td>{{total_fee}}</td>
                         <td>{{closed}}</td>
                         <td {{class_value}}>{{currency}} {{closed_value}}</td>
                         <td>{{comment}}</td>
-                        <td><a class="{{popupType}}" name="{{doc1}}" href="{{popupHash}}" user="{{first_name}} {{middle_name}} {{surname}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                        <td><a class="{{popupType}}" name="{{doc1}}" href="{{popupHash}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
                         <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs" title="revise order">Revise</button></td>
                     </tr>
                 {{/each}}
