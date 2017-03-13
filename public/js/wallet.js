@@ -1,6 +1,5 @@
 $(function() {
     var template = Handlebars.compile($("#balance-template").html());
-
     function show_balance() {
         sum_money = 0;
         API.balance().success(function (balances) {
@@ -26,8 +25,8 @@ $(function() {
             $('#balance').html(template(balances));
         });
     }
+
     show_balance();
-    fillMessages();
 });
 
 $(function(){

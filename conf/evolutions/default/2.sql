@@ -751,6 +751,7 @@ begin
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
+
 -- noinspection SqlNoDataSourceInspection
 create or replace function
 get_user_name_info (

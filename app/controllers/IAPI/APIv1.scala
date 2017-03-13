@@ -136,34 +136,6 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
-  /*
-  def country_settings = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    Ok(Json.toJson(
-      Json.obj(
-        "decimal_separator" -> globals.country_decimal_separator,
-        "minimum_value" -> globals.country_minimum_value.toString,
-        "critical_value1" -> globals.country_critical_value1.toString,
-        "critical_value2" -> globals.country_critical_value2.toString,
-        "preferential_bank1_code" -> globals.country_preferential_bank1_code,
-        "preferential_bank1_name" -> globals.country_preferential_bank1_name,
-        "preferential_bank2_code" -> globals.country_preferential_bank2_code,
-        "preferential_bank2_name" -> globals.country_preferential_bank2_name,
-        "preferential_bank3_code" -> globals.country_preferential_bank3_code,
-        "preferential_bank3_name" -> globals.country_preferential_bank3_name,
-        "preferential_bank4_code" -> globals.country_preferential_bank4_code,
-        "preferential_bank4_name" -> globals.country_preferential_bank4_name,
-        "nominal_fee_withdrawal_preferential_bank" -> globals.country_nominal_fee_withdrawal_preferential_bank.toString,
-        "nominal_fee_withdrawal_not_preferential_bank" -> globals.country_nominal_fee_withdrawal_not_preferential_bank.toString,
-        "fees_global_percentage" -> globals.country_fees_global_percentage.toString,
-        "fee_deposit_percent" -> globals.country_fee_deposit_percent.toString,
-        "fee_withdrawal_percent" -> globals.country_fee_withdrawal_percent.toString,
-        "fee_send_percent" -> globals.country_fee_send_percent.toString,
-        "fee_tofiat_percent" -> globals.country_fee_tofiat_percent.toString
-      )
-    ))
-  }
-*/
-
   def user = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     Ok(Json.toJson(request.user))
   }
