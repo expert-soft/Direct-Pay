@@ -818,14 +818,13 @@ get_orders_list (
   out currency varchar(16),
   out initial_value numeric(23,8),
   out total_fee numeric(23,8),
-  out net_value numeric(23,8),
   out doc1 varchar(128),
   out doc2 varchar(128),
   out bank varchar(128),
   out agency varchar(16),
   out account varchar(16),
   out closed timestamp(3),
-  out closed_value numeric(23,8),
+  out net_value numeric(23,8),
   out comment varchar(128),
   out email varchar(256),
   out first_name varchar(64),
@@ -833,7 +832,7 @@ get_orders_list (
   out last_name varchar(128)
 ) returns setof record as $$
 begin
-  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.initial_value - o.total_fee as net_value, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_value, o.comment, u.email, un.first_name, un.middle_name, un.last_name
+  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, u.email, un.first_name, un.middle_name, un.last_name
   from orders o
   left join users u on o.user_id = u.id
   left join users_name_info un on o.user_id = un.user_id;;

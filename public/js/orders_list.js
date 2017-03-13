@@ -18,12 +18,12 @@ $(function(){
                 data[i].currency = data[i].currency;
                 data[i].initial_value = data[i].initial_value;
                 data[i].total_fee = data[i].total_fee;
+                data[i].net_value = data[i].net_value;
                 data[i].doc1 = data[i].doc1;
                 data[i].doc2 = data[i].doc2;
                 data[i].bank = data[i].bank;
                 data[i].agency = data[i].agency;
                 data[i].account = data[i].account;
-                data[i].closed_value = data[i].closed_value;
                 data[i].comment = data[i].comment;
                 data[i].email = data[i].email;
                 data[i].first_name = data[i].first_name;
@@ -87,13 +87,13 @@ $(function(){
                 data[i].currency = data[i].currency;
                 data[i].initial_value = data[i].initial_value;
                 data[i].total_fee = data[i].total_fee;
+                data[i].net_value = data[i].net_value;
                 data[i].doc1 = data[i].doc1;
                 data[i].doc2 = data[i].doc2;
                 data[i].bank = data[i].bank;
                 data[i].agency = data[i].agency;
                 data[i].account = data[i].account;
                 data[i].closed = data[i].closed;
-                data[i].closed_value = data[i].closed_value;
                 data[i].comment = data[i].comment;
                 data[i].email = data[i].email;
                 data[i].first_name = data[i].first_name;
@@ -162,7 +162,7 @@ $(function(){
                 else if(data[i].order_type == "V") {
                     data[i].initial_value = "";
                     data[i].currency = "";
-                    data[i].closed_value = "";
+                    data[i].net_value = "";
                 }
             }
             $('#orders-search').html(orders_search_template(data));
@@ -186,25 +186,71 @@ $(function(){
             $('#popUpPictureInfo1').html($(this).attr('user'));
             $('#popUpPictureInfo2').html($(this).attr('email'));
         });
-    });
+
 
 /*
- $(window).on("hashchange", function(e){
- alert(e.originalEvent.oldURL + " - " + e.originalEvent.newURL);
- })​;
+Updating dB (example):
+dashboard.scala - 81
+dashboard.js - 20
+Api.js - 123
+routes - 48
+APIv1.scala - 276
+UserModel - 288
+4.sql - 43
 
 
-
-
-
-    $(window).hashchange( function(){
-// Alerts every time the hash changes!
-        alert ("EEE");
-        alert( location.hash );
-    })
-
-// Trigger the event (useful on page load).
-    $(window).hashchange();
+Verification
+Op - OK or Rj - revision brings it to Op
+Deposit
+Op - Lock - OK, Ch or Rj - revision brings it to Lock
+DCS
+Op - Lock - C or Rj - S - OK or cancel S that goes to Changed - revision would require S and C undo if possible and than Lock
+Conversion to Crypto
+Op - Ok (Ch possible?)
+Send
+Op - Ok or Rj
+Withdraw
+Op - Lock - Ok, Ch or Rj - revision brings it to Lock
+RFW
+Op - F or Rj - W - Lock - Ok, Ch or Rj - revision brings it to Lock
+Receive
+Op - OK or Rj
+Convert to Fiat
+Op - OK (Ch possible?)
 
 */
+    // Approving order
+        $('.triggers_Approval').live('click', function() {
+            var order_id = parseFloat($(this).attr('order_id').replace(",", "."));
+            var order_type = $(this).attr('order_type');
+            var status = $('#net_value' + order_id).val();
+            status = "OK";
+            var net_value = parseFloat($('#net_value' + order_id).val());
+            var comment = $('#comment' + order_id).val();
+//            alert(status + net_value + comment);
+            API.update_order(order_id, order_type, status, net_value, comment).success(function () {
+                $.pnotify({
+                    title: Messages("messages.api.success"),
+                    text: Messages("messages.api.success.orderupdatedsuccessfully"),
+                    styling: 'bootstrap',
+                    type: 'success',
+                    text_escape: true
+                });
+            })
+        });
+
+        $('.triggers_Rejection').live('click', function() {
+            if ($(this).attr('type') == "V")
+                $('#image-holder').attr('src', '/assets/img/brUserDocs/' + $(this).attr('name'));
+            alert("Rj");
+        });
+
+        $('.triggers_Revision').live('click', function() {
+            if ($(this).attr('type') == "V")
+                $('#image-holder').attr('src', '/assets/img/brUserDocs/' + $(this).attr('name'));
+            alert("Rv");
+        });
+
+    });
+
 });

@@ -285,6 +285,12 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def update_order(order_id: Long, status: String, net_value: BigDecimal, comment: String, local_fee: BigDecimal, global_fee: BigDecimal) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select update_order as success from update_order($order_id, $status, $net_value, $comment, $local_fee, $global_fee)
+    """.execute()
+  }
+
   def change_manualauto(uid: Long, manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
     SQL"""
      select change_manualauto as success from change_manualauto($uid, ${manualauto_mode.get})

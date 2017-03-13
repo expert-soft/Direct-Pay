@@ -120,6 +120,16 @@ var API;
             });
         }),
 
+
+        update_order: APIWrap(function(order_id, order_type, status, net_value, comment) {
+            return $.ajax(iapi_prefix+'update_order', {
+                type: 'POST',
+                data: JSON.stringify({order_id: order_id, order_type: order_type, status: status, net_value: net_value, comment: comment}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
         change_manualauto: APIWrap(function(manualauto_mode) {
             return $.ajax(iapi_prefix+'change_manualauto', {
                 type: 'POST',
@@ -128,5 +138,6 @@ var API;
                 contentType: 'application/json'
             });
         })
+
     };
 })();

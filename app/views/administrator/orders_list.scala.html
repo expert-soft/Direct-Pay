@@ -125,11 +125,12 @@
                             <td {{class_value}}>{{initial_value}}<br>{{total_fee}}</td>
                             <td>{{created}}</td>
                     <!--if({{class_type}} != "V"){ -->
-                                <td class="right_bold">{{currency}} <input name="value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px;"><br><input name="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
+                                <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px;"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
                     <!--        } else {
                                 <td class="right_bold"><br><input name="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
                             } -->
-                            <td><button id="btnOK{{order_id}}" type="button" class="btn btn-primary btn-xs" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button><button id="btnReject{{order_id}}" type="button" class="btn btn-warning btn-xs" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
+                            <td><button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
+                                <button id="btnReject{{order_id}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -165,10 +166,10 @@
                         <td>{{initial_value}}</td>
                         <td>{{total_fee}}</td>
                         <td>{{closed}}</td>
-                        <td {{class_value}}>{{currency}} {{closed_value}}</td>
+                        <td {{class_value}}>{{currency}} {{net_value}}</td>
                         <td>{{comment}}</td>
                         <td><a class="{{popupType}}" name="{{doc1}}" href="{{popupHash}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                        <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs" title="revise order">Revise</button></td>
+                        <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs triggers_Revision" title="revise order">Revise</button></td>
                     </tr>
                 {{/each}}
                 </tbody>

@@ -80,18 +80,17 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "currency" -> c._8,
         "initial_value" -> c._9,
         "total_fee" -> c._10,
-        "net_value" -> c._11,
-        "doc1" -> c._12,
-        "doc2" -> c._13,
-        "bank" -> c._14,
-        "agency" -> c._15,
-        "account" -> c._16,
-        "closed_value" -> c._17,
-        "comment" -> c._18,
-        "email" -> c._19,
-        "first_name" -> c._20,
-        "middle_name" -> c._21,
-        "last_name" -> c._22
+        "doc1" -> c._11,
+        "doc2" -> c._12,
+        "bank" -> c._13,
+        "agency" -> c._14,
+        "account" -> c._15,
+        "net_value" -> c._16,
+        "comment" -> c._17,
+        "email" -> c._18,
+        "first_name" -> c._19,
+        "middle_name" -> c._20,
+        "last_name" -> c._21
 
       )
     })
@@ -153,7 +152,6 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "preferential_bank3_name" -> globals.country_preferential_bank3_name,
         "preferential_bank4_code" -> globals.country_preferential_bank4_code,
         "preferential_bank4_name" -> globals.country_preferential_bank4_name,
-        "nominal_fee_doc_verification" -> globals.country_nominal_fee_doc_verification.toString,
         "nominal_fee_withdrawal_preferential_bank" -> globals.country_nominal_fee_withdrawal_preferential_bank.toString,
         "nominal_fee_withdrawal_not_preferential_bank" -> globals.country_nominal_fee_withdrawal_not_preferential_bank.toString,
         "fees_global_percentage" -> globals.country_fees_global_percentage.toString,
@@ -260,7 +258,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val status = (request.request.body \ "status").asOpt[String]
     val partner = (request.request.body \ "partner").asOpt[String]
     val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
-    val total_fee: BigDecimal = calculate_fee(order_type.get, initial_value.get)
+    val total_fee: BigDecimal = calculate_local_fee(order_type.get, initial_value.get) + calculate_global_fee(order_type.get, initial_value.get)
     val bank = (request.request.body \ "bank").asOpt[String]
     val agency = (request.request.body \ "agency").asOpt[String]
     val account = (request.request.body \ "account").asOpt[String]
@@ -269,6 +267,21 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtocreateorder")))
+    }
+  }
+
+  def update_order = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val order_id = (request.request.body \ "order_id").validate[Long]
+    val order_type = (request.request.body \ "order_type").validate[String]
+    val status = (request.request.body \ "status").validate[String]
+    val net_value = (request.request.body \ "net_value").validate[BigDecimal]
+    val comment = (request.request.body \ "comment").validate[String]
+    // This function updates orders, updates balance fiat, updates balance crypto, updates system balances (fees)
+
+    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, calculate_local_fee(order_type.get, net_value.get), calculate_global_fee(order_type.get, net_value.get))) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoupdateorder")))
     }
   }
 
@@ -281,26 +294,41 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     }
   }
 
-  def calculate_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
-    if (order_type == "V") {
-      return globals.country_nominal_fee_doc_verification.asInstanceOf[Double]
-    } else if (order_type == "D") {
-      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01
+  def calculate_local_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    val percentage = (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+    if (order_type == "D") {
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
     } else if (order_type == "S") {
-      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
     } else if (order_type == "DCS") {
-      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
     } else if (order_type == "W") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
     } else if (order_type == "W.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
     } else if (order_type == "RFW") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
     } else if (order_type == "RFW.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
     } else if (order_type == "F") {
-      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01
+      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
     } else return 0
   }
 
+  def calculate_global_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    val percentage = globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
+    if (order_type == "D") {
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "S") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "DCS") {
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
+    } else if (order_type == "W" || order_type == "W.") {
+      return initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "RFW" || order_type == "RFW.") {
+      return initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
+    } else if (order_type == "F") {
+      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else return 0
+  }
 }

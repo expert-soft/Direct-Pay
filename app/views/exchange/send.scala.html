@@ -64,12 +64,26 @@
         <input type="hidden" id="hidden_fees_information"
         currency_code="@globals.country_currency_code"
         currency_crypto="@globals.country_currency_crypto"
-        wallet_available="12.34"
+        wallet_available="0"
         wallet_onhold="0"
         wallet_crypto="0"
         wallet_total="0"
         decimal_separator = "@globals.country_decimal_separator"
-        fee_send_percent = "@globals.country_fee_send_percent.toString"
+        minimum_value = "@globals.country_minimum_value.toString"
+        critical_value1 = "@globals.country_critical_value1.toString"
+        critical_value2 = "@globals.country_critical_value2.toString"
+        preferential_bank1_code = "@globals.country_preferential_bank1_code"
+        preferential_bank1_name = "@globals.country_preferential_bank1_name"
+        preferential_bank2_code = "@globals.country_preferential_bank2_code"
+        preferential_bank2_name = "@globals.country_preferential_bank2_name"
+        preferential_bank3_code = "@globals.country_preferential_bank3_code"
+        preferential_bank3_name = "@globals.country_preferential_bank3_name"
+        preferential_bank4_code = "@globals.country_preferential_bank4_code"
+        preferential_bank4_name = "@globals.country_preferential_bank4_name"
+        nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
+        nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
+        fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
+        fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
         ></input>
 
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -82,8 +96,8 @@
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
                     <table id="table_wallet" class="table-wallet">
                         <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
                 </div>

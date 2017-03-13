@@ -22,7 +22,7 @@ create table users (
     verification int default 0 not null,
     pgp text,
     active bool default true not null,
-    manualauto_mode bool default false not null
+    manualauto_mode bool default true not null
 );
 create unique index unique_lower_email on users (lower(email));
 
@@ -148,8 +148,8 @@ create table orders (
     agency varchar(16),
     account varchar(16),
     closed timestamp(3),
-    closed_by bigint,
-    closed_value numeric(23,8) default 0,
+    processed_by bigint,
+    net_value numeric(23,8) default 0,
     comment varchar(128),
     key1 varchar(32),
     key2 varchar(32),

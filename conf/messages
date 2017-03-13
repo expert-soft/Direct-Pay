@@ -552,10 +552,14 @@ messages.api.success=Success
 messages.api.success.ordercreatedsuccessfully=Order created successfully
 messages.api.success.manualautomodechanged=Manual/Automatic mode changed successfully
 messages.api.error.failedtocreateorder=Failed to create order.
+messages.api.success.orderupdatedsuccessfully=Order Updated Successfully
+messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
+messages.api.error.failedtoupdateorder=Failed to update order
+
+
 
 # API error messages
 
-messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
 messages.api.error.invalidpair=Invalid pair
 messages.api.error.failedtoparseinput=Failed to parse input.
 messages.api.error.nonsufficientfunds=Non-sufficient funds.

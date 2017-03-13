@@ -12,8 +12,7 @@ $(function() {
             var status = "Op";
             doc1 = $('#doc1').val();
             var initial_value = $('#value').val();
-            alert (order_type);
-            //order_type, status, partner, initial_value, '', '', '', doc1);
+//            alert (order_type);
             API.create_order(order_type, status, partner, initial_value, '', '', '', doc1).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),
@@ -23,7 +22,6 @@ $(function() {
                     text_escape: true
                 });
             })
-
 
             routes.Application.uploadImage();
         }
@@ -52,3 +50,23 @@ $('#uploadBtn1').change(function() {
     else
         $('#uploadDiv1').removeClass('btn-info');
 });
+
+
+
+document.getElementById("local").onchange = function() {
+
+    var img = document.createElement("img"),
+        reader = new FileReader();
+
+    img.file = this.files[0];
+
+    reader.onload = (function(aImg) {
+        return function(img) {
+            aImg.src = img.target.result;
+            document.body.appendChild(aImg);
+        }
+    })(img);
+
+    reader.readAsDataURL(img.file);
+
+}
