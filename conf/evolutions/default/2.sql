@@ -718,13 +718,13 @@ create or replace function
 balance (
   a_uid bigint,
   a_api_key text,
-  a_fiat varchar(16),
-  a_crypto varchar(16),
+  a_currency_name varchar(16),
   out currency varchar(16),
   out pos integer,
   out amount numeric(23,8),
   out hold numeric(23,8),
-  out is_fiat bool
+  out amount_c numeric(23,8),
+  out hold_c numeric(23,8)
 ) returns setof record as $$
 declare
   a_user_id bigint;;
@@ -744,9 +744,9 @@ begin
     return;;
   end if;;
 
-  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, c.is_fiat from currencies c
+  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, b.balance_c, b.hold_c from currencies c
   left outer join balances b on c.currency = b.currency and user_id = a_user_id
-  where c.currency = a_fiat or c.currency = a_crypto
+  where c.currency = a_currency_name
   order by c.position asc;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
@@ -880,7 +880,7 @@ drop function if exists totp_token_is_blacklisted (bigint, bigint) cascade;
 drop function if exists delete_expired_totp_blacklist_tokens () cascade;
 drop function if exists new_log (bigint, text, varchar(256), text, text, inet, text) cascade;
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
-drop function if exists balance (bigint, text, varchar(16), varchar(16)) cascade;
+drop function if exists balance (bigint, text, varchar(16)) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
 drop function if exists get_users_list() cascade;
 drop function if exists get_orders_list() cascade;

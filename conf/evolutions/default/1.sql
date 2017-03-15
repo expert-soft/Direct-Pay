@@ -9,8 +9,7 @@ revoke create on schema public from public;
 
 create table currencies (
     currency varchar(16) not null primary key,
-    position int not null,
-    is_fiat bool default false not null
+    position int not null
 );
 
 create table users (
@@ -122,9 +121,14 @@ create table balances (
     currency varchar(16) not null,
     balance numeric(23,8) default 0 not null,
     hold numeric(23,8) default 0 not null,
+    balance_c numeric(23,8) default 0 not null,
+    hold_c numeric(23,8) default 0 not null,
     constraint positive_balance check(balance >= 0),
     constraint positive_hold check(hold >= 0),
+    constraint positive_balance_c check(balance_c >= 0),
+    constraint positive_hold_c check(hold_c >= 0),
     constraint no_hold_above_balance check(balance >= hold),
+    constraint no_hold_above_balance_c check(balance_c >= hold_c),
     foreign key (user_id) references users(id),
     foreign key (currency) references currencies(currency),
     primary key (user_id, currency)

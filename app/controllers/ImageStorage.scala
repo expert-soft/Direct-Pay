@@ -31,15 +31,13 @@ object Image {
     }
   }
 
-  def saveImage(fullpath: String, filename: String) = {
-    val bis = new BufferedInputStream(new FileInputStream(fullpath))
+  def saveImage(fullPath: String, fileName: String) = {
+    val bis = new BufferedInputStream(new FileInputStream(fullPath))
     val bArray = Stream.continually(bis.read).takeWhile(-1 !=).map(_.toByte).toArray
-    saveImageFromDb(filename, bArray)
+    saveImageToDb(fileName, bArray)
   }
 
-  def saveImageFromDb(filename: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
-    SQL""" INSERT INTO image(name, data) VALUES ($filename, $file); """.execute()
+  def saveImageToDb(fileName: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
+    SQL""" INSERT INTO image(name, data) VALUES ($fileName, $file); """.execute()
   }
-
 }
-

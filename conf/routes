@@ -12,10 +12,10 @@ GET         /dashboard                                 controllers.Application.d
 GET         /user_settings                             controllers.Application.user_settings
 GET         /history                                   controllers.Application.history
 GET         /deposit                                   controllers.Application.deposit
-GET         /tocrypto                                   controllers.Application.tocrypto
+GET         /tocrypto                                  controllers.Application.tocrypto
 GET         /send                                      controllers.Application.send
 GET         /receive                                   controllers.Application.receive
-GET         /tofiat                                     controllers.Application.tofiat
+GET         /tofiat                                    controllers.Application.tofiat
 GET         /withdraw                                  controllers.Application.withdraw
 
 # Administrator's pages

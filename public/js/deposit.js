@@ -6,13 +6,12 @@ $(function() {
         {   var order_type = $('#hidden_page').val();
             var partner = '';
             var doc1 = 'XXX';
-            if(order_type == "DCS") { // automatic operation
+            if(order_type == "DCS") {
                 partner = $('#partner').val();
             }
             var status = "Op";
             doc1 = $('#doc1').val();
             var initial_value = $('#value').val();
-//            alert (order_type);
             API.create_order(order_type, status, partner, initial_value, '', '', '', doc1).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),
@@ -21,9 +20,7 @@ $(function() {
                     type: 'success',
                     text_escape: true
                 });
-            })
-
-            routes.Application.uploadImage();
+            });
         }
         else
             alert("Choose file name and value > 0");
@@ -33,9 +30,6 @@ $(function() {
     });
 
     $('.triggers_submit').click(function () {submit_deposit()});
-
-
-
 });
 
 
@@ -53,20 +47,6 @@ $('#uploadBtn1').change(function() {
 
 
 
-document.getElementById("local").onchange = function() {
 
-    var img = document.createElement("img"),
-        reader = new FileReader();
 
-    img.file = this.files[0];
 
-    reader.onload = (function(aImg) {
-        return function(img) {
-            aImg.src = img.target.result;
-            document.body.appendChild(aImg);
-        }
-    })(img);
-
-    reader.readAsDataURL(img.file);
-
-}

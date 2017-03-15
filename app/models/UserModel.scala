@@ -279,15 +279,15 @@ class UserModel(val db: String = "default") {
     }
   }
 
-  def create_order(uid: Long, country_id: String, order_type: Option[String], status: Option[String], partner: Option[String], currency: String, initial_value: Option[BigDecimal], total_fee: Option[BigDecimal], bank: Option[String], agency: Option[String], account: Option[String], doc1: Option[String]) = DB.withConnection(db) { implicit c =>
+  def create_order(uid: Long, country_id: String, order_type: Option[String], status: Option[String], partner: Option[String], currency: String, initial_value: Option[BigDecimal], local_fee: Option[BigDecimal], global_fee: Option[BigDecimal], bank: Option[String], agency: Option[String], account: Option[String], doc1: Option[String]) = DB.withConnection(db) { implicit c =>
     SQL"""
-     select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${total_fee.get}, ${bank}, ${agency}, ${account}, ${doc1})
+     select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${local_fee.get}, ${global_fee.get}, ${bank}, ${agency}, ${account}, ${doc1})
     """.execute()
   }
 
-  def update_order(order_id: Long, status: String, net_value: BigDecimal, comment: String, local_fee: BigDecimal, global_fee: BigDecimal) = DB.withConnection(db) { implicit c =>
+  def update_order(order_id: Long, status: String, net_value: BigDecimal, comment: String, local_fee: BigDecimal, global_fee: BigDecimal, admin_id: Long) = DB.withConnection(db) { implicit c =>
     SQL"""
-     select update_order as success from update_order($order_id, $status, $net_value, $comment, $local_fee, $global_fee)
+     select update_order as success from update_order($order_id, $status, $net_value, $comment, $local_fee, $global_fee, $admin_id)
     """.execute()
   }
 

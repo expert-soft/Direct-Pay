@@ -11,7 +11,6 @@
     <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {D} else {DCS}"></input>
         <!-- page content -->
 
-
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -35,21 +34,25 @@
     fee_send_percent = "@globals.country_fee_send_percent.toString"
     ></input>
 
+    <form action="@routes.Application.uploadImage" method="post" enctype="multipart/form-data">
+        @CSRF.formField
+        <input type="text" value="RRot">
+        <input type="file" name="archivoOriginal" id="archivoOriginal"/>
+        <input type="submit" value="Send"/>
+    </form>
+
 <style>
 .fileUpload { position: relative; overflow: hidden; margin: 10px; }
 .fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
 </style>
 
-
     <input type="file" id="local"/>
-
-
 
     <div class="clearfix"></div>
     <div class="row">
 
-            <!-- Start of form -->
 
+            <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
@@ -183,7 +186,6 @@
 
 
 
-
     <div class="disclaimer-text">
         <br>
         <p>@Messages("terminology.disclaimer"):</p>
@@ -192,6 +194,4 @@
     </div>
     <div class="clearfix"></div>
     <!-- /page content -->
-
-
 }

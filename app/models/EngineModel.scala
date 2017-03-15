@@ -97,9 +97,13 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def balance(uid: Option[Long], apiKey: Option[String], fiat: String, crypto: String) = DB.withConnection(db) { implicit c =>
-    SQL"""select * from balance($uid, $apiKey, $fiat, $crypto)"""().map(row =>
-      row[String]("currency") -> (row[BigDecimal]("amount"), row[BigDecimal]("hold"), row[Boolean]("is_fiat"))
-    ).toMap
+  def balance(uid: Option[Long], apiKey: Option[String], currency_name: String) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from balance($uid, $apiKey, $currency_name)"""().map(row =>
+      row[String]("currency") -> (
+        row[BigDecimal]("amount"),
+        row[BigDecimal]("hold"),
+        row[BigDecimal]("amount_c"),
+        row[BigDecimal]("hold_c")
+      )).toMap
   }
 }

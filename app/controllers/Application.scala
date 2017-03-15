@@ -90,9 +90,9 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   def uploadImage = SecuredAction(parse.multipartFormData) { implicit request =>
     request.body.files map {
       file =>
-        val filename = file.filename
+        val fileName = file.filename
         val contentType = file.contentType
-        controllers.Image.saveImage(file.ref.file.getAbsolutePath, filename)
+        controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName)
     }
     Ok(views.html.exchange.dashboard(request.user))
   }

@@ -124,13 +124,14 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.country_currency_code, globals.country_currency_crypto)
+    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.country_currency_code)
     Ok(Json.toJson(balances.map({ c =>
       Json.obj(
         "currency" -> c._1,
         "amount" -> c._2._1.bigDecimal.toPlainString,
         "hold" -> c._2._2.bigDecimal.toPlainString,
-        "is_fiat" -> c._2._3
+        "amount_c" -> c._2._3.bigDecimal.toPlainString,
+        "hold_c" -> c._2._4.bigDecimal.toPlainString
       )
     })
     ))
@@ -230,12 +231,13 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val status = (request.request.body \ "status").asOpt[String]
     val partner = (request.request.body \ "partner").asOpt[String]
     val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
-    val total_fee: BigDecimal = calculate_local_fee(order_type.get, initial_value.get) + calculate_global_fee(order_type.get, initial_value.get)
+    val local_fee: BigDecimal = calculate_local_fee(order_type.get, initial_value.get)
+    val global_fee: BigDecimal = calculate_global_fee(order_type.get, initial_value.get)
     val bank = (request.request.body \ "bank").asOpt[String]
     val agency = (request.request.body \ "agency").asOpt[String]
     val account = (request.request.body \ "account").asOpt[String]
     val doc1 = (request.request.body \ "doc1").asOpt[String]
-    if (globals.userModel.create_order(request.user.id, globals.country_code, order_type, status, partner, globals.country_currency_code, initial_value, Option(total_fee), bank, agency, account, doc1)) {
+    if (globals.userModel.create_order(request.user.id, globals.country_code, order_type, status, partner, globals.country_currency_code, initial_value, Option(local_fee), Option(global_fee), bank, agency, account, doc1)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtocreateorder")))
@@ -250,7 +252,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val comment = (request.request.body \ "comment").validate[String]
     // This function updates orders, updates balance fiat, updates balance crypto, updates system balances (fees)
 
-    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, calculate_local_fee(order_type.get, net_value.get), calculate_global_fee(order_type.get, net_value.get))) {
+    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, calculate_local_fee(order_type.get, net_value.get), calculate_global_fee(order_type.get, net_value.get), request.user.id)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoupdateorder")))

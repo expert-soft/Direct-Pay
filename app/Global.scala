@@ -158,14 +158,12 @@ package object globals {
         delete from currencies;
         delete from users;
 
-        select currency_insert('BRL', 1, true);
-        select currency_insert('BRL-crypto', 2, false);
-        select currency_insert('USD', 3, true);
-        select currency_insert('USD-crypto', 4, false);
+        select currency_insert('BRL', 1);
+        select currency_insert('USD', 2);
 
         insert into users(id, email) values (0, '');
         insert into balances (user_id, currency) select 0, currency from currencies;
-        update balances set balance = ${country_initial_crypto_capital.asInstanceOf[Double]} where currency = 'BRL-crypto' and user_id = 0;;
+        update balances set balance_c = ${country_initial_crypto_capital.asInstanceOf[Double]} where currency = 'BRL' and user_id = 0;;
 
         insert into users (id, email) values (1, $country_local_administrator);;
         insert into balances (user_id, currency) select 1, currency from currencies;;

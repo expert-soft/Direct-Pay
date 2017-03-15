@@ -137,7 +137,28 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
-        })
+        }),
 
+        //https://groups.google.com/forum/#!topic/play-framework/MEa0LKPcO0A
+        upload_form_with_image : APIWrap(function(e)
+        {   var myClass = $('#innerContainer').data('myClass');
+            //console.log(">>>"+myClass._myFiles);
+            var result = e.target.result;
+            var fileName = myClass._myFiles.name;
+            var fileSize = myClass._myFiles.size;
+            //console.log(result);
+//var iapi_prefix = '/iapi/1/';
+            alert(fileName);
+            $.ajax(iapi_prefix+'saveImageToDb', {
+                type: "POST",
+                //url: "/uploadCreativity",
+                enctype: "multipart/form-data",
+                data: {fileName: fileName, archivoOriginal: result},
+                success: function(){
+                    alert( "Data Uploaded: ");
+                }
+            });
+
+        })
     };
 })();
