@@ -18,6 +18,8 @@ package controllers
 
 import javax.inject.Inject
 
+import play.api._
+
 import play.api.mvc._
 import play.api.i18n.{ I18nSupport, Lang }
 import play.api.Play.current
@@ -88,12 +90,22 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   }
 
   def uploadImage = SecuredAction(parse.multipartFormData) { implicit request =>
+    var initial_value = 0.0
+    var partner = ""
     request.body.files map {
       file =>
         val fileName = file.filename
         val contentType = file.contentType
-        controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName)
+        val user_id = request.user.id
+        val position = file.key.indexOf("@")
+        // need to treat string to double exceptions. If not double value, reject order creation
+        initial_value = (file.key.substring(0, position)).toDouble
+        partner = file.key.substring(position + 1, file.key.length)
+        controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
     }
+//    val local_fee: BigDecimal = IAPI.calculate_local_fee("D", initial_value)
+//    val global_fee: BigDecimal = globals.calculate_global_fee("D", initial_value)
+    val success = globals.userModel.create_order_deposit(request.user.id, globals.country_code, "D", "Op", partner, globals.country_currency_code, initial_value, 0, 0, "", "", "", "")
     Ok(views.html.exchange.dashboard(request.user))
   }
 

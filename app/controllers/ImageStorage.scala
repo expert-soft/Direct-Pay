@@ -31,7 +31,7 @@ object Image {
     }
   }
 
-  def saveImage(fullPath: String, fileName: String) = {
+  def saveImage(fullPath: String, fileName: String, user_id: Long) = {
     val bis = new BufferedInputStream(new FileInputStream(fullPath))
     val bArray = Stream.continually(bis.read).takeWhile(-1 !=).map(_.toByte).toArray
     saveImageToDb(fileName, bArray)
@@ -41,3 +41,4 @@ object Image {
     SQL""" INSERT INTO image(name, data) VALUES ($fileName, $file); """.execute()
   }
 }
+

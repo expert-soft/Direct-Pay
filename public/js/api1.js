@@ -140,25 +140,35 @@ var API;
         }),
 
         //https://groups.google.com/forum/#!topic/play-framework/MEa0LKPcO0A
-        upload_form_with_image : APIWrap(function(e)
+        upload_image: APIWrap(function(e)
         {   var myClass = $('#innerContainer').data('myClass');
-            //console.log(">>>"+myClass._myFiles);
+alert(myClass.val());
             var result = e.target.result;
             var fileName = myClass._myFiles.name;
+alert (99);
             var fileSize = myClass._myFiles.size;
-            //console.log(result);
-//var iapi_prefix = '/iapi/1/';
-            alert(fileName);
+/*
+            return $.ajax(iapi_prefix+'create_order', {
+                type: 'POST',
+                data: JSON.stringify({order_type: 'F', status: 'Op', partner: '', initial_value: 100, bank: 'bank', agency: 'agency', account: 'account', doc1: 'doc1'}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+*/
+
             $.ajax(iapi_prefix+'saveImageToDb', {
                 type: "POST",
-                //url: "/uploadCreativity",
+                //url: "/uploadImage",
                 enctype: "multipart/form-data",
-                data: {fileName: fileName, archivoOriginal: result},
+                data: {fileName: fileName, uploadBtn1: result},  //uploadBtn1 was archivoOriginal
                 success: function(){
                     alert( "Data Uploaded: ");
                 }
             });
 
+
         })
+
+
     };
 })();

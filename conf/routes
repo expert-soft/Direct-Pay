@@ -47,7 +47,7 @@ POST        /iapi/1/add_pgp                            controllers.IAPI.APIv1.ad
 POST        /iapi/1/create_order                       controllers.IAPI.APIv1.create_order
 POST        /iapi/1/update_order                       controllers.IAPI.APIv1.update_order
 POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
-POST        /docs                                      controllers.Application.uploadImage()
+POST        /dashboard                                 controllers.Application.uploadImage()
 GET         /images/*name                              controllers.Application.getimage(name)
 
 

@@ -1,12 +1,13 @@
 
 $(function() {
-
+    // this function is not being used. Submission is being done through uploadImage
     function submit_deposit() {
-        if ($('#partner').val() != "00" && $('#value').val() > 0)
-        {   var order_type = $('#hidden_page').val();
+        if ($('#partner').val() != "00" && $('#value').val() > 0) {
+            var order_type = $('#hidden_page').val();
             var partner = '';
             var doc1 = 'XXX';
-            if(order_type == "DCS") {
+            submit_image();
+            if (order_type == "DCS") {
                 partner = $('#partner').val();
             }
             var status = "Op";
@@ -26,12 +27,17 @@ $(function() {
             alert("Choose file name and value > 0");
     }
 
+    function submit_image() {
+        API.upload_image($('#uploadBtn1'));
+    }
+
     $(document).ready(function () {
     });
 
-    $('.triggers_submit').click(function () {submit_deposit()});
+    $('.triggers_submit').click(function () {
+        submit_deposit($('#uploadBtn1'));
+    });
 });
-
 
 
 //document.getElementById("uploadBtn1").onchange = function () {
@@ -45,8 +51,8 @@ $('#uploadBtn1').change(function() {
         $('#uploadDiv1').removeClass('btn-info');
 });
 
-
-
-
-
+// See application.scala - line 101 - need to treat exception
+$('#value').change(function() { fillInfoIntoFileObject() });
+$('#partner').change(function() { fillInfoIntoFileObject() });
+function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#value').val() + "@" + $('#partner').val()); }
 

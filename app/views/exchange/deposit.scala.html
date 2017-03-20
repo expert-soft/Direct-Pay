@@ -34,19 +34,12 @@
     fee_send_percent = "@globals.country_fee_send_percent.toString"
     ></input>
 
-    <form action="@routes.Application.uploadImage" method="post" enctype="multipart/form-data">
-        @CSRF.formField
-        <input type="text" value="RRot">
-        <input type="file" name="archivoOriginal" id="archivoOriginal"/>
-        <input type="submit" value="Send"/>
-    </form>
-
 <style>
 .fileUpload { position: relative; overflow: hidden; margin: 10px; }
 .fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
 </style>
 
-    <input type="file" id="local"/>
+
 
     <div class="clearfix"></div>
     <div class="row">
@@ -60,7 +53,8 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="@routes.Application.uploadImage" method="post" enctype="multipart/form-data" id="deposit_form" data-parsley-validate class="form-horizontal form-label-left">
+                        @CSRF.formField
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-3 col-xs-6">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
                             </label>
@@ -73,7 +67,7 @@
                             <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
                             <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
-                                <input id="uploadBtn1" type="file" class="upload" />
+                                <input type="file" name="info_holder" id="uploadBtn1" class="upload"/>
                             </div>
                             <span id="uploadText1"></span>
                         </div>
@@ -94,7 +88,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary triggers_submit">@Messages("terminology.submit")</button>
+                                <button type="submit" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
                             </div>
                         </div>
                     </form>
