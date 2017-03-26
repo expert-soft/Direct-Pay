@@ -140,7 +140,7 @@ var API;
         }),
 
         //https://groups.google.com/forum/#!topic/play-framework/MEa0LKPcO0A
-        upload_image: APIWrap(function(e)
+        FFFupload_image: APIWrap(function(e)
         {   var myClass = $('#innerContainer').data('myClass');
 alert(myClass.val());
             var result = e.target.result;

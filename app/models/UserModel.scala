@@ -285,7 +285,7 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
-  def create_order_deposit(uid: Long, country_id: String, order_type: String, status: String, partner: String, currency: String, initial_value: BigDecimal, local_fee: BigDecimal, global_fee: BigDecimal, bank: String, agency: String, account: String, doc1: String) = DB.withConnection(db) { implicit c =>
+  def create_order_with_picture(uid: Long, country_id: String, order_type: String, status: String, partner: String, currency: String, initial_value: BigDecimal, local_fee: BigDecimal, global_fee: BigDecimal, bank: String, agency: String, account: String, doc1: String) = DB.withConnection(db) { implicit c =>
     SQL"""
      select create_order as success from create_order($uid, $country_id, $order_type, $status, $partner, $currency, $initial_value, $local_fee, $global_fee, ${bank}, ${agency}, ${account}, ${doc1})
     """.execute()

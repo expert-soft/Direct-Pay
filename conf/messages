@@ -203,6 +203,7 @@ terminology.extrainformation=Extra information
 terminology.minimizethisboard=Minimize this board
 terminology.closethisboard=Close this board
 terminology.browse=Browse
+terminology.upload=Upload
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -214,7 +215,7 @@ directpay.navigation.receivefunds.title=Receive
 directpay.navigation.converttofiat.title=Convert to {0}
 directpay.navigation.withdraw.title=Withdraw
 directpay.navigation.personalinfo.title=Personal info
-directpay.navigation.automatic.title=Automatic Orders
+directpay.navigation.documents.title=Documents
 directpay.navigation.depositsend.title=Deposit and Send
 directpay.navigation.receivewithdraw.title=Receive and Withdraw
 directpay.navigation.twofactorsecurity.title=2FA Security
@@ -270,6 +271,8 @@ directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1
 directpay.deposit.depositconvertsend=Deposit, Convert and Send
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
+directpay.deposit.accountatpartner=Account at partner
+directpay.deposit.youraccountatpartner=Your account at partner (email address)
 directpay.deposit.shortinfo1=Do your deposits to one of the following bank accounts
 directpay.deposit.shortinfo2=Deposits must be in cash or bank transfer from your own bank account (daily maximum: {0} {1})
 directpay.deposit.shortinfo3=After that, submit your deposit receipt at this form.
@@ -336,50 +339,44 @@ directpay.receivewithdraw.explanation3=Be sure your bank information is up to da
 
 directpay.receivewithdraw.receiveconvertandwithdraw=Receive, Convert and Withdraw
 
-directpay.usersettings.selectpictureofdocument=Select picture of the document
-directpay.usersettings.supportedfiletypes=(.gif, .jpg, .png, .pdf)
 directpay.usersettings.documentrequired.title=document number required
-directpay.usersettings.step1.title=Step 1 - Account Info
-directpay.usersettings.fullname.item=Full Name
-directpay.usersettings.firstname.placeholder=First Name
-directpay.usersettings.firstname.title=Enter your First Name
-directpay.usersettings.midname.placeholder=Mid Names
-directpay.usersettings.midname.title=Enter your Mid Names
-directpay.usersettings.lastname.placeholder=Last Name
-directpay.usersettings.lastname.title=Enter your Last Name
-directpay.usersettings.email.item=Email
-directpay.usersettings.email.title=Input a valid email address
-directpay.usersettings.password.item=Password
-directpay.usersettings.password.title=Select a password (minimum 8 chars)
-directpay.usersettings.password.title2=(minimum 8 chars long)
-directpay.usersettings.confirmpassword.item=Confirm Password
-directpay.usersettings.confirmpassword.title=Confirm the password
-directpay.usersettings.step1.explanation1=Fill up the data required above and press "Next". You will receive an email to confirm your registration. Follow email instructions to confirm and further complete the registration steps.
-directpay.usersettings.step2.title=Step 2 - Personal Info
+directpay.usersettings.step1=General Info
 directpay.usersettings.country.item=Country
 directpay.usersettings.country.title=Your country (can not be changed)
+directpay.usersettings.firstname=First Name
+directpay.usersettings.firstname.title=Enter your First Name
+directpay.usersettings.midname=Mid Names
+directpay.usersettings.midname.title=Enter your Mid Names
+directpay.usersettings.lastname=Last Name
+directpay.usersettings.lastname.title=Enter your Last Name
 directpay.usersettings.phone.item=Phone Number
 directpay.usersettings.phone.title=Your phone number with area code
-directpay.usersettings.step2.explanation1=Fields above can be left empty for a while, but to comply to legal requirements, some of your operations (specially withdrawals) can only be executed if all fields above are correctly filled and documents verified.
-directpay.usersettings.step2.explanation2=Documents verification process is performed by Direct Pay team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not according to your registration, you will be notified at the registration form.
-directpay.usersettings.step3.title=Step 3 - Financial Connections
+directpay.usersettings.step2=Bank Info
 directpay.usersettings.bank.item=Bank
 directpay.usersettings.bank.title=Select your Bank
 directpay.usersettings.bankagency.item=Agency
 directpay.usersettings.bankagency.title=Your Bank Agency
 directpay.usersettings.bankaccount.item=Account
 directpay.usersettings.bankaccount.title=Your Bank Account
+directpay.usersettings.step3=Preferred Partner
 directpay.usersettings.partner.title=Select the partner you want to connect your account
 directpay.usersettings.automatic.item=Automatic Operations
 directpay.usersettings.automatic.title=allow automatic operations (recommended)
 directpay.usersettings.automatic.title2=Sets the system to execute merged operations (deposit/send and receive/withdraw)
+directpay.usersettings.notselected=not selected
+
+directpay.usersettings.explanation1=The form at side shows the required fields to perform operations at {1}. User is responsible for the provided information and to keep it up to date.
+directpay.usersettings.explanation2=Some of those fields can be left empty but, to comply to legal requirements, some operations can not be executed if your personal info is not complete and required documents uploaded and verified.
 directpay.usersettings.step3.explanation1=The correct selection of bank, agency and account is needed to allow withdrawals. That account must be in the informed name and CPF. In any case, all operations are executed based on that data and you are responsible for providing the correct information (accurate and up to date).
 directpay.usersettings.step3.explanation2=The selection of Partner and Automatic options are features made available in order to simplify operations and make all the process easier and faster for you. This option is specially recommended if you always deals with one partner only.
 directpay.usersettings.step3.explanation3=If "Automatic Operations" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
 directpay.usersettings.step3.explanation4=If you have regular operations with more than one of our Partners or if you do not want the operations to be automatically performed by {0}, let unchecked the "Automatic Operations" checkbox.
-directpay.usersettings.notselected=not selected
 
-
+directpay.documents.requireddocuments=Required Documents
+directpay.documents.explanation1=dddd #######
+directpay.documents.explanation2=Documents verification process is performed by Direct Pay team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not according to your registration, you will be notified at the registration form.
+directpay.documents.selectpictureofdocument=Select picture of the document
+directpay.documents.supportedfiletypes=(.gif, .jpg, .png, .pdf)
 
 
 

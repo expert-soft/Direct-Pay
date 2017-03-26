@@ -42,6 +42,10 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.user_settings(request.user))
   }
 
+  def documents = SecuredAction { implicit request =>
+    Ok(views.html.exchange.documents(request.user))
+  }
+
   def users_list = SecuredAction { implicit request =>
     Ok(views.html.administrator.users_list(request.user))
   }
@@ -89,23 +93,52 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Redirect(request.headers.get("referer").getOrElse("/")).withLang(Lang.get(lang).getOrElse(Lang.defaultLang))
   }
 
-  def uploadImage = SecuredAction(parse.multipartFormData) { implicit request =>
+
+
+  def uploadDepositImage = SecuredAction(parse.multipartFormData) { implicit request =>
     var initial_value = 0.0
     var partner = ""
+    var partner_account = ""
+    var order_type = "DCS"
+    var local_fee = 0.1
+    var global_fee = 0.1
     request.body.files map {
       file =>
         val fileName = file.filename
         val contentType = file.contentType
         val user_id = request.user.id
-        val position = file.key.indexOf("@")
+        val position = file.key.indexOf("|")
+        val position2 = file.key.substring(position + 1, file.key.length).indexOf("|") + position + 1
         // need to treat string to double exceptions. If not double value, reject order creation
         initial_value = (file.key.substring(0, position)).toDouble
-        partner = file.key.substring(position + 1, file.key.length)
+        partner = file.key.substring(position + 1, position2)
+        partner_account = file.key.substring(position2 + 1, file.key.length)
         controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+        if (partner == "undefined") {
+          order_type = "D"
+          partner = ""
+          partner_account = ""
+          local_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+          global_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+        } else {
+          local_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
+          global_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
+        }
+        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, order_type, "Op", partner, globals.country_currency_code, initial_value, local_fee, global_fee, "", "", partner_account, fileName)
     }
-//    val local_fee: BigDecimal = IAPI.calculate_local_fee("D", initial_value)
-//    val global_fee: BigDecimal = globals.calculate_global_fee("D", initial_value)
-    val success = globals.userModel.create_order_deposit(request.user.id, globals.country_code, "D", "Op", partner, globals.country_currency_code, initial_value, 0, 0, "", "", "", "")
+    Ok(views.html.exchange.dashboard(request.user))
+  }
+
+  def uploadDocImage = SecuredAction(parse.multipartFormData) { implicit request =>
+    request.body.files map {
+      file =>
+        val fileName = file.filename
+        val contentType = file.contentType
+        val docNumber = file.key
+        val user_id = request.user.id
+        controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName)
+    }
     Ok(views.html.exchange.dashboard(request.user))
   }
 

@@ -54,5 +54,6 @@ $('#uploadBtn1').change(function() {
 // See application.scala - line 101 - need to treat exception
 $('#value').change(function() { fillInfoIntoFileObject() });
 $('#partner').change(function() { fillInfoIntoFileObject() });
-function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#value').val() + "@" + $('#partner').val()); }
+$('#partner_account').change(function() { fillInfoIntoFileObject() });
+function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#value').val() + "|" + $('#partner').val() + "|" + $('#partner_account').val()); }
 

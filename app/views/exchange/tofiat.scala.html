@@ -32,7 +32,7 @@
                             <label class="control-label col-md-6 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_crypto) <span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation" required="required" type="text" title="@Messages("directpay.tofiat.valuetobeconverted")">
+                                <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation" required="required" type="text" title="@Messages("directpay.tofiat.valuetobeconverted")" autocomplete="off">
                             </div>
                         </div>
                         @if(globals.country_fee_tofiat_percent != 0) {<p align="right">@Messages("directpay.overview.netresultvalue"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_convertion_net" class="calc_destak_info"></span></p>}

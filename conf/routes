@@ -10,6 +10,7 @@ GET         /messages.js                               controllers.Application.j
 GET         /account                                   controllers.Application.account
 GET         /dashboard                                 controllers.Application.dashboard
 GET         /user_settings                             controllers.Application.user_settings
+GET         /documents                                 controllers.Application.documents
 GET         /history                                   controllers.Application.history
 GET         /deposit                                   controllers.Application.deposit
 GET         /tocrypto                                  controllers.Application.tocrypto
@@ -47,7 +48,8 @@ POST        /iapi/1/add_pgp                            controllers.IAPI.APIv1.ad
 POST        /iapi/1/create_order                       controllers.IAPI.APIv1.create_order
 POST        /iapi/1/update_order                       controllers.IAPI.APIv1.update_order
 POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
-POST        /dashboard                                 controllers.Application.uploadImage()
+POST        /dashboard                                 controllers.Application.uploadDepositImage()
+POST        /documents                                 controllers.Application.uploadDocImage()
 GET         /images/*name                              controllers.Application.getimage(name)
 
 
