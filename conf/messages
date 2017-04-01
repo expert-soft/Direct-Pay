@@ -226,6 +226,7 @@ directpay.navigation.admin.adminpanel.title=Admin Panel
 directpay.navigation.admin.management.title=Management
 directpay.navigation.admin.userslist.title=List of Users
 directpay.navigation.admin.orderslist.title=List of Orders
+directpay.navigation.admin.orderdetails.title=Order Details
 directpay.navigation.overview.title=Actions Overview
 
 directpay.admin.orderslist.openorders.title=Open Orders
@@ -243,12 +244,19 @@ directpay.admin.orderslist.status.Rj=Rejected
 
 directpay.admin.userslist.userID=User ID
 
-directpay.overview.explanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request it at {0}.
-directpay.overview.explanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
+directpay.overview.systemoverview=System Overview
+directpay.overview.explanation1={0} is an community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
+directpay.overview.explanation2=To operate at {0} is very simple. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
+directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
+directpay.overview.explanation4=If you want the operations even simpler, you can set to "automatic mode".
+directpay.overview.explanationmanual=If at "Manual Mode", all operations (deposit, convert to {0}, send, receive, convert to {1} and withdraw) must be ordered separately.  Any money you deposit is automatically converted and sent to your preferred partner and any money received from partner is reconverted and withdrawed to your bank account.
+directpay.overview.explanationautomatic=If at "Automatic Mode", operations get grouped in two (deposit + convert to {0} + send and receive + convert to {1} + withdraw). A deposit order automatically triggers a convertion and send to partner, and any money received from partner is automaically reconverted and withdrawed to your bank account.
+directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
+directpay.overview.extraexplanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
 directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
 directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
-directpay.overview.optionautomatic=Option Automatic
-directpay.overview.optionmanual=Option Manual
+directpay.overview.optionautomatic=Automatic
+directpay.overview.optionmanual=Manual
 
 directpay.overview.depositpage=Deposit page
 directpay.overview.conversionpage=Conversion page
@@ -365,12 +373,13 @@ directpay.usersettings.automatic.title=allow automatic operations (recommended)
 directpay.usersettings.automatic.title2=Sets the system to execute merged operations (deposit/send and receive/withdraw)
 directpay.usersettings.notselected=not selected
 
-directpay.usersettings.explanation1=The form at side shows the required fields to perform operations at {1}. User is responsible for the provided information and to keep it up to date.
-directpay.usersettings.explanation2=Some of those fields can be left empty but, to comply to legal requirements, some operations can not be executed if your personal info is not complete and required documents uploaded and verified.
-directpay.usersettings.step3.explanation1=The correct selection of bank, agency and account is needed to allow withdrawals. That account must be in the informed name and CPF. In any case, all operations are executed based on that data and you are responsible for providing the correct information (accurate and up to date).
-directpay.usersettings.step3.explanation2=The selection of Partner and Automatic options are features made available in order to simplify operations and make all the process easier and faster for you. This option is specially recommended if you always deals with one partner only.
-directpay.usersettings.step3.explanation3=If "Automatic Operations" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
-directpay.usersettings.step3.explanation4=If you have regular operations with more than one of our Partners or if you do not want the operations to be automatically performed by {0}, let unchecked the "Automatic Operations" checkbox.
+directpay.usersettings.explanation1=This form receives required info to perform operations at {0}. User is responsible to provide accurate information and to keep it up to date.
+directpay.usersettings.step1.explanation1=The general information part is needed to identify user, according to legal requirements. You must provide accurate information, both to make deposits as well as withdrawals.
+directpay.usersettings.step2.explanation1=The correct selection of bank, agency and account is needed to allow withdrawals. The bank account must be registered in the informed name and CPF, both for withdrawals as deposits.
+directpay.usersettings.step3.explanation1=The pre-selection of Partner and Automatic options are features made available in order to simplify operations and make all the process easier and faster for you. This option is specially recommended if you always deals with the same partner.
+directpay.usersettings.step3.explanation2=If "{0}" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
+directpay.usersettings.extrainfo.explanation1=You can leave some of those fields empty but, to comply with legal requirements, some operations can only be executed if your personal info is complete and required documents uploaded and verified.
+directpay.usersettings.extrainfo.explanation2=If you have regular operations with more than one partner or if you do not want the operations to be automatically performed by {0}, let the "Automatic Operations" checkbox unchecked.
 
 directpay.documents.requireddocuments=Required Documents
 directpay.documents.explanation1=dddd #######

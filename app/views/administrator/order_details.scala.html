@@ -1,0 +1,14 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+<div class="page-title">
+    <div class="title_left">
+        <h3><i class="fa fa-tasks"> &nbsp;</i> @Messages("directpay.navigation.admin.orderdetails.title")</h3>
+    </div>
+        <p>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></p>
+        <p>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></p>
+        <!-- example how read image -->
+
+        <p><img src="@routes.Application.getimage("DSC04475.JPG")" text-align="center" style="max-width: 600px;"></p>
+        <p><span id="popUpPictureInfo3"></span></p>
+    </div>
+</div>

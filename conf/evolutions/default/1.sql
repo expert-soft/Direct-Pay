@@ -50,6 +50,7 @@ create table users_connections (
     agency varchar(16),
     account varchar(16),
     partner varchar(64),
+    partner_account varchar(64),
     foreign key (user_id) references users(id),
     primary key (user_id)
 );

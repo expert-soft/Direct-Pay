@@ -19,7 +19,7 @@
     <div class="clearfix"></div>
     <div class="row">
             <!-- Start of form -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("terminology.convertto") @globals.country_currency_crypto</h2>
@@ -28,10 +28,9 @@
                 <div class="x_content">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <label class="control-label col-md-6 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
-                            </label>
-                            <div class="col-md-4 col-sm-3">
-                                <input id="value" class="form-control col-md-4 col-xs-12" required="required" type="text" title="@Messages("directpay.tocrypto.valuetobeconverted")" autocomplete="off">
+                            <label class="control-label col-md-6 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
+                            <div class="col-md-4 col-sm-6">
+                                <input id="value" class="form-control col-md-4 col-xs-12" type="text" title="@Messages("directpay.tocrypto.valuetobeconverted")" autocomplete="off">
                             </div>
                         </div>
                         <div class="ln_solid"></div>
@@ -74,7 +73,7 @@
         fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
         ></input>
 
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
@@ -97,7 +96,7 @@
             <!-- end of Wallet -->
 
             <!-- Instructions -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel" style="@globals.country_appearance2">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>

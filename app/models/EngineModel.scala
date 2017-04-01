@@ -44,7 +44,8 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("bank").getOrElse("N/A"),
       row[Option[String]]("agency").getOrElse("N/A"),
       row[Option[String]]("account").getOrElse("N/A"),
-      row[Option[String]]("partner").getOrElse("N/A")
+      row[Option[String]]("partner").getOrElse("N/A"),
+      row[Option[String]]("partner_account").getOrElse("N/A")
     )).toList
   }
 

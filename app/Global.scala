@@ -189,11 +189,11 @@ package object globals {
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestRU', '', 'skovsk', '343.782.121-34', 'doc_38.jpg', '', '(11)95454-0993', 'doc5', true, true, true, true, false from users where email='testru@gmail.ru';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Aaaaa', 'midA', 'LastA', '333.988.454-08', 'doc_PDF.pdf', 'doc_37.jpg', '(19)23240-434', 'doc5', true, true, true, true, false from users where email='a';
 
-        insert into users_connections (user_id, bank, agency, account, partner) select (select id from users where email='a'), '237', 'Agency A', 'Account A', 'Crypto-Trade.net';
-        insert into users_connections (user_id, bank, agency, account, partner) select (select id from users where email='mboczko@yahoo.com'), '001', 'Agency B', 'Account B', 'Crypto-Trade.net';
-        insert into users_connections (user_id, bank, agency, account, partner) select (select id from users where email='a2terminator@mail.ru'), '341', '8788-X', '677.789-9', 'Crypto-Trade.net';
-        insert into users_connections (user_id, bank, agency, account, partner) select (select id from users where email='test@yahoo.com.br'), '237', '65665', '00685343-0', '';
-        insert into users_connections (user_id, bank, agency, account, partner) select (select id from users where email='testru@gmail.ru'), '341', '352323-c', '67345-9', '';
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='a'), '237', 'Agency A', 'Account A', 'Crypto-Trade.net', 'qwqwqw@ioe.cs';
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='mboczko@yahoo.com'), '745', 'Agency B', 'Account B', 'Crypto-Trade.net', 'partner_account@gmail.com';
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='a2terminator@mail.ru'), '341', '8788-X', '677.789-9', 'Crypto-Trade.net', '';
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='test@yahoo.com.br'), '237', '65665', '00685343-0', '', '';
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='testru@gmail.ru'), '341', '352323-c', '67345-9', '', '';
 
         update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='mboczko@yahoo.com');;
         update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='a2terminator@mail.ru');;

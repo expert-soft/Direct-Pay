@@ -120,11 +120,19 @@ var API;
             });
         }),
 
-
         update_order: APIWrap(function(order_id, order_type, status, net_value, comment) {
             return $.ajax(iapi_prefix+'update_order', {
                 type: 'POST',
                 data: JSON.stringify({order_id: order_id, order_type: order_type, status: status, net_value: net_value, comment: comment}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        update_personal_info: APIWrap(function(first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode) {
+            return $.ajax(iapi_prefix+'update_personal_info', {
+                type: 'POST',
+                data: JSON.stringify({first_name: first_name, middle_name: middle_name, last_name: last_name, doc1: doc1, doc2: doc2, doc3: doc3, doc4: doc4, doc5: doc5, bank: bank, agency: agency, account: account, partner: partner, partner_account: partner_account, manualauto_mode: manualauto_mode}),
                 dataType: 'json',
                 contentType: 'application/json'
             });
@@ -137,26 +145,16 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
-        }),
+        })
 
+/*
         //https://groups.google.com/forum/#!topic/play-framework/MEa0LKPcO0A
         FFFupload_image: APIWrap(function(e)
         {   var myClass = $('#innerContainer').data('myClass');
-alert(myClass.val());
             var result = e.target.result;
             var fileName = myClass._myFiles.name;
-alert (99);
             var fileSize = myClass._myFiles.size;
-/*
-            return $.ajax(iapi_prefix+'create_order', {
-                type: 'POST',
-                data: JSON.stringify({order_type: 'F', status: 'Op', partner: '', initial_value: 100, bank: 'bank', agency: 'agency', account: 'account', doc1: 'doc1'}),
-                dataType: 'json',
-                contentType: 'application/json'
-            });
-*/
-
-            $.ajax(iapi_prefix+'saveImageToDb', {
+        $.ajax(iapi_prefix+'saveImageToDb', {
                 type: "POST",
                 //url: "/uploadImage",
                 enctype: "multipart/form-data",
@@ -166,8 +164,8 @@ alert (99);
                 }
             });
 
-
         })
+*/
 
 
     };

@@ -22,6 +22,7 @@ GET         /withdraw                                  controllers.Application.w
 # Administrator's pages
 GET         /users_list                                controllers.Application.users_list
 GET         /orders_list                               controllers.Application.orders_list
+GET         /order_details                             controllers.Application.order_details
 
 
 # Route for changing the language cookie
@@ -47,6 +48,7 @@ POST        /iapi/1/add_pgp                            controllers.IAPI.APIv1.ad
 
 POST        /iapi/1/create_order                       controllers.IAPI.APIv1.create_order
 POST        /iapi/1/update_order                       controllers.IAPI.APIv1.update_order
+POST        /iapi/1/update_personal_info               controllers.IAPI.APIv1.update_personal_info
 POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
 POST        /dashboard                                 controllers.Application.uploadDepositImage()
 POST        /documents                                 controllers.Application.uploadDocImage()

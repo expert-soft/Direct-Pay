@@ -46,7 +46,7 @@
 
 
             <!-- Start of form -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-file-text-o"></i> &nbsp; @Messages("directpay.deposit.submitdepositreceipt")</h2>
@@ -56,14 +56,13 @@
                     <form id="deposit_form" action="@routes.Application.uploadDepositImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
                         @CSRF.formField
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-3 col-xs-6">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
-                            </label>
-                            <div class="col-md-4 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-6 triggers_fee_calculation" required="required" type="text" title="@Messages("terminology.value")" autocomplete="off">
+                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input id="value" class="form-control col-md-3 col-xs-6 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group"> <!-- http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/ -->
-                            <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.deposit.depositreceipt") <span class="required">*</span></label>
+                            <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.deposit.depositreceipt")</label>
                             <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
                             <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
@@ -84,17 +83,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-3 col-xs-6">@Messages("directpay.deposit.accountatpartner") <span class="required">*</span>
-                                </label>
+                                <label class="control-label col-md-4 col-sm-4 col-xs-6">@Messages("directpay.deposit.accountatpartner")</label>
                                 <div class="col-md-4 col-sm-3">
-                                    <input id="partner_account" class="form-control col-md-3 col-xs-6" required="required" type="text" title="@Messages("directpay.deposit.youraccountatpartner")">
+                                    <input id="partner_account" class="form-control col-md-3 col-xs-6" type="text" title="@Messages("directpay.deposit.youraccountatpartner")">
                                 </div>
                             </div>
                         }
                         @if(globals.country_fee_deposit_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_deposit_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-4">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
                             </div>
                         </div>
@@ -106,7 +104,7 @@
 
 
             <!-- Instructions -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel" style="@globals.country_appearance2">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>

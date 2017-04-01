@@ -297,6 +297,12 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def update_personal_info(uid: Long, first_name: Option[String], middle_name: Option[String], last_name: Option[String], doc1: Option[String], doc2: Option[String], doc3: Option[String], doc4: Option[String], doc5: Option[String], bank: Option[String], agency: Option[String], account: Option[String], partner: Option[String], partner_account: Option[String], manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select update_personal_info as success from update_personal_info($uid, ${first_name.get}, ${middle_name.get}, ${last_name.get}, ${doc1.get}, ${doc2.get}, ${doc3.get}, ${doc4.get}, ${doc5.get}, ${bank.get}, ${agency.get}, ${account.get}, ${partner.get}, ${partner_account.get}, ${manualauto_mode.get})
+    """.execute()
+  }
+
   def change_manualauto(uid: Long, manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
     SQL"""
      select change_manualauto as success from change_manualauto($uid, ${manualauto_mode.get})

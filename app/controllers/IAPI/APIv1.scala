@@ -60,7 +60,8 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "bank" -> c._9,
         "agency" -> c._10,
         "account" -> c._11,
-        "partner" -> c._12
+        "partner" -> c._12,
+        "partner_account" -> c._13
       )
     })
     ))
@@ -256,6 +257,28 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoupdateorder")))
+    }
+  }
+
+  def update_personal_info() = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val first_name = (request.request.body \ "first_name").asOpt[String]
+    val middle_name = (request.request.body \ "middle_name").asOpt[String]
+    val last_name = (request.request.body \ "last_name").asOpt[String]
+    val doc1 = (request.request.body \ "doc1").asOpt[String]
+    val doc2 = (request.request.body \ "doc2").asOpt[String]
+    val doc3 = (request.request.body \ "doc3").asOpt[String]
+    val doc4 = (request.request.body \ "doc4").asOpt[String]
+    val doc5 = (request.request.body \ "doc5").asOpt[String]
+    val bank = (request.request.body \ "bank").asOpt[String]
+    val agency = (request.request.body \ "agency").asOpt[String]
+    val account = (request.request.body \ "account").asOpt[String]
+    val partner = (request.request.body \ "partner").asOpt[String]
+    val partner_account = (request.request.body \ "partner_account").asOpt[String]
+    val manualauto_mode = (request.request.body \ "manualauto_mode").asOpt[Boolean]
+    if (globals.userModel.update_personal_info(request.user.id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode)) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoremovepgpkey")))
     }
   }
 

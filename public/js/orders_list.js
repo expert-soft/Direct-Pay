@@ -173,10 +173,6 @@ $(function(){
 
     $(document).ready(function () {
         $('.requestPopUp').live('click', function() {
-            if($(this).attr('type') == "V")
-                $('#image-holder').attr('src', '/assets/img/brUserDocs/' + $(this).attr('name'));
-            else
-                $('#image-holder').attr('src', '/assets/img/brReceipts/' + $(this).attr('name'));
             var id_value = $(this).attr('id');
             if ($(this).attr('doc') == "1") $('#popUpPictureTitle').html($('#popUpPictureDoc1').val());
             if ($(this).attr('doc') == "2") $('#popUpPictureTitle').html($('#popUpPictureDoc2').val());
@@ -185,9 +181,22 @@ $(function(){
             if ($(this).attr('doc') == "5") $('#popUpPictureTitle').html($('#popUpPictureDoc5').val());
             $('#popUpPictureInfo1').html($(this).attr('user'));
             $('#popUpPictureInfo2').html($(this).attr('email'));
+//need to pass parameter order_id
+$('#div_details').load($('#hidden_div_url').val());
+            resizeDiv()
         });
 
+        $( window ).resize(function() {
+            resizeDiv()
+        });
 
+        function resizeDiv (){
+            $('#popupInfoDiv').css('width', parseInt($( document ).width()*0.8));
+            $('#popupInfoDiv').css('height', parseInt($( document ).height()*0.5));
+        }
+
+
+//        frames['iframe_details'].document.body.
 /*
 Updating dB (example):
 dashboard.scala - 81
@@ -221,7 +230,7 @@ Op - OK (Ch possible?)
 */
     // Approving order
         $('.triggers_Approval').live('click', function() {
-            var order_id = parseFloat($(this).attr('order_id').replace(",", "."));
+            var order_id = $(this).attr('order_id');
             var order_type = $(this).attr('order_type');
             var status = $('#net_value' + order_id).val();
             status = "OK";
@@ -252,5 +261,6 @@ Op - OK (Ch possible?)
         });
 
     });
+
 
 });

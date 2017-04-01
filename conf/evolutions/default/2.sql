@@ -767,10 +767,11 @@ get_user_name_info (
   out bank varchar (16),
   out agency varchar (16),
   out account varchar (16),
-  out partner varchar (64)
+  out partner varchar (64),
+  out partner_account varchar (64)
 ) returns setof record as $$
 begin
-  return query select uf.first_name, uf.middle_name, uf.last_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.partner
+  return query select uf.first_name, uf.middle_name, uf.last_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.partner, uc.partner_account
   from users_name_info uf
   left join users_connections uc on uc.user_id = uf.user_id
   where uf.user_id = a_id;;

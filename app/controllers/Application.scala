@@ -54,6 +54,10 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.administrator.orders_list(request.user))
   }
 
+  def order_details = SecuredAction { implicit request =>
+    Ok(views.html.administrator.order_details(request.user))
+  }
+
   def history = SecuredAction { implicit request =>
     Ok(views.html.exchange.history(request.user))
   }
@@ -92,8 +96,6 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     }
     Redirect(request.headers.get("referer").getOrElse("/")).withLang(Lang.get(lang).getOrElse(Lang.defaultLang))
   }
-
-
 
   def uploadDepositImage = SecuredAction(parse.multipartFormData) { implicit request =>
     var initial_value = 0.0

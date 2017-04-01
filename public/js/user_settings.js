@@ -18,6 +18,7 @@ $(function(){
             reg_info.account = data[0].account;
             if(data[0].partner == $('#hidden_partner1').val()) {reg_info.partner1_selected = "selected"} else {reg_info.partner1_selected = ""}
             if(data[0].partner == $('#hidden_partner2').val()) {reg_info.partner2_selected = "selected"} else {reg_info.partner2_selected = ""}
+            reg_info.partner_account = data[0].partner_account;
 
             $('#user-reg-one').html(user_reg_template_one(reg_info));
             reloadsrc();
@@ -50,8 +51,7 @@ $(function(){
     reloadsrc();
 
 
-    function submit_user_info() {
-        alert(66);
+    function submit_personal_info() {
         if ($('#first_name').val() != "")
         {   var first_name = $('#first_name').val();
             var middle_name = $('#middle_name').val();
@@ -66,7 +66,9 @@ $(function(){
             var agency = $('#agency').val();
             var account = $('#account').val();
             var partner = $('#partner').val();
-/*            API.create_order(order_type, status, '', initial_value, '', '', '', '').success(function () {
+            var partner_account = $('#partner_account').val();
+            var manualauto_mode = $('#manualauto_mode').prop('checked');
+            API.update_personal_info(first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),
                     text: Messages("messages.api.success.ordercreatedsuccessfully"),
@@ -75,71 +77,20 @@ $(function(){
                     text_escape: true
                 });
             })
- */       }
+        }
         else
             alert("not submitted");
     }
 
-    $(document).ready(function () {
+    $(document).ready(function () {    });
+
+    $('.triggers_submit').live('click', function() {
+        submit_personal_info()
     });
-    $('.triggers_submit').click(function () {submit_user_info()});
-
 });
 
 
 
-$(document).ready(function () {
-});
-$('.triggers_submit').click(function () {submit_user_settings()});
 
 
-/* functions for uploading pictures */
-$('#uploadBtn1').live('change', function() {
-    $('#uploadFile1').val(this.value);
-    $('#uploadText1').html(this.value);
-    $('#uploadDiv1').addClass('btn-default');
-    if (this.value == "")
-        $('#uploadDiv1').addClass('btn-info');
-    else
-        $('#uploadDiv1').removeClass('btn-info');
-});
 
-$('#uploadBtn2').live('change', function() {
-    $('#uploadFile2').val(this.value);
-    $('#uploadText2').html(this.value);
-    $('#uploadDiv2').addClass('btn-default');
-    if (this.value == "")
-        $('#uploadDiv2').addClass('btn-info');
-    else
-        $('#uploadDiv2').removeClass('btn-info');
-});
-
-$('#uploadBtn3').live('change', function() {
-    $('#uploadFile3').val(this.value);
-    $('#uploadText3').html(this.value);
-    $('#uploadDiv3').addClass('btn-default');
-    if (this.value == "")
-        $('#uploadDiv3').addClass('btn-info');
-    else
-        $('#uploadDiv3').removeClass('btn-info');
-});
-
-$('#uploadBtn4').live('change', function() {
-    $('#uploadFile4').val(this.value);
-    $('#uploadText4').html(this.value);
-    $('#uploadDiv4').addClass('btn-default');
-    if (this.value == "")
-        $('#uploadDiv4').addClass('btn-info');
-    else
-        $('#uploadDiv4').removeClass('btn-info');
-});
-
-$('#uploadBtn5').live('change', function() {
-    $('#uploadFile5').val(this.value);
-    $('#uploadText5').html(this.value);
-    $('#uploadDiv5').addClass('btn-default');
-    if (this.value == "")
-        $('#uploadDiv5').addClass('btn-info');
-    else
-        $('#uploadDiv5').removeClass('btn-info');
-});
