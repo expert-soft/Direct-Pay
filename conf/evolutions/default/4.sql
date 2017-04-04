@@ -119,7 +119,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
 -- fees should be charged for deposit and withdraw when order update and at send when sending and to fiat when order creation
     if b_order_type = 'D' then
       update balances set balance = balance + 1000 - b_initial_value + a_processed_value - a_global_fee - a_local_fee, hold = hold + 1000 - b_initial_value where currency = b_currency and user_id = b_user_id;;
-      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = b_order_id;;
+      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
     end if;;
     if b_order_type = 'DCS' then
       update balances set balance = balance + 1000 - b_initial_value, hold = hold + 1000 - b_initial_value, balance_c = balance_c + a_processed_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
@@ -128,7 +128,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
     end if;;
     if b_order_type = 'W' or b_order_type = 'W.' then
       update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee + 1000, hold = hold + 1000 - a_processed_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
-      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = b_order_id;;
+      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
     end if;;
     if b_order_type = 'RFW' or b_order_type = 'RFW.' then
   --    update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee + 1000, hold = hold + 1000 - a_processed_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
@@ -167,13 +167,13 @@ update_personal_info (
   a_bank varchar(16),
   a_agency varchar(16),
   a_account varchar(16),
-  a_partner varchar(64),
+  a_partner varchar(128),
   a_partner_account varchar(64),
   a_manualauto_mode bool
 ) returns boolean as $$
 begin
   update users_name_info set first_name = a_first_name, middle_name = a_middle_name, last_name = a_last_name, doc1 = a_doc1, doc2 = a_doc2, doc3 = a_doc3, doc4 = a_doc4, doc5 = a_doc5 where user_id = a_user_id;;
-  update user_connections set bank = a_bank, agency = a_agency, account = a_account, partner = a_partner, partner_account = a_partner_account where user_id=a_user_id;;
+  update users_connections set bank = a_bank, agency = a_agency, account = a_account, partner = a_partner, partner_account = a_partner_account where user_id=a_user_id;;
   update users set manualauto_mode = a_manualauto_mode where id=a_user_id;;
 
   return true;;
@@ -195,6 +195,19 @@ begin
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
+create or replace function
+insert_user_image (
+  a_name varchar(256),
+  a_data bytea
+) returns bigint as $$
+declare
+  image_id bigint;;
+begin
+  insert into image (name, data)
+    values (a_name, a_data) returning id into strict image_id;;
+  return image_id;;
+end;;
+$$ language plpgsql volatile security invoker set search_path = public, pg_temp cost 100;
 
 # --- !Downs
 
@@ -203,5 +216,6 @@ drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), v
 drop function if exists update_order(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8)) cascade;
 drop function if exists update_personal_info(Long, varchar(64), varchar(128), varchar(128)) cascade;
 drop function if exists change_manualauto(Long, bool) cascade;
+drop function if exists insert_user_image (varchar(256), bytea) cascade;
 
 -- security definer functions

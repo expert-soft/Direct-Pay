@@ -65,10 +65,15 @@ $(function(){
 
             }
             $('#orders-open').html(orders_open_template(data));
+
+            $('#requestPopupDetails').live('click', function() {
+                $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('name');
+                function do_transfer(e) { e.preventDefault() }
+                transfer_details ($(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc'), '');
+            });
         });
     }
     openOrders();
-
 
     var orders_search_template = Handlebars.compile($("#orders-search-template").html());
     function searchedOrders(){
@@ -171,21 +176,8 @@ $(function(){
     searchedOrders();
 
 
-    $(document).ready(function () {
-        $('.requestPopUp').live('click', function() {
-            var id_value = $(this).attr('id');
-            if ($(this).attr('doc') == "1") $('#popUpPictureTitle').html($('#popUpPictureDoc1').val());
-            if ($(this).attr('doc') == "2") $('#popUpPictureTitle').html($('#popUpPictureDoc2').val());
-            if ($(this).attr('doc') == "3") $('#popUpPictureTitle').html($('#popUpPictureDoc3').val());
-            if ($(this).attr('doc') == "4") $('#popUpPictureTitle').html($('#popUpPictureDoc4').val());
-            if ($(this).attr('doc') == "5") $('#popUpPictureTitle').html($('#popUpPictureDoc5').val());
-            $('#popUpPictureInfo1').html($(this).attr('user'));
-            $('#popUpPictureInfo2').html($(this).attr('email'));
-//need to pass parameter order_id
-$('#div_details').load($('#hidden_div_url').val());
-            resizeDiv()
-        });
 
+    $(document).ready(function () {
         $( window ).resize(function() {
             resizeDiv()
         });
@@ -195,10 +187,13 @@ $('#div_details').load($('#hidden_div_url').val());
             $('#popupInfoDiv').css('height', parseInt($( document ).height()*0.5));
         }
 
-
+        $('.triggers_details').live('change', function() {
+            $('#net_value' + $('#hidden_order_id').val()).val($('#popUpNet_value').val());
+            $('#comment' + $('#hidden_order_id').val()).val($('#popUpComment').val());
+        });
 //        frames['iframe_details'].document.body.
-/*
-Updating dB (example):
+
+/*Updating dB (example):
 dashboard.scala - 81
 dashboard.js - 20
 Api.js - 123
@@ -230,13 +225,13 @@ Op - OK (Ch possible?)
 */
     // Approving order
         $('.triggers_Approval').live('click', function() {
-            var order_id = $(this).attr('order_id');
+            var order_id = parseInt($(this).attr('order_id'));
             var order_type = $(this).attr('order_type');
             var status = $('#net_value' + order_id).val();
             status = "OK";
             var net_value = parseFloat($('#net_value' + order_id).val());
             var comment = $('#comment' + order_id).val();
-//            alert(status + net_value + comment);
+//alert(order_id + order_type + status + net_value + comment);
             API.update_order(order_id, order_type, status, net_value, comment).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),
@@ -260,7 +255,37 @@ Op - OK (Ch possible?)
             alert("Rv");
         });
 
+
+        $('#btnZoomIn').live('click', function() {
+            $('#the_picture').width(parseInt($('#the_picture').width() * 1.5));
+        });
+
+        $('#btnZoomOut').live('click', function() {
+            $('#the_picture').width(parseInt($('#the_picture').width() / 1.5));
+        });
+
     });
 
-
 });
+
+function transfer_details (order_id, user_name, user_email, order_type, doc, attr4) {
+//alert(order_id);
+    $('#hidden_order_id').val(order_id);
+    $('#popUpPictureInfo1').html(user_name);
+    $('#popUpPictureInfo2').html(user_email);
+    if (doc == "1") $('#popUpPictureTitle').html($('#popUpPictureDoc1').val());
+    if (doc == "2") $('#popUpPictureTitle').html($('#popUpPictureDoc2').val());
+    if (doc == "3") $('#popUpPictureTitle').html($('#popUpPictureDoc3').val());
+    if (doc == "4") $('#popUpPictureTitle').html($('#popUpPictureDoc4').val());
+    if (doc == "5") $('#popUpPictureTitle').html($('#popUpPictureDoc5').val());
+alert(doc);
+    $('#popUpPictureInfo3').html(doc);
+    $('#popUpPictureInfo4').html(attr4);
+    $('#popUpNet_value').attr('value', $('#net_value' + order_id).val());
+    $('#popUpComment').attr('value', $('#comment' + order_id).val());
+    $('#btnApprove').attr('order_type', order_type);
+    $('#btnApprove').attr('order_id', order_id);
+    $('#btnReject').attr('order_type', order_type);
+    $('#btnReject').attr('order_id', order_id);
+    resizeDiv()
+}

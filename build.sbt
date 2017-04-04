@@ -24,7 +24,8 @@ libraryDependencies ++= Seq(
   "org.bouncycastle" % "bcprov-jdk15on" % "1.51",
   "org.bouncycastle" % "bcpg-jdk15on" % "1.51",
   "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.51",
-  "org.bouncycastle" % "bcmail-jdk15on" % "1.51"
+  "org.bouncycastle" % "bcmail-jdk15on" % "1.51",
+  "com.ibm.icu"		%  "icu4j"	% "55.1"
 )
 
 libraryDependencies += "org.julienrf" %% "play-jsmessages" % "2.0.0"

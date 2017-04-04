@@ -18,6 +18,7 @@ GET         /send                                      controllers.Application.s
 GET         /receive                                   controllers.Application.receive
 GET         /tofiat                                    controllers.Application.tofiat
 GET         /withdraw                                  controllers.Application.withdraw
+GET         /orderdetails                             controllers.Application.orderdetails
 
 # Administrator's pages
 GET         /users_list                                controllers.Application.users_list
@@ -78,3 +79,4 @@ POST        /password                                  controllers.PasswordChang
 POST        /authenticate                              controllers.ProviderController.loginPost
 POST        /tfa                                       controllers.ProviderController.tfaPost
 GET         /not-authorized                            controllers.ProviderController.notAuthorized
+GET         /iapi/1/get_all_img                        controllers.IAPI.APIv1.give_all_image

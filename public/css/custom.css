@@ -35,9 +35,11 @@
   padding: 20px;
   background: #fff;
   border-radius: 5px;
-  max-width: 700px;
+  max-width: 800px;
   max-height: 85%;
   position: relative;
+  left: 100px;
+  top: 10px;
   overflow-y: auto;
   transition: all 5s ease-in-out;
 }
@@ -50,7 +52,7 @@
 
 .popup .popupClose {
   position: absolute;
-  top: 8px;
+  top: 6px;
   right: 12px;
   transition: all 200ms;
   font-size: 36px;

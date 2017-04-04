@@ -14,34 +14,6 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
-<style>
-.fileUpload { position: relative; overflow: hidden; margin: 10px; }
-.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
-</style>
-
-        <!-- page content -->
-    <!-- example image upl -->
-<!--    <div class="panel panel-success">
-        <div class="panel-heading">Image Upload</div>
-        <div class="panel-body">
-        helper.form(action = routes.Application.uploadImage, 'enctype -> "multipart/form-data") {
-            CSRF.formField
-            <span class="btn btn-success fileinput-button">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add files...</span>
-                <input type="file" name="pictures" id="pictures" multiple="multiple">
-            </span>
-
-            <p>
-                <input type="submit" class="btn btn-success">
-            </p>
-        }
-        </div>
-    </div>
--->
-
-    <!-- example how read image -->
-    <img src="@routes.Application.getimage("flagar.gif")">
 
     <div class="page-title">
         <div class="title_left">
@@ -184,7 +156,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="checkbox"><label><input type="checkbox" id="manualauto_mode" title="@Messages("directpay.usersettings.automatic.title")" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { checked }> <b>@Messages("directpay.usersettings.automatic.item")</b> - @Messages("directpay.usersettings.automatic.title2")</label></div>
+                                    <div class="checkbox"><label><input type="checkbox" class="flat" id="manualauto_mode" title="@Messages("directpay.usersettings.automatic.title")" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { checked="checked" }> <b>@Messages("directpay.usersettings.automatic.item")</b> - @Messages("directpay.usersettings.automatic.title2")</label></div>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>

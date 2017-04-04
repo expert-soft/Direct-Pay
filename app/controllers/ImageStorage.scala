@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage
 
 import anorm._
 import anorm.SqlParser._
-import anorm.~
 import play.api.Play.current
 import play.api.db.DB
+
 import scala.language.postfixOps
 
 object Image {
@@ -34,11 +34,20 @@ object Image {
   def saveImage(fullPath: String, fileName: String, user_id: Long) = {
     val bis = new BufferedInputStream(new FileInputStream(fullPath))
     val bArray = Stream.continually(bis.read).takeWhile(-1 !=).map(_.toByte).toArray
-    saveImageToDb(fileName, bArray)
+    val fullname = Romanization.normalize(fileName).replace(" ", "-")
+    insert_user_image(fullname, bArray)
   }
 
   def saveImageToDb(fileName: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
     SQL""" INSERT INTO image(name, data) VALUES ($fileName, $file); """.execute()
+  }
+
+  def insert_user_image(fileName: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select insert_user_image as success from insert_user_image($fileName, $file)
+    """().map(row =>
+      row[Long]("success")
+    ).head
   }
 }
 

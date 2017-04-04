@@ -107,4 +107,12 @@ class EngineModel(val db: String = "default") {
         row[BigDecimal]("hold_c")
       )).toMap
   }
+
+  def get_all_image(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
+    SQL"""SELECT id, name  FROM public.image;"""().map(row => (
+      row[Long]("id"),
+      row[String]("name")
+    )).toList
+  }
+
 }

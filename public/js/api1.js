@@ -49,6 +49,10 @@ var API;
             return $.get(iapi_prefix+'balance', 'json');
         }),
 
+        get_all_img: APIWrap(function() {
+            return $.get(iapi_prefix+'get_all_img', 'json');
+        }),
+
         user: APIWrap(function() {
             return $.get(iapi_prefix+'user', 'json');
         }),

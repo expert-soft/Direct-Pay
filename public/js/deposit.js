@@ -29,7 +29,25 @@ $(function() {
 
     function submit_image() {
         API.upload_image($('#uploadBtn1'));
+        $.pnotify({
+            title: Messages("messages.api.success"),
+            text: Messages("messages.api.success.manualautomodechanged"),
+            styling: 'bootstrap',
+            type: 'success',
+            text_escape: true
+        });
+
     }
+
+/*    API.upload_image($('#uploadBtn1')).success(function () {
+        $.pnotify({
+            title: Messages("messages.api.success"),
+            text: Messages("messages.api.success.manualautomodechanged"),
+            styling: 'bootstrap',
+            type: 'success',
+            text_escape: true
+        });
+    })*/
 
     $(document).ready(function () {
     });

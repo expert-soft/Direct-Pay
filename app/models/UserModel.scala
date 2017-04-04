@@ -298,8 +298,20 @@ class UserModel(val db: String = "default") {
   }
 
   def update_personal_info(uid: Long, first_name: Option[String], middle_name: Option[String], last_name: Option[String], doc1: Option[String], doc2: Option[String], doc3: Option[String], doc4: Option[String], doc5: Option[String], bank: Option[String], agency: Option[String], account: Option[String], partner: Option[String], partner_account: Option[String], manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
+    val middle_name_s = middle_name.getOrElse("None")
+    val doc1_s = doc1.getOrElse("None")
+    val doc2_s = doc2.getOrElse("None")
+    val doc3_s = doc3.getOrElse("None")
+    val doc4_s = doc4.getOrElse("None")
+    val doc5_s = doc5.getOrElse("None")
+    val bank_s = bank.getOrElse("None")
+    val agency_s = agency.getOrElse("None")
+    val account_s = account.getOrElse("None")
+    val partner_s = partner.getOrElse("None")
+    val partner_account_s = partner_account.getOrElse("None")
+    val manualauto_mode_b = manualauto_mode.getOrElse(false)
     SQL"""
-     select update_personal_info as success from update_personal_info($uid, ${first_name.get}, ${middle_name.get}, ${last_name.get}, ${doc1.get}, ${doc2.get}, ${doc3.get}, ${doc4.get}, ${doc5.get}, ${bank.get}, ${agency.get}, ${account.get}, ${partner.get}, ${partner_account.get}, ${manualauto_mode.get})
+     select update_personal_info as success from update_personal_info($uid, ${first_name.get}, ${middle_name_s}, ${last_name.get}, ${doc1_s}, ${doc2_s}, ${doc3_s}, ${doc4_s}, ${doc5_s}, ${bank_s}, ${agency_s}, ${account_s}, ${partner_s}, ${partner_account_s}, ${manualauto_mode_b})
     """.execute()
   }
 

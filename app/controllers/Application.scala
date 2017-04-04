@@ -86,6 +86,10 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.withdraw(request.user))
   }
 
+  def orderdetails = SecuredAction { implicit request =>
+    Ok(views.html.administrator.order_details(request.user))
+  }
+
   def dashboard = SecuredAction { implicit request =>
     Ok(views.html.exchange.dashboard(request.user))
   }
@@ -115,7 +119,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         initial_value = (file.key.substring(0, position)).toDouble
         partner = file.key.substring(position + 1, position2)
         partner_account = file.key.substring(position2 + 1, file.key.length)
-        controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+        val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
         if (partner == "undefined") {
           order_type = "D"
           partner = ""

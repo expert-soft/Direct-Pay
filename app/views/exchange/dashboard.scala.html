@@ -76,14 +76,14 @@
                             <input type="radio" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {checked} value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.overview.optionautomatic")
                         </label>
                     </div>
+                    <p>@Messages("directpay.overview.explainoptionautomatic")</p>
                     <div class="radio">
                         <label>
                             <input type="radio" @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {checked} value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.overview.optionmanual")
                         </label>
                     </div>
+                    <p>@Messages("directpay.overview.explainoptionmanual")</p>
                  </div>
-                <p>@Messages("directpay.overview.explanationmanual", globals.country_currency_crypto, globals.country_currency_crypto)</p>
-                <p>@Messages("directpay.overview.explanationautomatic", globals.country_currency_crypto, globals.country_currency_crypto)</p>
             </div>
                 <!-- end of Form -->
         </div>

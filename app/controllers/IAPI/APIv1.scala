@@ -328,4 +328,16 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
     } else return 0
   }
+
+  def give_all_image = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val images = globals.engineModel.get_all_image(Some(request.user.id))
+    Ok(Json.toJson(images.map({ c =>
+      Json.obj(
+        "id" -> c._1,
+        "name" -> c._2
+      )
+    })
+    ))
+  }
+
 }
