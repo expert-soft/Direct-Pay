@@ -25,6 +25,7 @@ $(function(){
                 data[i].agency = data[i].agency;
                 data[i].account = data[i].account;
                 data[i].comment = data[i].comment;
+                data[i].image_id = data[i].image_id;
                 data[i].email = data[i].email;
                 data[i].first_name = data[i].first_name;
                 data[i].middle_name = data[i].middle_name;
@@ -67,7 +68,7 @@ $(function(){
             $('#orders-open').html(orders_open_template(data));
 
             $('#requestPopupDetails').live('click', function() {
-                $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('name');
+                $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
                 function do_transfer(e) { e.preventDefault() }
                 transfer_details ($(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc'), '');
             });
@@ -100,6 +101,7 @@ $(function(){
                 data[i].account = data[i].account;
                 data[i].closed = data[i].closed;
                 data[i].comment = data[i].comment;
+                data[i].image_id = data[i].image_id;
                 data[i].email = data[i].email;
                 data[i].first_name = data[i].first_name;
                 data[i].middle_name = data[i].middle_name;
@@ -269,7 +271,6 @@ Op - OK (Ch possible?)
 });
 
 function transfer_details (order_id, user_name, user_email, order_type, doc, attr4) {
-//alert(order_id);
     $('#hidden_order_id').val(order_id);
     $('#popUpPictureInfo1').html(user_name);
     $('#popUpPictureInfo2').html(user_email);
@@ -278,7 +279,6 @@ function transfer_details (order_id, user_name, user_email, order_type, doc, att
     if (doc == "3") $('#popUpPictureTitle').html($('#popUpPictureDoc3').val());
     if (doc == "4") $('#popUpPictureTitle').html($('#popUpPictureDoc4').val());
     if (doc == "5") $('#popUpPictureTitle').html($('#popUpPictureDoc5').val());
-alert(doc);
     $('#popUpPictureInfo3').html(doc);
     $('#popUpPictureInfo4').html(attr4);
     $('#popUpNet_value').attr('value', $('#net_value' + order_id).val());

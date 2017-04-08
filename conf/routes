@@ -51,7 +51,7 @@ POST        /iapi/1/update_personal_info               controllers.IAPI.APIv1.up
 POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
 POST        /dashboard                                 controllers.Application.uploadDepositImage()
 POST        /documents                                 controllers.Application.uploadDocImage()
-GET         /images/*name                              controllers.Application.getimage(name)
+GET         /images/*image_id                          controllers.Application.getimage(image_id)
 
 
 

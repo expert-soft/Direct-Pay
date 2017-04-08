@@ -90,6 +90,7 @@ class EngineModel(val db: String = "default") {
       row[Option[String]]("account").getOrElse("N/A"),
       row[BigDecimal]("net_value"),
       row[Option[String]]("comment").getOrElse("N/A"),
+      row[Long]("image_id"),
       row[Option[String]]("email").getOrElse("N/A"),
       row[Option[String]]("first_name").getOrElse("N/A"),
       row[Option[String]]("middle_name").getOrElse("N/A"),

@@ -140,10 +140,10 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.dashboard(request.user))
   }
 
-  def getimage(name: String) = Action {
+  def getimage(image_id_s: String) = Action {
     val MimeType = "image/png"
     try {
-      val imageData: Array[Byte] = controllers.Image.getImage(name)
+      val imageData: Array[Byte] = controllers.Image.getImage(image_id_s.toLong)
       Ok(imageData).as(MimeType)
     } catch {
       case e: IllegalArgumentException =>

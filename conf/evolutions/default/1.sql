@@ -164,8 +164,8 @@ create table orders (
     comment varchar(128),
     key1 varchar(32),
     key2 varchar(32),
-    image_n bigint default 0,
-    foreign key (image_n) references image(image_id),
+    image_id bigint default 0,
+    foreign key (image_id) references image(image_id),
     foreign key (currency) references currencies(currency),
     foreign key (user_id) references users(id)
 );

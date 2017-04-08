@@ -88,10 +88,11 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "account" -> c._15,
         "net_value" -> c._16,
         "comment" -> c._17,
-        "email" -> c._18,
-        "first_name" -> c._19,
-        "middle_name" -> c._20,
-        "last_name" -> c._21
+        "image_id" -> c._18,
+        "email" -> c._19,
+        "first_name" -> c._20,
+        "middle_name" -> c._21,
+        "last_name" -> c._22
 
       )
     })

@@ -14,6 +14,8 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+    <input type="hidden" id="hidden_partner1" value="@globals.country_partner1">
+    <input type="hidden" id="hidden_partner2" value="@globals.country_partner2">
 
     <div class="page-title">
         <div class="title_left">
@@ -141,12 +143,11 @@
                             <span class="text_additional_info">@Messages("directpay.usersettings.step3")</span>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4 col-xs-12">@Messages("terminology.partner")</label>
-    <input type="hidden" name="hidden_partner1" value="@globals.country_partner1">
                                 <div class="col-md-8 col-sm-4 col-xs-12">
                                     <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                         <option value="0">@Messages("directpay.usersettings.notselected")</option>
-                                        @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
-                                        @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
+                                        @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1" {{partner1_selected}}>@globals.country_partner1</option> }
+                                        @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2" {{partner2_selected}}>@globals.country_partner2</option> }
                                     </select>
                                 </div>
                             </div>

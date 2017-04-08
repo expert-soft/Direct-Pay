@@ -151,26 +151,5 @@ var API;
             });
         })
 
-/*
-        //https://groups.google.com/forum/#!topic/play-framework/MEa0LKPcO0A
-        FFFupload_image: APIWrap(function(e)
-        {   var myClass = $('#innerContainer').data('myClass');
-            var result = e.target.result;
-            var fileName = myClass._myFiles.name;
-            var fileSize = myClass._myFiles.size;
-        $.ajax(iapi_prefix+'saveImageToDb', {
-                type: "POST",
-                //url: "/uploadImage",
-                enctype: "multipart/form-data",
-                data: {fileName: fileName, uploadBtn1: result},  //uploadBtn1 was archivoOriginal
-                success: function(){
-                    alert( "Data Uploaded: ");
-                }
-            });
-
-        })
-*/
-
-
     };
 })();

@@ -18,13 +18,15 @@ object Image {
 
   val db: String = "default"
 
-  def getImage(name: String): Array[Byte] = {
-    getImageFromDb(name)._3
+  def getImage(image_id: Long): Array[Byte] = {
+    getImageFromDb(image_id)._3
   }
 
-  def getImageFromDb(name: String) = DB.withConnection(db) { implicit c =>
-    play.api.cache.Cache.getOrElse("%s.images".format(name)) {
-      SQL""" SELECT image_id, name, data FROM image where name =${name}"""().map(row => (
+  def getImageFromDb(image_id: Long) = DB.withConnection(db) { implicit c =>
+    //    play.api.cache.Cache.getOrElse("%s.images".format(name)) {
+    {
+      SQL""" SELECT image_id, name, data FROM image where image_id =${image_id}"""().map(row => (
+        //      SQL""" SELECT image_id, name, data FROM image where name =${name}"""().map(row => (
         row[Int]("image_id"),
         row[String]("name"),
         row[Array[Byte]]("data"))).head
