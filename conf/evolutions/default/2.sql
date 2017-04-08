@@ -386,7 +386,7 @@ begin
     elsif byte >= 97 and byte <= 122 then
       select byte - 97 into tmp;;
     else
-      raise 'Failed to base32 decode due to invalid character %s, code: %', chr(byte), byte;;
+      raise 'Failed to base32 decode due to invalid character %s, code: %s', chr(byte), byte;;
     end if;;
     select result || tmp::bit(5) into result;;
   end loop;;

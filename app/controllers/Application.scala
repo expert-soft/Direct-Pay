@@ -54,10 +54,6 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.administrator.orders_list(request.user))
   }
 
-  def order_details = SecuredAction { implicit request =>
-    Ok(views.html.administrator.order_details(request.user))
-  }
-
   def history = SecuredAction { implicit request =>
     Ok(views.html.exchange.history(request.user))
   }
@@ -84,10 +80,6 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
 
   def withdraw = SecuredAction { implicit request =>
     Ok(views.html.exchange.withdraw(request.user))
-  }
-
-  def orderdetails = SecuredAction { implicit request =>
-    Ok(views.html.administrator.order_details(request.user))
   }
 
   def dashboard = SecuredAction { implicit request =>
@@ -130,7 +122,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
           local_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
           global_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
         }
-        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, order_type, "Op", partner, globals.country_currency_code, initial_value, local_fee, global_fee, "", "", partner_account, fileName)
+        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, order_type, "Op", partner, globals.country_currency_code, initial_value, local_fee, global_fee, "", "", partner_account, fileName, image_id)
     }
     Ok(views.html.exchange.dashboard(request.user))
   }
@@ -142,8 +134,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val contentType = file.contentType
         val docNumber = file.key
         val user_id = request.user.id
-        controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
-        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName)
+        val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName, image_id)
     }
     Ok(views.html.exchange.dashboard(request.user))
   }

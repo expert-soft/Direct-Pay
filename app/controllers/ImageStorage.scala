@@ -24,8 +24,8 @@ object Image {
 
   def getImageFromDb(name: String) = DB.withConnection(db) { implicit c =>
     play.api.cache.Cache.getOrElse("%s.images".format(name)) {
-      SQL""" SELECT id, name, data  FROM image where name =${name}"""().map(row => (
-        row[Int]("id"),
+      SQL""" SELECT image_id, name, data FROM image where name =${name}"""().map(row => (
+        row[Int]("image_id"),
         row[String]("name"),
         row[Array[Byte]]("data"))).head
     }

@@ -137,7 +137,7 @@ create table balances (
 
 create sequence image_id_seq;
 create table image (
-    id bigint default nextval('image_id_seq') primary key,
+    image_id bigint default nextval('image_id_seq') primary key,
     name varchar(256),
     data bytea);
 
@@ -164,8 +164,8 @@ create table orders (
     comment varchar(128),
     key1 varchar(32),
     key2 varchar(32),
-    order_image bigint,
-    foreign key (order_image) references image(id),
+    image_n bigint default 0,
+    foreign key (image_n) references image(image_id),
     foreign key (currency) references currencies(currency),
     foreign key (user_id) references users(id)
 );

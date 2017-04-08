@@ -30,7 +30,8 @@ create_order (
   a_bank varchar(128),
   a_agency varchar(16),
   a_account varchar(16),
-  a_doc1 varchar(128)
+  a_doc1 varchar(128),
+  a_image_id bigint
 ) returns boolean as $$
 declare
   b_order_id bigint;;
@@ -44,7 +45,7 @@ begin
   a_local_admin_id = 1;;
   a_global_admin_id = 2;;
   b_total_fee = a_local_fee + a_global_fee;;
-  insert into orders (user_id, country_id, order_type, status, partner, currency, initial_value, total_fee, bank, agency, account, doc1) values (a_user_id, a_country_id, a_order_type, a_status, a_partner, a_currency, a_initial_value, b_total_fee, a_bank, a_agency, a_account, a_doc1) returning order_id into b_order_id;;
+  insert into orders (user_id, country_id, order_type, status, partner, currency, initial_value, total_fee, bank, agency, account, doc1, image_n) values (a_user_id, a_country_id, a_order_type, a_status, a_partner, a_currency, a_initial_value, b_total_fee, a_bank, a_agency, a_account, a_doc1, a_image_id) returning order_id into b_order_id;;
 
   if a_order_type = 'V' then
   end if;;
@@ -201,11 +202,10 @@ insert_user_image (
   a_data bytea
 ) returns bigint as $$
 declare
-  image_id bigint;;
+  b_image_id bigint;;
 begin
-  insert into image (name, data)
-    values (a_name, a_data) returning id into strict image_id;;
-  return image_id;;
+  insert into image (name, data) values (a_name, a_data) returning image_id into strict b_image_id;;
+  return b_image_id;;
 end;;
 $$ language plpgsql volatile security invoker set search_path = public, pg_temp cost 100;
 

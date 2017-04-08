@@ -68,7 +68,6 @@ class EngineModel(val db: String = "default") {
       row[Option[Boolean]]("ver3").getOrElse(false),
       row[Option[Boolean]]("ver4").getOrElse(false),
       row[Option[Boolean]]("ver5").getOrElse(false)
-
     )).toList
   }
 
@@ -108,9 +107,9 @@ class EngineModel(val db: String = "default") {
       )).toMap
   }
 
-  def get_all_image(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
-    SQL"""SELECT id, name  FROM public.image;"""().map(row => (
-      row[Long]("id"),
+  def return_all_images(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
+    SQL"""SELECT image_id, name  FROM public.image;"""().map(row => (
+      row[Long]("image_id"),
       row[String]("name")
     )).toList
   }

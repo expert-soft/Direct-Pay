@@ -329,11 +329,11 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     } else return 0
   }
 
-  def give_all_image = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val images = globals.engineModel.get_all_image(Some(request.user.id))
+  def return_all_images = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val images = globals.engineModel.return_all_images(Some(request.user.id))
     Ok(Json.toJson(images.map({ c =>
       Json.obj(
-        "id" -> c._1,
+        "image_id" -> c._1,
         "name" -> c._2
       )
     })
