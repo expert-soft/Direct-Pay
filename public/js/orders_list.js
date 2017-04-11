@@ -32,6 +32,7 @@ $(function(){
                 data[i].surname = data[i].surname;
 
                 data[i].popupType="requestPopUp";
+                data[i].input_visible = "inline";
                 if(data[i].order_type == "W" || data[i].order_type == "W.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "withdraw";
@@ -55,6 +56,7 @@ $(function(){
                 else if(data[i].order_type == "V") {
                     data[i].class_type = "class=bgn_blue";
                     data[i].explained_type = "document verification"
+                    data[i].input_visible = "none";
                 }
                 else
                     data[i].class_type = "class=center_bold";
@@ -144,7 +146,7 @@ $(function(){
                     data[i].class_value = "class=smallfail";
 
 
-                if(data[i].status == "Op") {
+                if(data[i].status == "Op" || data[i].status == "Lk") {
                     data[i].class_status = "class=bgn_yellow";  //Bootstrap line 2844
                     data[i].explained_status = "Open order"
                 }

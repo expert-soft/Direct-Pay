@@ -93,7 +93,6 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "first_name" -> c._20,
         "middle_name" -> c._21,
         "last_name" -> c._22
-
       )
     })
     ))

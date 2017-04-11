@@ -165,7 +165,7 @@ package object globals {
 
         insert into users(id, email) values (0, '');
         insert into balances (user_id, currency) select 0, currency from currencies;
-        update balances set balance_c = ${country_initial_crypto_capital.asInstanceOf[Double]} where currency = 'BRL' and user_id = 0;;
+        update balances set balance = ${country_initial_crypto_capital.asInstanceOf[Double]}, balance_c = ${country_initial_crypto_capital.asInstanceOf[Double]} where currency = 'BRL' and user_id = 0;;
 
         insert into users (id, email) values (1, $country_local_administrator);;
         insert into balances (user_id, currency) select 1, currency from currencies;;
@@ -175,16 +175,31 @@ package object globals {
         insert into balances (user_id, currency) select 2, currency from currencies;;
         insert into users_passwords (user_id, password) values (2, crypt('qwe', gen_salt('bf', 8)));;
 
-        select create_user('a', 'a', true, null, 'en');
         select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en');
         select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en');
+
+        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Simão', 'Boczko', '999.090.089-98', 'doc_pdf.pdf', 'doc_pdf.pdf', '(12)99324-0988', 'doc5', true, true, true, true, false from users where email='mboczko@yahoo.com';
+        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', '', 'Mitrofanov', '097.455.645-09', '140.png', 'doc_38.jpg', '(53)30823-098', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
+
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='mboczko@yahoo.com'), '745', 'Agency B', 'Account B', 'Crypto-Trade.net', 'partner_account@gmail.com';
+        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='a2terminator@mail.ru'), '341', '8788-X', '677.789-9', 'Crypto-Trade.net', '';
+
+        update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='mboczko@yahoo.com');;
+        update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='a2terminator@mail.ru');;
+
+        insert into image (image_id, name) values (0, 'null');;
+      commit;
+      """.execute()
+      })
+    }
+  } catch {
+    /*
+        select create_user('a', 'a', true, null, 'en');
         select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
         select create_user('test@gmail.com', 'pass02', true, null, 'en');
         select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
         select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
 
-        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Simão', 'Boczko', '999.090.089-98', 'doc_pdf.pdf', 'doc_pdf.pdf', '(12)99324-0988', 'doc5', true, true, true, true, false from users where email='mboczko@yahoo.com';
-        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', '', 'Mitrofanov', '097.455.645-09', '140.png', 'doc_38.jpg', '(53)30823-098', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Test-middle_name', 'Tes-last_name', '', '', '', '', '', false, false, false, false, false from users where email='test@hotmail.ru';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', '', 'last name', '566.432.789-03', 'doc39.jpg', '140.png', '(11)32580-342', 'doc5', false, false, false, true, false from users where email='test@gmail.com';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestBR', '', 'sobrenome', '', 'doc39.jpg', 'doc_37.JPG', '(15)99707-0000', '', false, false, false, true, false from users where email='test@yahoo.com.br';
@@ -192,15 +207,9 @@ package object globals {
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Aaaaa', 'midA', 'LastA', '333.988.454-08', 'doc_PDF.pdf', 'doc_37.jpg', '(19)23240-434', 'doc5', true, true, true, true, false from users where email='a';
 
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='a'), '237', 'Agency A', 'Account A', 'Crypto-Trade.net', 'qwqwqw@ioe.cs';
-        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='mboczko@yahoo.com'), '745', 'Agency B', 'Account B', 'Crypto-Trade.net', 'partner_account@gmail.com';
-        insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='a2terminator@mail.ru'), '341', '8788-X', '677.789-9', 'Crypto-Trade.net', '';
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='test@yahoo.com.br'), '237', '65665', '00685343-0', '', '';
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='testru@gmail.ru'), '341', '352323-c', '67345-9', '', '';
 
-        update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='mboczko@yahoo.com');;
-        update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='a2terminator@mail.ru');;
-
-        insert into image (image_id, name) values (0, 'null');;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'br', 'RFW', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 4566.9808, 15.76, '', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 120, 4420.8, 'comment', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='a2terminator@mail.ru'), 'br', 'D', 'Op', '', '2016-12-22 01:18:59.842', 'BRL', 74.98, 0, 'recibo1.jpg', '', '237', '5454-0', '4645-8', '2016-12-22 01:18:59.842', 0, 0, '', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W', 'Rj', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '', '', 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 01:18:59.842', 12121, 0, 'bank info not correct', '', '', 0;
@@ -212,13 +221,6 @@ package object globals {
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 37870.98, 5.55, 'recibo5.jpg', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 37865.43, 'bank OK, receipt OK', 'key1 OK from CT', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'D', 'Ch', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 78.00, 0, 'recibo6.png', '', '341', '7876', '7897', '2016-12-22 01:18:59.842', 121212, 780, 'value declared wrong. confirmed at bank 780', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W.', 'Rj','' , '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '','' , 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 01:18:59.842', 12121, 0, 'bank info not correct', '', '', 0;
-      commit;
-      """.execute()
-      })
-    }
-  } catch {
-    /*
-
 
 
 */

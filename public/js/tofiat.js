@@ -5,7 +5,7 @@ $(function() {
         if ($('#value').val() > 0)
         {   var order_type = "F";
             var status = "Op";
-            var initial_value = $('#value').val();
+            var initial_value = parseFloat($('#value').val());
             //alert(initial_value);
             API.create_order(order_type, status, '', initial_value, '', '', '', '').success(function () {
                 $.pnotify({

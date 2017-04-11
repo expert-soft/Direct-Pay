@@ -31,24 +31,26 @@ create_order (
   a_agency varchar(16),
   a_account varchar(16),
   a_doc1 varchar(128),
-  a_image_id bigint
+  a_image_id bigint default 0
 ) returns boolean as $$
 declare
   b_order_id bigint;;
   b_total_fee numeric(23,8);;
-  a_system_id bigint;;
+  a_partner_id bigint;;
   a_local_admin_id bigint;;
   a_global_admin_id bigint;;
 begin
 -- Create orders
-  a_system_id = 0;;
+  a_partner_id = 0;;
   a_local_admin_id = 1;;
   a_global_admin_id = 2;;
   b_total_fee = a_local_fee + a_global_fee;;
   insert into orders (user_id, country_id, order_type, status, partner, currency, initial_value, total_fee, bank, agency, account, doc1, image_id) values (a_user_id, a_country_id, a_order_type, a_status, a_partner, a_currency, a_initial_value, b_total_fee, a_bank, a_agency, a_account, a_doc1, a_image_id) returning order_id into b_order_id;;
 
   if a_order_type = 'V' then
+  -- do nothing
   end if;;
+-- for deposit and withdraw fees should be charged when order update and at send when sending. To fiat when order creation
   if a_order_type = 'D' or a_order_type = 'DCS' then
     update balances set balance = balance + a_initial_value, hold = hold + a_initial_value where currency = a_currency and user_id = a_user_id;;
   end if;;
@@ -58,25 +60,22 @@ begin
 
   if a_order_type = 'C' then
     update balances set balance = balance - a_initial_value, balance_c = balance_c + a_initial_value where currency = a_currency and user_id = a_user_id;;
-    update balances set balance = balance + a_initial_value, balance_c = balance_c - a_initial_value where currency = a_currency and user_id = a_system_id;; -- System account
-    update orders set status = 'OK', closed = current_timestamp, processed_by = a_system_id, net_value = a_initial_value, comment = '***** System-processed Order *****' where order_id = b_order_id;;
+    update balances set balance = balance + a_initial_value, balance_c = balance_c - a_initial_value where currency = a_currency and user_id = a_partner_id;; -- Partner account
+    update orders set status = 'OK', closed = current_timestamp, processed_by = a_partner_id, net_value = a_initial_value, comment = '***** System-processed Order *****' where order_id = b_order_id;;
   end if;;
--- fees should be charged for deposit and withdraw when order update and at send when sending and to fiat when order creation
   if a_order_type = 'S' then
-    -- maybe send fees should not be charged here... Just when send confirmed
-    update balances set balance_c = balance_c + a_local_fee where currency = a_currency and user_id = a_local_admin_id;; -- Local administrator account
-    update balances set balance_c = balance_c + a_global_fee where currency = a_currency and user_id = a_global_admin_id;; -- Global administrator account
+  -- This creates a comunication to partner system. Fees will be charged when order update (closing)
   end if;;
   if a_order_type = 'F' then
     update balances set balance = balance + a_initial_value - b_total_fee, balance_c = balance_c - a_initial_value where currency = a_currency and user_id = a_user_id;;
-    update balances set balance = balance - a_initial_value, balance_c = balance_c + a_initial_value where currency = a_currency and user_id = a_system_id;; -- System account
+    update balances set balance = balance - a_initial_value, balance_c = balance_c + a_initial_value where currency = a_currency and user_id = a_partner_id;; -- Partner account
     update balances set balance = balance + a_local_fee where currency = a_currency and user_id = a_local_admin_id;; -- Local administrator account
     update balances set balance = balance + a_global_fee where currency = a_currency and user_id = a_global_admin_id;; -- Global administrator account
-    update orders set status = 'OK', closed = current_timestamp, processed_by = a_system_id, net_value = a_initial_value - b_total_fee, comment = '***** System-processed Order *****' where order_id = b_order_id;;
+    update orders set status = 'OK', closed = current_timestamp, processed_by = a_partner_id, net_value = a_initial_value - b_total_fee, comment = '***** System-processed Order *****' where order_id = b_order_id;;
   end if;;
   if a_order_type = 'RFW' or a_order_type = 'RFW.' then
+  -- ###
   end if;;
-
   return true;;
 
 end;;
@@ -97,46 +96,86 @@ update_order (
 declare
   b_user_id bigint;;
   b_order_type varchar(4);;
+  b_order_status varchar(2);;
   b_currency varchar(16);;
   b_initial_value numeric(23,8);;
   b_net_value numeric(23,8);;
   b_crypto_currency varchar(16);;
-  a_system_id bigint;;
+  b_update_fees boolean;;
+  a_partner_id bigint;;
   a_local_admin_id bigint;;
   a_global_admin_id bigint;;
 begin
-  a_system_id = 0;;
+  a_partner_id = 0;;
   a_local_admin_id = 1;;
   a_global_admin_id = 2;;
--- Update orders and balances and registers (if V)
-  select user_id, order_type, currency, initial_value into b_user_id, b_order_type, b_currency, b_initial_value
+-- Update orders and balances and user records (if V)
+  select user_id, order_type, status, currency, initial_value into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value
     from orders where order_id = a_order_id;;
-b_crypto_currency = b_currency;; -- system update should be at crypto-currency. It is being done at fiat for a while
+b_crypto_currency = b_currency;; -- system update should be at crypto-currency. It is being done at fiat for a while ###
 
+  b_update_fees = false;;
 -- At this point starts Order approved
   if a_status = 'OK' then
     if b_order_type = 'V' then
+    -- ###
     end if;;
 -- fees should be charged for deposit and withdraw when order update and at send when sending and to fiat when order creation
     if b_order_type = 'D' then
-      update balances set balance = balance + 1000 - b_initial_value + a_processed_value - a_global_fee - a_local_fee, hold = hold + 1000 - b_initial_value where currency = b_currency and user_id = b_user_id;;
-      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+      if b_order_status = 'Op' then
+        update balances set balance = balance - b_initial_value + a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value where currency = b_currency and user_id = b_user_id;;
+        update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+        b_update_fees = true;;
+      else
+    -- Order already processed (maybe by another administrator) ###
+      end if;;
     end if;;
-    if b_order_type = 'DCS' then
-      update balances set balance = balance + 1000 - b_initial_value, hold = hold + 1000 - b_initial_value, balance_c = balance_c + a_processed_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
-      -- missing Send operation, but fee already charged
-      update balances set balance = balance + a_processed_value - a_global_fee - a_local_fee + 1000, hold = hold + 1000 - a_processed_value where currency = b_crypto_currency and user_id = a_system_id;; -- System account
+    if b_order_type = 'DCS' or b_order_type = 'S' then
+      if b_order_type = 'DCS' and b_order_status = 'Op' then
+        update balances set balance = balance + 1000 - b_initial_value, hold = hold + 1000 - b_initial_value, balance_c = balance_c + a_processed_value, hold_c = hold_c + a_processed_value where currency = b_currency and user_id = b_user_id;;
+        update balances set balance = balance + a_processed_value + 1000, balance_c = balance_c + 1000 - a_processed_value where currency = b_crypto_currency and user_id = a_partner_id;; -- Partner account
+        update orders set status = 'S', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+      else
+        if b_order_status = 'S' or b_order_type = 'S' then
+        -- Sending process just happened (sent only processed value minus fees, discounted outside this function, when sending) ###
+          update balances set balance_c = balance_c - a_processed_value, hold_c = hold_c - a_processed_value where currency = b_currency and user_id = b_user_id;;
+          update balances set balance = balance + a_processed_value - a_global_fee - a_local_fee + 1000, hold = hold + 1000 - a_processed_value where currency = b_crypto_currency and user_id = a_partner_id;; -- Partner account
+          update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
+          b_update_fees = true;;
+        else
+    -- Order already processed (maybe by another administrator) ###
+        end if;;
+      end if;;
     end if;;
-    if b_order_type = 'W' or b_order_type = 'W.' then
-      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee + 1000, hold = hold + 1000 - a_processed_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
-      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+    if b_order_type = 'W' or b_order_type = 'W.' or b_order_type = 'RFW' or b_order_type = 'RFW.' then
+      if b_order_status = 'F' then
+        update balances set balance = balance + b_initial_value, balance_c = balance_c - b_initial_value where currency = b_currency and user_id = b_user_id;;
+        update balances set balance = balance - b_initial_value, balance_c = balance_c + b_initial_value where currency = b_currency and user_id = a_partner_id;; -- Partner account
+        update orders set status = 'Op', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+      end if;;
+      if b_order_status = 'Op' then
+        update orders set status = 'Lk', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+      else
+        if b_order_status = 'Lk' then
+          update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+          update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+          b_update_fees = true;;
+        else
+    -- Order already processed (maybe by another administrator) ###
+        end if;;
+      end if;;
     end if;;
     if b_order_type = 'RFW' or b_order_type = 'RFW.' then
-  --    update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee + 1000, hold = hold + 1000 - a_processed_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+-- ###
     end if;;
-    update balances set balance = balance + a_local_fee where currency = b_currency and user_id = a_local_admin_id;; -- Local administrator account
-    update balances set balance = balance + a_global_fee where currency = b_currency and user_id = a_global_admin_id;; -- Global administrator account
+    if b_update_fees then
+      update balances set balance = balance + a_local_fee where currency = b_currency and user_id = a_local_admin_id;; -- Local administrator account
+      update balances set balance = balance + a_global_fee where currency = b_currency and user_id = a_global_admin_id;; -- Global administrator account
+    end if;;
+    return true;;
   end if;;
+
+
 return true;;
 
 -- After this point is order lock (withdrwals need to be locked till actual withdrawal performed)

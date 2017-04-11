@@ -141,11 +141,7 @@
                             <td>{{bank}}, {{agency}}, {{account}}</td>
                             <td {{class_value}}>{{initial_value}}<br>{{total_fee}}</td>
                             <td>{{created}}</td>
-                    <!--if({{class_type}} != "V"){ -->
-                                <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px;"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
-                    <!--        } else {
-                                <td class="right_bold"><br><input name="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
-                            } -->
+                            <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
                             <td><button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
                                 <button id="btnReject{{order_id}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
                         </tr>

@@ -126,7 +126,7 @@ function fillWithdrawMessages() {
         aux += parseFloat(country_settings.fee_tofiat_percent);
         $('#calc_convertion_rate').html((parseFloat(100 - country_settings.fee_tofiat_percent) * 0.01).toFixed(3))
     }
-alert($('#hidden_fees_information').attr('wallet_available'));
+//alert($('#hidden_fees_information').attr('wallet_available'));
     var calc_value = 0;
     if($('#banks').val() == "00" || $('#banks').val() == country_settings.preferential_bank1_code || $('#banks').val() == country_settings.preferential_bank2_code || $('#banks').val() == country_settings.preferential_bank3_code || $('#banks').val() == country_settings.preferential_bank4_code) {
         if($.isNumeric($('#value').val())) {

@@ -1,16 +1,6 @@
 
-$(function() {
-
-    function submit_image() {
-        API.upload_image($('#uploadBtn1'));
-    }
-
-    $(document).ready(function () {
-    });
-
-    $('.triggers_submit').click(function () {
-        submit_deposit($('#uploadBtn1'));
-    });
+$('.triggers_submit').click(function () {
+    submit_deposit($('#uploadBtn1'));
 });
 
 
