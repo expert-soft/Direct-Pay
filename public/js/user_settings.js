@@ -18,7 +18,6 @@ $(function(){
             reg_info.account = data[0].account;
             if(data[0].partner == $('#hidden_partner1').val()) {reg_info.partner1_selected = "selected"} else {reg_info.partner1_selected = ""}
             if(data[0].partner == $('#hidden_partner2').val()) {reg_info.partner2_selected = "selected"} else {reg_info.partner2_selected = ""}
-alert(data[0].partner + $('#hidden_partner1').val());
             reg_info.partner_account = data[0].partner_account;
 
             $('#user-reg-one').html(user_reg_template_one(reg_info));

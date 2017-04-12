@@ -33,17 +33,30 @@ $(function(){
 
                 data[i].popupType="requestPopUp";
                 data[i].input_visible = "inline";
+                if (data[i].net_value == 0 && data[i].status != "Rj") {
+                    data[i].net_value = data[i].initial_value;
+                }
+                data[i].popupButtonOKDisplay = "inline";
+                data[i].popupButtonLockDisplay = "none";
                 if(data[i].order_type == "W" || data[i].order_type == "W.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "withdraw";
                     data[i].popupType = "requestBrowser";
-                    data[i].doc1 = "upload";
+                    if (data[i].status == "Op") {
+                        data[i].doc1 = "";
+                        data[i].popupButtonOKDisplay = "none";
+                        data[i].popupButtonLockDisplay = "inline";
+                    } else data[i].doc1 = "upload";
                 }
                 else if(data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "receive + withdraw";
                     data[i].popupType = "requestBrowser";
-                    data[i].doc1 = "upload";
+                    if (data[i].status == "Op") {
+                        data[i].doc1 = "";
+                        data[i].popupButtonOKDisplay = "none";
+                        data[i].popupButtonLockDisplay = "inline";
+                    } else data[i].doc1 = "upload";
                 }
                 else if(data[i].order_type == "D") {
                     data[i].class_type = "class=bgn_green";
@@ -57,6 +70,10 @@ $(function(){
                     data[i].class_type = "class=bgn_blue";
                     data[i].explained_type = "document verification"
                     data[i].input_visible = "none";
+                    data[i].initial_value = "";
+                    data[i].total_fee = "";
+                    data[i].currency = "";
+                    data[i].net_value = "";
                 }
                 else
                     data[i].class_type = "class=center_bold";
@@ -146,12 +163,16 @@ $(function(){
                     data[i].class_value = "class=smallfail";
 
 
-                if(data[i].status == "Op" || data[i].status == "Lk") {
+                if(data[i].status == "Op") {
                     data[i].class_status = "class=bgn_yellow";  //Bootstrap line 2844
                     data[i].explained_status = "Open order"
                 }
-                else if(data[i].status == "Ch") {
+                else if(data[i].status == "Lk") {
                     data[i].class_status = "class=bgn_brown";
+                    data[i].explained_status = "Order Locked"
+                }
+                else if(data[i].status == "Ch") {
+                    data[i].class_status = "class=bgn_blue";
                     data[i].explained_status = "Order Changed"
                 }
                 else if(data[i].status == "Rj") {
@@ -231,20 +252,25 @@ Op - OK (Ch possible?)
         $('.triggers_Approval').live('click', function() {
             var order_id = parseInt($(this).attr('order_id'));
             var order_type = $(this).attr('order_type');
-            var status = $('#net_value' + order_id).val();
-            status = "OK";
+            //var status = $('#net_value' + order_id).val();
+            var status = "OK";
             var net_value = parseFloat($('#net_value' + order_id).val());
             var comment = $('#comment' + order_id).val();
-//alert(order_id + order_type + status + net_value + comment);
-            API.update_order(order_id, order_type, status, net_value, comment).success(function () {
-                $.pnotify({
-                    title: Messages("messages.api.success"),
-                    text: Messages("messages.api.success.orderupdatedsuccessfully"),
-                    styling: 'bootstrap',
-                    type: 'success',
-                    text_escape: true
-                });
-            })
+            if ((order_type == "D" || order_type == "DCS") && (net_value <= 0 || comment == "")) {
+                status = "flag not OK";
+                alert("value must be greater than 0 and comment required");
+            }
+            if(status != "flag not OK") {
+                 API.update_order(order_id, order_type, status, net_value, comment).success(function () {
+                     $.pnotify({
+                         title: Messages("messages.api.success"),
+                         text: Messages("messages.api.success.orderupdatedsuccessfully"),
+                         styling: 'bootstrap',
+                         type: 'success',
+                         text_escape: true
+                     });
+                 })
+            }
         });
 
         $('.triggers_Rejection').live('click', function() {

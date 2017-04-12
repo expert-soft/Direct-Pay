@@ -133,8 +133,6 @@ package object globals {
   val country_appearance4 = Play.current.configuration.getString("country.country_appearance4").getOrElse("Not Set")
   val country_appearance5 = Play.current.configuration.getString("country.country_appearance5").getOrElse("Not Set")
 
-  val preference_manual_operations = Play.current.configuration.getBoolean("country.preference_manual_operations").getOrElse(true)
-
   val masterDB = "default"
   val masterDBWallet = "wallet"
   val masterDBTrusted = "trust"
@@ -162,7 +160,6 @@ package object globals {
         select currency_insert('BRL', 1);
         select currency_insert('USD', 2);
 
-
         insert into users(id, email) values (0, '');
         insert into balances (user_id, currency) select 0, currency from currencies;
         update balances set balance = ${country_initial_crypto_capital.asInstanceOf[Double]}, balance_c = ${country_initial_crypto_capital.asInstanceOf[Double]} where currency = 'BRL' and user_id = 0;;
@@ -188,12 +185,9 @@ package object globals {
         update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='a2terminator@mail.ru');;
 
         insert into image (image_id, name) values (0, 'null');;
-      commit;
-      """.execute()
-      })
-    }
-  } catch {
-    /*
+
+
+
         select create_user('a', 'a', true, null, 'en');
         select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
         select create_user('test@gmail.com', 'pass02', true, null, 'en');
@@ -218,12 +212,16 @@ package object globals {
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='testru@gmail.ru'), 'br', 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 980, 0, 'recibo1.jpg', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 980, 'bank OK, receipt OK', 'key1 OK from CT', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'D', 'OK', '', '2016-12-22 01:18:59.842', 'USD', 7654.90, 43.15, 'recibo4.gif', '', 'BofA', '8987-tr', '343434-098', '2016-12-22 01:18:59.842', 121212, 7611.75, 'bank OK, receipt OK', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='testru@gmail.ru'), 'us', 'V', 'Op', '', '2016-12-22 01:18:59.842', 'USD', 0, 0, 'doc_38.jpg', '', '', '', '', '2016-12-22 01:18:59.842', 12121, 0, '', '', '', 0;
-        insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'DCS', 'OK', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 37870.98, 5.55, 'recibo5.jpg', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 37865.43, 'bank OK, receipt OK', 'key1 OK from CT', '', 0;
+        insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'W.', 'Lk', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 37870.98, 5.55, 'recibo5.jpg', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 37865.43, 'bank OK, receipt OK', 'key1 OK from CT', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'D', 'Ch', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 78.00, 0, 'recibo6.png', '', '341', '7876', '7897', '2016-12-22 01:18:59.842', 121212, 780, 'value declared wrong. confirmed at bank 780', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W.', 'Rj','' , '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '','' , 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 01:18:59.842', 12121, 0, 'bank info not correct', '', '', 0;
 
+      commit;
+      """.execute()
+      })
+    }
+  } catch {
 
-*/
     // XXX: any kind of error in the SQL above will cause this cryptic exception:
     // org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
     case error: Throwable => Logger.error(error.toString)
