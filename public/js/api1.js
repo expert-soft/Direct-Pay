@@ -37,6 +37,10 @@ var API;
             return $.get(iapi_prefix+'user_name_info', 'json');
         }),
 
+        get_bank_data: APIWrap(function() {
+            return $.get(iapi_prefix+'get_bank_data', 'json');
+        }),
+
         orders_list: APIWrap(function() {
             return $.get(iapi_prefix+'orders_list', 'json');
         }),
@@ -137,6 +141,15 @@ var API;
             return $.ajax(iapi_prefix+'update_personal_info', {
                 type: 'POST',
                 data: JSON.stringify({first_name: first_name, middle_name: middle_name, last_name: last_name, doc1: doc1, doc2: doc2, doc3: doc3, doc4: doc4, doc5: doc5, bank: bank, agency: agency, account: account, partner: partner, partner_account: partner_account, manualauto_mode: manualauto_mode}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        update_bank_data: APIWrap(function(bank, agency, account) {
+            return $.ajax(iapi_prefix+'update_bank_data', {
+                type: 'POST',
+                data: JSON.stringify({bank: bank, agency: agency, account: account}),
                 dataType: 'json',
                 contentType: 'application/json'
             });

@@ -67,7 +67,7 @@ $(function(){
             var account = $('#account').val();
             var partner = $('#partner').val();
             var partner_account = $('#partner_account').val();
-            var manualauto_mode = $('#manualauto_mode').prop('checked');
+            var manualauto_mode = !($('#manualauto_mode').prop('checked'));
             API.update_personal_info(first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),

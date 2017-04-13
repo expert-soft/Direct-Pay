@@ -49,6 +49,14 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
+  def GetBankData(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_bank_data($uid)"""().map(row => (
+      row[Option[String]]("bank").getOrElse(""),
+      row[Option[String]]("agency").getOrElse(""),
+      row[Option[String]]("account").getOrElse("")
+    )).toList
+  }
+
   def UsersList() = DB.withConnection(db) { implicit c =>
     SQL"""select * from get_users_list(${globals.country_currency_code})"""().map(row => (
       row[Long]("id"),

@@ -315,6 +315,15 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def update_bank_data(uid: Long, bank: Option[String], agency: Option[String], account: Option[String]) = DB.withConnection(db) { implicit c =>
+    val bank_s = bank.getOrElse("")
+    val agency_s = agency.getOrElse("")
+    val account_s = account.getOrElse("")
+    SQL"""
+     select update_bank_data as success from update_bank_data($uid, ${bank_s}, ${agency_s}, ${account_s})
+    """.execute()
+  }
+
   def change_manualauto(uid: Long, manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
     SQL"""
      select change_manualauto as success from change_manualauto($uid, ${manualauto_mode.get})

@@ -251,7 +251,7 @@ directpay.admin.userslist.userID=User ID
 
 directpay.overview.systemoverview=System Overview
 directpay.overview.explanation1={0} is an community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
-directpay.overview.explanation2=To operate at {0} is very simple. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
+directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
 directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
 directpay.overview.explanation4=If you want the operations even simpler, you can set to "automatic mode".
 directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
@@ -281,7 +281,8 @@ directpay.overview.additionalinfo=Additional Information
 directpay.overview.thisoperationdoesnotchargefees=This operation does not charge any fees
 directpay.overview.nofeesarecharged=No fees are charged for this operation.
 directpay.overview.convertionrate=Convertion Rate
-directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of 0.99. That means you will always be able to convert your money and at a competitive rate.
+directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of
+directpay.overview.convertionsareperformedbypartners2=That means you will always be able to convert your money at a competitive rate.
 
 directpay.deposit.depositconvertsend=Deposit, Convert and Send
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
@@ -328,6 +329,9 @@ directpay.send.disclaimer1=When you send your {0} to a partner, responsibility o
 directpay.receive.receivefrompartners=Receive from Partners
 directpay.receive.toreceivefrompartners1=After interacting with our partners, as a result of your operations, you may have funds to receive from them.
 directpay.receive.toreceivefrompartners2=To request your funds, you must enter Partners system and request a withdrawal there to {0}.
+
+directpay.receive.toreceivefrompartners4=But first confirm the bank account were you want to withdraw money you receive from partners.
+directpay.receive.savebankdata=Save Bank Data
 directpay.receive.linkstopartners=Links to Partners:
 directpay.receive.explanation1=To receive money from our partners, you must go to the partner-site and request a withdraw to {0}. Partner will send {1} and it will become available at {0} in a few seconds.
 
@@ -563,6 +567,7 @@ mails.passwordResetOk.body=Your password was updated.  Please log in using your 
 # Direct Pay API messages
 messages.api.success=Success
 messages.api.success.ordercreatedsuccessfully=Order created successfully
+messages.api.success.bankinfosavedsuccessfully=Bank data saved successfully
 messages.api.success.manualautomodechanged=Manual/Automatic mode changed successfully
 messages.api.error.failedtocreateorder=Failed to create order.
 messages.api.success.orderupdatedsuccessfully=Order Updated Successfully

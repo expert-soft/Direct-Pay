@@ -48,9 +48,9 @@ create table users_connections (
     user_id bigint not null,
     bank varchar(16),
     agency varchar(16),
-    account varchar(16),
+    account varchar(64),
     partner varchar(64),
-    partner_account varchar(64),
+    partner_account varchar(256),
     foreign key (user_id) references users(id),
     primary key (user_id)
 );
@@ -157,7 +157,7 @@ create table orders (
     doc2 varchar(128),
     bank varchar(128),
     agency varchar(16),
-    account varchar(16),
+    account varchar(64),
     closed timestamp(3),
     processed_by bigint,
     net_value numeric(23,8) default 0,

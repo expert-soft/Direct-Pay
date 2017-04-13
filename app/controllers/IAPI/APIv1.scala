@@ -67,6 +67,18 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
+  def get_bank_data = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val bank_data = globals.engineModel.GetBankData(Some(request.user.id))
+    Ok(Json.toJson(bank_data.map({ c =>
+      Json.obj(
+        "bank" -> c._1,
+        "agency" -> c._2,
+        "account" -> c._3
+      )
+    })
+    ))
+  }
+
   def orders_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     val orders_list_info = globals.engineModel.OrderList()
     Ok(Json.toJson(orders_list_info.map({ c =>
@@ -280,6 +292,17 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val partner_account = (request.request.body \ "partner_account").asOpt[String]
     val manualauto_mode = (request.request.body \ "manualauto_mode").asOpt[Boolean]
     if (globals.userModel.update_personal_info(request.user.id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode)) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoremovepgpkey")))
+    }
+  }
+
+  def update_bank_data() = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val bank = (request.request.body \ "bank").asOpt[String]
+    val agency = (request.request.body \ "agency").asOpt[String]
+    val account = (request.request.body \ "account").asOpt[String]
+    if (globals.userModel.update_bank_data(request.user.id, bank, agency, account)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoremovepgpkey")))

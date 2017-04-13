@@ -754,8 +754,8 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 -- noinspection SqlNoDataSourceInspection
 create or replace function
-get_user_name_info (
-  a_id bigint,
+  get_user_name_info (
+      a_id bigint,
   out first_name varchar(64),
   out middle_name varchar(128),
   out last_name varchar(128),
@@ -766,15 +766,27 @@ get_user_name_info (
   out doc5 varchar(256),
   out bank varchar (16),
   out agency varchar (16),
-  out account varchar (16),
+  out account varchar (64),
   out partner varchar (64),
-  out partner_account varchar (64)
+  out partner_account varchar (256)
 ) returns setof record as $$
 begin
   return query select uf.first_name, uf.middle_name, uf.last_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.partner, uc.partner_account
-  from users_name_info uf
-  left join users_connections uc on uc.user_id = uf.user_id
+    from users_name_info uf
+      left join users_connections uc on uc.user_id = uf.user_id
   where uf.user_id = a_id;;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+create or replace function
+  get_bank_data (
+      a_id bigint,
+  out bank varchar (16),
+  out agency varchar (16),
+  out account varchar (64)
+) returns setof record as $$
+begin
+  return query select uc.bank, uc.agency, uc.account from users_connections uc where user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
@@ -830,7 +842,7 @@ get_orders_list (
   out doc2 varchar(128),
   out bank varchar(128),
   out agency varchar(16),
-  out account varchar(16),
+  out account varchar(64),
   out closed timestamp(3),
   out net_value numeric(23,8),
   out comment varchar(128),
@@ -890,6 +902,7 @@ drop function if exists new_log (bigint, text, varchar(256), text, text, inet, t
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
 drop function if exists balance (bigint, text, varchar(16)) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
+drop function if exists get_bank_data(bigint) cascade;
 drop function if exists get_users_list() cascade;
 drop function if exists get_orders_list() cascade;
 drop function if exists get_balance_by_id_and_currency(bigint, text, text) cascade;

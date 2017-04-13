@@ -29,7 +29,7 @@ create_order (
   a_global_fee numeric(23,8),
   a_bank varchar(128),
   a_agency varchar(16),
-  a_account varchar(16),
+  a_account varchar(64),
   a_doc1 varchar(128),
   a_image_id bigint default 0
 ) returns boolean as $$
@@ -206,9 +206,9 @@ update_personal_info (
   a_doc5 varchar(256),
   a_bank varchar(16),
   a_agency varchar(16),
-  a_account varchar(16),
-  a_partner varchar(128),
-  a_partner_account varchar(64),
+  a_account varchar(64),
+  a_partner varchar(64),
+  a_partner_account varchar(256),
   a_manualauto_mode bool
 ) returns boolean as $$
 begin
@@ -219,6 +219,21 @@ begin
   return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
+
+create or replace function
+update_bank_data (
+  a_user_id bigint,
+  a_bank varchar(16),
+  a_agency varchar(16),
+  a_account varchar(64)
+) returns boolean as $$
+begin
+  update users_connections set bank = a_bank, agency = a_agency, account = a_account where user_id = a_user_id;;
+  return true;;
+end;;
+$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
 
 create or replace function
 change_manualauto (
@@ -248,12 +263,15 @@ begin
 end;;
 $$ language plpgsql volatile security invoker set search_path = public, pg_temp cost 100;
 
+
+
 # --- !Downs
 
 drop function if exists currency_insert(varchar(16), integer, bool) cascade;
 drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), varchar(128)) cascade;
 drop function if exists update_order(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8)) cascade;
 drop function if exists update_personal_info(Long, varchar(64), varchar(128), varchar(128)) cascade;
+drop function if exists update_bank_data(Long, varchar(16), varchar(16), varchar(64)) cascade;
 drop function if exists change_manualauto(Long, bool) cascade;
 drop function if exists insert_user_image (varchar(256), bytea) cascade;
 
