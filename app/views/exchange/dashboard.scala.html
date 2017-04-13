@@ -6,6 +6,7 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
+    <input type="hidden" id="hidden_page" value="Dashboard"></input>
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
@@ -39,6 +40,8 @@
             preferential_bank4_name = "@globals.country_preferential_bank4_name"
             nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
             nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
+            fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
+            fee_send_percent = "@globals.country_fee_send_percent.toString"
             fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
             fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
             ></input>

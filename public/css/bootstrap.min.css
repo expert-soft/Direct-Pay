@@ -65,16 +65,21 @@ body {
 
 .calc_destak_info {
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     color: #000;
 }
 
 .calc_mid_destak_info {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: #000;
 }
 
+.calc_low_destak_info {
+    font-size: 11px;
+    font-weight: 400;
+    color: #000;
+}
 /* following table styles created by me */
 .table > tbody > tr > td.center_bold, td.bgn_red, td.bgn_blue, td.bgn_yellow, td.bgn_green, td.bgn_brown {
     text-align: center;

@@ -19,14 +19,10 @@ $(function() {
             $('#hidden_fees_information').attr('wallet_total', parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c));
 
             $('#balance').html(template(balances));
+
+            fillMessages();  // due to assyncronous threads of API, need to run fillMessages after wallet completelly filled
         });
     }
 
     show_balance();
-});
-
-$(function(){
-    $(document).ready(function () {
-        //fillMessages();
-    });
 });

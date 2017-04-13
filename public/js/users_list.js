@@ -23,15 +23,15 @@ $(function(){
                 data[i].ver3 = data[i].ver3;
                 data[i].ver4 = data[i].ver4;
                 data[i].ver5 = data[i].ver5;
-                data[i].amount_fiat = 8000-i*782.93;
-                data[i].amount_crypto = i*893+990.312;
+                data[i].balance = data[i].balance;
+                data[i].balance_c = data[i].balance_c;
                 if (data[i].doc1 != "") { if (data[i].ver1) { data[i].checked1 = "fa fa-check" } else { data[i].checked1 = "fa fa-alert" } } else {data[i].checked1 = ""};
                 if (data[i].doc2 != "") { if (data[i].ver2) { data[i].checked2 = "fa fa-check" } else { data[i].checked2 = "fa fa-asterisk" } } else {data[i].checked2 = ""};
                 if (data[i].doc3 != "") { if (data[i].ver3) { data[i].checked3 = "fa fa-check" } else { data[i].checked3 = "fa fa-asterisk" } } else {data[i].checked3 = ""};
                 if (data[i].doc4 != "") { if (data[i].ver4) { data[i].checked4 = "fa fa-check" } else { data[i].checked4 = "fa fa-asterisk" } } else {data[i].checked4 = ""};
                 if (data[i].doc5 != "") { if (data[i].ver5) { data[i].checked5 = "fa fa-check" } else { data[i].checked5 = "fa fa-asterisk" } } else {data[i].checked5 = ""};
-                if (data[i].amount_fiat >= critical_value1 ) { data[i].class_fiat="bgn_green" }
-                if (data[i].amount_crypto >= critical_value1 ) {data[i].class_crypto="bgn_green" }
+                if (data[i].balance >= critical_value1 ) { data[i].class_fiat="bgn_green" }
+                if (data[i].balance_c >= critical_value1 ) {data[i].class_crypto="bgn_green" }
             }
             $('#users-list').html(users_list_template(data));
         });

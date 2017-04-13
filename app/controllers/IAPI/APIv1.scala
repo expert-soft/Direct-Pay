@@ -118,7 +118,11 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "ver2" -> c._14,
         "ver3" -> c._15,
         "ver4" -> c._16,
-        "ver5" -> c._17
+        "ver5" -> c._17,
+        "balance" -> c._18,
+        "hold" -> c._19,
+        "balance_c" -> c._20,
+        "hold_c" -> c._21
       )
     })
     ))
@@ -293,20 +297,24 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
 
   def calculate_local_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
     val percentage = (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+    var low_value_fee = 0.0
+    if (initial_value < globals.country_minimum_value) {
+      low_value_fee = globals.country_minimum_value * 0.02
+    }
     if (order_type == "D") {
-      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
     } else if (order_type == "S") {
       return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
     } else if (order_type == "DCS") {
-      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
     } else if (order_type == "W") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
     } else if (order_type == "W.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
     } else if (order_type == "RFW") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
     } else if (order_type == "RFW.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
     } else if (order_type == "F") {
       return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
     } else return 0

@@ -50,6 +50,7 @@ $(function() {
     })*/
 
     $(document).ready(function () {
+        fillMessages();
     });
 
     $('.triggers_submit').click(function () {

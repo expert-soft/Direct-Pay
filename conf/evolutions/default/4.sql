@@ -154,11 +154,11 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
         update orders set status = 'Op', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
       end if;;
       if b_order_status = 'Op' then
-        update orders set status = 'Lk', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+        update orders set status = 'Lk', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
       else
         if b_order_status = 'Lk' then
           update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
-          update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+          update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
           b_update_fees = true;;
         else
     -- Order already processed (maybe by another administrator) ###

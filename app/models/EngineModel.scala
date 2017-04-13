@@ -36,38 +36,42 @@ class EngineModel(val db: String = "default") {
       row[String]("first_name"),
       row[String]("middle_name"),
       row[String]("last_name"),
-      row[Option[String]]("doc1").getOrElse("N/A"),
-      row[Option[String]]("doc2").getOrElse("N/A"),
-      row[Option[String]]("doc3").getOrElse("N/A"),
-      row[Option[String]]("doc4").getOrElse("N/A"),
-      row[Option[String]]("doc5").getOrElse("N/A"),
-      row[Option[String]]("bank").getOrElse("N/A"),
-      row[Option[String]]("agency").getOrElse("N/A"),
-      row[Option[String]]("account").getOrElse("N/A"),
-      row[Option[String]]("partner").getOrElse("N/A"),
-      row[Option[String]]("partner_account").getOrElse("N/A")
+      row[Option[String]]("doc1").getOrElse(""),
+      row[Option[String]]("doc2").getOrElse(""),
+      row[Option[String]]("doc3").getOrElse(""),
+      row[Option[String]]("doc4").getOrElse(""),
+      row[Option[String]]("doc5").getOrElse(""),
+      row[Option[String]]("bank").getOrElse(""),
+      row[Option[String]]("agency").getOrElse(""),
+      row[Option[String]]("account").getOrElse(""),
+      row[Option[String]]("partner").getOrElse(""),
+      row[Option[String]]("partner_account").getOrElse("")
     )).toList
   }
 
   def UsersList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from get_users_list()"""().map(row => (
+    SQL"""select * from get_users_list(${globals.country_currency_code})"""().map(row => (
       row[Long]("id"),
       row[DateTime]("created"),
       row[String]("email"),
       row[Boolean]("active"),
-      row[Option[String]]("first_name").getOrElse("N/A"),
-      row[Option[String]]("middle_name").getOrElse("N/A"),
-      row[Option[String]]("last_name").getOrElse("N/A"),
-      row[Option[String]]("doc1").getOrElse("N/A"),
-      row[Option[String]]("doc2").getOrElse("N/A"),
-      row[Option[String]]("doc3").getOrElse("N/A"),
-      row[Option[String]]("doc4").getOrElse("N/A"),
-      row[Option[String]]("doc5").getOrElse("N/A"),
+      row[Option[String]]("first_name").getOrElse(""),
+      row[Option[String]]("middle_name").getOrElse(""),
+      row[Option[String]]("last_name").getOrElse(""),
+      row[Option[String]]("doc1").getOrElse(""),
+      row[Option[String]]("doc2").getOrElse(""),
+      row[Option[String]]("doc3").getOrElse(""),
+      row[Option[String]]("doc4").getOrElse(""),
+      row[Option[String]]("doc5").getOrElse(""),
       row[Option[Boolean]]("ver1").getOrElse(false),
       row[Option[Boolean]]("ver2").getOrElse(false),
       row[Option[Boolean]]("ver3").getOrElse(false),
       row[Option[Boolean]]("ver4").getOrElse(false),
-      row[Option[Boolean]]("ver5").getOrElse(false)
+      row[Option[Boolean]]("ver5").getOrElse(false),
+      row[BigDecimal]("balance"),
+      row[BigDecimal]("hold"),
+      row[BigDecimal]("balance_c"),
+      row[BigDecimal]("hold_c")
     )).toList
   }
 
@@ -78,23 +82,23 @@ class EngineModel(val db: String = "default") {
       row[String]("country_id"),
       row[String]("order_type"),
       row[String]("status"),
-      row[Option[String]]("partner").getOrElse("N/A"),
+      row[Option[String]]("partner").getOrElse(""),
       row[DateTime]("created"),
       row[String]("currency"),
       row[BigDecimal]("initial_value"),
       row[BigDecimal]("total_fee"),
-      row[Option[String]]("doc1").getOrElse("N/A"),
-      row[Option[String]]("doc2").getOrElse("N/A"),
-      row[Option[String]]("bank").getOrElse("N/A"),
-      row[Option[String]]("agency").getOrElse("N/A"),
-      row[Option[String]]("account").getOrElse("N/A"),
+      row[Option[String]]("doc1").getOrElse(""),
+      row[Option[String]]("doc2").getOrElse(""),
+      row[Option[String]]("bank").getOrElse(""),
+      row[Option[String]]("agency").getOrElse(""),
+      row[Option[String]]("account").getOrElse(""),
       row[BigDecimal]("net_value"),
-      row[Option[String]]("comment").getOrElse("N/A"),
+      row[Option[String]]("comment").getOrElse(""),
       row[Long]("image_id"),
-      row[Option[String]]("email").getOrElse("N/A"),
-      row[Option[String]]("first_name").getOrElse("N/A"),
-      row[Option[String]]("middle_name").getOrElse("N/A"),
-      row[Option[String]]("last_name").getOrElse("N/A")
+      row[Option[String]]("email").getOrElse(""),
+      row[Option[String]]("first_name").getOrElse(""),
+      row[Option[String]]("middle_name").getOrElse(""),
+      row[Option[String]]("last_name").getOrElse("")
     )).toList
   }
 

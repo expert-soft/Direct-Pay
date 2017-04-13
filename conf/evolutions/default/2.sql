@@ -781,6 +781,7 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 create or replace function
 get_users_list (
+  a_currency varchar(16),
   out id bigint,
   out created timestamp(3),
   out email varchar(256),
@@ -797,13 +798,18 @@ get_users_list (
   out ver2 bool,
   out ver3 bool,
   out ver4 bool,
-  out ver5 bool
+  out ver5 bool,
+  out balance numeric(23,8),
+  out hold numeric(23,8),
+  out balance_c numeric(23,8),
+  out hold_c numeric(23,8)
 ) returns setof record as $$
 begin
-  return query select u.id, u.created, u.email, u.active, ui.first_name, ui.middle_name, ui.last_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1, ui.ver2, ui.ver3, ui.ver4, ui.ver5
+  return query select u.id, u.created, u.email, u.active, ui.first_name, ui.middle_name, ui.last_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1, ui.ver2, ui.ver3, ui.ver4, ui.ver5, b.balance, b.hold, b.balance_c, b.hold_c
   from users u
-  left join users_name_info ui on u.id = ui.user_id
-  where u.id != 0;;
+    left join users_name_info ui on u.id = ui.user_id
+    left join balances b on u.id = b.user_id
+  where u.id != 0 and b.currency = a_currency;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
