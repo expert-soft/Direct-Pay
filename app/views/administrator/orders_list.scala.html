@@ -24,37 +24,6 @@
             <div id="orders_list" class="x_panel">
                 <div class="x_title"><h2><i class="fa fa-list-alt"></i> @Messages("directpay.admin.orderslist.openorders.title")</h2><div class="clearfix"></div></div>
                 <div class="x_content">
-
-                        <!-- Modal page for order details -->
-                    <div id="popupDetails" class="overlay">
-                        <div id="popupInfoDiv" class="popup">
-                            <div class="title_left">
-                                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.navigation.admin.orderdetails.title")</h3>
-                            </div>
-                            <h2><span id="popUpPictureTitle"></span></h2>
-                            <input type="hidden" id="hidden_order_id">
-                            <div id="buttonsDiv" class="popupTopButtons">
-                                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
-                                <button id="btnApprove" order_id="" order_type="" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnReject" order_id="" order_type="" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
-                            </div>
-                            <a class="popupClose" href="#">&times;</a>
-                            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name"><input type="hidden" id="popUpPictureDoc3" value="@globals.country_doc3_name"><input type="hidden" id="popUpPictureDoc4" value="@globals.country_doc4_name"><input type="hidden" id="popUpPictureDoc5" value="@globals.country_doc5_name">
-                            <table width="100%" cellpadding="10"><tr>
-                                <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
-                                <td><span id="popUpPictureInfo3"></span></td>
-                                <td>@Messages("terminology.value"): <input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
-                            </tr><tr>
-                                <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
-                                <td><span id="popUpPictureInfo4"></span></td>
-                                <td>@Messages("terminology.comment"): <input id="popUpComment" value="" title="" type="text" style="width: 200px;" class="triggers_details"></td>
-                            </tr></table>
-                            <p><img src="placeholder" id="the_picture"></p>
-                            <p><span id="popUpPictureInfo3"></span></p>
-                            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
-                        </div>
-                    </div>
-                        <!-- end of Modal page for order details -->
-
                     <input type="hidden" id="hidden_critical_value1" value="@globals.country_critical_value1"><input type="hidden" id="hidden_critical_value2" value="@globals.country_critical_value2">
                     <p id="orders-open"></p>  <!-- Script for open orders is called here -->
                     <br>
@@ -64,6 +33,37 @@
         </div>
     </div>
 
+
+
+        <!-- Modal page for order details -->
+    <div id="popupDetails" class="overlay">
+        <div id="popupInfoDiv" class="popup">
+            <div class="title_left">
+                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.navigation.admin.orderdetails.title")</h3>
+            </div>
+            <h2><span id="popUpPictureTitle"></span></h2>
+            <input type="hidden" id="hidden_order_id">
+            <div id="buttonsDiv" class="popupTopButtons">
+                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
+                <button id="btnApprove" order_id="" order_type="" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnReject" order_id="" order_type="" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
+            </div>
+            <a class="popupClose" href="#">&times;</a>
+            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name"><input type="hidden" id="popUpPictureDoc3" value="@globals.country_doc3_name"><input type="hidden" id="popUpPictureDoc4" value="@globals.country_doc4_name"><input type="hidden" id="popUpPictureDoc5" value="@globals.country_doc5_name">
+            <table width="100%" cellpadding="10"><tr>
+                <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
+                <td><span id="popUpPictureInfo3"></span></td>
+                <td>@Messages("terminology.value"): <input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
+            </tr><tr>
+                <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
+                <td><span id="popUpPictureInfo4"></span></td>
+                <td>@Messages("terminology.comment"): <input id="popUpComment" value="" title="" type="text" style="width: 200px;" class="triggers_details"></td>
+            </tr></table>
+            <p><img src="placeholder" id="the_picture"></p>
+            <p><span id="popUpPictureInfo3"></span></p>
+            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
+        </div>
+    </div>
+        <!-- end of Modal page for order details -->
 
 
     <div id="balance" class="panel panel-default">
