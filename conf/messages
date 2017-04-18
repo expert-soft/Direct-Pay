@@ -402,7 +402,10 @@ directpay.documents.explanation2=Documents verification process is performed by 
 directpay.documents.selectpictureofdocument=Select picture of the document
 directpay.documents.supportedfiletypes=(.gif, .jpg, .png, .pdf)
 
-
+directpay.history.usersoperationshistory=User's Operations History
+directpay.history.loghistory=Log History
+directpay.history.imagedetails=Image Details
+directpay.history.sum=Sum ({0})
 
 chrome.navigation.about.title=About
 chrome.exchange.navigation.admin.title=Admin Panel

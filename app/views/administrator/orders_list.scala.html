@@ -22,7 +22,9 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div id="orders_list" class="x_panel">
-                <div class="x_title"><h2><i class="fa fa-list-alt"></i> @Messages("directpay.admin.orderslist.openorders.title")</h2><div class="clearfix"></div></div>
+                <div class="x_title">
+                    <h2><i class="fa fa-list-alt"></i> @Messages("directpay.admin.orderslist.openorders.title")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 <div class="x_content">
                     <input type="hidden" id="hidden_critical_value1" value="@globals.country_critical_value1"><input type="hidden" id="hidden_critical_value2" value="@globals.country_critical_value2">
                     <p id="orders-open"></p>  <!-- Script for open orders is called here -->
@@ -126,14 +128,14 @@
                 {{#each this}}
                     <tr id="{{order_id}}">
                         <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
-                        <td {{class_status}} title="@Messages("directpay.admin.orderslist.status") = {{explained_status}}">{{status}}</td>
+                        <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
                         <td title="@Messages("directpay.admin.userslist.userID") = {{user_id}}, @Messages("terminology.name") = {{first_name}} {{middle_name}} {{last_name}}">{{email}}</td>
                         <td>{{initial_value}}</td>
                         <td>{{total_fee}}</td>
                         <td>{{closed}}</td>
                         <td {{class_value}}>{{currency}} {{net_value}}</td>
                         <td>{{comment}}</td>
-                        <td><a class="{{popupType}}" name="{{doc1}}" href="{{popupHash}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                        <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
                         <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs triggers_Revision" title="revise order">Revise</button></td>
                     </tr>
                 {{/each}}

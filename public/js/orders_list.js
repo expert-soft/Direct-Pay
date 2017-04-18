@@ -128,14 +128,14 @@ $(function(){
 
                 data[i].popupType="requestPopUp";
                 data[i].popupHash = "#popupPic";
-                if(data[i].order_type == "W") {
+                if(data[i].order_type == "W" || data[i].order_type == "W.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "withdraw";
                     data[i].popupType = "requestBrowse";
                     data[i].popupHash = "#popupBrowse";
                     data[i].doc1 = "upload";
                 }
-                else if(data[i].order_type == "RFW") {
+                else if(data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "receive + withdraw";
                     data[i].popupType = "requestBrowse";
