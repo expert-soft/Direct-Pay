@@ -234,6 +234,30 @@ begin
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
+create or replace function
+  management_data (
+      a_user_id bigint,
+  out country_code varchar(16),
+  out number_users integer,
+  out fiat_funds numeric(23,8),
+  out crypto_funds numeric(23,8),
+  out partners_balance numeric(23,8),
+  out number_pending_orders integer
+) returns setof record as $$
+declare
+b_currency varchar(4);;
+begin
+  --  return query select currency into b_currency from users u where id = a_user_id
+  --    left join sum(b.balance) as fiat_funds, sum(b.balance_c) as crypto_funds
+  --      from balances b where currency = b_currency;;
+
+  --  select user_id, order_type, status, currency, initial_value into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value    from orders where order_id = a_order_id;;
+
+  return query select currency, 6, balance, balance_c, balance + 1000, 8 from balances where user_id = a_user_id;;
+
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
 
 create or replace function
 change_manualauto (
@@ -272,6 +296,7 @@ drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), v
 drop function if exists update_order(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8)) cascade;
 drop function if exists update_personal_info(Long, varchar(64), varchar(128), varchar(128)) cascade;
 drop function if exists update_bank_data(Long, varchar(16), varchar(16), varchar(64)) cascade;
+drop function if exists management_data() cascade;
 drop function if exists change_manualauto(Long, bool) cascade;
 drop function if exists insert_user_image (varchar(256), bytea) cascade;
 

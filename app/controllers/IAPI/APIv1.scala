@@ -33,6 +33,7 @@ import java.security.SecureRandom
 
 import play.api.i18n.{ I18nSupport, Lang, Messages, MessagesApi }
 import globals._
+import org.joda.time.DateTime
 
 import scala.collection.immutable.Range.Double
 
@@ -136,6 +137,36 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "balance_c" -> c._20,
         "hold_c" -> c._21
       )
+    })
+    ))
+  }
+
+  def management_data = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val management_data_info = globals.engineModel.ManagementData(request.user.id)
+    Ok(Json.toJson(management_data_info.map({ c =>
+      Json.obj(
+        "country_code" -> c._1,
+        "number_users" -> c._2,
+        "fiat_funds" -> c._3,
+        "crypto_funds" -> c._4,
+        "partners_balance" -> c._5,
+        "number_pending_orders" -> c._6
+
+      )
+    })
+    ))
+  }
+
+  def get_log_events = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val log_list_info = globals.logModel.getLoginEvents(request.user.id, None, None, None)
+    Ok(Json.toJson(log_list_info.map({ c =>
+      Json.obj( /*
+        "log_id" -> c._1,
+        "log_email" -> c._2,
+        "log_ip" -> c._3,
+        "log_created" -> c._4,
+        "log_type" -> c._5
+        */ )
     })
     ))
   }

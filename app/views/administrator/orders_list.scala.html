@@ -68,81 +68,77 @@
         <!-- end of Modal page for order details -->
 
 
-    <div id="balance" class="panel panel-default">
-        <script id="orders-open-template" type="text/x-handlebars-template">
-            <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
+    <script id="orders-open-template" type="text/x-handlebars-template">
+        <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
 
-                <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
-                    <thead>
-                        <tr>
-                            <th>@Messages("terminology.type")</th>
-                            <th>@Messages("terminology.name")<br> &nbsp; @Messages("terminology.email")</th>
-                            <th>@Messages("directpay.admin.orderslist.doc")</th>
-                            <th>@Messages("directpay.usersettings.bank.item")<br> &nbsp; @Messages("directpay.usersettings.bankagency.item"), @Messages("directpay.usersettings.bankaccount.item")</th>
-                            <th>@Messages("terminology.requested")<br> &nbsp; @Messages("terminology.fee")</th>
-                            <th>@Messages("terminology.created")</th>
-                            <th>@Messages("terminology.value")<br> &nbsp; @Messages("terminology.comment")</th>
-                            <th>@Messages("terminology.action")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {{#each this}}
-                        <tr id="{{order_id}}">
-                            <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
-                            <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{last_name}}<br>{{email}}</td>
-                            <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                            <td>{{bank}}, {{agency}}, {{account}}</td>
-                            <td {{class_value}}>{{initial_value}}<br>{{total_fee}}</td>
-                            <td>{{created}}</td>
-                            <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
-                            <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")"> &nbsp; @Messages("directpay.admin.orderslist.lock") &nbsp; </button>
-                                <button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" style="display: {{popupButtonOKDisplay}};" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
-                                <button id="btnReject{{order_id}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-        </script>
-    </div>
-
-
-    <div id="balance" class="panel panel-default">
-        <script id="orders-search-template" type="text/x-handlebars-template">
-            <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
             <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
                 <thead>
                     <tr>
                         <th>@Messages("terminology.type")</th>
-                        <th>@Messages("terminology.status")</th>
-                        <th>@Messages("terminology.email")</th>
-                        <th>@Messages("terminology.requested")</th>
-                        <th>@Messages("terminology.fee")</th>
-                        <th>@Messages("terminology.executed")</th>
-                        <th>@Messages("terminology.value")</th>
-                        <th>@Messages("terminology.comment")</th>
+                        <th>@Messages("terminology.name")<br> &nbsp; @Messages("terminology.email")</th>
                         <th>@Messages("directpay.admin.orderslist.doc")</th>
-                        <th>@Messages("terminology.revision")</th>
+                        <th>@Messages("directpay.usersettings.bank.item")<br> &nbsp; @Messages("directpay.usersettings.bankagency.item"), @Messages("directpay.usersettings.bankaccount.item")</th>
+                        <th>@Messages("terminology.requested")<br> &nbsp; @Messages("terminology.fee")</th>
+                        <th>@Messages("terminology.created")</th>
+                        <th>@Messages("terminology.value")<br> &nbsp; @Messages("terminology.comment")</th>
+                        <th>@Messages("terminology.action")</th>
                     </tr>
                 </thead>
                 <tbody>
                 {{#each this}}
                     <tr id="{{order_id}}">
                         <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
-                        <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
-                        <td title="@Messages("directpay.admin.userslist.userID") = {{user_id}}, @Messages("terminology.name") = {{first_name}} {{middle_name}} {{last_name}}">{{email}}</td>
-                        <td>{{initial_value}}</td>
-                        <td>{{total_fee}}</td>
-                        <td>{{closed}}</td>
-                        <td {{class_value}}>{{currency}} {{net_value}}</td>
-                        <td>{{comment}}</td>
+                        <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{last_name}}<br>{{email}}</td>
                         <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                        <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs triggers_Revision" title="revise order">Revise</button></td>
+                        <td>{{bank}}, {{agency}}, {{account}}</td>
+                        <td {{class_value}}>{{initial_value}}<br>{{total_fee}}</td>
+                        <td>{{created}}</td>
+                        <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
+                        <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")"> &nbsp; @Messages("directpay.admin.orderslist.lock") &nbsp; </button>
+                            <button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" style="display: {{popupButtonOKDisplay}};" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
+                            <button id="btnReject{{order_id}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
                     </tr>
                 {{/each}}
                 </tbody>
             </table>
-        </script>
-    </div>
+    </script>
+
+
+    <script id="orders-search-template" type="text/x-handlebars-template">
+        <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
+        <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.type")</th>
+                    <th>@Messages("terminology.status")</th>
+                    <th>@Messages("terminology.email")</th>
+                    <th>@Messages("terminology.requested")</th>
+                    <th>@Messages("terminology.fee")</th>
+                    <th>@Messages("terminology.executed")</th>
+                    <th>@Messages("terminology.value")</th>
+                    <th>@Messages("terminology.comment")</th>
+                    <th>@Messages("directpay.admin.orderslist.doc")</th>
+                    <th>@Messages("terminology.revision")</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each this}}
+                <tr id="{{order_id}}">
+                    <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
+                    <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
+                    <td title="@Messages("directpay.admin.userslist.userID") = {{user_id}}, @Messages("terminology.name") = {{first_name}} {{middle_name}} {{last_name}}">{{email}}</td>
+                    <td>{{initial_value}}</td>
+                    <td>{{total_fee}}</td>
+                    <td>{{closed}}</td>
+                    <td {{class_value}}>{{currency}} {{net_value}}</td>
+                    <td>{{comment}}</td>
+                    <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                    <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs triggers_Revision" title="revise order">Revise</button></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </script>
 
 
 

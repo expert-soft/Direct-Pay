@@ -49,6 +49,14 @@ var API;
             return $.get(iapi_prefix+'users_list', 'json');
         }),
 
+        management_data: APIWrap(function() {
+            return $.get(iapi_prefix+'management_data', 'json');
+        }),
+
+        get_log_events: APIWrap(function() {
+            return $.get(iapi_prefix+'get_log_events', 'json');
+        }),
+
         balance: APIWrap(function() {
             return $.get(iapi_prefix+'balance', 'json');
         }),

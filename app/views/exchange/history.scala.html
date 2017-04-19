@@ -76,73 +76,67 @@
 
 
         <!-- orders list script -->
-    <div id="orders-list" class="panel panel-default">
-        <script id="orders-script-template" type="text/x-handlebars-template">
-            <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
-                <thead>
-                    <tr>
-                        <th>@Messages("terminology.type")</th>
-                        <th>@Messages("terminology.status")</th>
-                        <th>@Messages("terminology.created")</th>
-                        <th>@Messages("terminology.requested")</th>
-                        <th>@Messages("terminology.executed")</th>
-                        <th>@Messages("terminology.value")</th>
-                        <th>@Messages("terminology.fee")</th>
-                        <th>@Messages("terminology.comment")</th>
-                        <th>@Messages("directpay.admin.orderslist.doc")</th>
-                        <th>@Messages("directpay.history.sum", globals.country_currency_symbol)</th>
-                        <th>@Messages("directpay.history.sum", globals.country_currency_crypto)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each this}}
-                    <tr id="{{order_id}}">
-                        <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
-                        <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
-                        <td>{{created}}</td>
-                        <td>{{initial_value}}</td>
-                        <td>{{closed}}</td>
-                        <td {{class_value}}>{{net_value}}</td>
-                        <td>{{total_fee}}</td>
-                        <td>{{comment}}</td>
-                        <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                        <td>###</td>
-                        <td>###</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </script>
-    </div>
+    <script id="orders-script-template" type="text/x-handlebars-template">
+        <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.type")</th>
+                    <th>@Messages("terminology.status")</th>
+                    <th>@Messages("terminology.created")</th>
+                    <th>@Messages("terminology.requested")</th>
+                    <th>@Messages("terminology.executed")</th>
+                    <th>@Messages("terminology.value")</th>
+                    <th>@Messages("terminology.fee")</th>
+                    <th>@Messages("terminology.comment")</th>
+                    <th>@Messages("directpay.admin.orderslist.doc")</th>
+                    <th>@Messages("directpay.history.sum", globals.country_currency_symbol)</th>
+                    <th>@Messages("directpay.history.sum", globals.country_currency_crypto)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this}}
+                <tr id="{{order_id}}">
+                    <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
+                    <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
+                    <td>{{created}}</td>
+                    <td>{{initial_value}}</td>
+                    <td>{{closed}}</td>
+                    <td {{class_value}}>{{net_value}}</td>
+                    <td>{{total_fee}}</td>
+                    <td>{{comment}}</td>
+                    <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                    <td>###</td>
+                    <td>###</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </script>
         <!-- end of orders list script -->
 
 
 
         <!-- log list script -->
-    <div id="log-list" class="panel panel-default">
-        <script id="log-script-template" type="text/x-handlebars-template">
-            <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
-                <thead>
-                    <tr>
-                        <th>@Messages("terminology.created")</th>
-                        <th>@Messages("terminology.type")</th>
-                        <th>@Messages("terminology.status")</th>
-                        <th>@Messages("terminology.comment")</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each this}}
-                    <tr id="{{order_id}}">
-                        <td>{{created}}</td>
-                        <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
-                        <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
-                        <td>{{comment}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </script>
-    </div>
+    <script id="log-script-template" type="text/x-handlebars-template">
+        <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.created")</th>
+                    <th>@Messages("terminology.type")</th>
+                    <th>@Messages("terminology.ipaddress")</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this}}
+                <tr>
+                    <td>{{log_created}}</td>
+                    <td>{{log_type}}</td>
+                    <td>{{log_ip}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </script>
         <!-- end of log list script -->
 
 }

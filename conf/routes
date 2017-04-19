@@ -20,6 +20,7 @@ GET         /tofiat                                    controllers.Application.t
 GET         /withdraw                                  controllers.Application.withdraw
 
 # Administrator's pages
+GET         /management                                controllers.Application.management
 GET         /users_list                                controllers.Application.users_list
 GET         /orders_list                               controllers.Application.orders_list
 
@@ -36,7 +37,9 @@ GET         /iapi/1/user                               controllers.IAPI.APIv1.us
 GET         /iapi/1/user_name_info                     controllers.IAPI.APIv1.user_name_info
 GET         /iapi/1/get_bank_data                      controllers.IAPI.APIv1.get_bank_data
 GET         /iapi/1/users_list                         controllers.IAPI.APIv1.users_list
+GET         /iapi/1/management_data                    controllers.IAPI.APIv1.management_data
 GET         /iapi/1/orders_list                        controllers.IAPI.APIv1.orders_list
+GET         /iapi/1/get_log_events                     controllers.IAPI.APIv1.get_log_events
 GET         /iapi/1/balance                            controllers.IAPI.APIv1.balance
 POST        /iapi/1/turnoff_tfa                        controllers.IAPI.APIv1.turnOffTFA
 POST        /iapi/1/turnon_tfa                         controllers.IAPI.APIv1.turnOnTFA

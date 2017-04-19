@@ -1,0 +1,56 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import securesocial.core.UsernamePasswordProvider
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
+
+@scripts = {
+    <script src="@routes.Assets.at("js/management.js")"></script>
+}
+
+@exchange._chrome(Messages("directpay.navigation.admin.management.title"), "user", scripts) {
+        <!-- page content -->
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-line-chart"> &nbsp;</i> @Messages("directpay.navigation.admin.management.title")</h3>
+        </div>
+    </div>
+
+
+    <p id="script-position"></p>
+
+    <script id="script-template" type="text/x-handlebars-template">
+        {{#each this}}
+            <!-- Country Info -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <div class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; {{country_code}}</h2>
+    <!-- panel controls do not work due to being inside script -->
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.management.numberofusers"): <span class="calc_mid_destak_info">{{number_users}}</span></p>
+                    <p>@Messages("directpay.management.currentfiatfunds"): <span class="calc_mid_destak_info">{{country_code}} {{fiat_funds}}</span></p>
+                    <p>@Messages("directpay.management.currentcryptofunds"): <span class="calc_mid_destak_info">{{crypto_funds}}</span></p>
+                    <p>@Messages("directpay.management.partnersbalance"): <span class="calc_mid_destak_info">{{partners_balance}}</span></p>
+                    <p>@Messages("directpay.management.expectedbankbalance"): <span class="calc_mid_destak_info">{{partners_balance}}</span></p>
+                    <p>@Messages("directpay.management.pendingorders"): <span class="calc_mid_destak_info">{{number_pending_orders}}</span></p>
+
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end of Country Info -->
+
+        {{/each}}
+    </script>
+
+
+
+}

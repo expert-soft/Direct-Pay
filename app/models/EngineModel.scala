@@ -110,6 +110,17 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
+  def ManagementData(user_id: Long) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from management_data($user_id)"""().map(row => (
+      row[String]("country_code"),
+      row[Int]("number_users"),
+      row[BigDecimal]("fiat_funds"),
+      row[BigDecimal]("crypto_funds"),
+      row[BigDecimal]("partners_balance"),
+      row[Int]("number_pending_orders")
+    )).toList
+  }
+
   def balance(uid: Option[Long], apiKey: Option[String], currency_name: String) = DB.withConnection(db) { implicit c =>
     SQL"""select * from balance($uid, $apiKey, $currency_name)"""().map(row =>
       row[String]("currency") -> (

@@ -206,6 +206,7 @@ terminology.browse=Browse
 terminology.upload=Upload
 terminology.zoomin=Zoom in
 terminology.zoomout=Zoom out
+terminology.ipaddress=IP Address
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -252,6 +253,13 @@ directpay.admin.orderslist.status.Ch=Changed
 directpay.admin.orderslist.status.Rj=Rejected
 
 directpay.admin.userslist.userID=User ID
+
+directpay.management.numberofusers=Number of Users
+directpay.management.currentfiatfunds=Current Fiat Funds ({0})
+directpay.management.currentcryptofunds=Current Crypto Funds
+directpay.management.partnersbalance=Partners Balance
+directpay.management.expectedbankbalance=Expected Bank Balance
+directpay.management.pendingorders=Pending Orders
 
 directpay.overview.systemoverview=System Overview
 directpay.overview.explanation1={0} is an community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.

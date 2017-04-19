@@ -110,18 +110,13 @@ $(function(){
 
     var data_log_variable = Handlebars.compile($("#log-script-template").html());
     function searchedLog(){
-        API.orders_list().success(function(data){
+        API.get_log_events().success(function(data){
             for (var i = 0; i < data.length; i++) {
-
-                data[i].created = moment(data[i].created).format("YYYY-MM-DD HH:mm:ss");
-                data[i].order_type = data[i].order_type;
-                data[i].status = data[i].status;
-                data[i].comment = data[i].comment;
-
-                if(data[i].order_type == "W") {
-                    data[i].class_type = "class=bgn_yellow";
-                    data[i].explained_type = "withdraw";
-                }
+                data[i].log_id = data[i].log_id;
+                data[i].log_email = data[i].log_email;
+                data[i].log_ip = data[i].log_ip;
+                data[i].log_created = moment(data[i].log_created).format("YYYY-MM-DD, HH:mm:ss");
+                data[i].log_type = data[i].log_type; //one of: login_partial_success, login_success, login_failure, logout, session_expired
             }
 
             $('#log-script-position').html(data_log_variable(data));
