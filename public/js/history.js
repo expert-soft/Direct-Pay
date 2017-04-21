@@ -112,11 +112,11 @@ $(function(){
     function searchedLog(){
         API.get_log_events().success(function(data){
             for (var i = 0; i < data.length; i++) {
-                data[i].log_id = data[i].log_id;
-                data[i].log_email = data[i].log_email;
-                data[i].log_ip = data[i].log_ip;
-                data[i].log_created = moment(data[i].log_created).format("YYYY-MM-DD, HH:mm:ss");
-                data[i].log_type = data[i].log_type; //one of: login_partial_success, login_success, login_failure, logout, session_expired
+                data[i].id = data[i].id;
+                data[i].email = data[i].email;
+                data[i].ip = data[i].ip;
+                data[i].created = moment(data[i].created).format("YYYY-MM-DD, HH:mm:ss");
+                data[i].type = data[i].type; //one of: login_partial_success, login_success, login_failure, logout, session_expired
             }
 
             $('#log-script-position').html(data_log_variable(data));

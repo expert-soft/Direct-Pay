@@ -110,7 +110,29 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def ManagementData(user_id: Long) = DB.withConnection(db) { implicit c =>
+  def GetDocsInfo(user_id: Long) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_docs_info($user_id)"""().map(row => (
+      row[Long]("user_id"),
+      row[Option[String]]("doc1").getOrElse(""),
+      row[Option[String]]("doc2").getOrElse(""),
+      row[Option[String]]("doc3").getOrElse(""),
+      row[Option[String]]("doc4").getOrElse(""),
+      row[Option[String]]("doc5").getOrElse(""),
+      row[Option[Boolean]]("ver1").getOrElse(false),
+      row[Option[Boolean]]("ver2").getOrElse(false),
+      row[Option[Boolean]]("ver3").getOrElse(false),
+      row[Option[Boolean]]("ver4").getOrElse(false),
+      row[Option[Boolean]]("ver5").getOrElse(false),
+      row[Option[Long]]("pic1").getOrElse(0L),
+      row[Option[Long]]("pic2").getOrElse(0L),
+      row[Option[Long]]("pic3").getOrElse(0L),
+      row[Option[Long]]("pic4").getOrElse(0L),
+      row[Option[Long]]("pic5").getOrElse(0L)
+
+    )).toList
+  }
+
+  def ManagementData(user_id: Option[Long]) = DB.withConnection(db) { implicit c =>
     SQL"""select * from management_data($user_id)"""().map(row => (
       row[String]("country_code"),
       row[Int]("number_users"),
@@ -121,8 +143,8 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def balance(uid: Option[Long], apiKey: Option[String], currency_name: String) = DB.withConnection(db) { implicit c =>
-    SQL"""select * from balance($uid, $apiKey, $currency_name)"""().map(row =>
+  def balance(user_id: Option[Long], apiKey: Option[String], currency_name: String) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from balance($user_id, $apiKey, $currency_name)"""().map(row =>
       row[String]("currency") -> (
         row[BigDecimal]("amount"),
         row[BigDecimal]("hold"),

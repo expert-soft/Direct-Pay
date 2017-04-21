@@ -73,19 +73,14 @@
                     <div class="clearfix"></div>
                 </div>
                 <p>@Messages("directpay.overview.chooseoptions")</p>
-                </p><div class="x_content">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {checked} value="optionAutomatic" id="optionAutomatic" name="optionsAutomaticManual" onchange="showHide();"> @Messages("directpay.overview.optionautomatic")
-                        </label>
+                <div class="x_content">
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="checkbox"><label><input type="checkbox" class="flat" id="manualauto_mode" title="@Messages("directpay.usersettings.automatic.title")" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { checked="checked" }> <b>@Messages("directpay.usersettings.automatic.item")</b> - @Messages("directpay.usersettings.automatic.title2")</label></div>
+                        </div>
                     </div>
-                    <p>@Messages("directpay.overview.explainoptionautomatic")</p>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {checked} value="optionManual" id="optionManual" name="optionsAutomaticManual"  onchange="showHide();"> @Messages("directpay.overview.optionmanual")
-                        </label>
-                    </div>
-                    <p>@Messages("directpay.overview.explainoptionmanual")</p>
+                    <p class="class_automatic" style="display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {inline}">@Messages("directpay.overview.explainoptionautomatic")</p>
+                    <p class="class_manual" style="display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {none}">@Messages("directpay.overview.explainoptionmanual")</p>
                  </div>
             </div>
                 <!-- end of Form -->

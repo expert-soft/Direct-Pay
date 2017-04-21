@@ -186,13 +186,8 @@ package object globals {
 
         insert into image (image_id, name) values (0, 'null');;
 
-        commit;
-        """.execute()
-      })
-    }
-  } catch {
 
-    /*
+
         select create_user('a', 'a', true, null, 'en');
         select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
         select create_user('test@gmail.com', 'pass02', true, null, 'en');
@@ -220,7 +215,12 @@ package object globals {
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'W.', 'Lk', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 37870.98, 5.55, 'recibo5.jpg', '', '001', '8787', '455454-0', '2016-12-22 01:18:59.842', 121212, 37865.43, 'bank OK, receipt OK', 'key1 OK from CT', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'D', 'Ch', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 78.00, 0, 'recibo6.png', '', '341', '7876', '7897', '2016-12-22 01:18:59.842', 121212, 780, 'value declared wrong. confirmed at bank 780', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W.', 'Rj','' , '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '','' , 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 01:18:59.842', 12121, 0, 'bank info not correct', '', '', 0;
-*/
+
+        commit;
+        """.execute()
+      })
+    }
+  } catch {
 
     // XXX: any kind of error in the SQL above will cause this cryptic exception:
     // org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.

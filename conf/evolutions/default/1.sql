@@ -40,6 +40,11 @@ create table users_name_info (
     ver3 boolean not null,
     ver4 boolean not null,
     ver5 boolean not null,
+    pic1 bigint,
+    pic2 bigint,
+    pic3 bigint,
+    pic4 bigint,
+    pic5 bigint,
     foreign key (user_id) references users(id),
     primary key (user_id)
 );

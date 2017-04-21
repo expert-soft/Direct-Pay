@@ -139,7 +139,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val docNumber = file.key
         val user_id = request.user.id
         val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
-        val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName, image_id)
+        var success = globals.userModel.create_order_with_picture(user_id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName, image_id)
+        success = globals.userModel.update_user_doc(user_id, docNumber, image_id, fileName)
     }
     Ok(views.html.exchange.dashboard(request.user))
   }

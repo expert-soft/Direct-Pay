@@ -10,9 +10,9 @@ $(function(){
                 data[i].created = data[i].created;
                 data[i].email = data[i].email;
                 data[i].active = data[i].active;
-                data[i].name = data[i].name;
-                data[i].surname = data[i].surname;
+                data[i].first_name = data[i].first_name;
                 data[i].middle_name = data[i].middle_name;
+                data[i].last_name = data[i].last_name;
                 data[i].doc1 = data[i].doc1;
                 data[i].doc2 = data[i].doc2;
                 data[i].doc3 = data[i].doc3;

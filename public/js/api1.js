@@ -49,6 +49,10 @@ var API;
             return $.get(iapi_prefix+'users_list', 'json');
         }),
 
+        get_docs_info: APIWrap(function() {
+            return $.get(iapi_prefix+'get_docs_info', 'json');
+        }),
+
         management_data: APIWrap(function() {
             return $.get(iapi_prefix+'management_data', 'json');
         }),

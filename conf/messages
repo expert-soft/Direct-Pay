@@ -207,6 +207,8 @@ terminology.upload=Upload
 terminology.zoomin=Zoom in
 terminology.zoomout=Zoom out
 terminology.ipaddress=IP Address
+terminology.yes=Yes
+terminology.no=No
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -229,7 +231,6 @@ directpay.navigation.admin.adminpanel.title=Admin Panel
 directpay.navigation.admin.management.title=Management
 directpay.navigation.admin.userslist.title=List of Users
 directpay.navigation.admin.orderslist.title=List of Orders
-directpay.navigation.admin.orderdetails.title=Order Details
 directpay.navigation.overview.title=Actions Overview
 
 directpay.security.accountemail=Account (email)
@@ -251,18 +252,19 @@ directpay.admin.orderslist.status.OK=OK
 directpay.admin.orderslist.status.Op=Open
 directpay.admin.orderslist.status.Ch=Changed
 directpay.admin.orderslist.status.Rj=Rejected
+directpay.admin.orderdetails=Order Details
 
 directpay.admin.userslist.userID=User ID
 
 directpay.management.numberofusers=Number of Users
-directpay.management.currentfiatfunds=Current Fiat Funds ({0})
+directpay.management.currentfiatfunds=Current Fiat Funds
 directpay.management.currentcryptofunds=Current Crypto Funds
 directpay.management.partnersbalance=Partners Balance
 directpay.management.expectedbankbalance=Expected Bank Balance
 directpay.management.pendingorders=Pending Orders
 
 directpay.overview.systemoverview=System Overview
-directpay.overview.explanation1={0} is an community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
+directpay.overview.explanation1={0} is a community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
 directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
 directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
 directpay.overview.explanation4=If you want the operations even simpler, you can set to "automatic mode".
@@ -409,11 +411,22 @@ directpay.documents.explanation1=dddd #######
 directpay.documents.explanation2=Documents verification process is performed by Direct Pay team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not according to your registration, you will be notified at the registration form.
 directpay.documents.selectpictureofdocument=Select picture of the document
 directpay.documents.supportedfiletypes=(.gif, .jpg, .png, .pdf)
+directpay.documents.documentdetails=Document Details
+directpay.documents.verified=Verified
+directpay.documents.filename=File Name
+directpay.documents.documentverified=Document Verified
 
 directpay.history.usersoperationshistory=User's Operations History
 directpay.history.loghistory=Log History
 directpay.history.imagedetails=Image Details
 directpay.history.sum=Sum ({0})
+
+
+
+
+
+
+
 
 chrome.navigation.about.title=About
 chrome.exchange.navigation.admin.title=Admin Panel

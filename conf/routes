@@ -39,6 +39,7 @@ GET         /iapi/1/get_bank_data                      controllers.IAPI.APIv1.ge
 GET         /iapi/1/users_list                         controllers.IAPI.APIv1.users_list
 GET         /iapi/1/management_data                    controllers.IAPI.APIv1.management_data
 GET         /iapi/1/orders_list                        controllers.IAPI.APIv1.orders_list
+GET         /iapi/1/get_docs_info                      controllers.IAPI.APIv1.get_docs_info
 GET         /iapi/1/get_log_events                     controllers.IAPI.APIv1.get_log_events
 GET         /iapi/1/balance                            controllers.IAPI.APIv1.balance
 POST        /iapi/1/turnoff_tfa                        controllers.IAPI.APIv1.turnOffTFA

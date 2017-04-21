@@ -102,6 +102,7 @@ declare
   b_net_value numeric(23,8);;
   b_crypto_currency varchar(16);;
   b_update_fees boolean;;
+  b_doc_number varchar(128);;
   a_partner_id bigint;;
   a_local_admin_id bigint;;
   a_global_admin_id bigint;;
@@ -110,7 +111,7 @@ begin
   a_local_admin_id = 1;;
   a_global_admin_id = 2;;
 -- Update orders and balances and user records (if V)
-  select user_id, order_type, status, currency, initial_value into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value
+  select user_id, order_type, status, currency, initial_value, partner into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value, b_doc_number
     from orders where order_id = a_order_id;;
 b_crypto_currency = b_currency;; -- system update should be at crypto-currency. It is being done at fiat for a while ###
 
@@ -118,7 +119,12 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
 -- At this point starts Order approved
   if a_status = 'OK' then
     if b_order_type = 'V' then
-    -- ###
+      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, comment = a_comment where order_id = a_order_id;;
+      if b_doc_number = 'doc1' then update users_name_info set ver1 = true where user_id = b_user_id;; end if;;
+      if b_doc_number = 'doc2' then update users_name_info set ver2 = true where user_id = b_user_id;; end if;;
+      if b_doc_number = 'doc3' then update users_name_info set ver3 = true where user_id = b_user_id;; end if;;
+      if b_doc_number = 'doc4' then update users_name_info set ver4 = true where user_id = b_user_id;; end if;;
+      if b_doc_number = 'doc5' then update users_name_info set ver5 = true where user_id = b_user_id;; end if;;
     end if;;
 -- fees should be charged for deposit and withdraw when order update and at send when sending and to fiat when order creation
     if b_order_type = 'D' then
@@ -147,12 +153,14 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
         end if;;
       end if;;
     end if;;
+
     if b_order_type = 'W' or b_order_type = 'W.' or b_order_type = 'RFW' or b_order_type = 'RFW.' then
       if b_order_status = 'F' then
         update balances set balance = balance + b_initial_value, balance_c = balance_c - b_initial_value where currency = b_currency and user_id = b_user_id;;
         update balances set balance = balance - b_initial_value, balance_c = balance_c + b_initial_value where currency = b_currency and user_id = a_partner_id;; -- Partner account
         update orders set status = 'Op', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
       end if;;
+
       if b_order_status = 'Op' then
         update orders set status = 'Lk', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
       else
@@ -165,6 +173,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
         end if;;
       end if;;
     end if;;
+
     if b_order_type = 'RFW' or b_order_type = 'RFW.' then
 -- ###
     end if;;
@@ -176,20 +185,19 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
   end if;;
 
 
-return true;;
-
--- After this point is order lock (withdrwals need to be locked till actual withdrawal performed)
+return true;; -- this return is temporary to stop function
 
 
 -- After this point is order rejection
 
-    update balances set balance = balance + a_net_value
-    where currency = (select currency FROM orders where order_id = a_order_id)
-    and user_id = (select user_id FROM orders where order_id = a_order_id);;
+--    update balances set balance = balance + a_net_value
+--    where currency = (select currency FROM orders where order_id = a_order_id)
+--    and user_id = (select user_id FROM orders where order_id = a_order_id);;
 
-  return true;;
+
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
 
 
 
@@ -216,6 +224,34 @@ begin
   update users_connections set bank = a_bank, agency = a_agency, account = a_account, partner = a_partner, partner_account = a_partner_account where user_id=a_user_id;;
   update users set manualauto_mode = a_manualauto_mode where id=a_user_id;;
 
+  return true;;
+end;;
+$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
+
+create or replace function
+update_user_doc (
+  a_user_id bigint,
+  a_docNumber varchar(8),
+  a_image_id bigint,
+  a_fileName varchar(256)
+) returns boolean as $$
+begin
+  if a_docNumber = 'doc1' then
+    update users_name_info set doc1 = a_fileName, ver1 = false, pic1 = a_image_id where user_id = a_user_id;;
+  end if;;
+  if a_docNumber = 'doc2' then
+    update users_name_info set doc2 = a_fileName, ver2 = false, pic2 = a_image_id where user_id = a_user_id;;
+  end if;;
+  if a_docNumber = 'doc3' then
+    update users_name_info set doc3 = a_fileName, ver3 = false, pic3 = a_image_id where user_id = a_user_id;;
+  end if;;
+  if a_docNumber = 'doc4' then
+    update users_name_info set doc4 = a_fileName, ver4 = false, pic4 = a_image_id where user_id = a_user_id;;
+  end if;;
+  if a_docNumber = 'doc5' then
+    update users_name_info set doc5 = a_fileName, ver5 = false, pic5 = a_image_id where user_id = a_user_id;;
+  end if;;
   return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
@@ -295,6 +331,7 @@ drop function if exists currency_insert(varchar(16), integer, bool) cascade;
 drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), varchar(128)) cascade;
 drop function if exists update_order(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8)) cascade;
 drop function if exists update_personal_info(Long, varchar(64), varchar(128), varchar(128)) cascade;
+drop function if exists update_user_doc(Long, varchar(8), Long, varchar(256)) cascade;
 drop function if exists update_bank_data(Long, varchar(16), varchar(16), varchar(64)) cascade;
 drop function if exists management_data() cascade;
 drop function if exists change_manualauto(Long, bool) cascade;

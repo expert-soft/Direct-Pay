@@ -291,6 +291,12 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def update_user_doc(uid: Long, docNumber: String, image_id: Long, fileName: String) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select update_user_doc as success from update_user_doc($uid, $docNumber, $image_id, $fileName)
+    """.execute()
+  }
+
   def update_order(order_id: Long, status: String, net_value: BigDecimal, comment: String, local_fee: BigDecimal, global_fee: BigDecimal, admin_id: Long) = DB.withConnection(db) { implicit c =>
     SQL"""
      select update_order as success from update_order($order_id, $status, $net_value, $comment, $local_fee, $global_fee, $admin_id)

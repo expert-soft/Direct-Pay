@@ -716,7 +716,7 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 create or replace function
 balance (
-  a_uid bigint,
+  a_user_id bigint,
   a_api_key text,
   a_currency_name varchar(16),
   out currency varchar(16),
@@ -727,25 +727,25 @@ balance (
   out hold_c numeric(23,8)
 ) returns setof record as $$
 declare
-  a_user_id bigint;;
+  b_user_id bigint;;
 begin
-  if a_uid = 0 then
+  if a_user_id = 0 then
     raise 'User id 0 is not allowed to use this function.';;
   end if;;
 
   if a_api_key is not null then
-    select user_id into a_user_id from users_api_keys
+    select user_id into b_user_id from users_api_keys
     where api_key = a_api_key and active = true and list_balance = true;;
   else
-    a_user_id := a_uid;;
+    b_user_id := a_user_id;;
   end if;;
 
-  if a_user_id is null then
+  if b_user_id is null then
     return;;
   end if;;
 
   return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, b.balance_c, b.hold_c from currencies c
-  left outer join balances b on c.currency = b.currency and user_id = a_user_id
+  left outer join balances b on c.currency = b.currency and user_id = b_user_id
   where c.currency = a_currency_name
   order by c.position asc;;
 end;;
@@ -777,6 +777,41 @@ begin
   where uf.user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+
+create or replace function
+  get_docs_info (
+      a_id bigint,
+  out user_id bigint,
+  out doc1 varchar(256),
+  out doc2 varchar(256),
+  out doc3 varchar(256),
+  out doc4 varchar(256),
+  out doc5 varchar(256),
+  out ver1 bool,
+  out ver2 bool,
+  out ver3 bool,
+  out ver4 bool,
+  out ver5 bool,
+  out pic1 bigint,
+  out pic2 bigint,
+  out pic3 bigint,
+  out pic4 bigint,
+  out pic5 bigint
+
+) returns setof record as $$
+declare
+  a_user_id bigint;;
+begin
+--  select un.user_id into a_user_id from users_name_info un where first_name = 'Marcelo';;
+
+  return query select un.user_id, un.doc1, un.doc2, un.doc3, un.doc4, un.doc5, un.ver1, un.ver2, un.ver3, un.ver4, un.ver5
+                 , un.pic1, un.pic2, un.pic3, un.pic4, un.pic5
+    from users_name_info un where un.user_id != 0 and un.first_name = 'Marcelo';;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+
 
 create or replace function
   get_bank_data (
@@ -902,6 +937,7 @@ drop function if exists new_log (bigint, text, varchar(256), text, text, inet, t
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
 drop function if exists balance (bigint, text, varchar(16)) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
+drop function if exists get_docs_info(bigint) cascade;
 drop function if exists get_bank_data(bigint) cascade;
 drop function if exists get_users_list() cascade;
 drop function if exists get_orders_list() cascade;

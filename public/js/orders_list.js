@@ -258,8 +258,18 @@ Op - OK (Ch possible?)
             var comment = $('#comment' + order_id).val();
             if ((order_type == "D" || order_type == "DCS") && (net_value <= 0 || comment == "")) {
                 status = "flag not OK";
-                alert("value must be greater than 0 and comment required");
+                alert("###value must be greater than 0 and comment required");
+            } else if (order_type == "V") {
+                net_value = 0;
+                if (comment == "") {
+                    status = "flag not OK";
+                    alert("###comment required");
+                }
+            } else if ((order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.") && (net_value <= 0 || comment == "")) {
+                status = "flag not OK";
+                alert("###value must be greater than 0 and comment required");
             }
+
             if(status != "flag not OK") {
                  API.update_order(order_id, order_type, status, net_value, comment).success(function () {
                      $.pnotify({

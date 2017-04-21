@@ -141,8 +141,33 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
+  def get_docs_info = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val docs_info = globals.engineModel.GetDocsInfo(request.user.id)
+    Ok(Json.toJson(docs_info.map({ c =>
+      Json.obj(
+        "user_id" -> c._1,
+        "doc1" -> c._2,
+        "doc2" -> c._3,
+        "doc3" -> c._4,
+        "doc4" -> c._5,
+        "doc5" -> c._6,
+        "ver1" -> c._7,
+        "ver2" -> c._8,
+        "ver3" -> c._9,
+        "ver4" -> c._10,
+        "ver5" -> c._11,
+        "pic1" -> c._12,
+        "pic2" -> c._13,
+        "pic3" -> c._14,
+        "pic4" -> c._15,
+        "pic5" -> c._16
+      )
+    })
+    ))
+  }
+
   def management_data = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val management_data_info = globals.engineModel.ManagementData(request.user.id)
+    val management_data_info = globals.engineModel.ManagementData(Some(request.user.id))
     Ok(Json.toJson(management_data_info.map({ c =>
       Json.obj(
         "country_code" -> c._1,
@@ -160,13 +185,13 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   def get_log_events = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     val log_list_info = globals.logModel.getLoginEvents(request.user.id, None, None, None)
     Ok(Json.toJson(log_list_info.map({ c =>
-      Json.obj( /*
-        "log_id" -> c._1,
-        "log_email" -> c._2,
-        "log_ip" -> c._3,
-        "log_created" -> c._4,
-        "log_type" -> c._5
-        */ )
+      Json.obj(
+        "id" -> c.id,
+        "email" -> c.email.getOrElse("").toString,
+        "ip" -> c.ip.getOrElse("").toString,
+        "created" -> c.created.getOrElse(new DateTime(0).toString).toString,
+        "type" -> c.typ.toString
+      )
     })
     ))
   }
