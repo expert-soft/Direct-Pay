@@ -54,7 +54,7 @@
             <table width="100%" cellpadding="10"><tr>
                 <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
                 <td><span id="popUpPictureInfo3"></span></td>
-                <td>@Messages("terminology.value"): <input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
+                <td><span id="popUpMessageValue">@Messages("terminology.value"): </span><input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
             </tr><tr>
                 <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
                 <td><span id="popUpPictureInfo4"></span></td>
@@ -86,17 +86,17 @@
                 </thead>
                 <tbody>
                 {{#each this}}
-                    <tr id="{{order_id}}">
-                        <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
+                    <tr>
+                        <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}<input type="hidden" id="explained_type{{order_id}}" value="{{explained_type}}"></td>
                         <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{last_name}}<br>{{email}}</td>
-                        <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                        <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" doc_type="{{doc_type}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" order_type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
                         <td>{{bank}}, {{agency}}, {{account}}</td>
-                        <td {{class_value}}>{{initial_value}}<br>{{total_fee}}</td>
+                        <td {{class_value}}>{{initial_value}}<br>{{total_fee}} <input type="hidden" id="hidden_initial_value{{order_id}}" value="{{initial_value}}"></td>
                         <td>{{created}}</td>
                         <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
-                        <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")"> &nbsp; @Messages("directpay.admin.orderslist.lock") &nbsp; </button>
+                        <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")">@Messages("directpay.admin.orderslist.lock")</button>
                             <button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" style="display: {{popupButtonOKDisplay}};" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
-                            <button id="btnReject{{order_id}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
+                            <button id="btnReject{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
                     </tr>
                 {{/each}}
                 </tbody>
@@ -123,7 +123,7 @@
             </thead>
             <tbody>
             {{#each this}}
-                <tr id="{{order_id}}">
+                <tr>
                     <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
                     <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
                     <td title="@Messages("directpay.admin.userslist.userID") = {{user_id}}, @Messages("terminology.name") = {{first_name}} {{middle_name}} {{last_name}}">{{email}}</td>
@@ -132,7 +132,7 @@
                     <td>{{closed}}</td>
                     <td {{class_value}}>{{currency}} {{net_value}}</td>
                     <td>{{comment}}</td>
-                    <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                    <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" order_type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
                     <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs triggers_Revision" title="revise order">Revise</button></td>
                 </tr>
             {{/each}}

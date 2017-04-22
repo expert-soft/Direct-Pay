@@ -8,31 +8,11 @@ $(function(){
         API.orders_list().success(function(data){
             for (var i = 0; i < data.length; i++) {
 
-                data[i].order_id = data[i].order_id;
-                data[i].user_id = data[i].user_id;
-                data[i].country_id = data[i].country_id;
-                data[i].order_type = data[i].order_type;
-                data[i].status = data[i].status;
-                data[i].partner = data[i].partner;
                 data[i].created = moment(data[i].created).format("YYYY-MM-DD HH:mm:ss");
-                data[i].currency = data[i].currency;
-                data[i].initial_value = data[i].initial_value;
-                data[i].total_fee = data[i].total_fee;
-                data[i].net_value = data[i].net_value;
-                data[i].doc1 = data[i].doc1;
-                data[i].doc2 = data[i].doc2;
-                data[i].bank = data[i].bank;
-                data[i].agency = data[i].agency;
-                data[i].account = data[i].account;
-                data[i].comment = data[i].comment;
-                data[i].image_id = data[i].image_id;
-                data[i].email = data[i].email;
-                data[i].first_name = data[i].first_name;
-                data[i].middle_name = data[i].middle_name;
-                data[i].surname = data[i].surname;
 
                 data[i].popupType="requestPopUp";
                 data[i].input_visible = "inline";
+                data[i].doc_type = "";
                 if (data[i].net_value == 0 && data[i].status != "Rj") {
                     data[i].net_value = data[i].initial_value;
                 }
@@ -68,12 +48,13 @@ $(function(){
                 }
                 else if(data[i].order_type == "V") {
                     data[i].class_type = "class=bgn_blue";
-                    data[i].explained_type = "document verification"
+                    data[i].explained_type = "document verification";
                     data[i].input_visible = "none";
                     data[i].initial_value = "";
                     data[i].total_fee = "";
                     data[i].currency = "";
                     data[i].net_value = "";
+                    data[i].doc_type = data[i].partner;
                 }
                 else
                     data[i].class_type = "class=center_bold";
@@ -89,7 +70,7 @@ $(function(){
             $('#requestPopupDetails').live('click', function() {
                 $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
                 function do_transfer(e) { e.preventDefault() }
-                transfer_details ($(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc'), '');
+                transfer_details ($(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc1'), $(this).attr('doc_type'));
             });
         });
     }
@@ -102,29 +83,7 @@ $(function(){
         API.orders_list().success(function(data){
             for (var i = 0; i < data.length; i++) {
 
-                data[i].order_id = data[i].order_id;
-                data[i].user_id = data[i].user_id;
-                data[i].country_id = data[i].country_id;
-                data[i].order_type = data[i].order_type;
-                data[i].status = data[i].status;
-                data[i].partner = data[i].partner;
                 data[i].created = moment(data[i].created).format("YYYY-MM-DD HH:mm:ss");
-                data[i].currency = data[i].currency;
-                data[i].initial_value = data[i].initial_value;
-                data[i].total_fee = data[i].total_fee;
-                data[i].net_value = data[i].net_value;
-                data[i].doc1 = data[i].doc1;
-                data[i].doc2 = data[i].doc2;
-                data[i].bank = data[i].bank;
-                data[i].agency = data[i].agency;
-                data[i].account = data[i].account;
-                data[i].closed = data[i].closed;
-                data[i].comment = data[i].comment;
-                data[i].image_id = data[i].image_id;
-                data[i].email = data[i].email;
-                data[i].first_name = data[i].first_name;
-                data[i].middle_name = data[i].middle_name;
-                data[i].surname = data[i].surname;
 
                 data[i].popupType="requestPopUp";
                 data[i].popupHash = "#popupPic";
@@ -188,7 +147,7 @@ $(function(){
 
 
                 if(data[i].status == "Ch")
-                    data[i].class_value = "class=bigfail";
+                    data[i].class_value = "class=smallfail"; // or class=bigfail ?
                 else if(data[i].order_type == "V") {
                     data[i].initial_value = "";
                     data[i].currency = "";
@@ -215,8 +174,7 @@ $(function(){
         $('.triggers_details').live('change', function() {
             $('#net_value' + $('#hidden_order_id').val()).val($('#popUpNet_value').val());
             $('#comment' + $('#hidden_order_id').val()).val($('#popUpComment').val());
-        });
-//        frames['iframe_details'].document.body.
+         });
 
 /*Updating dB (example):
 dashboard.scala - 81
@@ -254,23 +212,29 @@ Op - OK (Ch possible?)
             var order_type = $(this).attr('order_type');
             //var status = $('#net_value' + order_id).val();
             var status = "OK";
+            var initial_value = parseFloat($('#hidden_initial_value' + order_id).val());
             var net_value = parseFloat($('#net_value' + order_id).val());
+            if (Math.abs(initial_value - net_value) > 0.02) {
+                status = "Ch"; //approved or executed value is significantly different
+alert ('Ch');
+            }
             var comment = $('#comment' + order_id).val();
+
             if ((order_type == "D" || order_type == "DCS") && (net_value <= 0 || comment == "")) {
-                status = "flag not OK";
+                status = "error";
                 alert("###value must be greater than 0 and comment required");
             } else if (order_type == "V") {
                 net_value = 0;
                 if (comment == "") {
-                    status = "flag not OK";
+                    status = "error";
                     alert("###comment required");
                 }
             } else if ((order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.") && (net_value <= 0 || comment == "")) {
-                status = "flag not OK";
+                status = "error";
                 alert("###value must be greater than 0 and comment required");
             }
-
-            if(status != "flag not OK") {
+            if(status != "error") {
+                HideButtons (order_id);
                  API.update_order(order_id, order_type, status, net_value, comment).success(function () {
                      $.pnotify({
                          title: Messages("messages.api.success"),
@@ -283,16 +247,33 @@ Op - OK (Ch possible?)
             }
         });
 
+
         $('.triggers_Rejection').live('click', function() {
-            if ($(this).attr('type') == "V")
+            if ($(this).attr('order_type') == "V")
                 $('#image-holder').attr('src', '/assets/img/brUserDocs/' + $(this).attr('name'));
-            alert("Rj");
+            var order_id = parseInt($(this).attr('order_id'));
+            var order_type = $(this).attr('order_type');
+            var status = "Rj";
+            var comment = $('#comment' + order_id).val();
+            if (comment != "") {
+                HideButtons (order_id);
+                API.update_order(order_id, order_type, status, 0, comment).success(function () {
+                    $.pnotify({
+                        title: Messages("messages.api.success"),
+                        text: Messages("messages.api.success.orderupdatedsuccessfully"),
+                        styling: 'bootstrap',
+                        type: 'success',
+                        text_escape: true
+                    });
+                });
+            } else
+                alert("###comment required");
         });
 
         $('.triggers_Revision').live('click', function() {
-            if ($(this).attr('type') == "V")
+            if ($(this).attr('order_type') == "V")
                 $('#image-holder').attr('src', '/assets/img/brUserDocs/' + $(this).attr('name'));
-            alert("Rv");
+            alert("###Rv");
         });
 
 
@@ -303,20 +284,20 @@ Op - OK (Ch possible?)
         $('#btnZoomOut').live('click', function() {
             $('#the_picture').width(parseInt($('#the_picture').width() / 1.5));
         });
-
     });
-
 });
 
-function transfer_details (order_id, user_name, user_email, order_type, doc, attr4) {
+function transfer_details (order_id, user_name, user_email, order_type, doc, doc_type) {
     $('#hidden_order_id').val(order_id);
     $('#popUpPictureInfo1').html(user_name);
     $('#popUpPictureInfo2').html(user_email);
-    if (doc == "1") $('#popUpPictureTitle').html($('#popUpPictureDoc1').val());
-    if (doc == "2") $('#popUpPictureTitle').html($('#popUpPictureDoc2').val());
-    if (doc == "3") $('#popUpPictureTitle').html($('#popUpPictureDoc3').val());
-    if (doc == "4") $('#popUpPictureTitle').html($('#popUpPictureDoc4').val());
-    if (doc == "5") $('#popUpPictureTitle').html($('#popUpPictureDoc5').val());
+alert(doc_type);
+    if (doc_type == "doc1") $('#popUpPictureTitle').html($('#popUpPictureDoc1').val()); else
+    if (doc_type == "doc2") $('#popUpPictureTitle').html($('#popUpPictureDoc2').val()); else
+    if (doc_type == "doc3") $('#popUpPictureTitle').html($('#popUpPictureDoc3').val()); else
+    if (doc_type == "doc4") $('#popUpPictureTitle').html($('#popUpPictureDoc4').val()); else
+    if (doc_type == "doc5") $('#popUpPictureTitle').html($('#popUpPictureDoc5').val()); else
+        $('#popUpPictureTitle').html($('#explained_type' + order_id).val());
     $('#popUpPictureInfo3').html(doc);
     $('#popUpPictureInfo4').html(attr4);
     $('#popUpNet_value').attr('value', $('#net_value' + order_id).val());
@@ -325,5 +306,24 @@ function transfer_details (order_id, user_name, user_email, order_type, doc, att
     $('#btnApprove').attr('order_id', order_id);
     $('#btnReject').attr('order_type', order_type);
     $('#btnReject').attr('order_id', order_id);
+    $('#btnApprove').css('display', $('#btnOK' + order_id).css('display'));
+    $('#btnReject').css('display', $('#btnReject' + order_id).css('display'));
+    $('#popUpNet_value').attr("disabled", $('#net_value' + order_id).attr("disabled"));
+    $('#popUpComment').attr("disabled", $('#comment' + order_id).attr("disabled"));
+    if(order_type == 'V') {
+        $('#popUpMessageValue').css('display', 'none');
+        $('#popUpNet_value').hide();
+    } else {
+        $('#popUpMessageValue').css('display', 'inline');
+        $('#popUpNet_value').show();
+    }
     resizeDiv()
+}
+
+function HideButtons (order_id) {
+    $('#btnLock' + order_id).hide();
+    $('#btnOK' + order_id).hide();
+    $('#btnReject' + order_id).hide();
+    $('#net_value' + order_id).attr("disabled", "disabled");
+    $('#comment' + order_id).attr("disabled", "disabled");
 }

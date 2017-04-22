@@ -48,7 +48,8 @@ begin
   insert into orders (user_id, country_id, order_type, status, partner, currency, initial_value, total_fee, bank, agency, account, doc1, image_id) values (a_user_id, a_country_id, a_order_type, a_status, a_partner, a_currency, a_initial_value, b_total_fee, a_bank, a_agency, a_account, a_doc1, a_image_id) returning order_id into b_order_id;;
 
   if a_order_type = 'V' then
-  -- do nothing
+    -- if one order for that document already exists, user replaced document, must consider only the last one. Old orders become Rj with system information
+    update orders set status = 'Rj', comment = '***** User replaced doc before analysis *****' where status = 'Op' and partner = a_partner and user_id = a_user_id and order_id != b_order_id;;
   end if;;
 -- for deposit and withdraw fees should be charged when order update and at send when sending. To fiat when order creation
   if a_order_type = 'D' or a_order_type = 'DCS' then
@@ -185,16 +186,36 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
   end if;;
 
 
-return true;; -- this return is temporary to stop function
-
 
 -- After this point is order rejection
+
+  if a_status = 'Rj' then
+    if b_order_type = 'V' then
+      update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, comment = a_comment where (status = 'Op' or status = 'Lk') and order_id = a_order_id;;
+    end if;;
+    if b_order_type = 'D' or b_order_type = 'DCS' then
+      if b_order_status = 'Op' then
+        update balances set balance = balance - b_initial_value, hold = hold - b_initial_value where currency = b_currency and user_id = b_user_id;;
+        update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = 0, total_fee = 0, comment = a_comment where order_id = a_order_id;;
+      end if;;
+    end if;;
+    if b_order_type = 'W' or b_order_type = 'W.' then
+      if b_order_status = 'Op' or b_order_status = 'Lk' then
+        update balances set hold = hold - a_initial_value - b_total_fee where currency = a_currency and user_id = a_user_id;;
+        update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = 0, total_fee = 0, comment = a_comment where order_id = a_order_id;;
+      end if;;
+    end if;;
+
+    if b_order_type = 'RFW' or b_order_type = 'RFW.' then
+-- ###
+    end if;;
+  end if;;
 
 --    update balances set balance = balance + a_net_value
 --    where currency = (select currency FROM orders where order_id = a_order_id)
 --    and user_id = (select user_id FROM orders where order_id = a_order_id);;
 
-
+  return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 

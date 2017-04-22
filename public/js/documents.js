@@ -41,7 +41,11 @@ $(function() {
             $('#requestPopupDetails5').attr('verified', data[0].ver5);
             $('#requestPopupDetails5').attr('image_id', data[0].pic5);
 
+            if (data[0].ver1) $('#docCheck1').show();
+            if (data[0].ver2) $('#docCheck2').show();
             if (data[0].ver3) $('#docCheck3').show();
+            if (data[0].ver4) $('#docCheck4').show();
+            if (data[0].ver5) $('#docCheck5').show();
 
             $('.requestPopUp').live('click', function() {
                 $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
@@ -94,6 +98,7 @@ $('#uploadBtn1').change(function() {
     $('#uploadFile1').val(this.value);
     $('#uploadText1').html(this.value);
     $('#uploadDiv1').addClass('btn-default');
+    $('#docCheck1').hide();
     if (this.value == "")
         $('#uploadDiv1').addClass('btn-info');
     else
@@ -104,6 +109,7 @@ $('#uploadBtn2').change(function() {
     $('#uploadFile2').val(this.value);
     $('#uploadText2').html(this.value);
     $('#uploadDiv2').addClass('btn-default');
+    $('#docCheck2').hide();
     if (this.value == "")
         $('#uploadDiv2').addClass('btn-info');
     else
@@ -115,6 +121,7 @@ $('#uploadBtn3').change(function() {
     $('#uploadFile3').val(this.value);
     $('#uploadText3').html(this.value);
     $('#uploadDiv3').addClass('btn-default');
+    $('#docCheck3').hide();
     if (this.value == "")
         $('#uploadDiv3').addClass('btn-info');
     else
@@ -126,6 +133,7 @@ $('#uploadBtn4').change(function() {
     $('#uploadFile4').val(this.value);
     $('#uploadText4').html(this.value);
     $('#uploadDiv4').addClass('btn-default');
+    $('#docCheck4').hide();
     if (this.value == "")
         $('#uploadDiv4').addClass('btn-info');
     else
@@ -137,6 +145,7 @@ $('#uploadBtn5').change(function() {
     $('#uploadFile5').val(this.value);
     $('#uploadText5').html(this.value);
     $('#uploadDiv5').addClass('btn-default');
+    $('#docCheck5').hide();
     if (this.value == "")
         $('#uploadDiv5').addClass('btn-info');
     else
