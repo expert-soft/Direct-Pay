@@ -8,14 +8,14 @@ $(function() {
             balances[0].amount_c = balances[0].amount_c;
             balances[0].hold_c = balances[0].hold_c;
 
-            $("#available_fiat").html(parseFloat(balances[0].available).toFixed(2));
-            $("#hold_fiat").html(parseFloat(balances[0].hold).toFixed(2));
+            $("#available_fiat").html(NumberFormat(balances[0].available, 2));
+            $("#hold_fiat").html(NumberFormat(balances[0].hold, 2));
             $('#hidden_fees_information').attr('wallet_available', balances[0].available);
             $('#hidden_fees_information').attr('wallet_onhold', balances[0].hold);
-            $("#amount_crypto").html(parseFloat(balances[0].amount_c).toFixed(2));
+            $("#amount_crypto").html(NumberFormat(balances[0].amount_c, 2));
             $('#hidden_fees_information').attr('wallet_crypto', balances[0].amount_c);
 
-            $("#amount_total").html((parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c)).toFixed(2));
+            $("#amount_total").html(NumberFormat(parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c), 2));
             $('#hidden_fees_information').attr('wallet_total', parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c));
 
             $('#balance').html(template(balances));
@@ -26,3 +26,5 @@ $(function() {
 
     show_balance();
 });
+
+

@@ -18,6 +18,7 @@
     </div>
 
 
+    <input type="hidden" id="hidden_fees_information" decimal_separator = "@globals.country_decimal_separator"></input>
 
     <div class="clearfix"></div>
     <div class="row">
@@ -99,14 +100,14 @@
                     <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
                     <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
                     <td>{{created}}</td>
-                    <td>{{initial_value}}</td>
+                    <td style="text-align: right;">{{initial_value_s}}</td>
                     <td>{{closed}}</td>
-                    <td {{class_value}}>{{net_value}}</td>
-                    <td>{{total_fee}}</td>
+                    <td {{class_value}} style="text-align: right;">{{net_value_s}}</td>
+                    <td style="text-align: right;">{{total_fee_s}}</td>
                     <td>{{comment}}</td>
                     <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                    <td>###</td>
-                    <td>###</td>
+                    <td style="text-align: right;">###</td>
+                    <td style="text-align: right;">###</td>
                 </tr>
                 {{/each}}
             </tbody>

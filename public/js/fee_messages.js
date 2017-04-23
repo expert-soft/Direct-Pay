@@ -95,31 +95,33 @@ function fillDepositMessages() {
     if($('#hidden_page').val() == "DCS")  // automatic operation
         aux += parseFloat(country_settings.fee_send_percent);
     if (aux != 0 && $.isNumeric($('#value').val()))
-        $('#calc_deposit_fee').html((parseFloat($('#value').val()) * aux * 0.01).toFixed(2))
+        $('#calc_deposit_fee').html(NumberFormat(parseFloat($('#value').val()) * aux * 0.01, 2))
     else
         $('#calc_deposit_fee').html("- - - ");
-    $('#calc_deposit_minimum_value').html(parseFloat(country_settings.minimum_value).toFixed(2));
-    $('#calc_deposit_minimum_value_extra_fee').html((parseFloat(country_settings.minimum_value) * 0.02).toFixed(2));
+    $('#calc_deposit_critical_value2').html(NumberFormat(parseFloat(country_settings.critical_value2), 2));
+    $('#calc_deposit_minimum_value').html(NumberFormat(parseFloat(country_settings.minimum_value), 2));
+    $('#calc_deposit_minimum_value_extra_fee').html(NumberFormat(parseFloat(country_settings.minimum_value) * 0.02, 2));
+
 }
 
 
 /* Fills the spaces for fees and values information inside Send page */
 function fillSendMessages() {
     if (country_settings.fee_send_percent != 0 && $.isNumeric($('#value').val()))
-        $('#calc_send_fee').html((parseFloat($('#value').val()) * parseFloat(country_settings.fee_send_percent) * 0.01).toFixed(2))
+        $('#calc_send_fee').html(NumberFormat(parseFloat($('#value').val()) * parseFloat(country_settings.fee_send_percent) * 0.01, 2))
     else
         $('#calc_send_fee').html("- - - ");
-    $('#calc_maximum_send').html(((parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto'))) * (1 - country_settings.fee_send_percent * 0.01)).toFixed(2));
+    $('#calc_maximum_send').html(NumberFormat((parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto'))) * (1 - country_settings.fee_send_percent * 0.01), 2));
 }
 
 
 /* Fills the spaces for fees and values information inside Convert to Fiat page */
 function fillToFiatMessages() {
     if (country_settings.fee_tofiat_percent != 0 && $.isNumeric($('#value').val()) && $('#value').val() > parseFloat($('#hidden_fees_information').attr('wallet_crypto')))
-        $('#calc_convertion_net').html((parseFloat($('#value').val()) * (100 - country_settings.fee_tofiat_percent) * 0.01).toFixed(2))
+        $('#calc_convertion_net').html(NumberFormat(($('#value').val() * (100 - country_settings.fee_tofiat_percent) * 0.01), 2))
     else
         $('#calc_convertion_net').html("- - - ");
-    $('#calc_convertion_rate').html((parseFloat(100 - country_settings.fee_tofiat_percent) * 0.01).toFixed(3))
+    $('#calc_convertion_rate').html(NumberFormat((100 - country_settings.fee_tofiat_percent) * 0.01, 3))
 }
 
 
@@ -130,7 +132,7 @@ function fillWithdrawMessages() {
     var aux2 = 0;
     if ($('#hidden_page').val() == "RFW") { // automatic operation
         aux += parseFloat(country_settings.fee_tofiat_percent);
-        $('#calc_convertion_rate').html((parseFloat(100 - country_settings.fee_tofiat_percent) * 0.01).toFixed(3))
+        $('#calc_convertion_rate').html(NumberFormat(parseFloat(100 - country_settings.fee_tofiat_percent) * 0.01, 3))
     }
     if($.isNumeric($('#value').val()))
         if (parseFloat($('#value').val()) < parseFloat(country_settings.minimum_value))
@@ -138,35 +140,36 @@ function fillWithdrawMessages() {
     if($('#banks').val() == "00" || $('#banks').val() == country_settings.preferential_bank1_code || $('#banks').val() == country_settings.preferential_bank2_code || $('#banks').val() == country_settings.preferential_bank3_code || $('#banks').val() == country_settings.preferential_bank4_code) {
         if($.isNumeric($('#value').val())) {
             $('#total_withdraw_fee').val((calc_value + parseFloat($('#value').val()) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank) + aux2).toFixed(2));
-            $('#calc_withdraw_fee').html($('#total_withdraw_fee').val());
+            $('#calc_withdraw_fee').html(NumberFormat($('#total_withdraw_fee').val(), 2));
         } else {
             $('#total_withdraw_fee').val(0);
             $('#calc_withdraw_fee').html(" - - - ");
         }
         calc_value = (parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank)) * (1 - aux * 0.01);
         if (calc_value < 0 ) calc_value = 0;
-        $('#calc_maximum_withdraw').html(calc_value.toFixed(2));
+        $('#calc_maximum_withdraw').html(NumberFormat(calc_value, 2));
     } else {
         if($.isNumeric($('#value').val())) {
-            $('#total_withdraw_fee').val(calc_value + (parseFloat($('#value').val()) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank) + aux2).toFixed(2));
-            $('#calc_withdraw_fee').html($('#total_withdraw_fee').val());
+            $('#total_withdraw_fee').val((calc_value + parseFloat($('#value').val()) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank) + aux2).toFixed(2));
+            $('#calc_withdraw_fee').html(NumberFormat($('#total_withdraw_fee').val(), 2));
         } else {
             $('#total_withdraw_fee').val(0);
             $('#calc_withdraw_fee').html(" - - - ");
         }
         calc_value = (parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank)) * (1 - aux * 0.01);
         if (calc_value < 0 ) calc_value = 0;
-        $('#calc_maximum_withdraw').html(calc_value.toFixed(2));
+        $('#calc_maximum_withdraw').html(NumberFormat(calc_value, 2));
     }
 
 
     calc_value = parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - calc_value;
 
-    $('#calc_withdraw_preferential_bank_fee').html(parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank).toFixed(2));
-    $('#calc_withdraw_not_preferential_bank_extra_fee').html(parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank - country_settings.nominal_fee_withdrawal_preferential_bank).toFixed(2));
+    $('#calc_deposit_critical_value2').html(NumberFormat(parseFloat(country_settings.critical_value2), 2));
+    $('#calc_withdraw_preferential_bank_fee').html(NumberFormat(country_settings.nominal_fee_withdrawal_preferential_bank, 2));
+    $('#calc_withdraw_not_preferential_bank_extra_fee').html(NumberFormat(country_settings.nominal_fee_withdrawal_not_preferential_bank - country_settings.nominal_fee_withdrawal_preferential_bank, 2));
 
-    $('#calc_withdraw_minimum_value').html(parseFloat(country_settings.minimum_value).toFixed(2));
-    $('#calc_withdraw_minimum_value_extra_fee').html((parseFloat(country_settings.minimum_value)*0.02).toFixed(2));
+    $('#calc_withdraw_minimum_value').html(NumberFormat(country_settings.minimum_value, 2));
+    $('#calc_withdraw_minimum_value_extra_fee').html(NumberFormat(parseFloat(country_settings.minimum_value)*0.02, 2));
 
     var bank_list = $('#hidden_fees_information').attr('preferential_bank1_name');
     if(country_settings.preferential_bank2_name != '') bank_list += ', ' + country_settings.preferential_bank2_name;

@@ -168,7 +168,10 @@
                     <p>@Messages("directpay.receive.explanation1", globals.country_system_name, globals.country_currency_crypto)</p>
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
-                        <p>@Messages("directpay.overview.nofeesarecharged")</p>
+                        @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0) {
+                            if(globals.country_fee_tofiat_percent != 0) {<p>@Messages("directpay.fee"): <span id="calc_convertion_rate" class="calc_mid_destak_info"></span></p>}
+                            <p>@Messages("directpay.fee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>}.</p>
+                        } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
                     </div>
                 </div>
             </div>

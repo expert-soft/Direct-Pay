@@ -45,3 +45,32 @@ $(document).ready(function () {
 });
 
 
+
+
+
+var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
+var three_digits_separator;
+if (decimal_separator == '.') three_digits_separator = ','; else three_digits_separator = '.';
+// decimal_separator : This is what to change the decimal character into.
+// three_digits_separator : This is the separator, which is usually a comma.
+function NumberFormat (number, numberOfDecimals) { // http://www.hashbangcode.com/blog/format-numbers-commas-javascript
+// numberOfDecimals : number of decimal digits
+// nStr : This is the number to be formatted. This might be a number or a string. No validation is done on this input.
+    var nStr = String(number);
+// inD : This is the decimal character for the string. This is usually a dot but might be something else.
+    var inD = '.';
+    var dpos = nStr.indexOf(inD); // position of decimal point
+    var nStrEnd = '';
+    if (numberOfDecimals != 0) {
+        if (dpos == -1)
+            nStrEnd = decimal_separator;
+        else {
+            nStrEnd = decimal_separator + nStr.substring(dpos + 1, dpos + 1 + numberOfDecimals);
+            nStr = nStr.substring(0, dpos);
+        }
+        while (nStrEnd.length < numberOfDecimals + 1) nStrEnd += '0';
+    }
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(nStr)) nStr = nStr.replace(rgx, '$1' + three_digits_separator + '$2');
+    return nStr + nStrEnd;
+}

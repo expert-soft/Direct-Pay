@@ -267,14 +267,13 @@ directpay.overview.systemoverview=System Overview
 directpay.overview.explanation1={0} is a community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
 directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
 directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
-directpay.overview.explanation4=If you want the operations even simpler, you can set to "automatic mode".
+directpay.overview.explanation4=If you want the operations even simpler, you can set it to operate
 directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
 directpay.overview.extraexplanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
 directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
 directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
-directpay.overview.optionautomatic=Automatic
-directpay.overview.explainoptionautomatic=Automatic Send after any Deposit and automatic Withdraw after any Receive from partner.
-directpay.overview.optionmanual=Manual
+directpay.overview.automatic=Automatic
+directpay.overview.explainoptionautomatic=Any Deposit is Sent to a partner and any Receive from partner is Withdrawed to your bank account.
 directpay.overview.explainoptionmanual=All operations executed by user.
 directpay.overview.explanationautomatic=If at "Automatic Mode", operations get grouped in two (deposit + convert to {0} + send and receive + convert to {1} + withdraw). A deposit order automatically triggers a convertion and send to partner, and any money received from partner is automaically reconverted and withdrawed to your bank account.
 directpay.overview.explanationmanual=If at "Manual Mode", all operations (deposit, convert to {0}, send, receive, convert to {1} and withdraw) must be ordered separately.  Any money you deposit is automatically converted and sent to your preferred partner and any money received from partner is reconverted and withdrawed to your bank account.
@@ -353,14 +352,14 @@ directpay.receive.explanation1=To receive money from our partners, you must go t
 directpay.tocrypto.valuetobeconverted=Value to be converted
 directpay.tocrypto.shortinfo1=If you want to send funds to a partner you must first convert your money to {0}.
 directpay.tocrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
-directpay.tocrypto.explanation2=Convertion rate is {0} 1.00 <=> {2} {1}. This operation pays ## % fees, what would result in ##calculated amount.
-directpay.tocrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than 0.99.
+directpay.tocrypto.explanation2=Convertion rate is {0} 1.00 <=> {2} {1}.
+directpay.tocrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than {2}.
 directpay.tofiat.valuetobeconverted=Value to be converted
 directpay.tofiat.shortinfo1=If you intend to withdraw your {0} funds to your bank account, you must first convert it to {1}.
 directpay.tofiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at this form.
 
 directpay.tofiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
-directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed not to be lower than 0.99.
+directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed not to be lower than {2}.
 directpay.depositsend.depositconvertandsend=Deposit, Convert and Send
 directpay.depositsend.explanation1=When Automatic Operations is set on, your deposits will automatically trigger conversion to {0} and sending it to the selected partner.
 directpay.depositsend.explanation2=The deposit operation remains exactly the same: deposit at {0} bank account and uploading receipt. After receipt verification, the conversion and sending operations will start automatically.
@@ -399,7 +398,8 @@ directpay.usersettings.automatic.title2=Sets the system to execute merged operat
 directpay.usersettings.notselected=not selected
 
 directpay.usersettings.explanation1=This form receives required info to perform operations at {0}. User is responsible to provide accurate information and to keep it up to date.
-directpay.usersettings.step1.explanation1=The general information part is needed to identify user, according to legal requirements. You must provide accurate information, both to make deposits as well as withdrawals.
+directpay.usersettings.step1.explanation1=The general information section is needed to identify user, according to legal requirements. You must provide accurate information, both to make deposits as well as withdrawals.
+directpay.usersettings.step1.explanation2=If you want to change password or revise your account settings you can do it at
 directpay.usersettings.step2.explanation1=The correct selection of bank, agency and account is needed to allow withdrawals. The bank account must be registered in the informed name and CPF, both for withdrawals as deposits.
 directpay.usersettings.step3.explanation1=The pre-selection of Partner and Automatic options are features made available in order to simplify operations and make all the process easier and faster for you. This option is specially recommended if you always deals with the same partner.
 directpay.usersettings.step3.explanation2=If "{0}" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.

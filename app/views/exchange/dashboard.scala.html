@@ -76,15 +76,16 @@
                 <div class="x_content">
                     <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="checkbox"><label><input type="checkbox" class="flat" id="manualauto_mode" title="@Messages("directpay.usersettings.automatic.title")" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { checked="checked" }> <b>@Messages("directpay.usersettings.automatic.item")</b> - @Messages("directpay.usersettings.automatic.title2")</label></div>
+                            <div class="checkbox"><label><input type="checkbox" id="manualauto_mode" title="@Messages("directpay.usersettings.automatic.title")" @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { checked="checked" }> <b>@Messages("directpay.usersettings.automatic.item")</b> - @Messages("directpay.usersettings.automatic.title2")</label></div>
                         </div>
                     </div>
-                    <p class="class_automatic" style="display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {inline}">@Messages("directpay.overview.explainoptionautomatic")</p>
-                    <p class="class_manual" style="display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {none}">@Messages("directpay.overview.explainoptionmanual")</p>
+                    <p class="class_automatic" style="display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {inline} else {none}">@Messages("directpay.overview.explainoptionautomatic")</p>
+                    <p class="class_manual" style="display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {none} else {inline}">@Messages("directpay.overview.explainoptionmanual")</p>
                  </div>
             </div>
                 <!-- end of Form -->
         </div>
+
 
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <!-- Instructions -->
@@ -98,7 +99,7 @@
                     <p>@Messages("directpay.overview.explanation1", globals.country_system_name, globals.country_currency_name_plural, globals.country_name)</p>
                     <p>@Messages("directpay.overview.explanation2", globals.country_system_name, globals.country_currency_name_plural, globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.overview.explanation3", globals.country_system_name)</p>
-                    <p>@Messages("directpay.overview.explanation4")</p>
+                    <p>@Messages("directpay.overview.explanation4") "<span class="calc_low_destak_info">@Messages("directpay.overview.automatic")</span>".</p>
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.overview.extraexplanation1", globals.country_system_name,  globals.country_currency_crypto)</p>
@@ -126,6 +127,7 @@
                 <div class="x_content">
                     <p>@Messages("directpay.overview.deposit.explanation1", globals.country_system_name) @Messages("directpay.deposit.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
                     <p>@Messages("directpay.overview.deposit.explanation2")</p>
+                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_deposit_percent) %</span></p> }
                     <div class="text-center">
                         <a href="@routes.Application.deposit().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.depositpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
@@ -141,7 +143,8 @@
                 </div>
                 <div class="x_content">
                     <p>@Messages("directpay.tocrypto.explanation1", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.tocrypto.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <i class="fa fa-arrow-right"></i> <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>.</p>
+                    <p>@Messages("directpay.overview.nofeesarecharged")</p>
                     <div class="text-center">
                         <a href="@routes.Application.tocrypto().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
@@ -158,6 +161,7 @@
                 <div class="x_content">
                     <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.send.explanation2", globals.country_currency_crypto)</p>
+                    @if(globals.country_fee_send_percent != 0) {<p>@Messages("directpay.send.sendfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>}.</p>
                     <div class="text-center">
                         <a href="@routes.Application.send().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.sendpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
@@ -195,7 +199,7 @@
                 </div>
                 <div class="x_content">
                     <p>@Messages("directpay.tofiat.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
-                    <p>@Messages("directpay.tofiat.explanation2", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span> <i class="fa fa-arrow-right"></i> <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
                     <div class="text-center">
                         <a href="@routes.Application.tofiat().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
@@ -213,6 +217,8 @@
                     <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
                     <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.withdraw.explanation3", globals.country_currency_symbol)</p>
+                    <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
+                    <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
                     <div class="text-center">
                         <a href="@routes.Application.withdraw().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.withdrawpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
@@ -235,6 +241,8 @@
                     <p>@Messages("directpay.depositsend.explanation1", globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.depositsend.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.depositsend.explanation3")</p>
+                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_deposit_percent) %</span></p> }
+                    @if(globals.country_fee_send_percent != 0) {<p>@Messages("directpay.send.sendfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>}.</p>
                     <div class="text-center">
                         <a href="@routes.Application.deposit().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.depositsend") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
@@ -252,8 +260,11 @@
                     <p>@Messages("directpay.receivewithdraw.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
                     <p>@Messages("directpay.receivewithdraw.explanation2", globals.country_currency_crypto, globals.country_currency_symbol)</p>
                     <p>@Messages("directpay.receivewithdraw.explanation3")</p>
+                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span> <i class="fa fa-arrow-right"></i> <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate2" class="calc_mid_destak_info"></span>.</p>
+                    <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee2" class="calc_mid_destak_info"></span>.</p>
+                    <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee2" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
                     <div class="text-center">
-                        <a href="@routes.Application.withdraw().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.receivewithdraw") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        <a href="@routes.Application.receive().url"><button type="submit" class="btn btn-info">@Messages("directpay.overview.receivewithdraw") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
                     </div>
                 </div>
             </div>

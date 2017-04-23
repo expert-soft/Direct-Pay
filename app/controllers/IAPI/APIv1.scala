@@ -99,6 +99,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "bank" -> c._13,
         "agency" -> c._14,
         "account" -> c._15,
+        // ###       "closed" ->
         "net_value" -> c._16,
         "comment" -> c._17,
         "image_id" -> c._18,
@@ -106,6 +107,8 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "first_name" -> c._20,
         "middle_name" -> c._21,
         "last_name" -> c._22
+      // ###       "sum BRL" -> (calculated balance at each time)
+      // ###       "sum crypto" -> (calculated balance at each time)
       )
     })
     ))

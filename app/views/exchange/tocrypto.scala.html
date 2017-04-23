@@ -108,7 +108,7 @@
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.tocrypto.explanation1", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                        <p>@Messages("directpay.overview.convertionsareperformedbypartners", globals.country_currency_symbol, globals.country_currency_crypto) <span class="calc_low_destak_info">0.99</span>. @Messages("directpay.overview.convertionsareperformedbypartners2")</p>
+                        <p>@Messages("directpay.overview.convertionsareperformedbypartners", globals.country_currency_symbol, globals.country_currency_crypto) <span class="calc_low_destak_info">@globals.numberFormat(globals.country_fee_tofiat_minimum_rate_percent.asInstanceOf[Double] * 0.01)</span>. @Messages("directpay.overview.convertionsareperformedbypartners2")</p>
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
     <div class="disclaimer-text">
         <br>
         <p>@Messages("terminology.disclaimer"):</p>
-        <p>@Messages("directpay.tocrypto.disclaimer1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+        <p>@Messages("directpay.tocrypto.disclaimer1", globals.country_currency_crypto, globals.country_currency_symbol, globals.numberFormat(globals.country_fee_tofiat_minimum_rate_percent.asInstanceOf[Double] * 0.01))</p>
     </div>
     <div class="clearfix"></div>
         <!-- /page content -->

@@ -2,6 +2,7 @@
 $(function() {
 
     function submit_send() {
+//treatment of , as decimal separator: parseFloat(str.replace(',','.').replace(' ',''))
         if ($('#partner').val() != "00" && $('#value').val() > 0)
         {   var order_type = "S";
             var status = "Op";

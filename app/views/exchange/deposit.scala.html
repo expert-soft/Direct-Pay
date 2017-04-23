@@ -158,11 +158,11 @@
                         </tbody>
                     </table>
                     <br>
-                    <p>@Messages("directpay.deposit.shortinfo2") <span class="calc_low_destak_info">@globals.country_currency_symbol @globals.country_critical_value2)</span>.</p>
+                    <p>@Messages("directpay.deposit.shortinfo2") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_critical_value2">@globals.country_critical_value2</span></span>.</p>
                     <p>@Messages("directpay.deposit.shortinfo3")</p>
-                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.country_fee_deposit_percent %</span></p> }
+                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_deposit_percent) %</span></p> }
                     @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0) {
-                        <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>}.</p>
+                        <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>}.</p>
                     }
 
                     <div class="x_extrainfo_content" style="display: none;">
@@ -171,7 +171,7 @@
                         <p>@Messages("directpay.deposit.explanation2")</p>
                         @if(globals.country_fee_deposit_percent != 0) {
                             @if(globals.country_minimum_value != 0) {
-                                <p>@Messages("directpay.deposit.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value">@globals.country_minimum_value</span></span> @Messages("directpay.deposit.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value_extra_fee">@(globals.country_minimum_value * 0.02)</span></span></p>
+                                <p>@Messages("directpay.deposit.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value">@globals.numberFormat(globals.country_minimum_value)</span></span> @Messages("directpay.deposit.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value_extra_fee">@globals.numberFormat(globals.country_minimum_value * 0.02)</span></span></p>
                             }
                         } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
                     </div>

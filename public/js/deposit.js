@@ -1,7 +1,7 @@
 
 $(function() {
     // this function is not being used. Submission is being done through uploadImage
-    function submit_deposit() {
+/*    function submit_deposit() {
         if ($('#partner').val() != "00" && $('#value').val() > 0) {
             var order_type = $('#hidden_page').val();
             var partner = '';
@@ -26,6 +26,7 @@ $(function() {
         else
             alert("Choose file name and value > 0");
     }
+*/
 
     function submit_image() {
         API.upload_image($('#uploadBtn1'));
@@ -70,7 +71,7 @@ $('#uploadBtn1').change(function() {
         $('#uploadDiv1').removeClass('btn-info');
 });
 
-// See application.scala - line 101 - need to treat exception
+// ###See application.scala - line 101 - need to treat exception
 $('#value').change(function() { fillInfoIntoFileObject() });
 $('#partner').change(function() { fillInfoIntoFileObject() });
 $('#partner_account').change(function() { fillInfoIntoFileObject() });

@@ -1,7 +1,6 @@
 $(function(){
     function showHide() {
-//alert($('#manualauto_mode').val());
-        if ($('#manualauto_mode').val() == 'on') {
+        if ($('#manualauto_mode').attr("checked") == 'checked') {
             $('#manual_operations').hide();
             $('#automatic_operations').show();
             $('.class_manual').hide();
@@ -14,13 +13,21 @@ $(function(){
         }
     }
 
-//    $('#manualauto_mode').live('click', alert(9));
+    function showFeeMessages()
+    {
+        $('#calc_convertion_rate').html(NumberFormat((100 - parseFloat($('#hidden_fees_information').attr('fee_tofiat_percent'))) * 0.01, 3));
+        $('#calc_withdraw_preferential_bank_fee').html(NumberFormat($('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank'), 2));
+        $('#calc_withdraw_not_preferential_bank_extra_fee').html(NumberFormat(parseFloat($('#hidden_fees_information').attr('nominal_fee_withdrawal_not_preferential_bank') - parseFloat($('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank'))), 2));
+        $('#calc_convertion_rate2').html($('#calc_convertion_rate').text());
+        $('#calc_withdraw_preferential_bank_fee2').html($('#calc_withdraw_preferential_bank_fee').text());
+        $('#calc_withdraw_not_preferential_bank_extra_fee2').html($('#calc_withdraw_not_preferential_bank_extra_fee').text());
+    }
 
 
     $(document).ready(function () {
         $('#manualauto_mode').change(function () {
             showHide();
-            var manualauto_mode = ($('#manualauto_mode').val() != 'on');
+            var manualauto_mode = ($('#manualauto_mode').attr("checked") != 'checked');
             API.change_manualauto(manualauto_mode).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),
@@ -34,4 +41,11 @@ $(function(){
         });
     });
     showHide();
+
+    showFeeMessages();
+
 });
+
+
+
+

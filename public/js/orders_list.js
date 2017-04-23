@@ -291,7 +291,6 @@ function transfer_details (order_id, user_name, user_email, order_type, doc, doc
     $('#hidden_order_id').val(order_id);
     $('#popUpPictureInfo1').html(user_name);
     $('#popUpPictureInfo2').html(user_email);
-alert(doc_type);
     if (doc_type == "doc1") $('#popUpPictureTitle').html($('#popUpPictureDoc1').val()); else
     if (doc_type == "doc2") $('#popUpPictureTitle').html($('#popUpPictureDoc2').val()); else
     if (doc_type == "doc3") $('#popUpPictureTitle').html($('#popUpPictureDoc3').val()); else
