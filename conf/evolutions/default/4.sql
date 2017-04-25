@@ -139,6 +139,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
     end if;;
     if b_order_type = 'DCS' or b_order_type = 'S' then
       if b_order_type = 'DCS' and b_order_status = 'Op' then
+        -- deposit approval and convertion done in one single step
         update balances set balance = balance + 1000 - b_initial_value, hold = hold + 1000 - b_initial_value, balance_c = balance_c + a_processed_value, hold_c = hold_c + a_processed_value where currency = b_currency and user_id = b_user_id;;
         update balances set balance = balance + a_processed_value + 1000, balance_c = balance_c + 1000 - a_processed_value where currency = b_crypto_currency and user_id = a_partner_id;; -- Partner account
         update orders set status = 'S', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;

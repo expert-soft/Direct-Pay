@@ -152,7 +152,7 @@
                     <p>@Messages("directpay.withdraw.yourmaximumwithdrawal"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_maximum_withdraw" class="calc_destak_info"></span></p>
                     <p>@Messages("directpay.withdraw.shortinfo2")</p>
                     @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
-                        <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span> <i class="fa fa-arrow-right"></i> <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
+                        <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
                     }
 
                     <div class="x_extrainfo_content" style="display: none;">

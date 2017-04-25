@@ -405,6 +405,7 @@ directpay.usersettings.step3.explanation1=The pre-selection of Partner and Autom
 directpay.usersettings.step3.explanation2=If "{0}" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
 directpay.usersettings.extrainfo.explanation1=You can leave some of those fields empty but, to comply with legal requirements, some operations can only be executed if your personal info is complete and required documents uploaded and verified.
 directpay.usersettings.extrainfo.explanation2=If you have regular operations with more than one partner or if you do not want the operations to be automatically performed by {0}, let the "Automatic Operations" checkbox unchecked.
+directpay.user_settings.disclaimer1=All information provided by the user Personal Information is required to
 
 directpay.documents.requireddocuments=Required Documents
 directpay.documents.explanation1=dddd #######
