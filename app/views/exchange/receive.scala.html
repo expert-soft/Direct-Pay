@@ -2,44 +2,182 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/receive.js?v=1.0.0.1")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
-            <h3><i class="fa fa-download"> &nbsp;</i> @Messages("terminology.receive")</h3>
+            <h3>
+                @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
+                    <i class="fa fa-download"> &nbsp;</i> @Messages("terminology.receive")
+                } else {
+                    <i class="fa fa-download"> </i> <i class="fa fa-minus"></i> @Messages("directpay.withdraw.receiveconvertwithdraw")
+                }
+            </h3>
         </div>
     </div>
 
-        <!-- Wallet -->
-    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
-    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+
+
     <div class="clearfix"></div>
     <div class="row">
+            <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div  id="wallet" class="x_panel">
+            <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
-                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.receive.receivefrompartners")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.receive.toreceivefrompartners1")</p>
+                    <p>@Messages("directpay.receive.toreceivefrompartners2", globals.country_system_name)</p>
+                    @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
+                        ### put a remark if documentation incomplete<br>
+                        <p>@Messages("directpay.receive.toreceivefrompartners4")</p>
+
+                            <!-- Beginning of the form -->
+                            <form id="form1" data-parsley-validate class="form-horizontal form-label-left">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
+                                    <div class="col-md-8 col-sm-4 col-xs-12">
+                                        <input type="hidden" id="hidden_bank""></input>
+                                        <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
+                                            <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                            @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
+                                            @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
+                                            @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
+                                            @if(globals.country_bank4_code != "") { <option value="@globals.country_bank4_code">@globals.country_bank4_code - @globals.country_bank4_name</option> }
+                                            @if(globals.country_bank5_code != "") { <option value="@globals.country_bank5_code">@globals.country_bank5_code - @globals.country_bank5_name</option> }
+                                            @if(globals.country_bank6_code != "") { <option value="@globals.country_bank6_code">@globals.country_bank6_code - @globals.country_bank6_name</option> }
+                                            @if(globals.country_bank7_code != "") { <option value="@globals.country_bank7_code">@globals.country_bank7_code - @globals.country_bank7_name</option> }
+                                            @if(globals.country_bank8_code != "") { <option value="@globals.country_bank8_code">@globals.country_bank8_code - @globals.country_bank8_name</option> }
+                                            @if(globals.country_bank9_code != "") { <option value="@globals.country_bank9_code">@globals.country_bank9_code - @globals.country_bank9_name</option> }
+                                            @if(globals.country_bank10_code != "") { <option value="@globals.country_bank10_code">@globals.country_bank10_code - @globals.country_bank10_name</option> }
+                                            @if(globals.country_bank11_code != "") { <option value="@globals.country_bank11_code">@globals.country_bank11_code - @globals.country_bank11_name</option> }
+                                            @if(globals.country_bank12_code != "") { <option value="@globals.country_bank12_code">@globals.country_bank12_code - @globals.country_bank12_name</option> }
+                                            @if(globals.country_bank13_code != "") { <option value="@globals.country_bank13_code">@globals.country_bank13_code - @globals.country_bank13_name</option> }
+                                            @if(globals.country_bank14_code != "") { <option value="@globals.country_bank14_code">@globals.country_bank14_code - @globals.country_bank14_name</option> }
+                                            @if(globals.country_bank15_code != "") { <option value="@globals.country_bank15_code">@globals.country_bank15_code - @globals.country_bank15_name</option> }
+                                            @if(globals.country_bank16_code != "") { <option value="@globals.country_bank16_code">@globals.country_bank16_code - @globals.country_bank16_name</option> }
+                                            @if(globals.country_bank17_code != "") { <option value="@globals.country_bank17_code">@globals.country_bank17_code - @globals.country_bank17_name</option> }
+                                            @if(globals.country_bank18_code != "") { <option value="@globals.country_bank18_code">@globals.country_bank18_code - @globals.country_bank18_name</option> }
+                                            @if(globals.country_bank19_code != "") { <option value="@globals.country_bank19_code">@globals.country_bank19_code - @globals.country_bank19_name</option> }
+                                            @if(globals.country_bank20_code != "") { <option value="@globals.country_bank20_code">@globals.country_bank20_code - @globals.country_bank20_name</option> }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6" for="agency">@Messages("terminology.agency")</label>
+                                    <div class="col-md-5 col-sm-5"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.account")</label>
+                                    <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary triggers_submit">@Messages("directpay.receive.savebankdata")</button>
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                            </form>
+                        <p id="script-position"></p>
+                        <script id="script-template" type="text/x-handlebars-template">
+                        </script>
+
+
+                    }
+
+                    <p>@Messages("directpay.receive.linkstopartners")</p>
+                    @if(globals.country_partner1 != "Not Set") {
+                        <style> #box_partner1 { border-radius: 5px; background: @globals.country_partner1_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
+                        <a href="@globals.country_partner1_url" target="_blank"><p id="box_partner1" title="@globals.country_partner1_info - @globals.country_partner1_url"><img src="/assets/img/carusel/@globals.country_partner1_picture" height="28px"> @globals.country_partner1</p></a> }
+                    @if(globals.country_partner2 != "Not Set") {
+                        <style> #box_partner2 { border-radius: 5px; background: @globals.country_partner2_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
+                        <a href="@globals.country_partner2_url" target="_blank"><p id="box_partner2" title="@globals.country_partner2_info - @globals.country_partner2_url"><img src="/assets/img/carusel/@globals.country_partner2_picture" height="28px"> @globals.country_partner2</p></a> }
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        ## Extra content
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End of form -->
+
+
+
+            <!-- Wallet -->
+        <input type="hidden" id="hidden_fees_information"
+        currency_code="@globals.country_currency_code"
+        currency_crypto="@globals.country_currency_crypto"
+        wallet_available="0"
+        wallet_onhold="0"
+        wallet_crypto="0"
+        wallet_total="0"
+        decimal_separator = "@globals.country_decimal_separator"
+        minimum_value = "@globals.country_minimum_value.toString"
+        critical_value1 = "@globals.country_critical_value1.toString"
+        critical_value2 = "@globals.country_critical_value2.toString"
+        preferential_bank1_code = "@globals.country_preferential_bank1_code"
+        preferential_bank1_name = "@globals.country_preferential_bank1_name"
+        preferential_bank2_code = "@globals.country_preferential_bank2_code"
+        preferential_bank2_name = "@globals.country_preferential_bank2_name"
+        preferential_bank3_code = "@globals.country_preferential_bank3_code"
+        preferential_bank3_name = "@globals.country_preferential_bank3_name"
+        preferential_bank4_code = "@globals.country_preferential_bank4_code"
+        preferential_bank4_name = "@globals.country_preferential_bank4_name"
+        nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
+        nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
+        fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
+        fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
+        ></input>
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
+                <div class="x_title">
+                    <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
                     <table id="table_wallet" class="table-wallet">
-                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
-                    <p>Texto.</p>
                 </div>
             </div>
         </div>
+        <div id="balance">
+            <script id="balance-template" type="text/x-handlebars-template"></script>
+        </div>
+            <!-- end of Wallet -->
+
+
+            <!-- Instructions -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance2">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.receive.explanation1", globals.country_system_name, globals.country_currency_crypto)</p>
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0) {
+                            if(globals.country_fee_tofiat_percent != 0) {<p>@Messages("directpay.fee"): <span id="calc_convertion_rate" class="calc_mid_destak_info"></span></p>}
+                            <p>@Messages("directpay.fee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>}.</p>
+                        } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end of Instructions -->
     </div>
-    <div id="balance">
-        <script id="balance-template" type="text/x-handlebars-template"></script>
-    </div>
-        <!-- end of Wallet -->
 
 
 }

@@ -73,7 +73,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                 @if(loggedIn){
-                    @navItem(routes.Application.wallet().url, "credit-card", Messages("chrome.exchange.navigation.dashboard.title"))
+                    @navItem(routes.Application.dashboard().url, "credit-card", Messages("chrome.exchange.navigation.dashboard.title"))
                     @navItem(routes.Application.user_settings().url, "floppy-disk", Messages("chrome.exchange.navigation.withdraw.lable"))
                     @navItem(routes.Application.users_list().url, "home", Messages("chrome.exchange.navigation.history.lable"))
                     @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.account.title"))

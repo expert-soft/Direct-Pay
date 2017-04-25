@@ -6,44 +6,138 @@
 @implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
 
 @scripts = {
-    <script src="@routes.Assets.at("../../../public/js/users_list.js")"></script>
+    <script src="@routes.Assets.at("js/history.js")" xmlns="http://www.w3.org/1999/html"></script>
 }
 
-@exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+@exchange._chrome(Messages("chrome.exchange.navigation.history.label"), "dashboard", scripts) {
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-list"> &nbsp;</i> @Messages("chrome.exchange.navigation.history.label")</h3>
+        </div>
+    </div>
+
+
+    <input type="hidden" id="hidden_fees_information" decimal_separator = "@globals.country_decimal_separator"></input>
+
+    <div class="clearfix"></div>
     <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">@Messages("exchange.account.info.title")</div>
-                <div class="panel-body">
-                    <p id="user-info"></p>
+            <!-- Start of form -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-list"></i> &nbsp; @Messages("directpay.history.usersoperationshistory")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p id="orders-script-position"></p>  <!-- Script for searched orders is called here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <script id="user-info-template" type="text/x-handlebars-template">
-    <div class="panel-heading">@Messages("terminology.contacts")</div>
-        <table id="table_users" class="table table-striped responsive">
+
+    <div class="clearfix"></div>
+    <div class="row">
+            <!-- Start of form -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-bookmark"></i> &nbsp; @Messages("directpay.history.loghistory")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p id="log-script-position"></p>  <!-- Script for searched orders is called here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Modal page for order details -->
+    <div id="popupDetails" class="overlay">
+        <div id="popupInfoDiv" class="popup">
+            <div class="title_left">
+                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.history.imagedetails")</h3>
+            </div>
+            <h2><span id="popUpPictureTitle"></span></h2>
+            <input type="hidden" id="hidden_order_id">
+            <div id="buttonsDiv" class="popupTopButtons">
+                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
+            </div>
+            <a class="popupClose" href="#">&times;</a>
+            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name"><input type="hidden" id="popUpPictureDoc3" value="@globals.country_doc3_name"><input type="hidden" id="popUpPictureDoc4" value="@globals.country_doc4_name"><input type="hidden" id="popUpPictureDoc5" value="@globals.country_doc5_name">
+            <p><img src="placeholder" id="the_picture"></p>
+            <p><span id="popUpPictureInfo3"></span></p>
+            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
+        </div>
+    </div>
+        <!-- end of Modal page for order details -->
+
+
+
+        <!-- orders list script -->
+    <script id="orders-script-template" type="text/x-handlebars-template">
+        <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
             <thead>
                 <tr>
-                    <th width="25%">@Messages("form.first_name")</th>
-                    <th width="25%">@Messages("form.first_name")</th>
-                    <th width="25%">@Messages("form.last_name")</th>
-                    <th width="20%">@Messages("form.middle_name")</th>
-                    <th width="30%">@Messages("form.first_name")</th>
+                    <th>@Messages("terminology.type")</th>
+                    <th>@Messages("terminology.status")</th>
+                    <th>@Messages("terminology.created")</th>
+                    <th>@Messages("terminology.requested")</th>
+                    <th>@Messages("terminology.executed")</th>
+                    <th>@Messages("terminology.value")</th>
+                    <th>@Messages("terminology.fee")</th>
+                    <th>@Messages("terminology.comment")</th>
+                    <th>@Messages("directpay.admin.orderslist.doc")</th>
+                    <th>@Messages("directpay.history.sum", globals.country_currency_symbol)</th>
+                    <th>@Messages("directpay.history.sum", globals.country_currency_crypto)</th>
                 </tr>
             </thead>
             <tbody>
-            {{#each this}}
-                <tr id="{{id}}">
-                    <td width="25%">{{email}}</td>
-                    <td width="25%">{{name}}</td>
-                    <td width="25%">{{surname}}</td>
-                    <td width="20%">{{middle_name}}</td>
-                    <td width="30%">{{prefix}}</td>
+                {{#each this}}
+                <tr id="{{order_id}}">
+                    <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
+                    <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
+                    <td>{{created}}</td>
+                    <td style="text-align: right;">{{initial_value_s}}</td>
+                    <td>{{closed}}</td>
+                    <td {{class_value}} style="text-align: right;">{{net_value_s}}</td>
+                    <td style="text-align: right;">{{total_fee_s}}</td>
+                    <td>{{comment}}</td>
+                    <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                    <td style="text-align: right;">###</td>
+                    <td style="text-align: right;">###</td>
                 </tr>
-            {{/each}}
+                {{/each}}
             </tbody>
         </table>
     </script>
+        <!-- end of orders list script -->
+
+
+
+        <!-- log list script -->
+    <script id="log-script-template" type="text/x-handlebars-template">
+        <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.created")</th>
+                    <th>@Messages("terminology.type")</th>
+                    <th>@Messages("terminology.ipaddress")</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this}}
+                <tr>
+                    <td>{{created}}</td>
+                    <td>{{type}}</td>
+                    <td>{{ip}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </script>
+        <!-- end of log list script -->
+
 }

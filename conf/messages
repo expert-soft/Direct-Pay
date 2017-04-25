@@ -59,8 +59,8 @@ terminology.banner=We look forward to helping you with your inquiry. We respond 
 terminology.contacts=Contacts
 form.legal_name=Full Legal Name
 form.first_name=First Name
-form.last_name=Last Name
 form.middle_name=Middle Name
+form.last_name=Last Name
 form.address=Address
 form.city=City
 form.state=State
@@ -170,6 +170,7 @@ chrome.exchange.node.listnodes=Peers list:
 
 
 
+terminology.user=User
 terminology.partner=Partner
 terminology.connectedto=connected to
 
@@ -184,7 +185,6 @@ terminology.agency=Agency
 terminology.account=Account
 terminology.submit=Submit
 terminology.convert=Convert
-terminology.submit=Submit
 terminology.send=Send
 terminology.receive=Receive
 terminology.info=Info
@@ -195,7 +195,20 @@ terminology.wallet.available=Available
 terminology.wallet.onhold=On Hold
 terminology.wallet.crypto=Crypto
 terminology.wallet.total=Total
+terminology.calculatedfee=Calculated fee
+terminology.plus=plus
 terminology.convertto=Convert to
+terminology.instructions=Instructions
+terminology.extrainformation=Extra information
+terminology.minimizethisboard=Minimize this board
+terminology.closethisboard=Close this board
+terminology.browse=Browse
+terminology.upload=Upload
+terminology.zoomin=Zoom in
+terminology.zoomout=Zoom out
+terminology.ipaddress=IP Address
+terminology.yes=Yes
+terminology.no=No
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -207,10 +220,10 @@ directpay.navigation.receivefunds.title=Receive
 directpay.navigation.converttofiat.title=Convert to {0}
 directpay.navigation.withdraw.title=Withdraw
 directpay.navigation.personalinfo.title=Personal info
-directpay.navigation.automatic.title=Automatic Orders
+directpay.navigation.documents.title=Documents
 directpay.navigation.depositsend.title=Deposit and Send
 directpay.navigation.receivewithdraw.title=Receive and Withdraw
-directpay.navigation.twofactorsecurity.title=2FA Security
+directpay.navigation.security.title=Security
 directpay.navigation.support.title=Support
 directpay.navigation.contact.title=Contact
 directpay.navigation.terms.title=Terms & Contract
@@ -220,11 +233,18 @@ directpay.navigation.admin.userslist.title=List of Users
 directpay.navigation.admin.orderslist.title=List of Orders
 directpay.navigation.overview.title=Actions Overview
 
+directpay.security.accountemail=Account (email)
+directpay.security.securitysettings=Security Settings
+directpay.security.receiveupdatesfrommailinglist=Receive news about {0} and our partners
+
 directpay.admin.orderslist.openorders.title=Open Orders
 directpay.admin.orderslist.ordersfromsearch.title=Result from search:
 directpay.admin.orderslist.orderID=Order ID
 directpay.admin.orderslist.doc=doc
+directpay.admin.orderslist.lock=Lock
+directpay.admin.orderslist.lockorder=Lock order. Confirmation required in 48 h.
 directpay.admin.orderslist.ok=OK
+directpay.admin.orderslist.accept=Accept
 directpay.admin.orderslist.acceptorder=Accept Order
 directpay.admin.orderslist.reject=Reject
 directpay.admin.orderslist.rejectorder=Reject Order
@@ -232,15 +252,31 @@ directpay.admin.orderslist.status.OK=OK
 directpay.admin.orderslist.status.Op=Open
 directpay.admin.orderslist.status.Ch=Changed
 directpay.admin.orderslist.status.Rj=Rejected
+directpay.admin.orderdetails=Order Details
 
 directpay.admin.userslist.userID=User ID
 
-directpay.overview.userfundsposition=Your current funds position:
-directpay.overview.explanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be converted and withdrawed to your bank account, with no need to request it at {0}.
-directpay.overview.explanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
-directpay.overview.chooseoptions=Choose at the options below to understand how would be the operations.
-directpay.overview.optionautomatic=Option Automatic
-directpay.overview.optionmanual=Option Manual
+directpay.management.numberofusers=Number of Users
+directpay.management.currentfiatfunds=Current Fiat Funds
+directpay.management.currentcryptofunds=Current Crypto Funds
+directpay.management.partnersbalance=Partners Balance
+directpay.management.expectedbankbalance=Expected Bank Balance
+directpay.management.pendingorders=Pending Orders
+
+directpay.overview.systemoverview=System Overview
+directpay.overview.explanation1={0} is a community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
+directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
+directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
+directpay.overview.explanation4=If you want the operations even simpler, you can set it to operate
+directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
+directpay.overview.extraexplanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
+directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
+directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
+directpay.overview.automatic=Automatic
+directpay.overview.explainoptionautomatic=Any Deposit is Sent to a partner and any Receive from partner is Withdrawed to your bank account.
+directpay.overview.explainoptionmanual=All operations executed by user.
+directpay.overview.explanationautomatic=If at "Automatic Mode", operations get grouped in two (deposit + convert to {0} + send and receive + convert to {1} + withdraw). A deposit order automatically triggers a convertion and send to partner, and any money received from partner is automaically reconverted and withdrawed to your bank account.
+directpay.overview.explanationmanual=If at "Manual Mode", all operations (deposit, convert to {0}, send, receive, convert to {1} and withdraw) must be ordered separately.  Any money you deposit is automatically converted and sent to your preferred partner and any money received from partner is reconverted and withdrawed to your bank account.
 
 directpay.overview.depositpage=Deposit page
 directpay.overview.conversionpage=Conversion page
@@ -249,40 +285,81 @@ directpay.overview.receivepage=Receive page
 directpay.overview.withdrawpage=Withdraw page
 directpay.overview.depositsend=Deposit and Send
 directpay.overview.receivewithdraw=Receive and Withdraw
+directpay.overview.netresultvalue=Net result value
 
 directpay.overview.deposit.explanation1=You can deposit funds in your account at {0} through the bank system.
 directpay.overview.deposit.explanation2=To validate your deposit, you must upload a readable picture of the receipt of deposit or transfer. Your deposits will be verified and should be credited in your account in some minutes or a few hours.
 directpay.overview.receive.explanation1=To receive funds from a partner, you should login to the partner system and there request your funds to be withdrawed to {0}.
+directpay.overview.additionalinfo=Additional Information
+directpay.overview.thisoperationdoesnotchargefees=This operation does not charge any fees
+directpay.overview.nofeesarecharged=No fees are charged for this operation.
+directpay.overview.convertionrate=Convertion Rate
+directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of
+directpay.overview.convertionsareperformedbypartners2=That means you will always be able to convert your money at a competitive rate.
 
+directpay.deposit.depositconvertsend=Deposit, Convert and Send
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
 directpay.deposit.depositreceipt=Deposit Receipt
-directpay.deposit.explanation1=Deposit must be in cash or bank transfer from your own personal bank account (daily maximum deposit is {0} {1}) to one of the following bank accounts
-directpay.deposit.explanation2=After doing the bank deposit you must submit the deposit receipt to verification:
-directpay.deposit.explanation3=Picture of the receipt must be clear and prefectly readable and exactly the same declared. Otherwise, your funds may be kept on hold or refused.
+directpay.deposit.accountatpartner=Account at partner
+directpay.deposit.youraccountatpartner=Your account at partner (email address)
+directpay.deposit.shortinfo1=Do your deposits to one of the following bank accounts
+directpay.deposit.shortinfo2=Deposits must be in cash or bank transfer from your own bank account (daily maximum:
+directpay.deposit.shortinfo3=After that, submit your deposit receipt at this form.
+directpay.deposit.depositfee=Deposit fee
+directpay.deposit.explanation1=After doing the bank deposit you must submit the deposit receipt to verification. Analysis of the document can take few minutes till few hours.
+directpay.deposit.explanation2=Picture of the receipt must be clear and prefectly readable and exactly the same value declared. Otherwise, your funds may be kept on hold or refused.
+directpay.deposit.explanation3a=Too small deposit operations should be avoided. For that, if requested amount lower than
+directpay.deposit.explanation3b= the operation will be charged extra
 directpay.deposit.disclaimer1=To be sure your deposit to be recognized, keed your personal information complete and up to date, do the deposit in cash or from your own bank account and submit a clear picture of your bank receipt.
 directpay.deposit.disclaimer2=Deposits made at banking working time are processed in few minutes after effective bank confirmation (max = 3 hours). Deposits made out of banking work time are subject to specific verification and can be delayed. If you have trouble to have your deposit recognized, please contact eu.euateumesmo.com.
+
+directpay.withdraw.receiveconvertwithdraw=Receive, Convert and Withdraw
 directpay.withdraw.requestwithdrawal=Request a Withdrawal
-directpay.withdraw.explanation1=You can request the withdrawal of your money at any time, but that action will be executed following banking work time and security practices, what limits maximum daily withdrawal to {0} {1}.
+directpay.withdraw.preferentialbanks=Preferential banks
+directpay.withdraw.yougetlowerfees=Lower fees when withdrawal to those banks.
+directpay.withdraw.shortinfo1=Withdrawals can only be done to your personal bank account.
+directpay.withdraw.shortinfo2=Be sure your banking data is correct! This operation can not be reverted.
+directpay.withdraw.yourmaximumwithdrawal=Your maximum withdrawal
+directpay.withdraw.withdrawfee=Withdraw fee
+directpay.withdraw.extrafee1=Extra
+directpay.withdraw.extrafee2=fee if withdrawal requested to a not-preferential bank
+directpay.withdraw.explanation1=You can request the withdrawal of your money at any time, but that action will be executed following banking work time and security practices, what limits maximum daily withdrawal to
 directpay.withdraw.explanation2=Also, your withdrawals are limited to your available funds, including both {0} and {1} (will be converted to {0} if needed), less the fees that apply to the operation, that depend on the amount and choosen bank.
-directpay.withdraw.explanation3=Considering the amount and bank selected, the total calculated fees is {0} ## 999.99, and your net withdraw will be {0} ##999.99.
+directpay.withdraw.explanation3a=Too small withdraw operations should be avoided. For that, if requested amount lower than
+directpay.withdraw.explanation3b= the operation will be charged extra
 directpay.withdraw.disclaimer1=Withdrawals can be requested at any time. The transfer to your banking account is usually performed in few minutes but as some banking operations need to be performed during banking work time and that can cause delays to the operation.
 directpay.withdraw.disclaimer2=User is responsible for providing adequate information and readable document copies. If information is not correct or not complete, Direct Pay will not be able to perform withdrawal operations.
 directpay.withdraw.disclaimer3=If you have any trouble with your request, please contact eu.euATeumesmo.com.
+
 directpay.send.sendtopartner=Send to Partner
 directpay.send.valuetobesent=Value to be sent
-directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred.
-directpay.send.explanation2=Maximum amount that can be transferred is ## sum of crypto and R$ available. ##fees and calculated net transfer.
+directpay.send.shortinfo1=Some services provided by our partners require you to send funds to them. Use this form to send {0} to the selected partner
+directpay.send.yourmaximumsend=The maximum amount that can be sent
+directpay.send.sendfee=Sending fee
+directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred. Be sure to select the correct amount and partner, as this operation is not be reverted!
 directpay.send.disclaimer1=When you send your {0} to a partner, responsibility of your funds are also transferred to the partner. Once partner confirms transfer complete, Direct Pay no longer is responsible nor have access to the amount transferred.
-directpay.receive.linkstopartners=Links to Partners:
 
-directpay.ccrypto.valuetobeconverted=Value to be converted
-directpay.ccrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
-directpay.ccrypto.explanation2=Convertion rate is {0} 1.00 <=> ##1.00000 {1}. This operation pays ## % fees, what would result in ##calculated amount.
-directpay.ccrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than 0.99.
-directpay.cfiat.valuetobeconverted=Value to be converted
-directpay.cfiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at the form below.
-directpay.cfiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
-directpay.cfiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1} . The conversion rate is guaranteed not to be lower than 0.99.
+directpay.receive.receivefrompartners=Receive from Partners
+directpay.receive.toreceivefrompartners1=After interacting with our partners, as a result of your operations, you may have funds to receive from them.
+directpay.receive.toreceivefrompartners2=To request your funds, you must enter Partners system and request a withdrawal there to {0}.
+
+directpay.receive.toreceivefrompartners4=But first confirm the bank account were you want to withdraw money you receive from partners.
+directpay.receive.savebankdata=Save Bank Data
+directpay.receive.linkstopartners=Links to Partners:
+directpay.receive.explanation1=To receive money from our partners, you must go to the partner-site and request a withdraw to {0}. Partner will send {1} and it will become available at {0} in a few seconds.
+
+
+directpay.tocrypto.valuetobeconverted=Value to be converted
+directpay.tocrypto.shortinfo1=If you want to send funds to a partner you must first convert your money to {0}.
+directpay.tocrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
+directpay.tocrypto.explanation2=Convertion rate is {0} 1.00 <=> {2} {1}.
+directpay.tocrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than {2}.
+directpay.tofiat.valuetobeconverted=Value to be converted
+directpay.tofiat.shortinfo1=If you intend to withdraw your {0} funds to your bank account, you must first convert it to {1}.
+directpay.tofiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at this form.
+
+directpay.tofiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
+directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed not to be lower than {2}.
 directpay.depositsend.depositconvertandsend=Deposit, Convert and Send
 directpay.depositsend.explanation1=When Automatic Operations is set on, your deposits will automatically trigger conversion to {0} and sending it to the selected partner.
 directpay.depositsend.explanation2=The deposit operation remains exactly the same: deposit at {0} bank account and uploading receipt. After receipt verification, the conversion and sending operations will start automatically.
@@ -294,49 +371,59 @@ directpay.receivewithdraw.explanation3=Be sure your bank information is up to da
 
 directpay.receivewithdraw.receiveconvertandwithdraw=Receive, Convert and Withdraw
 
-directpay.usersettings.browsebutton=Browse
-directpay.usersettings.selectpictureofdocument=Select picture of the document
-directpay.usersettings.supportedfiletypes=(.gif, .jpg, .png, .pdf)
 directpay.usersettings.documentrequired.title=document number required
-directpay.usersettings.step1.title=Step 1 - Account Info
-directpay.usersettings.fullname.item=Full Name
-directpay.usersettings.firstname.placeholder=First Name
-directpay.usersettings.firstname.title=Enter your First Name
-directpay.usersettings.midname.placeholder=Mid Names
-directpay.usersettings.midname.title=Enter your Mid Names
-directpay.usersettings.lastname.placeholder=Last Name
-directpay.usersettings.lastname.title=Enter your Last Name
-directpay.usersettings.email.item=Email
-directpay.usersettings.email.title=Input a valid email address
-directpay.usersettings.password.item=Password
-directpay.usersettings.password.title=Select a password (minimum 8 chars)
-directpay.usersettings.password.title2=(minimum 8 chars long)
-directpay.usersettings.confirmpassword.item=Confirm Password
-directpay.usersettings.confirmpassword.title=Confirm the password
-directpay.usersettings.step1.explanation1=Fill up the data required above and press "Next". You will receive an email to confirm your registration. Follow email instructions to confirm and further complete the registration steps.
-directpay.usersettings.step2.title=Step 2 - Personal Info
+directpay.usersettings.step1=General Info
 directpay.usersettings.country.item=Country
 directpay.usersettings.country.title=Your country (can not be changed)
+directpay.usersettings.firstname=First Name
+directpay.usersettings.firstname.title=Enter your First Name
+directpay.usersettings.midname=Mid Names
+directpay.usersettings.midname.title=Enter your Mid Names
+directpay.usersettings.lastname=Last Name
+directpay.usersettings.lastname.title=Enter your Last Name
 directpay.usersettings.phone.item=Phone Number
 directpay.usersettings.phone.title=Your phone number with area code
-directpay.usersettings.step2.explanation1=Fields above can be left empty for a while, but to comply to legal requirements, some of your operations (specially withdrawals) can only be executed if all fields above are correctly filled and documents verified.
-directpay.usersettings.step2.explanation2=Documents verification process is performed by Direct Pay team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not according to your registration, you will be notified at the registration form.
-directpay.usersettings.step3.title=Step 3 - Financial Connections
+directpay.usersettings.step2=Bank Info
 directpay.usersettings.bank.item=Bank
 directpay.usersettings.bank.title=Select your Bank
 directpay.usersettings.bankagency.item=Agency
 directpay.usersettings.bankagency.title=Your Bank Agency
 directpay.usersettings.bankaccount.item=Account
 directpay.usersettings.bankaccount.title=Your Bank Account
+directpay.usersettings.step3=Preferred Partner
 directpay.usersettings.partner.title=Select the partner you want to connect your account
 directpay.usersettings.automatic.item=Automatic Operations
 directpay.usersettings.automatic.title=allow automatic operations (recommended)
 directpay.usersettings.automatic.title2=Sets the system to execute merged operations (deposit/send and receive/withdraw)
-directpay.usersettings.step3.explanation1=The correct selection of bank, agency and account is needed to allow withdrawals. That account must be in the informed name and CPF. In any case, all operations are executed based on that data and you are responsible for providing the correct information (accurate and up to date).
-directpay.usersettings.step3.explanation2=The selection of Partner and Automatic options are features made available in order to simplify operations and make all the process easier and faster for you. This option is specially recommended if you always deals with one partner only.
-directpay.usersettings.step3.explanation3=If "Automatic Operations" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
-directpay.usersettings.step3.explanation4=If you have regular operations with more than one of our Partners or if you do not want the operations to be automatically performed by Direct Pay, let unchecked the "Automatic Operations" checkbox.
 directpay.usersettings.notselected=not selected
+
+directpay.usersettings.explanation1=This form receives required info to perform operations at {0}. User is responsible to provide accurate information and to keep it up to date.
+directpay.usersettings.step1.explanation1=The general information section is needed to identify user, according to legal requirements. You must provide accurate information, both to make deposits as well as withdrawals.
+directpay.usersettings.step1.explanation2=If you want to change password or revise your account settings you can do it at
+directpay.usersettings.step2.explanation1=The correct selection of bank, agency and account is needed to allow withdrawals. The bank account must be registered in the informed name and CPF, both for withdrawals as deposits.
+directpay.usersettings.step3.explanation1=The pre-selection of Partner and Automatic options are features made available in order to simplify operations and make all the process easier and faster for you. This option is specially recommended if you always deals with the same partner.
+directpay.usersettings.step3.explanation2=If "{0}" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
+directpay.usersettings.extrainfo.explanation1=You can leave some of those fields empty but, to comply with legal requirements, some operations can only be executed if your personal info is complete and required documents uploaded and verified.
+directpay.usersettings.extrainfo.explanation2=If you have regular operations with more than one partner or if you do not want the operations to be automatically performed by {0}, let the "Automatic Operations" checkbox unchecked.
+directpay.user_settings.disclaimer1=All information provided by the user Personal Information is required to
+
+directpay.documents.requireddocuments=Required Documents
+directpay.documents.explanation1=dddd #######
+directpay.documents.explanation2=Documents verification process is performed by Direct Pay team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not according to your registration, you will be notified at the registration form.
+directpay.documents.selectpictureofdocument=Select picture of the document
+directpay.documents.supportedfiletypes=(.gif, .jpg, .png, .pdf)
+directpay.documents.documentdetails=Document Details
+directpay.documents.verified=Verified
+directpay.documents.filename=File Name
+directpay.documents.documentverified=Document Verified
+
+directpay.history.usersoperationshistory=User's Operations History
+directpay.history.loghistory=Log History
+directpay.history.imagedetails=Image Details
+directpay.history.sum=Sum ({0})
+
+
+
 
 
 
@@ -472,7 +559,7 @@ auth.passwordChange.title=Change Password
 auth.passwordChange.currentPassword=Current Password
 auth.passwordChange.newPassword1=New Password (12 characters minimum)
 auth.passwordChange.newPassword2=New Password Confirmation
-auth.passwordChange.changeButton=Change
+auth.passwordChange.changeButton=Change Password
 auth.passwordChange.invalidPassword=Invalid password
 auth.passwordChange.ok=Your password was changed successfully
 auth.passwordChange.okButton=Ok
@@ -505,6 +592,18 @@ mails.sendSignUpEmail.body=Please follow this link to complete your registration
 mails.welcomeEmail.body=Your new account is ready. Click here to log in:
 mails.passwordResetEmail.body=Please follow this link to reset your password.
 mails.passwordResetOk.body=Your password was updated.  Please log in using your new password by clicking here.
+
+# Direct Pay API messages
+messages.api.success=Success
+messages.api.success.ordercreatedsuccessfully=Order created successfully
+messages.api.success.bankinfosavedsuccessfully=Bank data saved successfully
+messages.api.success.manualautomodechanged=Manual/Automatic mode changed successfully
+messages.api.error.failedtocreateorder=Failed to create order.
+messages.api.success.orderupdatedsuccessfully=Order Updated Successfully
+messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
+messages.api.error.failedtoupdateorder=Failed to update order
+
+
 
 # API error messages
 

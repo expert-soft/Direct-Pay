@@ -37,6 +37,10 @@ var API;
             return $.get(iapi_prefix+'user_name_info', 'json');
         }),
 
+        get_bank_data: APIWrap(function() {
+            return $.get(iapi_prefix+'get_bank_data', 'json');
+        }),
+
         orders_list: APIWrap(function() {
             return $.get(iapi_prefix+'orders_list', 'json');
         }),
@@ -45,8 +49,24 @@ var API;
             return $.get(iapi_prefix+'users_list', 'json');
         }),
 
+        get_docs_info: APIWrap(function() {
+            return $.get(iapi_prefix+'get_docs_info', 'json');
+        }),
+
+        management_data: APIWrap(function() {
+            return $.get(iapi_prefix+'management_data', 'json');
+        }),
+
+        get_log_events: APIWrap(function() {
+            return $.get(iapi_prefix+'get_log_events', 'json');
+        }),
+
         balance: APIWrap(function() {
             return $.get(iapi_prefix+'balance', 'json');
+        }),
+
+        get_all_img: APIWrap(function() {
+            return $.get(iapi_prefix+'get_all_img', 'json');
         }),
 
         user: APIWrap(function() {
@@ -109,6 +129,52 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
+        }),
+
+        create_order: APIWrap(function(order_type, status, partner, initial_value, bank, agency, account, doc1) {
+            return $.ajax(iapi_prefix+'create_order', {
+                type: 'POST',
+                data: JSON.stringify({order_type: order_type, status: status, partner: partner, initial_value: initial_value, bank: bank, agency: agency, account: account, doc1: doc1}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        update_order: APIWrap(function(order_id, order_type, status, net_value, comment) {
+            return $.ajax(iapi_prefix+'update_order', {
+                type: 'POST',
+                data: JSON.stringify({order_id: order_id, order_type: order_type, status: status, net_value: net_value, comment: comment}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        update_personal_info: APIWrap(function(first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode) {
+            return $.ajax(iapi_prefix+'update_personal_info', {
+                type: 'POST',
+                data: JSON.stringify({first_name: first_name, middle_name: middle_name, last_name: last_name, doc1: doc1, doc2: doc2, doc3: doc3, doc4: doc4, doc5: doc5, bank: bank, agency: agency, account: account, partner: partner, partner_account: partner_account, manualauto_mode: manualauto_mode}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        update_bank_data: APIWrap(function(bank, agency, account) {
+            return $.ajax(iapi_prefix+'update_bank_data', {
+                type: 'POST',
+                data: JSON.stringify({bank: bank, agency: agency, account: account}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        change_manualauto: APIWrap(function(manualauto_mode) {
+            return $.ajax(iapi_prefix+'change_manualauto', {
+                type: 'POST',
+                data: JSON.stringify({manualauto_mode: manualauto_mode}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
         })
+
     };
 })();

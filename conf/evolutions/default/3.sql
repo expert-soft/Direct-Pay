@@ -20,8 +20,8 @@ begin
   if a_id = 0 then
     raise 'User id 0 is not allowed to use this function.';;
   end if;;
-  update users set language=a_language
-  where id=a_id;;
+  update users set language = a_language
+  where id = a_id;;
   return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;

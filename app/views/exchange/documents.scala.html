@@ -1,0 +1,149 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@scripts = {
+    <script src="@routes.Assets.at("js/documents.js")"></script>
+}
+
+<style>
+.fileUpload { position: relative; overflow: hidden; margin: 10px; }
+.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+</style>
+
+@exchange._chrome(Messages("chrome.exchange.navigation.documents.title"), "documents", scripts) {
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-file-text"> &nbsp;</i> @Messages("directpay.navigation.documents.title")</h3>
+        </div>
+    </div>
+
+
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+            <!-- Start of form -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-file-text"> &nbsp;</i> @Messages("directpay.documents.requireddocuments")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="documents_form" action="@routes.Application.uploadDocImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                        @CSRF.formField
+                        <div id="div_doc_1" class="form-group" style="display: @if(globals.country_doc1_required && globals.country_doc1_ispicture) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc1">@globals.country_doc1_name</label>
+                            <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
+                                <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                <input type="file" name="doc1" id="uploadBtn1" class="upload"/>
+                            </div>
+                        <a href="#popupDetails" id="requestPopupDetails1" class="requestPopUp" doc="1" image_id="" fileName="" verified=""><span id="uploadText1"></span></a> &nbsp; <i id="docCheck1" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
+                        </div>
+                        <div id="div_doc_2" class="form-group" style="display: @if(globals.country_doc2_required && globals.country_doc2_ispicture) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc2">@globals.country_doc2_name</label>
+                            <div id="uploadDiv2" class="fileUpload btn btn-info" style="top: -6px;">
+                                <span id="uploadButtonCaption2" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                <input type="file" name="doc2" id="uploadBtn2" class="upload"/>
+                            </div>
+                            <a href="#popupDetails" id="requestPopupDetails2" class="requestPopUp" doc="2" image_id="" fileName="" verified=""><span id="uploadText2"></span></a> &nbsp; <i id="docCheck2" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
+                        </div>
+                        <div id="div_doc_3" class="form-group" style="display: @if(globals.country_doc3_required && globals.country_doc3_ispicture) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc3">@globals.country_doc3_name</label>
+                            <div id="uploadDiv3" class="fileUpload btn btn-info" style="top: -6px;">
+                                <span id="uploadButtonCaption3" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                <input type="file" name="doc3" id="uploadBtn3" class="upload"/>
+                            </div>
+                            <a href="#popupDetails" id="requestPopupDetails3" class="requestPopUp" doc="3" image_id="" fileName="" verified=""><span id="uploadText3"></span></a> &nbsp; <i id="docCheck3" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
+                        </div>
+                        <div id="div_doc_4" class="form-group" style="display: @if(globals.country_doc4_required && globals.country_doc4_ispicture) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc4">@globals.country_doc4_name</label>
+                            <div id="uploadDiv4" class="fileUpload btn btn-info" style="top: -6px;">
+                                <span id="uploadButtonCaption4" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                <input type="file" name="doc4" id="uploadBtn4" class="upload"/>
+                            </div>
+                            <a href="#popupDetails" id="requestPopupDetails4" class="requestPopUp" doc="4" image_id="" fileName="" verified=""><span id="uploadText4"></span></a> &nbsp; <i id="docCheck4" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
+                        </div>
+                        <div id="div_doc_5" class="form-group" style="display: @if(globals.country_doc5_required && globals.country_doc5_ispicture) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc5">@globals.country_doc5_name</label>
+                            <div id="uploadDiv5" class="fileUpload btn btn-info" style="top: -6px;">
+                                <span id="uploadButtonCaption5" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                <input type="file" name="doc5" id="uploadBtn5" class="upload"/>
+                            </div>
+                            <a href="#popupDetails" id="requestPopupDetails5" class="requestPopUp" doc="5" image_id="" fileName="" verified=""><span id="uploadText5"></span></a> &nbsp; <i id="docCheck5" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">@Messages("terminology.upload")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+            <!-- End of form -->
+
+
+
+
+            <!-- Instructions -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance2">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.documents.explanation1")</p>
+                    <p>@Messages("directpay.documents.explanation2")</p>
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        <p>@Messages("directpay.overview.convertionsareperformedbypartners", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end of Instructions -->
+
+    </div>
+
+
+
+
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.documents.disclaimer1")</p>
+    </div>
+    <div class="clearfix"></div>
+        <!-- end of page content -->
+
+
+
+        <!-- Modal page for doc details -->
+    <div id="popupDetails" class="overlay">
+        <div id="popupInfoDiv" class="popup">
+            <div class="title_left">
+                <h3><i class="fa fa-file-text"> &nbsp;</i> @Messages("directpay.documents.documentdetails")</h3>
+            </div>
+            <h2><span id="popUpPictureTitle"></span></h2>
+            <input type="hidden" id="hidden_verified" yes="@Messages("terminology.yes")" no="@Messages("terminology.no")">
+            <div id="buttonsDiv" class="popupTopButtons">
+                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
+            </div>
+            <a class="popupClose" href="#">&times;</a>
+            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name"><input type="hidden" id="popUpPictureDoc3" value="@globals.country_doc3_name"><input type="hidden" id="popUpPictureDoc4" value="@globals.country_doc4_name"><input type="hidden" id="popUpPictureDoc5" value="@globals.country_doc5_name">
+            <p>@Messages("directpay.documents.verified"): <span id="popUpPictureInfo1"></span> &nbsp; <i id="popupCheck" class="fa fa-check"  style="display: none; font-size: 14px; color: yellowgreen;"></i></p>
+            <p>@Messages("directpay.documents.filename"): <span id="popUpPictureInfo2"></span></p>
+            <p><img src="placeholder" id="the_picture"></p>
+            <p><span id="popUpPictureInfo3"></span></p>
+            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
+        </div>
+    </div>
+        <!-- end of Modal page for doc details -->
+
+}

@@ -1,3 +1,122 @@
+/* Created by me */
+
+/* Pop up information */
+.requestPopUp {
+  transition: all 200ms;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+/*  color: #f00; */
+}
+
+.requestPopUp:hover {
+/*  color: #06D85F; */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  max-width: 800px;
+  max-height: 85%;
+  position: relative;
+  left: 100px;
+  top: 10px;
+  overflow-y: auto;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .popupClose {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  transition: all 200ms;
+  font-size: 36px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.popup .popupTopButtons {
+  position: absolute;
+  top: 8px;
+  right: 50px;
+  text-align: right;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.popup .close:hover {
+  color: #06D85F;
+}
+
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+.popup .contentCenter {
+  max-height: 30%;
+  overflow: auto;
+  text-align: center;
+}
+
+.popup::-webkit-scrollbar {
+  width: 12px;
+}
+.popup::-webkit-scrollbar-thumb{
+  background-color:#ccd;
+  border-radius:10px;
+}
+.popup::-webkit-scrollbar-thumb:hover{
+  background-color:#BF4649;
+  border:1px solid #333333;
+}
+.popup::-webkit-scrollbar-thumb:active{
+  background-color:#A6393D;
+  border:1px solid #333333;
+}
+.popup::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+  border-left: 1px solid #ccc;
+}
+.popup::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+
+
+
+
+
+
+
 .daterangepicker .ranges li {
   color: #73879C; }
   .daterangepicker .ranges li.active, .daterangepicker .ranges li:hover {
@@ -200,8 +319,8 @@
   margin-top: 10px; }
 
 .profile_pic {
-  width: 70px;
-  height: 70px;
+  width: 75px;
+  height: 75px;
   float: left; }
 
 .img-circle.profile_img {
@@ -212,7 +331,7 @@
   z-index: 1000;
   position: inherit;
   border: 1px solid rgba(52, 73, 94, 0.44);
-  padding: 20px 20px; }
+  padding: 3px 3px; }
 
 .profile_info {
   padding: 5px 10px 15px 10px;
@@ -472,6 +591,9 @@ body {
 .fixed_height_390 {
   height: 390px; }
 
+.fixed_height_420 {
+  height: 420px
+}
 .overflow_hidden {
   overflow: hidden; }
 
@@ -778,7 +900,7 @@ a:hover, a:focus {
 
 footer {
   background: #fff;
-  padding: 15px 20px;
+  padding: 8px 20px;
   display: block; }
 
 .nav-sm footer {

@@ -1,111 +1,186 @@
 @(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
 
+@import helper._
+
 @scripts = {
-    <script src="@routes.Assets.at("js/exchange_index.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/fee_messages.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/deposit.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
+    <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {D} else {DCS}"></input>
         <!-- page content -->
+
     <div class="page-title">
         <div class="title_left">
-            <h3><i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")</h3>
+            <h3>
+                @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
+                    <i class="fa fa-plus"> &nbsp;</i> @Messages("directpay.navigation.deposit.title")
+                } else {
+                    <i class="fa fa-plus"> </i> <i class="fa fa-upload"></i> @Messages("directpay.deposit.depositconvertsend")
+                }
+            </h3>
         </div>
     </div>
-    <div class="normal-text">
-        <p>@Messages("directpay.deposit.explanation1", globals.country_currency_symbol, globals.country_critical_value2):</p>
 
-        <table id="table_working_banks" class="table table-striped responsive">
-            <thead>
-                <tr>
-                    <th>@Messages("terminology.bank")</th>
-                    <th>@Messages("terminology.agency")</th>
-                    <th>@Messages("terminology.account")</th>
-                    <th>@Messages("terminology.info")</th>
-                </tr>
-            </thead>
-            <tbody>
-            @if(globals.country_working_bank1_name != "") {
-                <tr>
-                    <td>@globals.country_working_bank1_name</td>
-                    <td>@globals.country_working_bank1_agency</td>
-                    <td>@globals.country_working_bank1_account</td>
-                    <td>@globals.country_working_bank1_reference</td>
-                </tr>
-            }
-            @if(globals.country_working_bank2_name != "") {
-                <tr>
-                    <td>@globals.country_working_bank2_name</td>
-                    <td>@globals.country_working_bank2_agency</td>
-                    <td>@globals.country_working_bank2_account</td>
-                    <td>@globals.country_working_bank2_reference</td>
-                </tr>
-            }
-            @if(globals.country_working_bank3_name != "") {
-                <tr>
-                    <td>@globals.country_working_bank3_name</td>
-                    <td>@globals.country_working_bank3_agency</td>
-                    <td>@globals.country_working_bank3_account</td>
-                    <td>@globals.country_working_bank3_reference</td>
-                </tr>
-            }
-            @if(globals.country_working_bank4_name != "") {
-                <tr>
-                    <td>@globals.country_working_bank4_name</td>
-                    <td>@globals.country_working_bank4_agency</td>
-                    <td>@globals.country_working_bank4_account</td>
-                    <td>@globals.country_working_bank4_reference</td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        <br>
-    </div>
+    <input type="hidden" id="hidden_fees_information"
+    currency_code="@globals.country_currency_code"
+    currency_crypto="@globals.country_currency_crypto"
+    decimal_separator = "@globals.country_decimal_separator"
+    minimum_value = "@globals.country_minimum_value.toString"
+    critical_value1 = "@globals.country_critical_value1.toString"
+    critical_value2 = "@globals.country_critical_value2.toString"
+    fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
+    fee_send_percent = "@globals.country_fee_send_percent.toString"
+    ></input>
+
+<style>
+.fileUpload { position: relative; overflow: hidden; margin: 10px; }
+.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+</style>
 
 
 
-    <p>@Messages("directpay.deposit.explanation2")</p>
-
-        <!-- Start of form -->
     <div class="clearfix"></div>
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title"><h2>@Messages("directpay.deposit.submitdepositreceipt")</h2><div class="clearfix"></div></div>
+
+
+            <!-- Start of form -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-file-text-o"></i> &nbsp; @Messages("directpay.deposit.submitdepositreceipt")</h2>
+                    <div class="clearfix"></div>
+                </div>
                 <div class="x_content">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form id="deposit_form" action="@routes.Application.uploadDepositImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                        @CSRF.formField
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol) <span class="required">*</span>
-                            </label>
-                            <div class="col-md-3 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("terminology.value")">
+                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input id="value" class="form-control col-md-3 col-xs-6 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="doc1">@Messages("directpay.deposit.depositreceipt") <span class="required">*</span></label>
-                            <div class="col-sm-6">
-                                <div class="input-group"><input type="text" class="form-control" id="doc1" name="doc1" title="@Messages("directpay.usersettings.selectpictureofdocument") @Messages("directpay.usersettings.supportedfiletypes")">
-                                    <span class="input-group-btn"><button type="button" class="btn btn-info">@Messages("directpay.usersettings.browsebutton")</button></span>
+                        <div class="form-group"> <!-- http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/ -->
+                            <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.deposit.depositreceipt")</label>
+                            <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
+                            <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
+                                <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                                <input type="file" name="info_holder" id="uploadBtn1" class="upload"/>
+                            </div>
+                            <span id="uploadText1"></span>
+                        </div>
+
+                        @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
+                                        <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                        @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
+                                        @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <p>@Messages("directpay.deposit.explanation3")</p>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-6">@Messages("directpay.deposit.accountatpartner")</label>
+                                <div class="col-md-4 col-sm-3">
+                                    <input id="partner_account" class="form-control col-md-3 col-xs-6" type="text" title="@Messages("directpay.deposit.youraccountatpartner")">
+                                </div>
+                            </div>
+                        }
+                        @if(globals.country_fee_deposit_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_deposit_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary">@Messages("terminology.submit")</button>
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+            <!-- End of form -->
+
+
+            <!-- Instructions -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance2">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.deposit.shortinfo1"):</p>
+
+                    <table id="table_preferential_banks" class="table table-striped responsive">
+                        <thead>
+                            <tr>
+                                <th>@Messages("terminology.bank")</th>
+                                <th>@Messages("terminology.agency")</th>
+                                <th>@Messages("terminology.account")</th>
+                                <th>@Messages("terminology.info")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(globals.country_preferential_bank1_name != "") {
+                            <tr>
+                                <td>@globals.country_preferential_bank1_name</td>
+                                <td>@globals.country_preferential_bank1_agency</td>
+                                <td>@globals.country_preferential_bank1_account</td>
+                                <td>@globals.country_preferential_bank1_reference</td>
+                            </tr>
+                        }
+                        @if(globals.country_preferential_bank2_name != "") {
+                            <tr>
+                                <td>@globals.country_preferential_bank2_name</td>
+                                <td>@globals.country_preferential_bank2_agency</td>
+                                <td>@globals.country_preferential_bank2_account</td>
+                                <td>@globals.country_preferential_bank2_reference</td>
+                            </tr>
+                        }
+                        @if(globals.country_preferential_bank3_name != "") {
+                            <tr>
+                                <td>@globals.country_preferential_bank3_name</td>
+                                <td>@globals.country_preferential_bank3_agency</td>
+                                <td>@globals.country_preferential_bank3_account</td>
+                                <td>@globals.country_preferential_bank3_reference</td>
+                            </tr>
+                        }
+                        @if(globals.country_preferential_bank4_name != "") {
+                            <tr>
+                                <td>@globals.country_preferential_bank4_name</td>
+                                <td>@globals.country_preferential_bank4_agency</td>
+                                <td>@globals.country_preferential_bank4_account</td>
+                                <td>@globals.country_preferential_bank4_reference</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                    <br>
+                    <p>@Messages("directpay.deposit.shortinfo2") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_critical_value2">@globals.country_critical_value2</span></span>.</p>
+                    <p>@Messages("directpay.deposit.shortinfo3")</p>
+                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_deposit_percent) %</span></p> }
+                    @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0) {
+                        <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>}.</p>
+                    }
+
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        <p>@Messages("directpay.deposit.explanation1")</p>
+                        <p>@Messages("directpay.deposit.explanation2")</p>
+                        @if(globals.country_fee_deposit_percent != 0) {
+                            @if(globals.country_minimum_value != 0) {
+                                <p>@Messages("directpay.deposit.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value">@globals.numberFormat(globals.country_minimum_value)</span></span> @Messages("directpay.deposit.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_minimum_value_extra_fee">@globals.numberFormat(globals.country_minimum_value * 0.02)</span></span></p>
+                            }
+                        } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end of Instructions -->
+
     </div>
-    </div>
-        <!-- End of form -->
-
-
-
-
 
 
 
@@ -117,7 +192,4 @@
     </div>
     <div class="clearfix"></div>
     <!-- /page content -->
-
-
-
 }

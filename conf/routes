@@ -8,18 +8,19 @@ GET         /messages.js                               controllers.Application.j
 
 # Exchange pages
 GET         /account                                   controllers.Application.account
-GET         /wallet                                    controllers.Application.wallet
+GET         /dashboard                                 controllers.Application.dashboard
 GET         /user_settings                             controllers.Application.user_settings
+GET         /documents                                 controllers.Application.documents
 GET         /history                                   controllers.Application.history
 GET         /deposit                                   controllers.Application.deposit
-GET         /ccrypto                                   controllers.Application.ccrypto
+GET         /tocrypto                                  controllers.Application.tocrypto
 GET         /send                                      controllers.Application.send
 GET         /receive                                   controllers.Application.receive
-GET         /cfiat                                     controllers.Application.cfiat
+GET         /tofiat                                    controllers.Application.tofiat
 GET         /withdraw                                  controllers.Application.withdraw
-GET         /automatic                                 controllers.Application.automatic
 
 # Administrator's pages
+GET         /management                                controllers.Application.management
 GET         /users_list                                controllers.Application.users_list
 GET         /orders_list                               controllers.Application.orders_list
 
@@ -31,19 +32,32 @@ GET         /chlang/:lang                              controllers.Application.c
 GET         /assets/*file                              controllers.Assets.at(path="/public", file)
 
 # APIv1
-GET         /iapi/1                                     controllers.IAPI.APIv1.index
-GET         /iapi/1/user                                controllers.IAPI.APIv1.user
-GET         /iapi/1/user_name_info                      controllers.IAPI.APIv1.user_name_info
-GET         /iapi/1/users_list                          controllers.IAPI.APIv1.users_list
-GET         /iapi/1/orders_list                         controllers.IAPI.APIv1.orders_list
-GET         /iapi/1/balance                             controllers.IAPI.APIv1.balance
-POST        /iapi/1/turnoff_tfa                         controllers.IAPI.APIv1.turnOffTFA
-POST        /iapi/1/turnon_tfa                          controllers.IAPI.APIv1.turnOnTFA
-POST        /iapi/1/turnoff_emails                      controllers.IAPI.APIv1.turnOffEmails
-POST        /iapi/1/turnon_emails                       controllers.IAPI.APIv1.turnOnEmails
-POST        /iapi/1/gen_totp_secret                     controllers.IAPI.APIv1.genTOTPSecret
-POST        /iapi/1/remove_pgp                          controllers.IAPI.APIv1.removePgp
-POST        /iapi/1/add_pgp                             controllers.IAPI.APIv1.addPgp
+GET         /iapi/1                                    controllers.IAPI.APIv1.index
+GET         /iapi/1/user                               controllers.IAPI.APIv1.user
+GET         /iapi/1/user_name_info                     controllers.IAPI.APIv1.user_name_info
+GET         /iapi/1/get_bank_data                      controllers.IAPI.APIv1.get_bank_data
+GET         /iapi/1/users_list                         controllers.IAPI.APIv1.users_list
+GET         /iapi/1/management_data                    controllers.IAPI.APIv1.management_data
+GET         /iapi/1/orders_list                        controllers.IAPI.APIv1.orders_list
+GET         /iapi/1/get_docs_info                      controllers.IAPI.APIv1.get_docs_info
+GET         /iapi/1/get_log_events                     controllers.IAPI.APIv1.get_log_events
+GET         /iapi/1/balance                            controllers.IAPI.APIv1.balance
+POST        /iapi/1/turnoff_tfa                        controllers.IAPI.APIv1.turnOffTFA
+POST        /iapi/1/turnon_tfa                         controllers.IAPI.APIv1.turnOnTFA
+POST        /iapi/1/turnoff_emails                     controllers.IAPI.APIv1.turnOffEmails
+POST        /iapi/1/turnon_emails                      controllers.IAPI.APIv1.turnOnEmails
+POST        /iapi/1/gen_totp_secret                    controllers.IAPI.APIv1.genTOTPSecret
+POST        /iapi/1/remove_pgp                         controllers.IAPI.APIv1.removePgp
+POST        /iapi/1/add_pgp                            controllers.IAPI.APIv1.addPgp
+
+POST        /iapi/1/create_order                       controllers.IAPI.APIv1.create_order
+POST        /iapi/1/update_order                       controllers.IAPI.APIv1.update_order
+POST        /iapi/1/update_personal_info               controllers.IAPI.APIv1.update_personal_info
+POST        /iapi/1/update_bank_data                   controllers.IAPI.APIv1.update_bank_data
+POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
+POST        /dashboard                                 controllers.Application.uploadDepositImage()
+POST        /documents                                 controllers.Application.uploadDocImage()
+GET         /images/*image_id                          controllers.Application.getimage(image_id)
 
 
 
@@ -69,3 +83,4 @@ POST        /password                                  controllers.PasswordChang
 POST        /authenticate                              controllers.ProviderController.loginPost
 POST        /tfa                                       controllers.ProviderController.tfaPost
 GET         /not-authorized                            controllers.ProviderController.notAuthorized
+GET         /iapi/1/return_all_images                  controllers.IAPI.APIv1.return_all_images

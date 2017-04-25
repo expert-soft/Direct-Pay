@@ -54,7 +54,8 @@ class UserModel(val db: String = "default") {
           row[String]("language"),
           row[Boolean]("on_mailing_list"),
           row[Boolean]("tfa_enabled"),
-          row[Option[String]]("pgp")
+          row[Option[String]]("pgp"),
+          row[Boolean]("manualauto_mode")
         )
       ).headOption
     }
@@ -88,15 +89,17 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("on_mailing_list"),
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
-      row[String]("language")) match {
+      row[String]("language"),
+      row[Option[Boolean]]("manualauto_mode")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
           Some(on_mailing_list: Boolean),
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
-          language: String) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp))
+          language: String,
+          manualauto_mode: Option[Boolean]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode.getOrElse(false)))
         case _ =>
           None
       }
@@ -112,15 +115,17 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("on_mailing_list"),
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
-      row[Option[String]]("language")) match {
+      row[Option[String]]("language"),
+      row[Option[Boolean]]("manualauto_mode")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
           Some(on_mailing_list: Boolean),
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
-          Some(language: String)) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp))
+          Some(language: String),
+          Some(manualauto_mode: Boolean)) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode))
         case _ =>
           None
       }
@@ -273,4 +278,62 @@ class UserModel(val db: String = "default") {
       case _: Throwable => 0
     }
   }
+
+  def create_order(uid: Long, country_id: String, order_type: Option[String], status: Option[String], partner: Option[String], currency: String, initial_value: Option[BigDecimal], local_fee: Option[BigDecimal], global_fee: Option[BigDecimal], bank: Option[String], agency: Option[String], account: Option[String], doc1: Option[String]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select create_order as success from create_order($uid, $country_id, ${order_type.get}, ${status.get}, ${partner.get}, $currency, ${initial_value.get}, ${local_fee.get}, ${global_fee.get}, ${bank}, ${agency}, ${account}, ${doc1})
+    """.execute()
+  }
+
+  def create_order_with_picture(uid: Long, country_id: String, order_type: String, status: String, partner: String, currency: String, initial_value: BigDecimal, local_fee: BigDecimal, global_fee: BigDecimal, bank: String, agency: String, account: String, doc1: String, image_id: Long) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select create_order as success from create_order($uid, $country_id, $order_type, $status, $partner, $currency, $initial_value, $local_fee, $global_fee, ${bank}, ${agency}, ${account}, ${doc1}, ${image_id})
+    """.execute()
+  }
+
+  def update_user_doc(uid: Long, docNumber: String, image_id: Long, fileName: String) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select update_user_doc as success from update_user_doc($uid, $docNumber, $image_id, $fileName)
+    """.execute()
+  }
+
+  def update_order(order_id: Long, status: String, net_value: BigDecimal, comment: String, local_fee: BigDecimal, global_fee: BigDecimal, admin_id: Long) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select update_order as success from update_order($order_id, $status, $net_value, $comment, $local_fee, $global_fee, $admin_id)
+    """.execute()
+  }
+
+  def update_personal_info(uid: Long, first_name: Option[String], middle_name: Option[String], last_name: Option[String], doc1: Option[String], doc2: Option[String], doc3: Option[String], doc4: Option[String], doc5: Option[String], bank: Option[String], agency: Option[String], account: Option[String], partner: Option[String], partner_account: Option[String], manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
+    val middle_name_s = middle_name.getOrElse("")
+    val doc1_s = doc1.getOrElse("")
+    val doc2_s = doc2.getOrElse("")
+    val doc3_s = doc3.getOrElse("")
+    val doc4_s = doc4.getOrElse("")
+    val doc5_s = doc5.getOrElse("")
+    val bank_s = bank.getOrElse("")
+    val agency_s = agency.getOrElse("")
+    val account_s = account.getOrElse("")
+    val partner_s = partner.getOrElse("")
+    val partner_account_s = partner_account.getOrElse("")
+    val manualauto_mode_b = manualauto_mode.getOrElse(false)
+    SQL"""
+     select update_personal_info as success from update_personal_info($uid, ${first_name.get}, ${middle_name_s}, ${last_name.get}, ${doc1_s}, ${doc2_s}, ${doc3_s}, ${doc4_s}, ${doc5_s}, ${bank_s}, ${agency_s}, ${account_s}, ${partner_s}, ${partner_account_s}, ${manualauto_mode_b})
+    """.execute()
+  }
+
+  def update_bank_data(uid: Long, bank: Option[String], agency: Option[String], account: Option[String]) = DB.withConnection(db) { implicit c =>
+    val bank_s = bank.getOrElse("")
+    val agency_s = agency.getOrElse("")
+    val account_s = account.getOrElse("")
+    SQL"""
+     select update_bank_data as success from update_bank_data($uid, ${bank_s}, ${agency_s}, ${account_s})
+    """.execute()
+  }
+
+  def change_manualauto(uid: Long, manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select change_manualauto as success from change_manualauto($uid, ${manualauto_mode.get})
+    """.execute()
+  }
+
 }

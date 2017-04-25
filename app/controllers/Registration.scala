@@ -165,7 +165,10 @@ class Registration @Inject() (val messagesApi: MessagesApi) extends Controller w
               t.email,
               0, //not verified
               t.language,
-              info.mailingList
+              info.mailingList,
+              false,
+              None,
+              false
             ), info.password, token, info.pgp)
             txbitsUserService.deleteToken(t.uuid)
             if (UsernamePasswordProvider.sendWelcomeEmail) {

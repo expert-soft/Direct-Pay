@@ -10,17 +10,68 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.account.title"), "user", scripts) {
+        <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+            <h3><i class="fa fa-key"> &nbsp;</i> @Messages("directpay.security.securitysettings")</h3>
+        </div>
+    </div>
 
+
+
+
+    <div class="clearfix"></div>
     <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">@Messages("exchange.account.info.title")</div>
-                <div class="panel-body">
+            <!-- Start of form -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance1">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-key"></i> &nbsp; @Messages("directpay.security.securitysettings")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
                     <p id="acct-info"></p>
                 </div>
             </div>
         </div>
+            <!-- end of Form -->
+
+
+
+            <!-- Instructions -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance2">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.usersettings.explanation1", globals.country_system_name)</p>
+
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.usersettings.step1")</span>
+                    <p>@Messages("directpay.usersettings.step1.explanation1")</p>
+
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.usersettings.step2")</span>
+                    <p>@Messages("directpay.usersettings.step2.explanation1")</p>
+
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.usersettings.step3")</span>
+                    <p>@Messages("directpay.usersettings.step3.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.usersettings.step3.explanation2", Messages("directpay.usersettings.automatic.item"))</p>
+                    <div class="x_extrainfo_content" style="display: none;">
+
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        <p>@Messages("directpay.usersettings.extrainfo.explanation1")</p>
+                        <p>@Messages("directpay.usersettings.extrainfo.explanation2", globals.country_system_name)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end of Instructions -->
     </div>
+
+
+
+
 
     <div class="modal fade" id="pgp-add-modal" tabindex="-1" role="dialog" aria-labelledby="pgp-add-modal" aria-hidden="true">
         <div class="modal-dialog">
@@ -191,30 +242,8 @@
 
 
     <script id="acct-info-template" type="text/x-handlebars-template">
-        <p>@Messages("terminology.email"): {{email}}</p>
+        <p>@Messages("directpay.security.accountemail"): <span class="calc_mid_destak_info">{{email}}</span></p>
         <!--<p>@Messages("terminology.verificationLevel"): {{verification}}</p>-->
-
-        <p>
-            {{#onMailingList}}
-            <p>@Messages("exchange.account.mailinglist"): @Messages("terminology.on")</p>
-            <button type="submit" class="btn btn-default" id="turnoff-emails">@Messages("emails.off.title")</button>
-            {{/onMailingList}}
-            {{^onMailingList}}
-            <p>@Messages("exchange.account.mailinglist"): @Messages("terminology.off")</p>
-            <button type="submit" class="btn btn-default" id="turnon-emails">@Messages("emails.on.title")</button>
-            {{/onMailingList}}
-        </p>
-
-        <p>
-            {{#TFAEnabled}}
-                <p>@Messages("exchange.account.tfa_login"): @Messages("terminology.on")</p>
-                <button type="submit" class="btn btn-danger" id="turnoff-tfa">@Messages("tfa.off.title")</button>
-            {{/TFAEnabled}}
-            {{^TFAEnabled}}
-                <p>@Messages("exchange.account.tfa_login"): @Messages("terminology.off")</p>
-                <button type="submit" class="btn btn-primary" id="turnon-tfa">@Messages("tfa.on.title")</button>
-            {{/TFAEnabled}}
-        </p>
 
         <p>
             <a href="@controllers.routes.PasswordChange.page().absoluteURL(UsernamePasswordProvider.sslEnabled)" class="btn btn-default">
@@ -222,17 +251,49 @@
             </a>
         </p>
 
+        <div class="ln_solid"></div>
+
+        <p>
+            {{#TFAEnabled}}
+                <p>@Messages("exchange.account.tfa_login"): <span class="calc_mid_destak_info">@Messages("terminology.on")</span></p>
+                <button type="submit" class="btn btn-danger" id="turnoff-tfa">@Messages("tfa.off.title")</button>
+            {{/TFAEnabled}}
+            {{^TFAEnabled}}
+                <p>@Messages("exchange.account.tfa_login"): <span class="calc_mid_destak_info">@Messages("terminology.off")</span></p>
+                <button type="submit" class="btn btn-primary" id="turnon-tfa">@Messages("tfa.on.title")</button>
+            {{/TFAEnabled}}
+        </p>
+
+        <br>
+
         <p>
             {{#pgp}}
             <p>@Messages("terminology.pgp_public_key"):</p>
-            <pre>{{.}}</pre>
+            <span class="calc_mid_destak_info"><pre>{{.}}</pre></span>
             <button type="submit" class="btn btn-danger" id="turnoff-pgp">@Messages("pgp.remove.title")</button>
             {{/pgp}}
             {{^pgp}}
-            <p>@Messages("terminology.pgp_public_key"): @Messages("terminology.none")</p>
+            <p>@Messages("terminology.pgp_public_key"): <span class="calc_mid_destak_info">@Messages("terminology.none")</span></p>
             <button type="submit" class="btn btn-primary" id="turnon-pgp">@Messages("pgp.add.title")</button>
             {{/pgp}}
         </p>
 
+
+        <div class="ln_solid"></div>
+
+        <p>
+            {{#onMailingList}}
+            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.on")</span></p>
+            <button type="submit" class="btn btn-default" id="turnoff-emails">@Messages("emails.off.title")</button>
+            {{/onMailingList}}
+            {{^onMailingList}}
+            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.off")</span></p>
+            <button type="submit" class="btn btn-default" id="turnon-emails">@Messages("emails.on.title")</button>
+            {{/onMailingList}}
+        </p>
+
     </script>
+
+
+
 }

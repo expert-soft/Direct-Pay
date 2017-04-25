@@ -2,92 +2,133 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/fee_messages.js")"></script>
+    <script src="@routes.Assets.at("js/send.js")"></script>
 }
 
 @exchange._chrome(Messages("terminology.send"), "dashboard", scripts) {
+    <input type="hidden" id="hidden_page" value="S"></input>
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
             <h3><i class="fa fa-upload"> &nbsp;</i> @Messages("directpay.send.sendtopartner")</h3>
         </div>
     </div>
-    <div class="normal-text">
-        <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
-    </div>
 
-        <!-- Wallet -->
-    <input type="hidden" id="hidden_currency_code" value="@globals.country_currency_code"></input>
-    <input type="hidden" id="hidden_currency_crypto" value="@globals.country_currency_crypto"></input>
+
+
     <div class="clearfix"></div>
     <div class="row">
+            <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div  id="wallet" class="x_panel">
+            <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
-                    <h2>@Messages("terminology.wallet.yourwallet")</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.send.sendtopartner")</h2>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
-                    <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
-                    <table id="table_wallet" class="table-wallet">
-                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak"><span id="available_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span></td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
-                        <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
-                    </table>
-                    <p>Texto.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="balance">
-        <script id="balance-template" type="text/x-handlebars-template"></script>
-    </div>
-        <!-- end of Wallet -->
-
-
-
-        <!-- Start of form -->
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title"><h2>@Messages("directpay.send.sendtopartner")</h2><div class="clearfix"></div></div>
                 <div class="x_content">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.value") (@globals.country_currency_crypto) <span class="required">*</span>
-                            </label>
-                            <div class="col-md-3 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-12" required="required" type="text" title="@Messages("directpay.send.valuetobesent")">
+                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_crypto)</label>
+                            <div class="col-md-4 col-sm-6">
+                                <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation"  type="text" title="@Messages("directpay.send.valuetobesent")" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
+                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.partner")</label>
+                            <div class="col-md-8 col-sm-4 col-xs-12">
                                 <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                     <option value="00">@Messages("directpay.usersettings.notselected")</option>
-                                    <option value="@globals.country_partner1">@globals.country_partner1</option>
+                                    @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
+                                    @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
                                 </select>
                             </div>
                         </div>
-                        <p>@Messages("directpay.send.explanation2")</p>
+                        @if(globals.country_fee_send_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_send_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary">@Messages("terminology.send")</button>
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary triggers_submit">@Messages("terminology.send")</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+            <!-- End of form -->
+
+
+
+            <!-- Wallet -->
+        <input type="hidden" id="hidden_fees_information"
+        currency_code="@globals.country_currency_code"
+        currency_crypto="@globals.country_currency_crypto"
+        wallet_available="0"
+        wallet_onhold="0"
+        wallet_crypto="0"
+        wallet_total="0"
+        decimal_separator = "@globals.country_decimal_separator"
+        minimum_value = "@globals.country_minimum_value.toString"
+        critical_value1 = "@globals.country_critical_value1.toString"
+        critical_value2 = "@globals.country_critical_value2.toString"
+        preferential_bank1_code = "@globals.country_preferential_bank1_code"
+        preferential_bank1_name = "@globals.country_preferential_bank1_name"
+        preferential_bank2_code = "@globals.country_preferential_bank2_code"
+        preferential_bank2_name = "@globals.country_preferential_bank2_name"
+        preferential_bank3_code = "@globals.country_preferential_bank3_code"
+        preferential_bank3_name = "@globals.country_preferential_bank3_name"
+        preferential_bank4_code = "@globals.country_preferential_bank4_code"
+        preferential_bank4_name = "@globals.country_preferential_bank4_name"
+        nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
+        nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
+        fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
+        fee_send_percent = "@globals.country_fee_send_percent.toString"
+        fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
+        ></input>
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
+                <div class="x_title">
+                    <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
+                    <table id="table_wallet" class="table-wallet">
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
+                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="balance">
+            <script id="balance-template" type="text/x-handlebars-template"></script>
+        </div>
+            <!-- end of Wallet -->
+
+            <!-- Instructions -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance2">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>@Messages("directpay.send.shortinfo1", globals.country_currency_crypto)</p>
+                    <p>@Messages("directpay.send.yourmaximumsend"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_maximum_send" class="calc_destak_info"></span></p>
+                    <p>@Messages("directpay.send.sendfee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>} else {@Messages("directpay.overview.thisoperationdoesnotchargefees")}.</p>
+                    <div class="x_extrainfo_content" style="display: none;">
+                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- end of Instructions -->
+
     </div>
-    </div>
-        <!-- End of form -->
-
-
-
-
 
 
 

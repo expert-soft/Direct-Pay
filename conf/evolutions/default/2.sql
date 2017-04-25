@@ -386,7 +386,7 @@ begin
     elsif byte >= 97 and byte <= 122 then
       select byte - 97 into tmp;;
     else
-      raise 'Failed to base32 decode due to invalid character %s, code: %', chr(byte), byte;;
+      raise 'Failed to base32 decode due to invalid character %s, code: %s', chr(byte), byte;;
     end if;;
     select result || tmp::bit(5) into result;;
   end loop;;
@@ -716,48 +716,49 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 create or replace function
 balance (
-  a_uid bigint,
+  a_user_id bigint,
   a_api_key text,
-  a_fiat varchar(16),
-  a_crypto varchar(16),
+  a_currency_name varchar(16),
   out currency varchar(16),
   out pos integer,
   out amount numeric(23,8),
   out hold numeric(23,8),
-  out is_fiat bool
+  out amount_c numeric(23,8),
+  out hold_c numeric(23,8)
 ) returns setof record as $$
 declare
-  a_user_id bigint;;
+  b_user_id bigint;;
 begin
-  if a_uid = 0 then
+  if a_user_id = 0 then
     raise 'User id 0 is not allowed to use this function.';;
   end if;;
 
   if a_api_key is not null then
-    select user_id into a_user_id from users_api_keys
+    select user_id into b_user_id from users_api_keys
     where api_key = a_api_key and active = true and list_balance = true;;
   else
-    a_user_id := a_uid;;
+    b_user_id := a_user_id;;
   end if;;
 
-  if a_user_id is null then
+  if b_user_id is null then
     return;;
   end if;;
 
-  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, c.is_fiat from currencies c
-  left outer join balances b on c.currency = b.currency and user_id = a_user_id
-  where c.currency = a_fiat or c.currency = a_crypto
+  return query select c.currency, c.position as pos, coalesce(b.balance, 0) as amount, b.hold, b.balance_c, b.hold_c from currencies c
+  left outer join balances b on c.currency = b.currency and user_id = b_user_id
+  where c.currency = a_currency_name
   order by c.position asc;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
+
 -- noinspection SqlNoDataSourceInspection
 create or replace function
-get_user_name_info (
-  a_id bigint,
-  out name varchar(64),
-  out surname varchar(128),
+  get_user_name_info (
+      a_id bigint,
+  out first_name varchar(64),
   out middle_name varchar(128),
+  out last_name varchar(128),
   out doc1 varchar(256),
   out doc2 varchar(256),
   out doc3 varchar(256),
@@ -765,39 +766,97 @@ get_user_name_info (
   out doc5 varchar(256),
   out bank varchar (16),
   out agency varchar (16),
-  out account varchar (16),
-  out automatic boolean,
-  out partner varchar (64)
+  out account varchar (64),
+  out partner varchar (64),
+  out partner_account varchar (256)
 ) returns setof record as $$
- begin
-  return query select uf.name, uf.surname, uf.middle_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.automatic, uc.partner
-  from users_name_info uf
-  left join users_connections uc on uc.user_id = uf.user_id
+begin
+  return query select uf.first_name, uf.middle_name, uf.last_name, uf.doc1, uf.doc2, uf.doc3, uf.doc4, uf.doc5, uc.bank, uc.agency, uc.account, uc.partner, uc.partner_account
+    from users_name_info uf
+      left join users_connections uc on uc.user_id = uf.user_id
   where uf.user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
 
 create or replace function
-get_users_list (
-  out id bigint,
-  out created timestamp(3),
-  out email varchar(256),
-  out active bool,
-  out name varchar(64),
-  out surname varchar(128),
-  out middle_name varchar(128),
+  get_docs_info (
+      a_id bigint,
+  out user_id bigint,
   out doc1 varchar(256),
   out doc2 varchar(256),
   out doc3 varchar(256),
   out doc4 varchar(256),
   out doc5 varchar(256),
-  out ver1 boolean
+  out ver1 bool,
+  out ver2 bool,
+  out ver3 bool,
+  out ver4 bool,
+  out ver5 bool,
+  out pic1 bigint,
+  out pic2 bigint,
+  out pic3 bigint,
+  out pic4 bigint,
+  out pic5 bigint
+
+) returns setof record as $$
+declare
+  a_user_id bigint;;
+begin
+--  select un.user_id into a_user_id from users_name_info un where first_name = 'Marcelo';;
+
+  return query select un.user_id, un.doc1, un.doc2, un.doc3, un.doc4, un.doc5, un.ver1, un.ver2, un.ver3, un.ver4, un.ver5
+                 , un.pic1, un.pic2, un.pic3, un.pic4, un.pic5
+    from users_name_info un where un.user_id != 0 and un.first_name = 'Marcelo';;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+
+
+create or replace function
+  get_bank_data (
+      a_id bigint,
+  out bank varchar (16),
+  out agency varchar (16),
+  out account varchar (64)
 ) returns setof record as $$
 begin
-  return query select u.id, u.created, u.email, u.active, ui.name, ui.surname, ui.middle_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1
+  return query select uc.bank, uc.agency, uc.account from users_connections uc where user_id = a_id;;
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
+
+create or replace function
+get_users_list (
+  a_currency varchar(16),
+  out id bigint,
+  out created timestamp(3),
+  out email varchar(256),
+  out active bool,
+  out first_name varchar(64),
+  out middle_name varchar(128),
+  out last_name varchar(128),
+  out doc1 varchar(256),
+  out doc2 varchar(256),
+  out doc3 varchar(256),
+  out doc4 varchar(256),
+  out doc5 varchar(256),
+  out ver1 bool,
+  out ver2 bool,
+  out ver3 bool,
+  out ver4 bool,
+  out ver5 bool,
+  out balance numeric(23,8),
+  out hold numeric(23,8),
+  out balance_c numeric(23,8),
+  out hold_c numeric(23,8)
+) returns setof record as $$
+begin
+  return query select u.id, u.created, u.email, u.active, ui.first_name, ui.middle_name, ui.last_name, ui.doc1, ui.doc2, ui.doc3, ui.doc4, ui.doc5, ui.ver1, ui.ver2, ui.ver3, ui.ver4, ui.ver5, b.balance, b.hold, b.balance_c, b.hold_c
   from users u
-  left join users_name_info ui on u.id = ui.user_id;;
+    left join users_name_info ui on u.id = ui.user_id
+    left join balances b on u.id = b.user_id
+  where u.id != 0 and b.currency = a_currency;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
@@ -806,7 +865,7 @@ create or replace function
 get_orders_list (
   out order_id bigint,
   out user_id bigint,
-  out country_id int,
+  out country_id varchar(4),
   out order_type varchar(4),
   out status varchar(4),
   out partner varchar(128),
@@ -814,22 +873,22 @@ get_orders_list (
   out currency varchar(16),
   out initial_value numeric(23,8),
   out total_fee numeric(23,8),
-  out net_value numeric(23,8),
   out doc1 varchar(128),
   out doc2 varchar(128),
   out bank varchar(128),
   out agency varchar(16),
-  out account varchar(16),
+  out account varchar(64),
   out closed timestamp(3),
-  out closed_value numeric(23,8),
+  out net_value numeric(23,8),
   out comment varchar(128),
+  out image_id bigint,
   out email varchar(256),
-  out first_name varchar(256),
-  out middle_name varchar(256),
-  out surname varchar(256)
+  out first_name varchar(64),
+  out middle_name varchar(128),
+  out last_name varchar(128)
 ) returns setof record as $$
 begin
-  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.initial_value - o.total_fee as net_value, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.closed_value, o.comment, u.email, un.name, un.middle_name, un.surname
+  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
   from orders o
   left join users u on o.user_id = u.id
   left join users_name_info un on o.user_id = un.user_id;;
@@ -876,8 +935,10 @@ drop function if exists totp_token_is_blacklisted (bigint, bigint) cascade;
 drop function if exists delete_expired_totp_blacklist_tokens () cascade;
 drop function if exists new_log (bigint, text, varchar(256), text, text, inet, text) cascade;
 drop function if exists login_log (bigint, timestamp(3), integer, bigint) cascade;
-drop function if exists balance (bigint, text, varchar(16), varchar(16)) cascade;
+drop function if exists balance (bigint, text, varchar(16)) cascade;
 drop function if exists get_user_name_info(bigint) cascade;
+drop function if exists get_docs_info(bigint) cascade;
+drop function if exists get_bank_data(bigint) cascade;
 drop function if exists get_users_list() cascade;
 drop function if exists get_orders_list() cascade;
 drop function if exists get_balance_by_id_and_currency(bigint, text, text) cascade;
