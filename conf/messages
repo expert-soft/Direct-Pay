@@ -189,7 +189,6 @@ terminology.send=Send
 terminology.receive=Receive
 terminology.info=Info
 terminology.disclaimer=Disclaimer
-terminology.yourfunds=Your Funds
 terminology.wallet.yourwallet=Your Wallet
 terminology.wallet.available=Available
 terminology.wallet.onhold=On Hold
@@ -209,6 +208,9 @@ terminology.zoomout=Zoom out
 terminology.ipaddress=IP Address
 terminology.yes=Yes
 terminology.no=No
+terminology.active=active
+terminology.enabled=enabled
+terminology.disabled=disabled
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -233,9 +235,6 @@ directpay.navigation.admin.userslist.title=List of Users
 directpay.navigation.admin.orderslist.title=List of Orders
 directpay.navigation.overview.title=Actions Overview
 
-directpay.security.accountemail=Account (email)
-directpay.security.securitysettings=Security Settings
-directpay.security.receiveupdatesfrommailinglist=Receive news about {0} and our partners
 
 directpay.admin.orderslist.openorders.title=Open Orders
 directpay.admin.orderslist.ordersfromsearch.title=Result from search:
@@ -269,7 +268,7 @@ directpay.overview.explanation2=It is very simple to operate at {0}. You may wan
 directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
 directpay.overview.explanation4=If you want the operations even simpler, you can set it to operate
 directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
-directpay.overview.extraexplanation2=On the other hand, if you deal with more than one partner or if you don't want system to automatically execute conversions and withdrawals, you may operate manually.
+directpay.overview.extraexplanation2=On the other hand, if you deal with more than one partner or if you don''t want system to automatically execute conversions and withdrawals, you may operate manually.
 directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
 directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
 directpay.overview.automatic=Automatic
@@ -352,13 +351,11 @@ directpay.receive.explanation1=To receive money from our partners, you must go t
 directpay.tocrypto.valuetobeconverted=Value to be converted
 directpay.tocrypto.shortinfo1=If you want to send funds to a partner you must first convert your money to {0}.
 directpay.tocrypto.explanation1=Our partners work primarely with crypto-currencies and not physical money. So, to deal with any of our partners, you need to convert your money ({0}) to crypto-currency ({1}).
-directpay.tocrypto.explanation2=Convertion rate is {0} 1.00 <=> {2} {1}.
 directpay.tocrypto.disclaimer1={0} is a crypto-currency perfectly accepted by our partners, and works as their guarantee that you can trade at their systems. {0} can be transferred to partners while money ({1}) stays in our banking accounts as guarantees to bake the back-conversion, ensured a rate not lower than {2}.
 directpay.tofiat.valuetobeconverted=Value to be converted
 directpay.tofiat.shortinfo1=If you intend to withdraw your {0} funds to your bank account, you must first convert it to {1}.
 directpay.tofiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at this form.
 
-directpay.tofiat.explanation2=Convertion rate is {0} 1.00 <=> ##0.99500 {1}. This operation pays ## % fees, what would result in ##calculated amount.
 directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed not to be lower than {2}.
 directpay.depositsend.depositconvertandsend=Deposit, Convert and Send
 directpay.depositsend.explanation1=When Automatic Operations is set on, your deposits will automatically trigger conversion to {0} and sending it to the selected partner.
@@ -405,19 +402,49 @@ directpay.usersettings.step3.explanation1=The pre-selection of Partner and Autom
 directpay.usersettings.step3.explanation2=If "{0}" is checked, any deposit made to your account will be (after verification) automatically converted to crypto-currency and sent to the selected partner. Also the crypto-ammount received from partner will be automatically converted to national currency and withdrawed to the informed bank account.
 directpay.usersettings.extrainfo.explanation1=You can leave some of those fields empty but, to comply with legal requirements, some operations can only be executed if your personal info is complete and required documents uploaded and verified.
 directpay.usersettings.extrainfo.explanation2=If you have regular operations with more than one partner or if you do not want the operations to be automatically performed by {0}, let the "Automatic Operations" checkbox unchecked.
-directpay.user_settings.disclaimer1=All information provided by the user Personal Information is required to
+directpay.user_settings.disclaimer1=User is responsible for providing accurate and up to date information and documents. Personal information is legal requirement to perform operations at {0}.
+directpay.user_settings.disclaimer2=Some personal information is also required {0} to perform user requests accordingly, specially bank data and partner choice. If your banking and partners information is incorrect, your requests can be delayed, not performed or performed erroneously.
+directpay.user_settings.disclaimer3=The correct and up to date information is user''s responsibility and {0} can not be considered responsible for any undesired or malicious event resulting from inaccurate information.
 
 directpay.documents.requireddocuments=Required Documents
-directpay.documents.explanation1=dddd #######
-directpay.documents.explanation2=Documents verification process is performed by Direct Pay team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not according to your registration, you will be notified at the registration form.
+directpay.documents.explanation1=Pictures of the documents listed bellow are necessary to fulfill your personal records and allow you to have access and execute all operations inside {0}.
+directpay.documents.explanation2=Documents must be uploaded as coloured pictures using the form at side.
+directpay.documents.explanation3=After uploading documents they will be verified by our team and doing so give you access to all system functionalities.
+directpay.documents.extraexplanation1=Documents verification process is performed by {0} team. When submission occurs in business hours, the verification usually takes less than an hour. Pictures must be clear and readable. If documents are not in accordance to {0} requirements, you will be notified at the Dashboard page and details of the verification request can be seen at History page.
+directpay.documents.extraexplanation2=The verification process is required in order to ensure personal information is correct and therefore activities performed inside {0} fulfill all local legal standards.
+directpay.documents.extraexplanation3=If provided information is not recognized as accurate, {0} reserves the right not to proceed to any operation, specially deposits recognition and withdrawals requests, in order to comply with the best business standards.
 directpay.documents.selectpictureofdocument=Select picture of the document
-directpay.documents.supportedfiletypes=(.gif, .jpg, .png, .pdf)
+directpay.documents.supportedfiletypes=Supported file tyes: .gif, .jpg, .png
 directpay.documents.documentdetails=Document Details
 directpay.documents.verified=Verified
 directpay.documents.filename=File Name
 directpay.documents.documentverified=Document Verified
 
-directpay.history.usersoperationshistory=User's Operations History
+directpay.documents.CPF=CPF
+directpay.documents.RG-passport=ID (RG) / Passport
+directpay.documents.addressevidence=Address Evidence
+directpay.documents.phonenumber=Phone number
+
+directpay.security.securitysettings=Security Settings
+directpay.security.accountemail=Account (email)
+directpay.security.receiveupdatesfrommailinglist=Receive news about {0} and our partners
+directpay.security.explanation1=Use the side form to set the security and preferences of your account.
+directpay.security.step1=Password
+directpay.security.step1.explanation1=Password is the first and most important protection for your account. Use strong passwords to protect your account against undesired intruders.
+directpay.security.step2=Two Factor Authentication (2FA)
+directpay.security.step2.explanation1=Enable the 2FA to establish a second layer of protection to your account and transactions.
+directpay.security.step3=PGP public Key
+directpay.security.step3.explanation1=PGP key is a cryptografic method to securily send communications to you without the risk to have the message intercepted and sensitive information unintentionally revealed.
+directpay.security.step4=Mailing List
+directpay.security.step4.explanation1=If you want to receive information about {0} or our partners, let Mailing List enabled.
+directpay.security.extrainfo.explanation1=Keep your password safe and let nobody else to know it. To ensure your password is strong, that hackers can not break it, avoid using easy passwords; include numbers and dymbols, if possible.
+directpay.security.extrainfo.explanation2=2FA works like an extra password to access your account. With 2FA enabled, your access into {0} will only be granted after providing username (email) and password and an extra piece of secret information. That extra feature turns your account virtually impossible to be invaded.
+directpay.security.extrainfo.explanation3=PGP key (Pretty Good Privacy) is an internet standard used for data encryption and digital signatures, what improves security of information transfers and privacy. It is a recommended practice, specially when you are managing money through internet channels.
+directpay.security.extrainfo.explanation4=Our Mailing List is a good channel you have if you want to receive news and opportunities about {0} and about our partners. If you don't want to receive any email with general information and news, disable the option. In any case you will still receive important information (specially info related to your account access, security and sensitive operations).
+directpay.security.disclaimer1={0} system provides a good set of protection tools to your account. Some of the features are mandatory and others are optional, what allows user to set the account according to his needs. {0} can not be accounted for poor management of the security features provided to users.
+directpay.security.disclaimer2=All internet systems have vulnerabilities. Even banks, big exchanges or high tech systems can be target for cyber attacks. {0} implements the state of the art security practices, tested and verified. Be sure you are secured the best. Nevertheless, being known that even the best systems suffer attacks, user is advised {0} does not assume the risks and possible losses caused by others than the people directly involved with administration of the system.
+
+directpay.history.usersoperationshistory=User''s Operations History
 directpay.history.loghistory=Log History
 directpay.history.imagedetails=Image Details
 directpay.history.sum=Sum ({0})
@@ -587,7 +614,7 @@ mails.signature.notice={0} will never send HTML in emails. If you see any images
 
 mails.sendWithdrawalConfirmEmail.body.confirm=Please confirm that you have requested a withdrawal for {0} {1} to {2} by clicking on the link below:
 mails.sendWithdrawalConfirmEmail.body.reject=If you have not requested this withdrawal, please click on the link below to cancel it:
-mails.sendAlreadyRegisteredEmail.body=You tried to sign up but you already have an account with us. If you don't remember your password please go here to reset it.
+mails.sendAlreadyRegisteredEmail.body=You tried to sign up but you already have an account with us. If you don''t remember your password please go here to reset it.
 mails.sendSignUpEmail.body=Please follow this link to complete your registration.
 mails.welcomeEmail.body=Your new account is ready. Click here to log in:
 mails.passwordResetEmail.body=Please follow this link to reset your password.
@@ -786,7 +813,7 @@ java.api.messages.copy.error=The address is not copied to the clipboard.
 
 java.api.messages.passform.pleaseenterapassword=Please enter a password.
 java.api.messages.passform.passwordnotlongenough=Password not long enough.
-java.api.messages.passform.passwordsdontmatch=Passwords don't match.
+java.api.messages.passform.passwordsdontmatch=Passwords don''t match.
 
 # user interface
 

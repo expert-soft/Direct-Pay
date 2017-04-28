@@ -658,6 +658,10 @@ a, a:visited, a:focus, a:active, :visited, :focus, :active, .btn:focus, .btn:act
 a:hover, a:focus {
   text-decoration: none; }
 
+a.normal_link {
+  font-weight: 600;
+  text-decoration: underline; }
+
 .navbar {
   margin-bottom: 0; }
 

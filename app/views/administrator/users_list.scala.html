@@ -43,7 +43,7 @@
                             <h2><span id="popUpPictureTitle"></span></h2>
                             <div id="buttonsDiv" class="popupTopButtons"><button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="Zoom in"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="Zoom out"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp; <button id="btnApprove" type="button" class="btn btn-primary btn-xs" title="Approve document">Approve</button><button id="btnReject" type="button" class="btn btn-warning btn-xs" title="Reject document">Reject</button></div>
                             <a class="popupClose" href="#">&times;</a>
-                            <input type="hidden" id="popUpPictureDoc1" value="@globals.country_doc1_name"><input type="hidden" id="popUpPictureDoc2" value="@globals.country_doc2_name"><input type="hidden" id="popUpPictureDoc3" value="@globals.country_doc3_name"><input type="hidden" id="popUpPictureDoc4" value="@globals.country_doc4_name"><input type="hidden" id="popUpPictureDoc5" value="@globals.country_doc5_name">
+                            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
                             <div class="content">
                                 <p>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></p>
                                 <p>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></p>
@@ -71,11 +71,11 @@
                     <th>@Messages("terminology.name")</th>
                     <th>@globals.country_currency_symbol</th>
                     <th>@globals.country_currency_crypto</th>
-                    @if(globals.country_doc1_required) { <th>@globals.country_doc1_name</th> }
-                    @if(globals.country_doc2_required) { <th>@globals.country_doc2_name</th> }
-                    @if(globals.country_doc3_required) { <th>@globals.country_doc3_name</th> }
-                    @if(globals.country_doc4_required) { <th>@globals.country_doc4_name</th> }
-                    @if(globals.country_doc5_required) { <th>@globals.country_doc5_name</th> }
+                    @if(globals.country_doc1_required) { <th>@Messages(globals.country_doc1_name)</th> }
+                    @if(globals.country_doc2_required) { <th>@Messages(globals.country_doc2_name)</th> }
+                    @if(globals.country_doc3_required) { <th>@Messages(globals.country_doc3_name)</th> }
+                    @if(globals.country_doc4_required) { <th>@Messages(globals.country_doc4_name)</th> }
+                    @if(globals.country_doc5_required) { <th>@Messages(globals.country_doc5_name)</th> }
                 </tr>
             </thead>
             <tbody>
