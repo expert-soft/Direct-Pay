@@ -50,62 +50,52 @@
                                 <label class="control-label col-md-4 col-sm-4" for="name">@Messages("directpay.usersettings.lastname")</label>
                                 <div class="col-md-8 col-sm-4"><input type="text" id="last_name" name="last_name" value="{{last_name}}" placeholder="@Messages("directpay.usersettings.lastname")" title="@Messages("directpay.usersettings.lastname.title")" class="form-control col-md-7 col-xs-12"></div>
                             </div>
-                            @if(globals.country_doc1_required) {
-                                @if(!globals.country_doc1_ispicture) {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4 col-sm-4" for="doc1">@Messages(globals.country_doc1_name)</label>
-                                        <div class="col-md-6 col-sm-6"><input type="text" id="doc1" name="doc1" value="{{doc1}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc1_format'"></div>
-                                    </div>
-                                }
+                            @if(globals.country_doc1_required && !globals.country_doc1_ispicture) {
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4" for="doc1">@Messages(globals.country_doc1_name)</label>
+                                    <div class="col-md-6 col-sm-6"><input type="text" id="doc1" name="doc1" value="{{doc1}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc1_format'"></div>
+                                </div>
                             } else {
                                 <input type="hidden" id="doc1" value="{{doc1}}">
                             }
-                            @if(globals.country_doc2_required) {
-                                @if(!globals.country_doc2_ispicture) {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4 col-sm-4" for="doc2">@Messages(globals.country_doc2_name)</label>
-                                        <div class="col-md-6 col-sm-6"><input type="text" id="doc2" name="doc2" value="{{doc2}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc2_format'"></div>
-                                    </div>
-                                }
+                            @if(globals.country_doc2_required && !globals.country_doc2_ispicture) {
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4" for="doc2">@Messages(globals.country_doc2_name)</label>
+                                    <div class="col-md-6 col-sm-6"><input type="text" id="doc2" name="doc2" value="{{doc2}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc2_format'"></div>
+                                </div>
                             } else {
                                 <input type="hidden" id="doc2" value="{{doc2}}">
                             }
-                            @if(globals.country_doc3_required) {
-                                @if(!globals.country_doc3_ispicture) {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4 col-sm-4" for="doc3">@Messages(globals.country_doc3_name)</label>
-                                        <div class="col-md-6 col-sm-6"><input type="text" id="doc3" name="doc3" value="{{doc3}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc3_format'"></div>
-                                    </div>
-                                }
+                            @if(globals.country_doc3_required && !globals.country_doc3_ispicture) {
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4" for="doc3">@Messages(globals.country_doc3_name)</label>
+                                    <div class="col-md-6 col-sm-6"><input type="text" id="doc3" name="doc3" value="{{doc3}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc3_format'"></div>
+                                </div>
                             } else {
                                 <input type="hidden" id="doc3" value="{{doc3}}">
                             }
-                            @if(globals.country_doc4_required) {
-                                @if(!globals.country_doc4_ispicture) {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4 col-sm-4" for="doc4">@Messages(globals.country_doc4_name)</label>
-                                        <div class="col-md-6 col-sm-6"><input type="text" id="doc4" name="doc4" value="{{doc4}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc4_format'"></div>
-                                    </div>
-                                }
+                            @if(globals.country_doc4_required && !globals.country_doc4_ispicture) {
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4" for="doc4">@Messages(globals.country_doc4_name)</label>
+                                    <div class="col-md-6 col-sm-6"><input type="text" id="doc4" name="doc4" value="{{doc4}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc4_format'"></div>
+                                </div>
                             } else {
                                 <input type="hidden" id="doc4" value="{{doc4}}">
                             }
-                            @if(globals.country_doc5_required) {
-                                @if(!globals.country_doc5_ispicture) {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4 col-sm-4" for="doc5">@Messages(globals.country_doc5_name)</label>
-                                        <div class="col-md-6 col-sm-6"><input type="text" id="doc5" name="doc5" value="{{doc5}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc5_format'"></div>
-                                    </div>
-                                } else {
+                            @if(globals.country_doc5_required && !globals.country_doc5_ispicture) {
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4" for="doc5">@Messages(globals.country_doc5_name)</label>
+                                    <div class="col-md-6 col-sm-6"><input type="text" id="doc5" name="doc5" value="{{doc5}}" title="@Messages("directpay.usersettings.documentrequired.title")" class="form-control col-md-7 col-xs-12"  data-inputmask="'mask' : '@globals.country_doc5_format'"></div>
+                                </div>
+                            } else {
                                     <input type="hidden" id="doc5" value="{{doc5}}">
-                                }
                             }
                             <br>
                             <span class="text_additional_info">@Messages("directpay.usersettings.step2")</span>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4 col-xs-6">@Messages("directpay.usersettings.bank.item")</label>
                                 <div class="col-md-8 col-sm-4 col-xs-12">
-                                    <input type="hidden" id="hidden_bank" value="{{bank}}"></input>
+                                    <input type="hidden" id="hidden_bank" value="{{bank}}">
                                     <select id="banks" class="form-control" title="@Messages("directpay.usersettings.bank.title")">
                                         <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                         @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }

@@ -41,6 +41,10 @@ function get_country_settings() { // Read from hidden variables
     country_settings.preferential_bank2_code = $('#hidden_fees_information').attr('preferential_bank2_code');
     country_settings.preferential_bank3_code = $('#hidden_fees_information').attr('preferential_bank3_code');
     country_settings.preferential_bank4_code = $('#hidden_fees_information').attr('preferential_bank4_code');
+    country_settings.preferential_bank1_name = $('#hidden_fees_information').attr('preferential_bank1_name');
+    country_settings.preferential_bank2_name = $('#hidden_fees_information').attr('preferential_bank2_name');
+    country_settings.preferential_bank3_name = $('#hidden_fees_information').attr('preferential_bank3_name');
+    country_settings.preferential_bank4_name = $('#hidden_fees_information').attr('preferential_bank4_name');
     country_settings.nominal_fee_doc_verification = $('#hidden_fees_information').attr('nominal_fee_doc_verification');
     country_settings.nominal_fee_withdrawal_preferential_bank = $('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank');
     country_settings.nominal_fee_withdrawal_not_preferential_bank = $('#hidden_fees_information').attr('nominal_fee_withdrawal_not_preferential_bank');
@@ -67,27 +71,6 @@ function fillMessages() {
         fillToFiatMessages();
 }
 
-/*
-if (order_type == "V") {
-    return globals.country_nominal_fee_doc_verification.asInstanceOf[Double]
-} else if (order_type == "D") {
-    return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01
-} else if (order_type == "S") {
-    return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01
-} else if (order_type == "DCS") {
-    return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01
-} else if (order_type == "W") { // withdrawal to a preferential bank
-    return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01
-} else if (order_type == "W.") { // withdrawal to a non preferential bank
-    return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01
-} else if (order_type == "RFW") { // withdrawal to a preferential bank
-    return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01
-} else if (order_type == "RFW.") { // withdrawal to a non preferential bank
-    return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01
-} else if (order_type == "F") {
-    return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01
-} else return 0
-*/
 
 /* Fills the spaces for fees and values information inside Deposit page */
 function fillDepositMessages() {
@@ -171,10 +154,24 @@ function fillWithdrawMessages() {
     $('#calc_withdraw_minimum_value').html(NumberFormat(country_settings.minimum_value, 2));
     $('#calc_withdraw_minimum_value_extra_fee').html(NumberFormat(parseFloat(country_settings.minimum_value)*0.02, 2));
 
-    var bank_list = $('#hidden_fees_information').attr('preferential_bank1_name');
+    var bank_list = country_settings.preferential_bank1_name;
     if(country_settings.preferential_bank2_name != '') bank_list += ', ' + country_settings.preferential_bank2_name;
     if(country_settings.preferential_bank3_name != '') bank_list += ', ' + country_settings.preferential_bank3_name;
     if(country_settings.preferential_bank4_name != '') bank_list += ', ' + country_settings.preferential_bank4_name;
     $('#calc_list_preferential_banks').html(bank_list);
+
+    FillDocumentsNotVerifiedMessages ();
 }
 
+
+function FillDocumentsNotVerifiedMessages () {
+    var list_of_documents = $('#hidden_listofdocuments').attr('listofdocuments_message');
+    list_of_documents += ' ' + $('#hidden_listofdocuments').attr('first_name');
+    list_of_documents += ', ' + $('#hidden_listofdocuments').attr('last_name');
+    if($('#hidden_listofdocuments').attr('country_doc1')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc1');
+    if($('#hidden_listofdocuments').attr('country_doc2')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc2');
+    if($('#hidden_listofdocuments').attr('country_doc3')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc3');
+    if($('#hidden_listofdocuments').attr('country_doc4')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc4');
+    if($('#hidden_listofdocuments').attr('country_doc5')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc5');
+    $('#incomplete_docs').attr('title', list_of_documents);
+}

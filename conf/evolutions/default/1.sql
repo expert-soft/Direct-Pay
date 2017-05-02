@@ -21,7 +21,9 @@ create table users (
     verification int default 0 not null,
     pgp text,
     active bool default true not null,
-    manualauto_mode bool default true not null
+    manualauto_mode bool default true not null,
+    user_country varchar(6),
+    docs_verified bool default false not null
 );
 create unique index unique_lower_email on users (lower(email));
 
@@ -103,6 +105,7 @@ create table event_log (
     id bigint default nextval('event_log_id_seq') primary key,
     created timestamp(3) default current_timestamp not null,
     email varchar(256),
+    user_country varchar(4),
     user_id bigint,
     ip inet,
     browser_headers text, -- these can be parsed later to produce country info

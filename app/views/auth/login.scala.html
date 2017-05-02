@@ -1,4 +1,4 @@
-@(loginForm: Form[(String,String)], errorMsg: Option[String] = None)(implicit request: RequestHeader, messages: Messages)
+@(loginForm: Form[(String,String, String)], errorMsg: Option[String] = None)(implicit request: RequestHeader, messages: Messages)
 @import securesocial.core.UsernamePasswordProvider
 
 @import helper._
@@ -45,11 +45,18 @@
                 'class -> "form-control"
             )
 
+            @helper.inputText(
+                loginForm("user_country"),
+                '_label -> Messages("terminology.user_country"),
+                'class -> "form-control"
+            )
+
             <button type="submit" class="btn btn-primary">@Messages("auth.login.title")</button>
 
             <div class="pull-right">
                 <a href="@controllers.routes.Registration.startResetPassword()" class="btn">@Messages("auth.login.forgotPassword") </a>
             </div>
         </form>
+            <!-- this user_country is temporary. In the future it will come from "which domain was accessed - or hidden field -->
     </div>
 }

@@ -50,6 +50,12 @@ begin
   if a_order_type = 'V' then
     -- if one order for that document already exists, user replaced document, must consider only the last one. Old orders become Rj with system information
     update orders set status = 'Rj', comment = '***** User replaced doc before analysis *****' where status = 'Op' and partner = a_partner and user_id = a_user_id and order_id != b_order_id;;
+--    update users set docs_verified = false where id = a_user_id;;
+--    if a_partner = 'doc1' then update users_name_info set ver1 = false where id = a_user_id;; end if;;
+--    if a_partner = 'doc2' then update users_name_info set ver2 = false where id = a_user_id;; end if;;
+--    if a_partner = 'doc3' then update users_name_info set ver3 = false where id = a_user_id;; end if;;
+--    if a_partner = 'doc4' then update users_name_info set ver4 = false where id = a_user_id;; end if;;
+--    if a_partner = 'doc5' then update users_name_info set ver5 = false where id = a_user_id;; end if;;
   end if;;
 -- for deposit and withdraw fees should be charged when order update and at send when sending. To fiat when order creation
   if a_order_type = 'D' or a_order_type = 'DCS' then
@@ -104,6 +110,13 @@ declare
   b_crypto_currency varchar(16);;
   b_update_fees boolean;;
   b_doc_number varchar(128);;
+  b_ver1 boolean;;
+  b_ver2 boolean;;
+  b_ver3 boolean;;
+  b_ver4 boolean;;
+  b_ver5 boolean;;
+  b_first_name varchar(64);;
+  b_last_name varchar(128);;
   a_partner_id bigint;;
   a_local_admin_id bigint;;
   a_global_admin_id bigint;;
@@ -126,6 +139,10 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
       if b_doc_number = 'doc3' then update users_name_info set ver3 = true where user_id = b_user_id;; end if;;
       if b_doc_number = 'doc4' then update users_name_info set ver4 = true where user_id = b_user_id;; end if;;
       if b_doc_number = 'doc5' then update users_name_info set ver5 = true where user_id = b_user_id;; end if;;
+      select first_name, last_name, ver1, ver2, ver3, ver4, ver5 into b_first_name, b_last_name, b_ver1, b_ver2, b_ver3, b_ver4, b_ver5 from users_name_info where user_id = b_user_id;;
+      if b_first_name != '' and b_last_name != '' and b_ver1 and b_ver2 and b_ver3 and b_ver4 and b_ver5 then
+        update users set docs_verified = true where id = b_user_id;;
+      end if;;
     end if;;
 -- fees should be charged for deposit and withdraw when order update and at send when sending and to fiat when order creation
     if b_order_type = 'D' then
@@ -241,11 +258,16 @@ update_personal_info (
   a_partner_account varchar(256),
   a_manualauto_mode bool
 ) returns boolean as $$
+declare
 begin
   update users_name_info set first_name = a_first_name, middle_name = a_middle_name, last_name = a_last_name, doc1 = a_doc1, doc2 = a_doc2, doc3 = a_doc3, doc4 = a_doc4, doc5 = a_doc5 where user_id = a_user_id;;
   update users_connections set bank = a_bank, agency = a_agency, account = a_account, partner = a_partner, partner_account = a_partner_account where user_id=a_user_id;;
   update users set manualauto_mode = a_manualauto_mode where id=a_user_id;;
-
+  if a_first_name = '' or a_first_name = '' or a_doc1 = '' or a_doc2 = '' or a_doc3 = '' or a_doc4 = '' or a_doc5 = '' then
+    update users set docs_verified = false where id = a_user_id;;
+  else
+    update users set docs_verified = true where id = a_user_id;;
+  end if;;
   return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
@@ -274,6 +296,7 @@ begin
   if a_docNumber = 'doc5' then
     update users_name_info set doc5 = a_fileName, ver5 = false, pic5 = a_image_id where user_id = a_user_id;;
   end if;;
+  update users set docs_verified = false where id = a_user_id;;
   return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
@@ -291,6 +314,7 @@ begin
   return true;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
 
 create or replace function
   management_data (

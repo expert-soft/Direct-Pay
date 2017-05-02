@@ -163,6 +163,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   }
 }
 
-object ManualAuto {
+/*object ManualAuto {
 
 }
+*/ 

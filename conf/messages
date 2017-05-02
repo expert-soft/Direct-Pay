@@ -196,7 +196,6 @@ terminology.wallet.crypto=Crypto
 terminology.wallet.total=Total
 terminology.calculatedfee=Calculated fee
 terminology.plus=plus
-terminology.convertto=Convert to
 terminology.instructions=Instructions
 terminology.extrainformation=Extra information
 terminology.minimizethisboard=Minimize this board
@@ -211,9 +210,45 @@ terminology.no=No
 terminology.active=active
 terminology.enabled=enabled
 terminology.disabled=disabled
+terminology.complete=Complete
+terminology.previous=Previous
+terminology.next=Next
+
+directpay.frontpage.notyetsignedup=Not yet signed up?
+directpay.frontpage.carousel1.text1=Your direct access to the best in the world!
+directpay.frontpage.carousel1.link1=###
+directpay.frontpage.carousel1.linktext1=Sign up!
+directpay.frontpage.carousel2.title=The best partners
+directpay.frontpage.carousel2.text1=The best services and opportunities you can find, wherever they are.
+directpay.frontpage.carousel2.link1=www.Crypto-Trade.net
+directpay.frontpage.carousel2.linktext1=Crypto-Trade.net
+directpay.frontpage.carousel3.title=The best to you
+directpay.frontpage.carousel3.text1=Become a member of {0} and get the world to you.
+directpay.frontpage.carousel3.link1=###
+directpay.frontpage.carousel3.linktext1=Sign up!
+
+directpay.legend=Legend
+directpay.legend.ordertype=Order Type
+directpay.legend.orderstatus=Order Status
+directpay.legend.documentverification=Document Verification
+directpay.legend.deposit=Deposit
+directpay.legend.convertto=Convert to
+directpay.legend.sendtopartner=Send to Partner
+directpay.legend.depositandsend=Deposit and Send
+directpay.legend.receivefrompartner=Receive from Partner
+directpay.legend.withdraw=Withdraw
+directpay.legend.receiveandwithdraw=Receive and Withdraw
+directpay.legend.openorder=Open Order
+directpay.legend.lockedinprocess=Locked (in process)
+directpay.legend.sendingtopartner=Sending to Partner
+directpay.legend.orderexecuted=Order Executed
+directpay.legend.executionmodified=Execution Modified
+directpay.legend.orderrejected=Order Rejected
+
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
+directpay.navigation.notconnectedtoanypartner=Not connected to any partner
 directpay.navigation.operations.title=Operations
 directpay.navigation.deposit.title=Deposit
 directpay.navigation.converttocrypto.title=Convert to crypto
@@ -313,6 +348,11 @@ directpay.deposit.disclaimer1=To be sure your deposit to be recognized, keed you
 directpay.deposit.disclaimer2=Deposits made at banking working time are processed in few minutes after effective bank confirmation (max = 3 hours). Deposits made out of banking work time are subject to specific verification and can be delayed. If you have trouble to have your deposit recognized, please contact eu.euateumesmo.com.
 
 directpay.withdraw.receiveconvertwithdraw=Receive, Convert and Withdraw
+directpay.withdraw.yourdocumentationis=Your documentation is
+directpay.withdraw.notyetverified=not yet verified
+directpay.withdraw.documentsrequiredtowithdraw=Information and documents required:
+directpay.withdraw.youarenotallowedtothisoperation=You are not allowed to perform this operation until your information and documents are not verified.
+directpay.withdraw.youroperationwillonlybeexecuted=Your operation will only be completely executed if you upload the missing documents before partner returns {0} to your account.
 directpay.withdraw.requestwithdrawal=Request a Withdrawal
 directpay.withdraw.preferentialbanks=Preferential banks
 directpay.withdraw.yougetlowerfees=Lower fees when withdrawal to those banks.
@@ -338,15 +378,17 @@ directpay.send.sendfee=Sending fee
 directpay.send.explanation1=To send your {0} to any of our partners, fill up the amount to be transferred and the partner you want funds to be transferred. Be sure to select the correct amount and partner, as this operation is not be reverted!
 directpay.send.disclaimer1=When you send your {0} to a partner, responsibility of your funds are also transferred to the partner. Once partner confirms transfer complete, Direct Pay no longer is responsible nor have access to the amount transferred.
 
+directpay.receive.withdrawinformation=Withdraw Information
 directpay.receive.receivefrompartners=Receive from Partners
 directpay.receive.toreceivefrompartners1=After interacting with our partners, as a result of your operations, you may have funds to receive from them.
-directpay.receive.toreceivefrompartners2=To request your funds, you must enter Partners system and request a withdrawal there to {0}.
+directpay.receive.toreceivefrompartners2=To request your funds, you must enter Partner''s system and there request a withdrawal to {0}.
 
 directpay.receive.toreceivefrompartners4=But first confirm the bank account were you want to withdraw money you receive from partners.
 directpay.receive.savebankdata=Save Bank Data
 directpay.receive.linkstopartners=Links to Partners:
 directpay.receive.explanation1=To receive money from our partners, you must go to the partner-site and request a withdraw to {0}. Partner will send {1} and it will become available at {0} in a few seconds.
-
+directpay.receive.explanation2=If you want to receive {0} from a Partner but doesn't want it immediately converted and withdrawn to your bank, or want to withdraw a different value, change to "Manual Mode".
+directpay.receive.extraexplanation1=### Operaç~es manuais
 
 directpay.tocrypto.valuetobeconverted=Value to be converted
 directpay.tocrypto.shortinfo1=If you want to send funds to a partner you must first convert your money to {0}.

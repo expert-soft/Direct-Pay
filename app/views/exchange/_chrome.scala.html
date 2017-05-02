@@ -66,25 +66,51 @@
 @_global_chrome(title, Html(scripts + exchangeScripts.body), Html(styles + exchangeStyles.body)) {
 
 <style>
-    li.class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
-    li.class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .nav li.current-page { @globals.country_appearance6 !important }
+    .nav li.current-page:hover { @globals.country_appearance7 !important }
+    .nav.navbar-nav > li > a { @globals.country_appearance9 }
+    .nav.side-menu > li > a:hover, .nav.child_menu > li > a, .nav-md ul.nav.child_menu li:before, .nav-md ul.nav.child_menu li:before, .main_menu span.fa { @globals.country_appearance8 !important}
+    .site_title i {@globals.country_appearance8}
+    .profile_info span {@globals.country_appearance8}
 </style>
 
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-play"></i> <span> @globals.country_system_name</span></a>
+                <div class="left_col scroll-view" style="@globals.country_appearance0">
+                    <div class="navbar nav_title" style="@globals.country_appearance0">
+                        <a href="index.html" class="site_title" style="@globals.country_appearance0; @globals.country_appearance8; text-decoration: none;">
+                        <i class="fa fa-play"></i> <span> @globals.country_system_name</span></a>
                     </div>
                     <div class="profile">
-                        <div class="profile_info">
-                            <span>@Messages("terminology.connectedto")</span>
-                            <h2>@Messages("terminology.partner")</h2>
+<!--
+                        country.country_partner1="Crypto-Trade.net"
+                        country.country_partner1_url="www.Crypto-Trade.net"
+                        country.country_partner1_info="Crypto-currencies Exchange"
+                        country.country_partner1_color="#9af"
+                        country.country_partner1_picture="partner1.gif"
+
+ ### bellow code still need to be improved... (logic and texts)
+ -->
+                    @if("partner1" == "partner1") {
+                        <div class="profile_info class_automatic">
+                            <span style="@globals.country_appearance9;">@Messages("terminology.connectedto")</span>
+                            <h2 style="@globals.country_appearance8; font-weight: 600;">@globals.country_partner1</h2>
                         </div>
-                        <div class="profile_pic">
-                            <img src="/assets/img/carusel/partner1.gif" alt="## Partner Name" class="img-circle profile_img">
+                        <div class="profile_pic class_automatic">
+                            <img src="@globals.country_partner1_picture" alt="@globals.country_partner1_url, @globals.country_partner1_info" class="img-circle profile_img">
                         </div>
+                    } else {
+                        <div class="profile_info class_manual">
+                            <span style="@globals.country_appearance9;">@Messages("directpay.navigation.notconnectedtoanypartner")</span>
+                            <h2 style="@globals.country_appearance8; font-weight: 600;">@Messages("terminology.partner")</h2>
+                        </div>
+                        <div class="profile_pic class_manual">
+                            <img src="/assets/img/carusel/partner0.gif" alt="## Partner Name" class="img-circle profile_img">
+                        </div>
+                    }
                     </div>
 
                     <!-- sidebar menu -->

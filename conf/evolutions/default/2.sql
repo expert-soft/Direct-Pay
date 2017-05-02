@@ -557,6 +557,7 @@ create or replace function
 find_user_by_email_and_password (
   a_email varchar(256),
   a_password text,
+  a_country text,
   a_browser_headers text,
   a_ip inet
 ) returns users as $$
@@ -566,7 +567,7 @@ begin
     raise 'Internal error. Cannot find user by email and password if totp is enabled.';;
   end if;;
 
-  return find_user_by_email_and_password_invoker(a_email, a_password, a_browser_headers, a_ip, false);;
+  return find_user_by_email_and_password_invoker(a_email, a_password, a_country, a_browser_headers, a_ip, false);;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
@@ -574,39 +575,41 @@ create or replace function
 find_user_by_email_and_password_invoker (
   a_email varchar(256),
   a_password text,
+  a_user_country text,
   a_browser_headers text,
   a_ip inet,
   a_totp_step1 boolean
 ) returns users as $$
 declare
-  u_pass text;;
   u_id bigint;;
   u_active boolean;;
+  u_pass text;;
+  u_user_country text;;
   u_record users%rowtype;;
 begin
-  select u.id, u.active, p.password into u_id, u_active, u_pass from users u
+  select u.id, u.active, p.password, u.user_country into u_id, u_active, u_pass, u_user_country from users u
     inner join users_passwords p on p.user_id = u.id
-    where lower(u.email) = lower(a_email)
+    where lower(u.email) = lower(a_email) and u.user_country = a_user_country
     order by p.created desc
     limit 1;;
 
   if not found then
-    perform new_log(null, a_browser_headers, a_email, null, null, a_ip, 'login_failure');;
+    perform new_log(null, a_browser_headers, a_email, a_user_country, null, null, a_ip, 'login_failure');;
     return null;;
   end if;;
 
   if u_active and u_pass = crypt(a_password, u_pass) then
     if a_totp_step1 then
-      perform new_log(u_id, a_browser_headers, a_email, null, null, a_ip, 'login_partial_success');;
+      perform new_log(u_id, a_browser_headers, a_email, a_user_country, null, null, a_ip, 'login_partial_success');;
     else
-      perform new_log(u_id, a_browser_headers, a_email, null, null, a_ip, 'login_success');;
+      perform new_log(u_id, a_browser_headers, a_email, a_user_country, null, null, a_ip, 'login_success');;
     end if;;
 
     select * into strict u_record from users where id = u_id;;
     return u_record;;
   end if;;
 
-  perform new_log(u_id, a_browser_headers, a_email, null, null, a_ip, 'login_failure');;
+  perform new_log(u_id, a_browser_headers, a_email, a_user_country, null, null, a_ip, 'login_failure');;
   return null;;
 end;;
 $$ language plpgsql volatile security invoker set search_path = public, pg_temp cost 100;
@@ -665,6 +668,7 @@ new_log (
   a_uid bigint,
   a_browser_headers text,
   a_email varchar(256),
+  a_user_country text,
   a_ssl_info text,
   a_browser_id text,
   a_ip inet,
@@ -674,8 +678,8 @@ begin
   if a_uid = 0 then
     raise 'User id 0 is not allowed to use this function.';;
   end if;;
-  insert into event_log (user_id, email, ip, browser_headers, browser_id, ssl_info, type)
-  values (a_uid, a_email, a_ip, a_browser_headers, a_browser_id, a_ssl_info, a_type);;
+  insert into event_log (user_id, email, user_country, ip, browser_headers, browser_id, ssl_info, type)
+  values (a_uid, a_email, a_user_country, a_ip, a_browser_headers, a_browser_id, a_ssl_info, a_type);;
   return;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;

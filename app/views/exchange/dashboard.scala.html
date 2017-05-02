@@ -6,7 +6,7 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
-    <input type="hidden" id="hidden_page" value="Dashboard"></input>
+    <input type="hidden" id="hidden_page" value="Dashboard">
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
@@ -44,7 +44,7 @@
             fee_send_percent = "@globals.country_fee_send_percent.toString"
             fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
             fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
-            ></input>
+            >
             <div id="wallet" class="x_panel" style="@globals.country_appearance3">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
@@ -100,6 +100,17 @@
                     <p>@Messages("directpay.overview.explanation2", globals.country_system_name, globals.country_currency_name_plural, globals.country_currency_crypto)</p>
                     <p>@Messages("directpay.overview.explanation3", globals.country_system_name)</p>
                     <p>@Messages("directpay.overview.explanation4") "<span class="calc_low_destak_info">@Messages("directpay.overview.automatic")</span>".</p>
+                    <input type="hidden" id="hidden_listofdocuments"
+                        listofdocuments_message="@Messages("directpay.withdraw.documentsrequiredtowithdraw")"
+                        first_name="@Messages("directpay.usersettings.firstname")"
+                        last_name="@Messages("directpay.usersettings.lastname")"
+                        country_doc1="@Messages(globals.country_doc1_name)"
+                        country_doc2="@Messages(globals.country_doc2_name)"
+                        country_doc3="@Messages(globals.country_doc3_name)"
+                        country_doc4="@Messages(globals.country_doc4_name)"
+                        country_doc5="@Messages(globals.country_doc5_name)"
+                    >
+                    @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {<p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youarenotallowedtothisoperation")</p>}
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.overview.extraexplanation1", globals.country_system_name,  globals.country_currency_crypto)</p>

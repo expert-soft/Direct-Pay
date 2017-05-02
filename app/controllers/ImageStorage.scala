@@ -38,10 +38,6 @@ object Image {
     insert_user_image(fullname, bArray)
   }
 
-  def saveImageToDb(fileName: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
-    SQL""" INSERT INTO image(name, data) VALUES ($fileName, $file); """.execute()
-  }
-
   def insert_user_image(fileName: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
     SQL"""
      select insert_user_image as success from insert_user_image($fileName, $file)
@@ -49,5 +45,11 @@ object Image {
       row[Long]("success")
     ).head
   }
+
+  /*  def saveImageToDb(fileName: String, file: Array[Byte]) = DB.withConnection(db) { implicit c =>
+  SQL""" INSERT INTO image(name, data) VALUES ($fileName, $file); """.execute()
+}
+*/
+
 }
 

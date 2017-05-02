@@ -7,7 +7,7 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
-    <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {W} else {RFW}"></input>
+    <input type="hidden" id="hidden_page" value="W">
     <!-- page content -->
     <div class="page-title">
         <div class="title_left">
@@ -31,7 +31,6 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    ### put a remark if documentation incomplete<br>
                     <form id="form1" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
@@ -42,7 +41,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                             <div class="col-md-8 col-sm-4 col-xs-12">
-                                <input type="hidden" id="hidden_bank" value="{{bank}}"></input>
+                                <input type="hidden" id="hidden_bank" value="{{bank}}">
                                 <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
                                     <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                     @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
@@ -80,15 +79,27 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary triggers_submit">@Messages("directpay.navigation.withdraw.title")</button>
+                                <button type="submit" class="btn @if(securesocial.core.SecureSocial.currentUser.get.docs_verified) {btn-primary} else {btn-default disabled} triggers_submit">@Messages("directpay.navigation.withdraw.title")</button>
                             </div>
                         </div>
+                        <input type="hidden" id="hidden_listofdocuments"
+                            listofdocuments_message="@Messages("directpay.withdraw.documentsrequiredtowithdraw")"
+                            first_name="@Messages("directpay.usersettings.firstname")"
+                            last_name="@Messages("directpay.usersettings.lastname")"
+                            country_doc1="@Messages(globals.country_doc1_name)"
+                            country_doc2="@Messages(globals.country_doc2_name)"
+                            country_doc3="@Messages(globals.country_doc3_name)"
+                            country_doc4="@Messages(globals.country_doc4_name)"
+                            country_doc5="@Messages(globals.country_doc5_name)"
+                        >
+                        @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {<p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youarenotallowedtothisoperation")</p>}
                         <input type="hidden" id="total_withdraw_fee">
                     </form>
                 </div>
             </div>
         </div>
         <!-- End of form -->
+
 
 
 
@@ -116,7 +127,7 @@
             nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
             fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
             fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
-        ></input>
+        >
 
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
@@ -160,7 +171,7 @@
                         <p>@Messages("directpay.withdraw.explanation1") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_critical_value2">@globals.country_critical_value2</span>)</span>.</p>
                         <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
                         <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
-                        <p>@Messages("directpay.withdraw.preferentialbanks"): <span id="calc_list_preferential_banks"></span>. @Messages("directpay.withdraw.yougetlowerfees").</p>
+                        <p>@Messages("directpay.withdraw.preferentialbanks"): <span id="calc_list_preferential_banks"></span>. @Messages("directpay.withdraw.yougetlowerfees")</p>
                         @if(globals.country_minimum_value != 0) {
                             <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
                             <p>@Messages("directpay.withdraw.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span></span> @Messages("directpay.withdraw.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span></span>.</p>

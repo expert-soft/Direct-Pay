@@ -2,10 +2,12 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
+    <script src="@routes.Assets.at("js/fee_messages.js?v=1.0.0.1")"></script>
     <script src="@routes.Assets.at("js/receive.js?v=1.0.0.1")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.dashboard.title"), "dashboard", scripts) {
+    <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {R} else {RFW}">
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
@@ -13,7 +15,7 @@
                 @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
                     <i class="fa fa-download"> &nbsp;</i> @Messages("terminology.receive")
                 } else {
-                    <i class="fa fa-download"> </i> <i class="fa fa-minus"></i> @Messages("directpay.withdraw.receiveconvertwithdraw")
+                    <i class="fa fa-download"> </i> <i class="fa fa-minus"></i> @Messages("directpay.receivewithdraw.receiveconvertandwithdraw")
                 }
             </h3>
         </div>
@@ -27,14 +29,28 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel" style="@globals.country_appearance1">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.receive.receivefrompartners")</h2>
+                    @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0){
+                        <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.receive.receivefrompartners")</h2>
+                    } else {
+                        <h2 style="overflow: visible;"><i class="fa fa-minus"></i> &nbsp; @Messages("directpay.receive.withdrawinformation")</h2>
+                    }
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <p>@Messages("directpay.receive.toreceivefrompartners1")</p>
                     <p>@Messages("directpay.receive.toreceivefrompartners2", globals.country_system_name)</p>
                     @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
-                        ### put a remark if documentation incomplete<br>
+                        <input type="hidden" id="hidden_listofdocuments"
+                            listofdocuments_message="@Messages("directpay.withdraw.documentsrequiredtowithdraw")"
+                            first_name="@Messages("directpay.usersettings.firstname")"
+                            last_name="@Messages("directpay.usersettings.lastname")"
+                            country_doc1="@Messages(globals.country_doc1_name)"
+                            country_doc2="@Messages(globals.country_doc2_name)"
+                            country_doc3="@Messages(globals.country_doc3_name)"
+                            country_doc4="@Messages(globals.country_doc4_name)"
+                            country_doc5="@Messages(globals.country_doc5_name)"
+                        >
+                        @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {<p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youroperationwillonlybeexecuted", globals.country_currency_crypto)</p>}
                         <p>@Messages("directpay.receive.toreceivefrompartners4")</p>
 
                             <!-- Beginning of the form -->
@@ -42,7 +58,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                                     <div class="col-md-8 col-sm-4 col-xs-12">
-                                        <input type="hidden" id="hidden_bank""></input>
+                                        <input type="hidden" id="hidden_bank">
                                         <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
                                             <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                             @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
@@ -132,7 +148,7 @@
         nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
         fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
         fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
-        ></input>
+        >
 
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
@@ -166,12 +182,23 @@
                 </div>
                 <div class="x_content">
                     <p>@Messages("directpay.receive.explanation1", globals.country_system_name, globals.country_currency_crypto)</p>
+                    @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
+                        @if(globals.country_fee_tofiat_percent != 0) {<p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>}
+                        <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
+                        <p>@Messages("directpay.receive.explanation2", globals.country_currency_crypto)</p>
+                    } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
-                        @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode && globals.country_fee_send_percent != 0) {
-                            if(globals.country_fee_tofiat_percent != 0) {<p>@Messages("directpay.fee"): <span id="calc_convertion_rate" class="calc_mid_destak_info"></span></p>}
-                            <p>@Messages("directpay.fee"): @if(globals.country_fee_send_percent != 0) {<span class="calc_mid_destak_info">@globals.country_fee_send_percent %</span>}.</p>
-                        } else {<p>@Messages("directpay.overview.nofeesarecharged")</p>}
+                        @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
+                            <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
+                            <p>@Messages("directpay.withdraw.preferentialbanks"): <span id="calc_list_preferential_banks"></span>. @Messages("directpay.withdraw.yougetlowerfees")</p>
+                            @if(globals.country_minimum_value != 0) {
+                                <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                                <p>@Messages("directpay.withdraw.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span></span> @Messages("directpay.withdraw.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span></span>.</p>
+                            }
+                        } else {
+                            <p>@Messages("directpay.receive.extraexplanation1")</p>
+                        }
                     </div>
                 </div>
             </div>
