@@ -262,7 +262,7 @@ declare
 begin
   update users_name_info set first_name = a_first_name, middle_name = a_middle_name, last_name = a_last_name, doc1 = a_doc1, doc2 = a_doc2, doc3 = a_doc3, doc4 = a_doc4, doc5 = a_doc5 where user_id = a_user_id;;
   update users_connections set bank = a_bank, agency = a_agency, account = a_account, partner = a_partner, partner_account = a_partner_account where user_id=a_user_id;;
-  update users set manualauto_mode = a_manualauto_mode where id=a_user_id;;
+  update users set manualauto_mode = a_manualauto_mode, partner = a_partner where id=a_user_id;;
   if a_first_name = '' or a_first_name = '' or a_doc1 = '' or a_doc2 = '' or a_doc3 = '' or a_doc4 = '' or a_doc5 = '' then
     update users set docs_verified = false where id = a_user_id;;
   else

@@ -3,10 +3,10 @@
 @import play.api.Play.current
 
 @navItem(url: String, icon: String, title:String) = {
-@if(request.path==url) {
-    <li class="active">
-} else {
-    <li>
+    @if(request.path==url) {
+        <li class="active">
+    } else {
+        <li>
     }
     <a href="@url" title="@title">
         <span class="sidebar-text">
@@ -50,8 +50,9 @@
 @extraStyles = {
 }
 <style>
-    .site_title { font-size: 28px; font-weight: 500; @globals.country_appearance8 }
-    .nav.navbar-nav > li > a { @globals.country_appearance9 }
+    .site_title { font-size: 28px; font-weight: 500; color: @globals.country_appearance8 }
+    .site_title:hover { color: @globals.country_appearance9 }
+    .nav.navbar-nav > li > a { color: @globals.country_appearance10 }
 </style>
 
 @_global_chrome(title, Html(scripts + extraScripts.body), Html(styles + extraStyles.body)) {
@@ -67,7 +68,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="logo" href="@routes.Application.index()" style="@globals.country_appearance0; @globals.country_appearance8">
+                <a id="logo" href="@routes.Application.index()" style="@globals.country_appearance0; color: @globals.country_appearance8">
                     <span class="site_title"><i class="fa fa-play"></i> @globals.country_system_name @*play.api.Play.current.configuration.getString("application.name")*@</span>
                     <span style="display: none" class="logo-text-icon"> @globals.country_system_name @*play.api.Play.current.configuration.getString("application.name")*@</span>
                 </a>

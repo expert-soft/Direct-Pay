@@ -248,7 +248,8 @@ directpay.legend.orderrejected=Order Rejected
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
-directpay.navigation.notconnectedtoanypartner=Not connected to any partner
+directpay.navigation.notconnectedtoanypartner=No partner connected
+directpay.navigation.operatingmode=Operating mode:
 directpay.navigation.operations.title=Operations
 directpay.navigation.deposit.title=Deposit
 directpay.navigation.converttocrypto.title=Convert to crypto
@@ -263,7 +264,7 @@ directpay.navigation.receivewithdraw.title=Receive and Withdraw
 directpay.navigation.security.title=Security
 directpay.navigation.support.title=Support
 directpay.navigation.contact.title=Contact
-directpay.navigation.terms.title=Terms & Contract
+directpay.navigation.termsandcontract.title=Terms & Contract
 directpay.navigation.admin.adminpanel.title=Admin Panel
 directpay.navigation.admin.management.title=Management
 directpay.navigation.admin.userslist.title=List of Users
@@ -307,6 +308,7 @@ directpay.overview.extraexplanation2=On the other hand, if you deal with more th
 directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
 directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
 directpay.overview.automatic=Automatic
+directpay.overview.manual=Manual
 directpay.overview.explainoptionautomatic=Any Deposit is Sent to a partner and any Receive from partner is Withdrawed to your bank account.
 directpay.overview.explainoptionmanual=All operations executed by user.
 directpay.overview.explanationautomatic=If at "Automatic Mode", operations get grouped in two (deposit + convert to {0} + send and receive + convert to {1} + withdraw). A deposit order automatically triggers a convertion and send to partner, and any money received from partner is automaically reconverted and withdrawed to your bank account.
@@ -492,6 +494,7 @@ directpay.history.imagedetails=Image Details
 directpay.history.sum=Sum ({0})
 
 
+directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
 
 
 
@@ -666,7 +669,7 @@ mails.passwordResetOk.body=Your password was updated.  Please log in using your 
 messages.api.success=Success
 messages.api.success.ordercreatedsuccessfully=Order created successfully
 messages.api.success.bankinfosavedsuccessfully=Bank data saved successfully
-messages.api.success.manualautomodechanged=Manual/Automatic mode changed successfully
+messages.api.success.manualautomodechanged=Manual / Automatic mode changed successfully
 messages.api.error.failedtocreateorder=Failed to create order.
 messages.api.success.orderupdatedsuccessfully=Order Updated Successfully
 messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode

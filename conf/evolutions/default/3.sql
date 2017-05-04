@@ -36,19 +36,21 @@ create_user (
   a_pgp text,
   a_language varchar(10),
   a_user_country varchar(6),
-  a_docs_verified bool
+  a_docs_verified bool,
+  a_partner varchar(64)
 ) returns bigint as $$
 declare
   new_user_id bigint;;
 begin
-  insert into users(id, email, on_mailing_list, pgp, language, user_country, docs_verified) values (
+  insert into users(id, email, on_mailing_list, pgp, language, user_country, docs_verified, partner) values (
       generate_random_user_id(),
       a_email,
       a_onMailingList,
       a_pgp,
       a_language,
       a_user_country,
-      a_docs_verified
+      a_docs_verified,
+      a_partner
     ) returning id into new_user_id;;
   -- create balances associated with users
   insert into balances (user_id, currency) select new_user_id, currency from currencies;;

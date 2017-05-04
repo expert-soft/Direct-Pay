@@ -19,6 +19,10 @@ GET         /receive                                   controllers.Application.r
 GET         /tofiat                                    controllers.Application.tofiat
 GET         /withdraw                                  controllers.Application.withdraw
 
+GET         /about                                     controllers.Application.about
+GET         /faq                                       controllers.Application.faq
+GET         /contract                                  controllers.Application.contract
+
 # Administrator's pages
 GET         /management                                controllers.Application.management
 GET         /users_list                                controllers.Application.users_list

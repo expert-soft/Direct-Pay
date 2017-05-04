@@ -21,14 +21,14 @@ import play.api.libs.json.{ JsValue, Json, JsObject, Writes }
 /**
  * An implementation of Identity.  Used by SecureSocial to gather user information when users sign up and/or sign in.
  */
-case class SocialUser(id: Long, email: String, verification: Int, language: String, onMailingList: Boolean, TFAEnabled: Boolean = false, pgp: Option[String] = None, manualauto_mode: Boolean, user_country: Option[String] = None, docs_verified: Boolean)
+case class SocialUser(id: Long, email: String, verification: Int, language: String, onMailingList: Boolean, TFAEnabled: Boolean = false, pgp: Option[String] = None, manualauto_mode: Boolean, user_country: Option[String] = None, docs_verified: Boolean, partner: Option[String] = None)
 
 object SocialUser {
   implicit def writes = new Writes[SocialUser] {
     def writes(u: SocialUser): JsValue = {
       // include everything except the id
       Json.obj("email" -> u.email, "verification" -> u.verification, "onMailingList" -> u.onMailingList,
-        "TFAEnabled" -> u.TFAEnabled, "pgp" -> u.pgp, "language" -> u.language, "manualauto_mode" -> u.manualauto_mode, "user_country" -> u.user_country, "docs_verified" -> u.docs_verified)
+        "TFAEnabled" -> u.TFAEnabled, "pgp" -> u.pgp, "language" -> u.language, "manualauto_mode" -> u.manualauto_mode, "user_country" -> u.user_country, "docs_verified" -> u.docs_verified, "partner" -> u.partner)
     }
   }
 }

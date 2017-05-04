@@ -57,7 +57,8 @@ class UserModel(val db: String = "default") {
           row[Option[String]]("pgp"),
           row[Boolean]("manualauto_mode"),
           row[Option[String]]("user_country"),
-          row[Boolean]("docs_verified")
+          row[Boolean]("docs_verified"),
+          row[Option[String]]("partner")
         )
       ).headOption
     }
@@ -94,7 +95,8 @@ class UserModel(val db: String = "default") {
       row[String]("language"),
       row[Option[Boolean]]("manualauto_mode"),
       row[Option[String]]("user_country"),
-      row[Option[Boolean]]("docs_verified")) match {
+      row[Option[Boolean]]("docs_verified"),
+      row[Option[String]]("partner")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
@@ -104,8 +106,9 @@ class UserModel(val db: String = "default") {
           language: String,
           manualauto_mode: Option[Boolean],
           user_country: Option[String],
-          docs_verified: Option[Boolean]) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode.getOrElse(false), user_country, docs_verified.getOrElse(false)))
+          docs_verified: Option[Boolean],
+          partner: Option[String]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode.getOrElse(false), user_country, docs_verified.getOrElse(false), partner))
         case _ =>
           None
       }
@@ -124,7 +127,8 @@ class UserModel(val db: String = "default") {
       row[Option[String]]("language"),
       row[Option[Boolean]]("manualauto_mode"),
       row[Option[String]]("user_country"),
-      row[Option[Boolean]]("docs_verified")) match {
+      row[Option[Boolean]]("docs_verified"),
+      row[Option[String]]("partner")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
@@ -134,8 +138,9 @@ class UserModel(val db: String = "default") {
           Some(language: String),
           Some(manualauto_mode: Boolean),
           user_country: Option[String],
-          Some(docs_verified: Boolean)) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode, user_country, docs_verified))
+          Some(docs_verified: Boolean),
+          partner: Option[String]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode, user_country, docs_verified, partner))
         case _ =>
           None
       }

@@ -86,6 +86,18 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.exchange.withdraw(request.user))
   }
 
+  def about = SecuredAction { implicit request =>
+    Ok(views.html.exchange.about(request.user))
+  }
+
+  def faq = SecuredAction { implicit request =>
+    Ok(views.html.exchange.faq(request.user))
+  }
+
+  def contract = SecuredAction { implicit request =>
+    Ok(views.html.exchange.contract(request.user))
+  }
+
   def dashboard = SecuredAction { implicit request =>
     Ok(views.html.exchange.dashboard(request.user))
   }

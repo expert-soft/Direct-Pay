@@ -138,6 +138,7 @@ package object globals {
   val country_appearance7 = Play.current.configuration.getString("country.country_appearance7").getOrElse("Not Set")
   val country_appearance8 = Play.current.configuration.getString("country.country_appearance8").getOrElse("Not Set")
   val country_appearance9 = Play.current.configuration.getString("country.country_appearance9").getOrElse("Not Set")
+  val country_appearance10 = Play.current.configuration.getString("country.country_appearance10").getOrElse("Not Set")
 
   def numberFormat(value: AnyVal): String = {
     if (country_decimal_separator == ',')
@@ -185,8 +186,8 @@ package object globals {
         insert into balances (user_id, currency) select 2, currency from currencies;;
         insert into users_passwords (user_id, password) values (2, crypt('qwe', gen_salt('bf', 8)));;
 
-        select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en', 'br', true);
-        select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en', 'ru', false);
+        select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en', 'br', true, '');
+        select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en', 'ru', false, '');
 
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Simão', 'Boczko', '999.090.089-98', 'doc_pdf.pdf', 'doc_pdf.pdf', '(12)99324-0988', 'doc5', ${!globals.country_doc1_ispicture}, ${!globals.country_doc2_ispicture}, ${!globals.country_doc3_ispicture}, ${!globals.country_doc4_ispicture}, ${!globals.country_doc5_ispicture} from users where email='mboczko@yahoo.com';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', '', 'Mitrofanov', '097.455.645-09', '140.png', 'doc_38.jpg', '(53)30823-098', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
@@ -201,11 +202,11 @@ package object globals {
 
 
 
-        select create_user('a', 'a', true, null, 'en', 'br', false);
-        select create_user('test@hotmail.ru', 'pass01', true, null, 'ru', 'br', false);
-        select create_user('test@gmail.com', 'pass02', true, null, 'en', 'br', false);
-        select create_user('test@yahoo.com.br', 'pass03', true, null, 'br', 'br', false);
-        select create_user('testru@gmail.ru', 'pass04', true, null, 'ru', 'br', false);
+        select create_user('a', 'a', true, null, 'en', 'br', false, '');
+        select create_user('test@hotmail.ru', 'pass01', true, null, 'ru', 'br', false, '');
+        select create_user('test@gmail.com', 'pass02', true, null, 'en', 'br', false, '');
+        select create_user('test@yahoo.com.br', 'pass03', true, null, 'br', 'br', false, '');
+        select create_user('testru@gmail.ru', 'pass04', true, null, 'ru', 'br', false, '');
 
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Test-middle_name', 'Tes-last_name', '', '', '', '', 'doc5', ${!globals.country_doc1_ispicture}, ${!globals.country_doc2_ispicture}, ${!globals.country_doc3_ispicture}, ${!globals.country_doc4_ispicture}, ${!globals.country_doc5_ispicture} from users where email='test@hotmail.ru';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', '', 'last name', '566.432.789-03', 'doc39.jpg', '140.png', '(11)32580-342', 'doc5', false, false, false, true, false from users where email='test@gmail.com';

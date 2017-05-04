@@ -23,7 +23,8 @@ create table users (
     active bool default true not null,
     manualauto_mode bool default true not null,
     user_country varchar(6),
-    docs_verified bool default false not null
+    docs_verified bool default false not null,
+    partner varchar(64)
 );
 create unique index unique_lower_email on users (lower(email));
 
