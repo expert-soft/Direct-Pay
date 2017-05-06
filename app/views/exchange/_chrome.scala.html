@@ -85,8 +85,8 @@
 <style>
     .site_title, .profile_info span { color: @globals.country_appearance8 }
     .site_title:hover { color: @globals.country_appearance9 }
-    .class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
-    .class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .nav > li .class_manual, .class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .nav > li .class_automatic, .class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
     .nav.child_menu > li { @globals.country_appearance0 !important }
     .nav li.current-page { @globals.country_appearance6 !important }
     .nav li.current-page:hover { @globals.country_appearance7 !important }
@@ -95,6 +95,12 @@
     .nav.child_menu li:before { color: @globals.country_appearance8 !important }
     .nav-md ul.nav.child_menu li:before { background: @globals.country_appearance8}
     .nav-md ul.nav.child_menu li:after { border-left: 1px solid @globals.country_appearance8 }
+    div.x_title { border-bottom: 3px solid #e6e9ed; }
+    div.x_title > h2, h3 { color: @globals.country_appearance12; }
+    .text_additional_info, .calc_destak_info, .calc_mid_destak_info, .calc_low_destak_info { color: @globals.country_appearance13; }
+    ul.panel_toolbox > li > a { color: @globals.country_appearance11 }
+    .wallet_destak, .wallet_destak_sum { color: @globals.country_appearance13; }
+    .table-wallet, .wallet_destak_icon { color: @globals.country_appearance14; }
 </style>
 
     <div class="container body">
@@ -200,7 +206,7 @@
             <div class="right_col" role="main" style="@globals.country_appearance4">
                 <div class="">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             @content
                         </div>
                     </div>

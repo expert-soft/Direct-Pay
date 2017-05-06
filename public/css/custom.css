@@ -561,7 +561,7 @@ body {
 }
 
 .page-title .title_left {
-  width: 45%;
+  width: 65%;
   float: left;
   display: block; }
 
@@ -592,8 +592,11 @@ body {
   height: 390px; }
 
 .fixed_height_420 {
-  height: 420px
-}
+  height: 420px }
+
+.variable_height {
+  height: 500px; }
+
 .overflow_hidden {
   overflow: hidden; }
 
@@ -1058,12 +1061,13 @@ h2 {
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
   opacity: 1;
-  transition: all .2s ease; }
+  transition: all .2s ease;
+  box-shadow: 2px 8px 14px 0 rgba(0, 0, 0, 0.2); }
 
 .x_title {
   border-bottom: 2px solid #E6E9ED;
   padding: 1px 5px 6px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   color: #467; /* before was no color */
 }
 

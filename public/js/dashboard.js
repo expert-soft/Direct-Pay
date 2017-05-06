@@ -39,12 +39,21 @@ $(function(){
             })
 
         });
+
+
+        $( window ).resize(function() {
+            resizeDiv()
+        });
     });
     showHide();
 
     showFeeMessages();
     FillDocumentsNotVerifiedMessages ();
 });
+
+function resizeDiv (){
+    $('.variable_height').css('height', parseInt(130 + 100000/$('.variable_height').width())); // choose numerical parameters if text is shorter or longer
+}
 
 function FillDocumentsNotVerifiedMessages () {
     var list_of_documents = $('#hidden_listofdocuments').attr('listofdocuments_message');

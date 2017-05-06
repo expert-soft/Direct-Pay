@@ -495,7 +495,15 @@ directpay.history.sum=Sum ({0})
 
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
-
+directpay.faq.1=O que é {0}?
+directpay.faq.1.1={0} é um sistema...
+directpay.faq.1.2=O usuário interage...
+directpay.faq.2=O que são "parceiros"?
+directpay.faq.2.1=Parceiros são...
+directpay.faq.2.2=O código deste país é {1}. O nome dele é {0}
+directpay.faq.3=É possível ...?
+directpay.faq.3.1=Sim, é possível...
+directpay.faq.3.2=Mais possível seria...
 
 
 

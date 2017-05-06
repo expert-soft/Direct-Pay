@@ -139,6 +139,10 @@ package object globals {
   val country_appearance8 = Play.current.configuration.getString("country.country_appearance8").getOrElse("Not Set")
   val country_appearance9 = Play.current.configuration.getString("country.country_appearance9").getOrElse("Not Set")
   val country_appearance10 = Play.current.configuration.getString("country.country_appearance10").getOrElse("Not Set")
+  val country_appearance11 = Play.current.configuration.getString("country.country_appearance11").getOrElse("Not Set")
+  val country_appearance12 = Play.current.configuration.getString("country.country_appearance12").getOrElse("Not Set")
+  val country_appearance13 = Play.current.configuration.getString("country.country_appearance13").getOrElse("Not Set")
+  val country_appearance14 = Play.current.configuration.getString("country.country_appearance14").getOrElse("Not Set")
 
   def numberFormat(value: AnyVal): String = {
     if (country_decimal_separator == ',')
