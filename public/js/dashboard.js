@@ -36,16 +36,17 @@ $(function(){
                     type: 'success',
                     text_escape: true
                 });
-            })
-
+            });
+            resizeDiv()
         });
 
 
-        $( window ).resize(function() {
+        $(window).resize(function() {
             resizeDiv()
         });
     });
     showHide();
+    resizeDiv();
 
     showFeeMessages();
     FillDocumentsNotVerifiedMessages ();
@@ -53,6 +54,7 @@ $(function(){
 
 function resizeDiv (){
     $('.variable_height').css('height', parseInt(130 + 100000/$('.variable_height').width())); // choose numerical parameters if text is shorter or longer
+    $('.variable_height2').css('height', parseInt(190 + 100000/$('.variable_height2').width())); // choose numerical parameters if text is shorter or longer
 }
 
 function FillDocumentsNotVerifiedMessages () {

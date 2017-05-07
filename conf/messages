@@ -400,7 +400,7 @@ directpay.tofiat.valuetobeconverted=Value to be converted
 directpay.tofiat.shortinfo1=If you intend to withdraw your {0} funds to your bank account, you must first convert it to {1}.
 directpay.tofiat.explanation1=Once you received {0} from our partners, you may want to convert it back to {1} and withdraw to your bank account. You can do it at this form.
 
-directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed not to be lower than {2}.
+directpay.tofiat.disclaimer1=User can, at any time and any amount, convert {0} received from partners to {1}. The conversion rate is guaranteed to be not lower than {2}.
 directpay.depositsend.depositconvertandsend=Deposit, Convert and Send
 directpay.depositsend.explanation1=When Automatic Operations is set on, your deposits will automatically trigger conversion to {0} and sending it to the selected partner.
 directpay.depositsend.explanation2=The deposit operation remains exactly the same: deposit at {0} bank account and uploading receipt. After receipt verification, the conversion and sending operations will start automatically.

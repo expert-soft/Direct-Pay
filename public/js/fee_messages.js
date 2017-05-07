@@ -77,8 +77,12 @@ function fillDepositMessages() {
     var aux = parseFloat(country_settings.fee_deposit_percent);
     if($('#hidden_page').val() == "DCS")  // automatic operation
         aux += parseFloat(country_settings.fee_send_percent);
-    if (aux != 0 && $.isNumeric($('#value').val()))
-        $('#calc_deposit_fee').html(NumberFormat(parseFloat($('#value').val()) * aux * 0.01, 2))
+    if (aux != 0 && $.isNumeric($('#value').val())) {
+        if (aux < parseFloat(country_settings.minimum_value))
+            $('#calc_deposit_fee').html(NumberFormat(parseFloat($('#value').val()) * aux * 0.01 + country_settings.minimum_value * 0.02, 2));
+        else
+            $('#calc_deposit_fee').html(NumberFormat(parseFloat($('#value').val()) * aux * 0.01, 2))
+    }
     else
         $('#calc_deposit_fee').html("- - - ");
     $('#calc_deposit_critical_value2').html(NumberFormat(parseFloat(country_settings.critical_value2), 2));

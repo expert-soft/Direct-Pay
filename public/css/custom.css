@@ -724,7 +724,8 @@ a.normal_link {
 
 .nav.side-menu > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
-  background: transparent; }
+  /*background: transparent; */
+}
 
 .nav.child_menu {
   display: none; }
