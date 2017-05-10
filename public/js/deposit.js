@@ -28,6 +28,7 @@ $(function() {
     }
 */
 
+/*
     function submit_image() {
         API.upload_image($('#uploadBtn1'));
         $.pnotify({
@@ -37,26 +38,19 @@ $(function() {
             type: 'success',
             text_escape: true
         });
-
     }
-
-/*    API.upload_image($('#uploadBtn1')).success(function () {
-        $.pnotify({
-            title: Messages("messages.api.success"),
-            text: Messages("messages.api.success.manualautomodechanged"),
-            styling: 'bootstrap',
-            type: 'success',
-            text_escape: true
-        });
-    })*/
+*/
 
     $(document).ready(function () {
         fillMessages();
     });
 
-    $('.triggers_submit').click(function () {
+/*    $('.triggers_submit').click(function () {
+alert(3);
         submit_deposit($('#uploadBtn1'));
     });
+*/
+
 });
 
 
@@ -77,3 +71,31 @@ $('#partner').change(function() { fillInfoIntoFileObject() });
 $('#partner_account').change(function() { fillInfoIntoFileObject() });
 function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#value').val() + "|" + $('#partner').val() + "|" + $('#partner_account').val()); }
 
+
+$(function(){
+    $('#deposit_form').on('submit',function(event){
+        var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
+        var value_s = $('#value').val();
+        if (decimal_separator == ",")
+            value_s = value_s.replace(decimal_separator, ".");
+        if ($.isNumeric(value_s)) {
+            if (parseFloat(value_s) > 0 ) {
+                if($('#uploadText1').text() != "") {
+                    // accept value and submit form
+                } else {
+                    event.preventDefault() ;
+                    event.stopPropagation();
+                    alert($('#hidden_form_validation_messages').attr('youmustselectdepositfile'));
+                }
+            } else {
+                event.preventDefault() ;
+                event.stopPropagation();
+                alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+            }
+        } else {
+            event.preventDefault() ;
+            event.stopPropagation();
+            alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+        }
+    });
+});

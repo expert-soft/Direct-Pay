@@ -353,7 +353,7 @@ directpay.withdraw.receiveconvertwithdraw=Receive, Convert and Withdraw
 directpay.withdraw.yourdocumentationis=Your documentation is
 directpay.withdraw.notyetverified=not yet verified
 directpay.withdraw.documentsrequiredtowithdraw=Information and documents required:
-directpay.withdraw.youarenotallowedtothisoperation=You are not allowed to perform this operation until your information and documents are not verified.
+directpay.withdraw.youarenotallowedtothisoperation=You are not allowed to perform this operation until your information and documents are verified.
 directpay.withdraw.youroperationwillonlybeexecuted=Your operation will only be completely executed if you upload the missing documents before partner returns {0} to your account.
 directpay.withdraw.requestwithdrawal=Request a Withdrawal
 directpay.withdraw.preferentialbanks=Preferential banks
@@ -492,6 +492,14 @@ directpay.history.usersoperationshistory=User''s Operations History
 directpay.history.loghistory=Log History
 directpay.history.imagedetails=Image Details
 directpay.history.sum=Sum ({0})
+
+directpay.formvalidation.valuemustbenumerical=Value must be numerical
+directpay.formvalidation.valuemustbegreaterthanzero=Value must be greater than 0
+directpay.formvalidation.amountnotavailable=Requested amount is not available
+directpay.formvalidation.bankinginformationisincomplete=Banking information is incomplete
+directpay.formvalidation.accountinformationisincomplete=Account information is incomplete
+directpay.formvalidation.youmustselectdepositfile=You must select the deposit receipt file to be uploaded
+directpay.formvalidation.nofileselected=There are no new files selected
 
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions

@@ -22,6 +22,8 @@ package object globals {
   val country_currency_name = Play.current.configuration.getString("country.country_currency_name").getOrElse("Not Set")
   val country_currency_name_plural = Play.current.configuration.getString("country.country_currency_name_plural").getOrElse("Not Set")
   val country_decimal_separator = Play.current.configuration.getString("country.country_decimal_separator").getOrElse("Not Set")
+  val country_operations_organized = Play.current.configuration.getString("country.country_operations_organized").getOrElse("Not Set")
+  val country_iban = Play.current.configuration.getString("country.country_iban").getOrElse(false)
   val country_minimum_value = Play.current.configuration.getInt("country.country_minimum_value").getOrElse(0)
   val country_critical_value1 = Play.current.configuration.getInt("country.country_critical_value1").getOrElse(0)
   val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)

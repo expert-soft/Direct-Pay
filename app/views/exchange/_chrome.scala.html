@@ -207,6 +207,48 @@
                 </div>
             </div>
             <!-- /top navigation -->
+
+
+            <input type="hidden" id="hidden_fees_information"
+            currency_code="@globals.country_currency_code"
+            currency_crypto="@globals.country_currency_crypto"
+            wallet_available="0"
+            wallet_onhold="0"
+            wallet_crypto="0"
+            wallet_crypto_onhold="0"
+            wallet_total="0"
+            decimal_separator = "@globals.country_decimal_separator"
+            minimum_value = "@globals.country_minimum_value.toString"
+            critical_value1 = "@globals.country_critical_value1.toString"
+            critical_value2 = "@globals.country_critical_value2.toString"
+            preferential_bank1_code = "@globals.country_preferential_bank1_code"
+            preferential_bank1_name = "@globals.country_preferential_bank1_name"
+            preferential_bank2_code = "@globals.country_preferential_bank2_code"
+            preferential_bank2_name = "@globals.country_preferential_bank2_name"
+            preferential_bank3_code = "@globals.country_preferential_bank3_code"
+            preferential_bank3_name = "@globals.country_preferential_bank3_name"
+            preferential_bank4_code = "@globals.country_preferential_bank4_code"
+            preferential_bank4_name = "@globals.country_preferential_bank4_name"
+            nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
+            nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
+            fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
+            fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
+            fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
+            fee_send_percent = "@globals.country_fee_send_percent.toString"
+            >
+
+            <input type="hidden" id="hidden_form_validation_messages"
+            dashboard_url="@routes.Application.dashboard().url"
+            valuemustbenumerical="@Messages("directpay.formvalidation.valuemustbenumerical")"
+            valuemustbegreaterthanzero="@Messages("directpay.formvalidation.valuemustbegreaterthanzero")"
+            amountnotavailable="@Messages("directpay.formvalidation.amountnotavailable")"
+            bankinginformationisincomplete="@Messages("directpay.formvalidation.bankinginformationisincomplete")"
+            accountinformationisincomplete="@Messages("directpay.formvalidation.accountinformationisincomplete")"
+            youmustselectdepositfile="@Messages("directpay.formvalidation.youmustselectdepositfile")"
+            nofileselected="@Messages("directpay.formvalidation.nofileselected")"
+            >
+
+
             <!-- page content -->
             <div class="right_col" role="main" style="background: @globals.country_appearance_background_2">
                 <div class="">

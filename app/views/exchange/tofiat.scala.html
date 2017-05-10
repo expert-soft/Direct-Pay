@@ -38,7 +38,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary triggers_submit">@Messages("terminology.convert")</button>
+                                <button type="button" class="btn btn-primary triggers_submit">@Messages("terminology.convert")</button>
                             </div>
                         </div>
                     </form>
@@ -48,32 +48,7 @@
         <!-- End of form -->
 
 
-            <!-- Wallet -->
-        <input type="hidden" id="hidden_fees_information"
-        currency_code="@globals.country_currency_code"
-        currency_crypto="@globals.country_currency_crypto"
-        wallet_available="0"
-        wallet_onhold="0"
-        wallet_crypto="0"
-        wallet_total="0"
-        decimal_separator = "@globals.country_decimal_separator"
-        minimum_value = "@globals.country_minimum_value.toString"
-        critical_value1 = "@globals.country_critical_value1.toString"
-        critical_value2 = "@globals.country_critical_value2.toString"
-        preferential_bank1_code = "@globals.country_preferential_bank1_code"
-        preferential_bank1_name = "@globals.country_preferential_bank1_name"
-        preferential_bank2_code = "@globals.country_preferential_bank2_code"
-        preferential_bank2_name = "@globals.country_preferential_bank2_name"
-        preferential_bank3_code = "@globals.country_preferential_bank3_code"
-        preferential_bank3_name = "@globals.country_preferential_bank3_name"
-        preferential_bank4_code = "@globals.country_preferential_bank4_code"
-        preferential_bank4_name = "@globals.country_preferential_bank4_name"
-        nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
-        nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
-        fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
-        fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
-        >
-
+        <!-- Wallet -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div  id="wallet" class="x_panel" style="background: @globals.country_appearance_background_6">
                 <div class="x_title">

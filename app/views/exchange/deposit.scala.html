@@ -23,16 +23,6 @@
         </div>
     </div>
 
-    <input type="hidden" id="hidden_fees_information"
-    currency_code="@globals.country_currency_code"
-    currency_crypto="@globals.country_currency_crypto"
-    decimal_separator = "@globals.country_decimal_separator"
-    minimum_value = "@globals.country_minimum_value.toString"
-    critical_value1 = "@globals.country_critical_value1.toString"
-    critical_value2 = "@globals.country_critical_value2.toString"
-    fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
-    fee_send_percent = "@globals.country_fee_send_percent.toString"
-    >
 
 <style>
 .fileUpload { position: relative; overflow: hidden; margin: 10px; }
@@ -93,7 +83,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
+                                <button type="submit" id="submit_deposit_button" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
                             </div>
                         </div>
                     </form>
