@@ -22,6 +22,8 @@ package object globals {
   val country_currency_name = Play.current.configuration.getString("country.country_currency_name").getOrElse("Not Set")
   val country_currency_name_plural = Play.current.configuration.getString("country.country_currency_name_plural").getOrElse("Not Set")
   val country_decimal_separator = Play.current.configuration.getString("country.country_decimal_separator").getOrElse("Not Set")
+  val country_operations_organized = Play.current.configuration.getString("country.country_operations_organized").getOrElse("Not Set")
+  val country_iban = Play.current.configuration.getString("country.country_iban").getOrElse(false)
   val country_minimum_value = Play.current.configuration.getInt("country.country_minimum_value").getOrElse(0)
   val country_critical_value1 = Play.current.configuration.getInt("country.country_critical_value1").getOrElse(0)
   val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)
@@ -128,11 +130,21 @@ package object globals {
   val country_fee_tofiat_minimum_rate_percent = Play.current.configuration.getDouble("country.country_fee_tofiat_minimum_rate_percent").getOrElse(0)
   val country_appearance_pic1 = Play.current.configuration.getString("country.country_appearance_pic1").getOrElse("Not Set")
   val country_appearance_pic2 = Play.current.configuration.getString("country.country_appearance_pic2").getOrElse("Not Set")
-  val country_appearance1 = Play.current.configuration.getString("country.country_appearance1").getOrElse("Not Set")
-  val country_appearance2 = Play.current.configuration.getString("country.country_appearance2").getOrElse("Not Set")
-  val country_appearance3 = Play.current.configuration.getString("country.country_appearance3").getOrElse("Not Set")
-  val country_appearance4 = Play.current.configuration.getString("country.country_appearance4").getOrElse("Not Set")
-  val country_appearance5 = Play.current.configuration.getString("country.country_appearance5").getOrElse("Not Set")
+  val country_appearance_background_1 = Play.current.configuration.getString("country.country_appearance_background_1").getOrElse("Not Set")
+  val country_appearance_background_2 = Play.current.configuration.getString("country.country_appearance_background_2").getOrElse("Not Set")
+  val country_appearance_background_3 = Play.current.configuration.getString("country.country_appearance_background_3").getOrElse("Not Set")
+  val country_appearance_background_4 = Play.current.configuration.getString("country.country_appearance_background_4").getOrElse("Not Set")
+  val country_appearance_background_5 = Play.current.configuration.getString("country.country_appearance_background_5").getOrElse("Not Set")
+  val country_appearance_background_6 = Play.current.configuration.getString("country.country_appearance_background_6").getOrElse("Not Set")
+  val country_appearance_background_7 = Play.current.configuration.getString("country.country_appearance_background_7").getOrElse("Not Set")
+  val country_appearance_background_8 = Play.current.configuration.getString("country.country_appearance_background_8").getOrElse("Not Set")
+  val country_appearance_text_1 = Play.current.configuration.getString("country.country_appearance_text_1").getOrElse("Not Set")
+  val country_appearance_text_2 = Play.current.configuration.getString("country.country_appearance_text_2").getOrElse("Not Set")
+  val country_appearance_text_3 = Play.current.configuration.getString("country.country_appearance_text_3").getOrElse("Not Set")
+  val country_appearance_text_4 = Play.current.configuration.getString("country.country_appearance_text_4").getOrElse("Not Set")
+  val country_appearance_text_5 = Play.current.configuration.getString("country.country_appearance_text_5").getOrElse("Not Set")
+  val country_appearance_text_6 = Play.current.configuration.getString("country.country_appearance_text_6").getOrElse("Not Set")
+  val country_appearance_text_7 = Play.current.configuration.getString("country.country_appearance_text_7").getOrElse("Not Set")
 
   def numberFormat(value: AnyVal): String = {
     if (country_decimal_separator == ',')
@@ -180,10 +192,10 @@ package object globals {
         insert into balances (user_id, currency) select 2, currency from currencies;;
         insert into users_passwords (user_id, password) values (2, crypt('qwe', gen_salt('bf', 8)));;
 
-        select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en');
-        select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en');
+        select create_user('mboczko@yahoo.com', 'Fada00Fada', true, null, 'en', 'br', true, '');
+        select create_user('a2terminator@mail.ru', 'qwerty123', true, null, 'en', 'ru', false, '');
 
-        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Simão', 'Boczko', '999.090.089-98', 'doc_pdf.pdf', 'doc_pdf.pdf', '(12)99324-0988', 'doc5', true, true, true, true, false from users where email='mboczko@yahoo.com';
+        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Marcelo', 'Simão', 'Boczko', '999.090.089-98', 'doc_pdf.pdf', 'doc_pdf.pdf', '(12)99324-0988', 'doc5', ${!globals.country_doc1_ispicture}, ${!globals.country_doc2_ispicture}, ${!globals.country_doc3_ispicture}, ${!globals.country_doc4_ispicture}, ${!globals.country_doc5_ispicture} from users where email='mboczko@yahoo.com';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Yura', '', 'Mitrofanov', '097.455.645-09', '140.png', 'doc_38.jpg', '(53)30823-098', 'doc5', false, false, false, true, false from users where email='a2terminator@mail.ru';
 
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='mboczko@yahoo.com'), '745', 'Agency B', 'Account B', 'Crypto-Trade.net', 'partner_account@gmail.com';
@@ -196,13 +208,13 @@ package object globals {
 
 
 
-        select create_user('a', 'a', true, null, 'en');
-        select create_user('test@hotmail.ru', 'pass01', true, null, 'ru');
-        select create_user('test@gmail.com', 'pass02', true, null, 'en');
-        select create_user('test@yahoo.com.br', 'pass03', true, null, 'br');
-        select create_user('testru@gmail.ru', 'pass04', true, null, 'ru');
+        select create_user('a', 'a', true, null, 'en', 'br', false, '');
+        select create_user('test@hotmail.ru', 'pass01', true, null, 'ru', 'br', false, '');
+        select create_user('test@gmail.com', 'pass02', true, null, 'en', 'br', false, '');
+        select create_user('test@yahoo.com.br', 'pass03', true, null, 'br', 'br', false, '');
+        select create_user('testru@gmail.ru', 'pass04', true, null, 'ru', 'br', false, '');
 
-        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Test-middle_name', 'Tes-last_name', '', '', '', '', '', false, false, false, false, false from users where email='test@hotmail.ru';
+        insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', 'Test-middle_name', 'Tes-last_name', '', '', '', '', 'doc5', ${!globals.country_doc1_ispicture}, ${!globals.country_doc2_ispicture}, ${!globals.country_doc3_ispicture}, ${!globals.country_doc4_ispicture}, ${!globals.country_doc5_ispicture} from users where email='test@hotmail.ru';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'Test', '', 'last name', '566.432.789-03', 'doc39.jpg', '140.png', '(11)32580-342', 'doc5', false, false, false, true, false from users where email='test@gmail.com';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestBR', '', 'sobrenome', '', 'doc39.jpg', 'doc_37.JPG', '(15)99707-0000', '', false, false, false, true, false from users where email='test@yahoo.com.br';
         insert into users_name_info (user_id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, ver1, ver2, ver3, ver4, ver5) select id, 'TestRU', '', 'skovsk', '343.782.121-34', 'doc_38.jpg', '', '(11)95454-0993', 'doc5', true, true, true, true, false from users where email='testru@gmail.ru';

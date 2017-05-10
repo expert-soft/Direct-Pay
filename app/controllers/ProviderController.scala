@@ -78,7 +78,7 @@ class ProviderController @Inject() (val messagesApi: MessagesApi) extends Contro
     )
   }
 
-  private def badRequest[A](f: Form[(String, String)], request: Request[A], msg: Option[String] = None): Result = {
+  private def badRequest[A](f: Form[(String, String, String)], request: Request[A], msg: Option[String] = None): Result = {
     implicit val r = request
     Results.BadRequest(views.html.auth.login(f, msg))
   }
@@ -94,9 +94,9 @@ class ProviderController @Inject() (val messagesApi: MessagesApi) extends Contro
           var totp_hash: Option[String] = None
           // check for 2FA
           if (globals.userModel.userHasTotp(email)) {
-            totp_hash = globals.userModel.totpLoginStep1(email, credentials._2, models.LogModel.headersFromRequest(request), models.LogModel.ipFromRequest(request))
+            totp_hash = globals.userModel.totpLoginStep1(email, credentials._2, credentials._3, models.LogModel.headersFromRequest(request), models.LogModel.ipFromRequest(request))
           } else {
-            user = globals.userModel.findUserByEmailAndPassword(email, credentials._2, models.LogModel.headersFromRequest(request), models.LogModel.ipFromRequest(request))
+            user = globals.userModel.findUserByEmailAndPassword(email, credentials._2, credentials._3, models.LogModel.headersFromRequest(request), models.LogModel.ipFromRequest(request))
           }
           if (totp_hash.isDefined) {
             // create session

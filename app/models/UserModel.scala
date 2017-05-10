@@ -55,7 +55,10 @@ class UserModel(val db: String = "default") {
           row[Boolean]("on_mailing_list"),
           row[Boolean]("tfa_enabled"),
           row[Option[String]]("pgp"),
-          row[Boolean]("manualauto_mode")
+          row[Boolean]("manualauto_mode"),
+          row[Option[String]]("user_country"),
+          row[Boolean]("docs_verified"),
+          row[Option[String]]("partner")
         )
       ).headOption
     }
@@ -72,9 +75,9 @@ class UserModel(val db: String = "default") {
     ).head
   }
 
-  def totpLoginStep1(email: String, password: String, browserHeaders: String, ip: String): Option[String] = DB.withConnection(db) { implicit c =>
+  def totpLoginStep1(email: String, password: String, user_country: String, browserHeaders: String, ip: String): Option[String] = DB.withConnection(db) { implicit c =>
     SQL"""
-     select totp_login_step1($email, $password, $browserHeaders, inet($ip))
+     select totp_login_step1($email, $password, $user_country, $browserHeaders, inet($ip))
     """().map(row =>
       row[Option[String]]("totp_login_step1")
     ).head
@@ -90,7 +93,10 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
       row[String]("language"),
-      row[Option[Boolean]]("manualauto_mode")) match {
+      row[Option[Boolean]]("manualauto_mode"),
+      row[Option[String]]("user_country"),
+      row[Option[Boolean]]("docs_verified"),
+      row[Option[String]]("partner")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
@@ -98,17 +104,20 @@ class UserModel(val db: String = "default") {
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
           language: String,
-          manualauto_mode: Option[Boolean]) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode.getOrElse(false)))
+          manualauto_mode: Option[Boolean],
+          user_country: Option[String],
+          docs_verified: Option[Boolean],
+          partner: Option[String]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode.getOrElse(false), user_country, docs_verified.getOrElse(false), partner))
         case _ =>
           None
       }
     ).head
   }
 
-  def findUserByEmailAndPassword(email: String, password: String, browserHeaders: String, ip: String): Option[SocialUser] = DB.withConnection(db) { implicit c =>
+  def findUserByEmailAndPassword(email: String, password: String, user_country: String, browserHeaders: String, ip: String): Option[SocialUser] = DB.withConnection(db) { implicit c =>
     SQL"""
-    select * from find_user_by_email_and_password($email, $password, $browserHeaders, inet($ip))
+    select * from find_user_by_email_and_password($email, $password, $user_country, $browserHeaders, inet($ip))
     """().map(row => (row[Option[Long]]("id"),
       row[Option[String]]("email"),
       row[Option[Int]]("verification"),
@@ -116,7 +125,10 @@ class UserModel(val db: String = "default") {
       row[Option[Boolean]]("tfa_enabled"),
       row[Option[String]]("pgp"),
       row[Option[String]]("language"),
-      row[Option[Boolean]]("manualauto_mode")) match {
+      row[Option[Boolean]]("manualauto_mode"),
+      row[Option[String]]("user_country"),
+      row[Option[Boolean]]("docs_verified"),
+      row[Option[String]]("partner")) match {
         case (Some(id: Long),
           Some(email: String),
           Some(verification: Int),
@@ -124,8 +136,11 @@ class UserModel(val db: String = "default") {
           Some(tfa_enabled: Boolean),
           pgp: Option[String],
           Some(language: String),
-          Some(manualauto_mode: Boolean)) =>
-          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode))
+          Some(manualauto_mode: Boolean),
+          user_country: Option[String],
+          Some(docs_verified: Boolean),
+          partner: Option[String]) =>
+          Some(SocialUser(id, email, verification, language, on_mailing_list, tfa_enabled, pgp, manualauto_mode, user_country, docs_verified, partner))
         case _ =>
           None
       }

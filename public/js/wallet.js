@@ -14,6 +14,7 @@ $(function() {
             $('#hidden_fees_information').attr('wallet_onhold', balances[0].hold);
             $("#amount_crypto").html(NumberFormat(balances[0].amount_c, 2));
             $('#hidden_fees_information').attr('wallet_crypto', balances[0].amount_c);
+            $('#hidden_fees_information').attr('wallet_crypto_onhold', balances[0].hold_c);
 
             $("#amount_total").html(NumberFormat(parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c), 2));
             $('#hidden_fees_information').attr('wallet_total', parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c));

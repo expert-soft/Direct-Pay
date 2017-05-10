@@ -24,7 +24,7 @@
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance1">
+            <div class="x_panel" style="@globals.country_appearance_background_4">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-key"></i> &nbsp; @Messages("directpay.security.securitysettings")</h2>
                     <div class="clearfix"></div>
@@ -40,28 +40,31 @@
 
             <!-- Instructions -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance2">
+            <div class="x_panel" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.usersettings.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.security.explanation1", globals.country_system_name)</p>
 
-                    <br><span class="calc_mid_destak_info">@Messages("directpay.usersettings.step1")</span>
-                    <p>@Messages("directpay.usersettings.step1.explanation1")</p>
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.security.step1")</span>
+                    <p>@Messages("directpay.security.step1.explanation1")</p>
 
-                    <br><span class="calc_mid_destak_info">@Messages("directpay.usersettings.step2")</span>
-                    <p>@Messages("directpay.usersettings.step2.explanation1")</p>
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.security.step2")</span>
+                    <p>@Messages("directpay.security.step2.explanation1")</p>
 
-                    <br><span class="calc_mid_destak_info">@Messages("directpay.usersettings.step3")</span>
-                    <p>@Messages("directpay.usersettings.step3.explanation1", globals.country_system_name)</p>
-                    <p>@Messages("directpay.usersettings.step3.explanation2", Messages("directpay.usersettings.automatic.item"))</p>
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.security.step3")</span>
+                    <p>@Messages("directpay.security.step3.explanation1")</p>
+
+                    <br><span class="calc_mid_destak_info">@Messages("directpay.security.step4")</span>
+                    <p>@Messages("directpay.security.step4.explanation1", globals.country_system_name)</p>
                     <div class="x_extrainfo_content" style="display: none;">
-
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
-                        <p>@Messages("directpay.usersettings.extrainfo.explanation1")</p>
-                        <p>@Messages("directpay.usersettings.extrainfo.explanation2", globals.country_system_name)</p>
+                        <p>@Messages("directpay.security.extrainfo.explanation1")</p>
+                        <p>@Messages("directpay.security.extrainfo.explanation2", globals.country_system_name)</p>
+                        <p>@Messages("directpay.security.extrainfo.explanation3")</p>
+                        <p>@Messages("directpay.security.extrainfo.explanation4", globals.country_system_name)</p>
                     </div>
                 </div>
             </div>
@@ -71,6 +74,13 @@
 
 
 
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.security.disclaimer1", globals.country_system_name)</p>
+        <p>@Messages("directpay.security.disclaimer2", globals.country_system_name)</p>
+    </div>
+    <div class="clearfix"></div>
 
 
     <div class="modal fade" id="pgp-add-modal" tabindex="-1" role="dialog" aria-labelledby="pgp-add-modal" aria-hidden="true">
@@ -255,11 +265,11 @@
 
         <p>
             {{#TFAEnabled}}
-                <p>@Messages("exchange.account.tfa_login"): <span class="calc_mid_destak_info">@Messages("terminology.on")</span></p>
+                <p>@Messages("exchange.account.tfa_login"): <span class="calc_mid_destak_info">@Messages("terminology.active")</span></p>
                 <button type="submit" class="btn btn-danger" id="turnoff-tfa">@Messages("tfa.off.title")</button>
             {{/TFAEnabled}}
             {{^TFAEnabled}}
-                <p>@Messages("exchange.account.tfa_login"): <span class="calc_mid_destak_info">@Messages("terminology.off")</span></p>
+                <p>@Messages("exchange.account.tfa_login"): <span class="calc_mid_destak_info">@Messages("terminology.disabled")</span></p>
                 <button type="submit" class="btn btn-primary" id="turnon-tfa">@Messages("tfa.on.title")</button>
             {{/TFAEnabled}}
         </p>
@@ -283,11 +293,11 @@
 
         <p>
             {{#onMailingList}}
-            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.on")</span></p>
+            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.enabled")</span></p>
             <button type="submit" class="btn btn-default" id="turnoff-emails">@Messages("emails.off.title")</button>
             {{/onMailingList}}
             {{^onMailingList}}
-            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.off")</span></p>
+            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.disabled")</span></p>
             <button type="submit" class="btn btn-default" id="turnon-emails">@Messages("emails.on.title")</button>
             {{/onMailingList}}
         </p>

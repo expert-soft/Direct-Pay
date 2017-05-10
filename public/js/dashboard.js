@@ -36,16 +36,35 @@ $(function(){
                     type: 'success',
                     text_escape: true
                 });
-            })
+            });
+            resizeDiv()
+        });
 
+
+        $(window).resize(function() {
+            resizeDiv()
         });
     });
     showHide();
+    resizeDiv();
 
     showFeeMessages();
-
+    FillDocumentsNotVerifiedMessages ();
 });
 
+function resizeDiv (){
+    $('.variable_height').css('height', parseInt(130 + 100000/$('.variable_height').width())); // choose numerical parameters if text is shorter or longer
+    $('.variable_height2').css('height', parseInt(190 + 100000/$('.variable_height2').width())); // choose numerical parameters if text is shorter or longer
+}
 
-
-
+function FillDocumentsNotVerifiedMessages () {
+    var list_of_documents = $('#hidden_listofdocuments').attr('listofdocuments_message');
+    list_of_documents += ' ' + $('#hidden_listofdocuments').attr('first_name');
+    list_of_documents += ', ' + $('#hidden_listofdocuments').attr('last_name');
+    if($('#hidden_listofdocuments').attr('country_doc1')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc1');
+    if($('#hidden_listofdocuments').attr('country_doc2')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc2');
+    if($('#hidden_listofdocuments').attr('country_doc3')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc3');
+    if($('#hidden_listofdocuments').attr('country_doc4')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc4');
+    if($('#hidden_listofdocuments').attr('country_doc5')) list_of_documents += ', ' + $('#hidden_listofdocuments').attr('country_doc5');
+    $('#incomplete_docs').attr('title', list_of_documents);
+}

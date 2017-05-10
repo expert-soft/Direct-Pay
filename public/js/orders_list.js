@@ -9,12 +9,14 @@ $(function(){
             for (var i = 0; i < data.length; i++) {
 
                 data[i].created = moment(data[i].created).format("YYYY-MM-DD HH:mm:ss");
+                data[i].initial_value_s = NumberFormat(data[i].initial_value, 2);
+                data[i].total_fee_s = NumberFormat(data[i].total_fee, 2);
 
                 data[i].popupType="requestPopUp";
                 data[i].input_visible = "inline";
                 data[i].doc_type = "";
                 if (data[i].net_value == 0 && data[i].status != "Rj") {
-                    data[i].net_value = data[i].initial_value;
+                    data[i].net_value = NumberFormat(data[i].initial_value, 2);
                 }
                 data[i].popupButtonOKDisplay = "inline";
                 data[i].popupButtonLockDisplay = "none";

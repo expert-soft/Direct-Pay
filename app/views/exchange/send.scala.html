@@ -7,7 +7,7 @@
 }
 
 @exchange._chrome(Messages("terminology.send"), "dashboard", scripts) {
-    <input type="hidden" id="hidden_page" value="S"></input>
+    <input type="hidden" id="hidden_page" value="S">
         <!-- page content -->
     <div class="page-title">
         <div class="title_left">
@@ -21,7 +21,7 @@
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance1">
+            <div class="x_panel" style="@globals.country_appearance_background_4">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.send.sendtopartner")</h2>
                     <div class="clearfix"></div>
@@ -34,6 +34,7 @@
                                 <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation"  type="text" title="@Messages("directpay.send.valuetobesent")" autocomplete="off">
                             </div>
                         </div>
+    <input type="hidden" id="account" value="should not be hidden input - waiting for Yura send-connection to CT">
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.partner")</label>
                             <div class="col-md-8 col-sm-4 col-xs-12">
@@ -48,9 +49,10 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary triggers_submit">@Messages("terminology.send")</button>
+                                <button type="button" class="btn btn-primary triggers_submit">@Messages("terminology.send")</button>
                             </div>
                         </div>
+                        <input type="hidden" id="total_send_fee">
                     </form>
                 </div>
             </div>
@@ -58,36 +60,9 @@
             <!-- End of form -->
 
 
-
             <!-- Wallet -->
-        <input type="hidden" id="hidden_fees_information"
-        currency_code="@globals.country_currency_code"
-        currency_crypto="@globals.country_currency_crypto"
-        wallet_available="0"
-        wallet_onhold="0"
-        wallet_crypto="0"
-        wallet_total="0"
-        decimal_separator = "@globals.country_decimal_separator"
-        minimum_value = "@globals.country_minimum_value.toString"
-        critical_value1 = "@globals.country_critical_value1.toString"
-        critical_value2 = "@globals.country_critical_value2.toString"
-        preferential_bank1_code = "@globals.country_preferential_bank1_code"
-        preferential_bank1_name = "@globals.country_preferential_bank1_name"
-        preferential_bank2_code = "@globals.country_preferential_bank2_code"
-        preferential_bank2_name = "@globals.country_preferential_bank2_name"
-        preferential_bank3_code = "@globals.country_preferential_bank3_code"
-        preferential_bank3_name = "@globals.country_preferential_bank3_name"
-        preferential_bank4_code = "@globals.country_preferential_bank4_code"
-        preferential_bank4_name = "@globals.country_preferential_bank4_name"
-        nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
-        nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
-        fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
-        fee_send_percent = "@globals.country_fee_send_percent.toString"
-        fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
-        ></input>
-
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div  id="wallet" class="x_panel" style="@globals.country_appearance3">
+            <div  id="wallet" class="x_panel" style="background: @globals.country_appearance_background_6">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -110,7 +85,7 @@
 
             <!-- Instructions -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance2">
+            <div class="x_panel" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>

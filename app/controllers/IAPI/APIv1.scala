@@ -350,6 +350,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val partner = (request.request.body \ "partner").asOpt[String]
     val partner_account = (request.request.body \ "partner_account").asOpt[String]
     val manualauto_mode = (request.request.body \ "manualauto_mode").asOpt[Boolean]
+    //  ### need to update currentUser variable:  securesocial.core.SecureSocial.currentUser.partner = partner
     if (globals.userModel.update_personal_info(request.user.id, first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode)) {
       Ok(Json.obj())
     } else {

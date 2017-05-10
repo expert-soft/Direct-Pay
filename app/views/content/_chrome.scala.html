@@ -3,10 +3,10 @@
 @import play.api.Play.current
 
 @navItem(url: String, icon: String, title:String) = {
-@if(request.path==url) {
-    <li class="active">
-} else {
-    <li>
+    @if(request.path==url) {
+        <li class="active">
+    } else {
+        <li>
     }
     <a href="@url" title="@title">
         <span class="sidebar-text">
@@ -49,13 +49,20 @@
 
 @extraStyles = {
 }
+<style>
+    .site_title { font-size: 28px; font-weight: 500; color: @globals.country_appearance_text_1 }
+    .site_title:hover { color: @globals.country_appearance_text_2 }
+    .nav.navbar-nav > li > a { color: @globals.country_appearance_text_1 }
+    div.x_title { border-bottom: 3px solid #e6e9ed; }
+    div.x_title > h2, h3 { color: @globals.country_appearance_text_4; }
+    .text_additional_info, .calc_destak_info, .calc_mid_destak_info, .calc_low_destak_info { color: @globals.country_appearance_background_3; }
+</style>
 
 @_global_chrome(title, Html(scripts + extraScripts.body), Html(styles + extraStyles.body)) {
-
     <!-- Fixed navbar -->
     <nav class="navbar navbar-exchange navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
+            <div class="navbar-header" style="background: @globals.country_appearance_background_1">
                     <!-- Sidebar toggle button-->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -63,10 +70,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="logo" href="@routes.Application.index()" class="navbar-brand">
-                    <span class="fa fa-rocket"></span>
-                    <span class="logo-text">@play.api.Play.current.configuration.getString("application.name")</span>
-                    <span style="display: none" class="logo-text-icon">@play.api.Play.current.configuration.getString("application.name")</span>
+                <a id="logo" href="@routes.Application.index()" style="background: @globals.country_appearance_background_1; color: @globals.country_appearance_text_1">
+                    <span class="site_title"><i class="fa fa-play"></i> @globals.country_system_name @*play.api.Play.current.configuration.getString("application.name")*@</span>
+                    <span style="display: none" class="logo-text-icon"> @globals.country_system_name @*play.api.Play.current.configuration.getString("application.name")*@</span>
                 </a>
             </div>
 
@@ -78,12 +84,12 @@
                     @navItem(routes.Application.users_list().url, "home", Messages("chrome.exchange.navigation.history.lable"))
                     @navItem(routes.Application.account().url, "user", Messages("chrome.exchange.navigation.account.title"))
                 } else {
-                    <li class="loggedout"><a href="@controllers.routes.Registration.startSignUp().absoluteURL(UsernamePasswordProvider.sslEnabled)">@Messages("chrome.signup")</a></li>
-                    <li class="loggedout"><a href="@controllers.routes.LoginPage.login().absoluteURL(UsernamePasswordProvider.sslEnabled)">@Messages("chrome.login") <i class="glyphicon glyphicon-user"></i></a></li>
+                    <li class="loggedout"><a href="@controllers.routes.LoginPage.login().absoluteURL(UsernamePasswordProvider.sslEnabled)"><i class="fa fa-sign-in"></i> &nbsp; @Messages("chrome.login")</a></li>
+                    <li class="loggedout"><a href="@controllers.routes.Registration.startSignUp().absoluteURL(UsernamePasswordProvider.sslEnabled)"><i class="fa fa-user"></i> &nbsp; @Messages("chrome.signup")</a></li>
                 }
                     <li class="dropdown" id="fat-menu">
                         <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="langdrop">
-                            @Messages("terminology.language")
+                            <i class="fa fa-flag"></i> &nbsp; @Messages("terminology.language")
                             <span class="caret"></span>
                         </a>
                         <ul aria-labelledby="langdrop" class="dropdown-menu">

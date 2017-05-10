@@ -1,6 +1,6 @@
 $(function() {
 
-    function apply_docs_info() {
+function apply_docs_info() {
         API.get_docs_info().success(function (data) {
 
             data[0].doc1 = data[0].doc1;
@@ -24,6 +24,12 @@ $(function() {
             $('#uploadText3').html(data[0].doc3);
             $('#uploadText4').html(data[0].doc4);
             $('#uploadText5').html(data[0].doc5);
+
+            $('#uploadOriginalText1').val(data[0].doc1);
+            $('#uploadOriginalText2').val(data[0].doc2);
+            $('#uploadOriginalText3').val(data[0].doc3);
+            $('#uploadOriginalText4').val(data[0].doc4);
+            $('#uploadOriginalText5').val(data[0].doc5);
 
             $('#requestPopupDetails1').attr('fileName', data[0].doc1);
             $('#requestPopupDetails1').attr('verified', data[0].ver1);
@@ -56,99 +62,123 @@ $(function() {
     }
 
     apply_docs_info();
-});
 
 
-$(document).ready(function () {
-    $( window ).resize(function() {
-        resizeDiv()
+
+    $(document).ready(function () {
+        $(window).resize(function () {
+            resizeDiv()
+        });
     });
 
-    function resizeDiv (){
-        $('#popupInfoDiv').css('width', parseInt($( document ).width()*0.8));
-        $('#popupInfoDiv').css('height', parseInt($( document ).height()*0.5));
+    function resizeDiv() {
+        $('#popupInfoDiv').css('width', parseInt($(document).width() * 0.8));
+        $('#popupInfoDiv').css('height', parseInt($(document).height() * 0.5));
     }
 
-    $('#btnZoomIn').live('click', function() {
+    $('#btnZoomIn').live('click', function () {
         $('#the_picture').width(parseInt($('#the_picture').width() * 1.5));
     });
 
-    $('#btnZoomOut').live('click', function() {
+    $('#btnZoomOut').live('click', function () {
         $('#the_picture').width(parseInt($('#the_picture').width() / 1.5));
     });
-});
 
-function transfer_details (doc, fileName, verified) {
-    if (verified == "true") {
-        $('#popUpPictureInfo1').html($('#hidden_verified').attr('yes'));
-        $('#popupCheck').show();
-    } else {
-        $('#popUpPictureInfo1').html($('#hidden_verified').attr('no'));
-        $('#popupCheck').hide();
+
+    function transfer_details (doc, fileName, verified) {
+        if (verified == "true") {
+            $('#popUpPictureInfo1').html($('#hidden_verified').attr('yes'));
+            $('#popupCheck').show();
+        } else {
+            $('#popUpPictureInfo1').html($('#hidden_verified').attr('no'));
+            $('#popupCheck').hide();
+        }
+        $('#popUpPictureInfo2').html(fileName);
+        $('#popUpPictureTitle').html($('#popUpPictureDoc' + doc).val());
+        resizeDiv()
     }
-    $('#popUpPictureInfo2').html(fileName);
-    $('#popUpPictureTitle').html($('#popUpPictureDoc' + doc).val());
-    resizeDiv()
-}
 
 
 
 
-$('#uploadBtn1').change(function() {
-    $('#uploadFile1').val(this.value);
-    $('#uploadText1').html(this.value);
-    $('#uploadDiv1').addClass('btn-default');
-    $('#docCheck1').hide();
-    if (this.value == "")
-        $('#uploadDiv1').addClass('btn-info');
-    else
-        $('#uploadDiv1').removeClass('btn-info');
+    $('#uploadBtn1').change(function() {
+        $('#uploadFile1').val(this.value);
+        $('#uploadText1').html(this.value);
+        $('#uploadDiv1').addClass('btn-default');
+        $('#docCheck1').hide();
+        if (this.value == "")
+            $('#uploadDiv1').addClass('btn-info');
+        else
+            $('#uploadDiv1').removeClass('btn-info');
+    });
+
+    $('#uploadBtn2').change(function() {
+        $('#uploadFile2').val(this.value);
+        $('#uploadText2').html(this.value);
+        $('#uploadDiv2').addClass('btn-default');
+        $('#docCheck2').hide();
+        if (this.value == "")
+            $('#uploadDiv2').addClass('btn-info');
+        else
+            $('#uploadDiv2').removeClass('btn-info');
+    });
+
+
+    $('#uploadBtn3').change(function() {
+        $('#uploadFile3').val(this.value);
+        $('#uploadText3').html(this.value);
+        $('#uploadDiv3').addClass('btn-default');
+        $('#docCheck3').hide();
+        if (this.value == "")
+            $('#uploadDiv3').addClass('btn-info');
+        else
+            $('#uploadDiv3').removeClass('btn-info');
+    });
+
+
+    $('#uploadBtn4').change(function() {
+        $('#uploadFile4').val(this.value);
+        $('#uploadText4').html(this.value);
+        $('#uploadDiv4').addClass('btn-default');
+        $('#docCheck4').hide();
+        if (this.value == "")
+            $('#uploadDiv4').addClass('btn-info');
+        else
+            $('#uploadDiv4').removeClass('btn-info');
+    });
+
+
+    $('#uploadBtn5').change(function() {
+        $('#uploadFile5').val(this.value);
+        $('#uploadText5').html(this.value);
+        $('#uploadDiv5').addClass('btn-default');
+        $('#docCheck5').hide();
+        if (this.value == "")
+            $('#uploadDiv5').addClass('btn-info');
+        else
+            $('#uploadDiv5').removeClass('btn-info');
+    });
+
+
+
+    $(function() {
+        $('#documents_form').on('submit', function (event) {
+            //alert($('#uploadText2').text() + " - " + $('#uploadFile2').val() + " - " + $('#div_doc_2').css('display')  + " - " + $('#div_doc_2').css('display') + " - " + $('#uploadOriginalText2').val());
+            var anyChangedFile = false;
+            if ($('#div_doc_1').css('display') == 'block' && $('#uploadText1').text() != "" && $('#uploadText1').text() != $('#uploadOriginalText1').val()) anyChangedFile = true;
+            if ($('#div_doc_2').css('display') == 'block' && $('#uploadText2').text() != "" && $('#uploadText2').text() != $('#uploadOriginalText2').val()) anyChangedFile = true;
+            if ($('#div_doc_3').css('display') == 'block' && $('#uploadText3').text() != "" && $('#uploadText3').text() != $('#uploadOriginalText3').val()) anyChangedFile = true;
+            if ($('#div_doc_4').css('display') == 'block' && $('#uploadText4').text() != "" && $('#uploadText4').text() != $('#uploadOriginalText4').val()) anyChangedFile = true;
+            if ($('#div_doc_5').css('display') == 'block' && $('#uploadText5').text() != "" && $('#uploadText5').text() != $('#uploadOriginalText5').val()) anyChangedFile = true;
+
+            if (anyChangedFile) {
+                // accept value and submit form
+            } else {
+                event.preventDefault();
+                event.stopPropagation();
+                alert($('#hidden_form_validation_messages').attr('nofileselected'));
+            }
+        });
+    })
+
 });
-
-$('#uploadBtn2').change(function() {
-    $('#uploadFile2').val(this.value);
-    $('#uploadText2').html(this.value);
-    $('#uploadDiv2').addClass('btn-default');
-    $('#docCheck2').hide();
-    if (this.value == "")
-        $('#uploadDiv2').addClass('btn-info');
-    else
-        $('#uploadDiv2').removeClass('btn-info');
-});
-
-
-$('#uploadBtn3').change(function() {
-    $('#uploadFile3').val(this.value);
-    $('#uploadText3').html(this.value);
-    $('#uploadDiv3').addClass('btn-default');
-    $('#docCheck3').hide();
-    if (this.value == "")
-        $('#uploadDiv3').addClass('btn-info');
-    else
-        $('#uploadDiv3').removeClass('btn-info');
-});
-
-
-$('#uploadBtn4').change(function() {
-    $('#uploadFile4').val(this.value);
-    $('#uploadText4').html(this.value);
-    $('#uploadDiv4').addClass('btn-default');
-    $('#docCheck4').hide();
-    if (this.value == "")
-        $('#uploadDiv4').addClass('btn-info');
-    else
-        $('#uploadDiv4').removeClass('btn-info');
-});
-
-
-$('#uploadBtn5').change(function() {
-    $('#uploadFile5').val(this.value);
-    $('#uploadText5').html(this.value);
-    $('#uploadDiv5').addClass('btn-default');
-    $('#docCheck5').hide();
-    if (this.value == "")
-        $('#uploadDiv5').addClass('btn-info');
-    else
-        $('#uploadDiv5').removeClass('btn-info');
-});
-

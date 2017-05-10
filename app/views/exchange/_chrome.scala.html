@@ -49,8 +49,25 @@
 @GetLangFromCookies(request.cookies)
 }
 
-
-
+@profileConnected(partner: String, url: String, info: String, color: String, picture: String) = {
+    @if(partner!="") {
+        <div class="profile_info class_automatic">
+            <span style="color: @globals.country_appearance_text_2;">@Messages("terminology.connectedto")</span>
+            <br>
+            <span style="color: @globals.country_appearance_text_1; font-weight: 600;" title="@url, @info">@partner</span>
+        </div>
+        <div class="profile_pic class_automatic">
+            <img src="@picture" title="@url, @info" class="img-circle profile_img">
+        </div>
+    } else {
+        <div class="profile_info class_automatic" style="width: 100%;">
+            <span style="color: @globals.country_appearance_text_2;">@Messages("directpay.navigation.operatingmode")</span>
+            <span style="color: @globals.country_appearance_text_1; font-weight: 600;">@Messages("directpay.overview.automatic")</span>
+            <br>
+            <span style="color: @globals.country_appearance_text_2;">@Messages("directpay.navigation.notconnectedtoanypartner")</span>
+        </div>
+    }
+}
 
 
 @exchangeStyles = {
@@ -66,26 +83,50 @@
 @_global_chrome(title, Html(scripts + exchangeScripts.body), Html(styles + exchangeStyles.body)) {
 
 <style>
-    li.class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
-    li.class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .site_title, .profile_info span { color: @globals.country_appearance_text_1 }
+    .site_title:hover { color: @globals.country_appearance_text_2 }
+    .nav > li .class_manual, .class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .nav > li .class_automatic, .class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
+    .nav.child_menu > li { background: @globals.country_appearance_background_1 !important }
+    .nav li.current-page { background: @globals.country_appearance_background_7 !important }
+    .nav li.current-page:hover { background: @globals.country_appearance_background_8 !important }
+    .nav > li > a:focus { background: @globals.country_appearance_background_7 !important }
+    .nav > li:hover, .nav > li > a:hover, .nav.child_menu li:hover, .nav li li.current-page:hover { background: @globals.country_appearance_background_8 !important }
+
+    .main_menu span.fa, .nav.navbar-nav > li > a, .nav.side-menu > li > a, .nav.child_menu > li > a { color: @globals.country_appearance_text_1 !important}
+    .nav.side-menu > li > a:hover, .nav.child_menu > li > a:hover { color: @globals.country_appearance_text_2 !important }
+    .nav.child_menu li:before { color: @globals.country_appearance_text_3 !important }
+    .nav-md ul.nav.child_menu li:before { background: @globals.country_appearance_text_2 }
+    .nav-md ul.nav.child_menu li:after { border-left: 1px solid @globals.country_appearance_text_2 }
+    div.x_title { border-bottom: 3px solid @globals.country_appearance_text_7; }
+    div.x_title > h2, h3 { color: @globals.country_appearance_text_4; }
+    .text_additional_info, .calc_destak_info, .calc_mid_destak_info, .calc_low_destak_info { color: @globals.country_appearance_text_6; }
+    ul.panel_toolbox > li:hover { opacity: 0.3 }
+    ul.panel_toolbox > li > a { color: @globals.country_appearance_text_5 }
+    ul.panel_toolbox > li > a:hover { background: @globals.country_appearance_background_5; }
+    .wallet_destak, .wallet_destak_sum { color: @globals.country_appearance_text_6; }
+    .table-wallet, .wallet_destak_icon { color: @globals.country_appearance_text_7; }
 </style>
 
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-play"></i> <span> @globals.country_system_name</span></a>
+                <div class="left_col scroll-view" style="background: @globals.country_appearance_background_1">
+                    <div class="navbar nav_title" style="background: @globals.country_appearance_background_1">
+                        <a href="index.html" class="site_title" style="background: @globals.country_appearance_background_1; text-decoration: none;">
+                        <i class="fa fa-play"></i> <span> @globals.country_system_name</span></a>
                     </div>
                     <div class="profile">
-                        <div class="profile_info">
-                            <span>@Messages("terminology.connectedto")</span>
-                            <h2>@Messages("terminology.partner")</h2>
+                        <div class="profile_info class_manual" style="width: 100%;">
+                            <span style="color: @globals.country_appearance_text_2;">@Messages("directpay.navigation.operatingmode")</span>
+                            <span style="color: @globals.country_appearance_text_1; font-weight: 600;">@Messages("directpay.overview.manual")</span>
                         </div>
-                        <div class="profile_pic">
-                            <img src="/assets/img/carusel/partner1.gif" alt="## Partner Name" class="img-circle profile_img">
-                        </div>
+
+                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option("")) {@profileConnected("", "", "", "", "")}
+                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option(globals.country_partner1)) {@profileConnected(globals.country_partner1, globals.country_partner1_url, globals.country_partner1_info, globals.country_partner1_color, globals.country_partner1_picture)}
+                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option(globals.country_partner2)) {@profileConnected(globals.country_partner2, globals.country_partner2_url, globals.country_partner2_info, globals.country_partner2_color, globals.country_partner2_picture)}
                     </div>
+
 
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -116,9 +157,9 @@
                                 </li>
                                 <li><a><i class="fa fa-info"></i> @Messages("directpay.navigation.support.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="index.html"><i class="fa fa-cubes"></i> @Messages("chrome.navigation.about.title") </a></li>
-                                        <li><a href="index.html"><i class="fa fa-question-circle"></i> @Messages("chrome.exchange.navigation.faq.title") </a></li>
-                                        <li><a href="index.html"><i class="fa fa-book"></i> @Messages("directpay.navigation.terms.title") </a></li>
+                                        <li><a href="@routes.Application.about().url"><i class="fa fa-cubes"></i> @Messages("chrome.navigation.about.title") </a></li>
+                                        <li><a href="@routes.Application.faq().url"><i class="fa fa-question-circle"></i> @Messages("chrome.exchange.navigation.faq.title") </a></li>
+                                        <li><a href="@routes.Application.contract().url"><i class="fa fa-book"></i> @Messages("directpay.navigation.termsandcontract.title") </a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
@@ -145,7 +186,7 @@
 
             <!-- top navigation -->
             <div class="top_nav">
-                <div class="nav_menu" style="@globals.country_appearance5">
+                <div class="nav_menu" style="background: @globals.country_appearance_background_3">
                     <nav>
                         <div class="nav toggle">
                             <a id="menu_toggle"><i class="fa fa-bars" title="@Messages("directpay.general.expandcontractsidemenu")"></i></a>
@@ -153,7 +194,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive" title="@Messages("getstarted.chooselanguage")">
+                                    <img src="@routes.Assets.at("img/flags/" + getlang() + ".png")" alt="" class="img-responsive" title="@Messages("getstarted.chooselanguage")" style="margin-right: 0px;">
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 @for(lang <- Lang.availables) {
@@ -166,11 +207,53 @@
                 </div>
             </div>
             <!-- /top navigation -->
+
+
+            <input type="hidden" id="hidden_fees_information"
+            currency_code="@globals.country_currency_code"
+            currency_crypto="@globals.country_currency_crypto"
+            wallet_available="0"
+            wallet_onhold="0"
+            wallet_crypto="0"
+            wallet_crypto_onhold="0"
+            wallet_total="0"
+            decimal_separator = "@globals.country_decimal_separator"
+            minimum_value = "@globals.country_minimum_value.toString"
+            critical_value1 = "@globals.country_critical_value1.toString"
+            critical_value2 = "@globals.country_critical_value2.toString"
+            preferential_bank1_code = "@globals.country_preferential_bank1_code"
+            preferential_bank1_name = "@globals.country_preferential_bank1_name"
+            preferential_bank2_code = "@globals.country_preferential_bank2_code"
+            preferential_bank2_name = "@globals.country_preferential_bank2_name"
+            preferential_bank3_code = "@globals.country_preferential_bank3_code"
+            preferential_bank3_name = "@globals.country_preferential_bank3_name"
+            preferential_bank4_code = "@globals.country_preferential_bank4_code"
+            preferential_bank4_name = "@globals.country_preferential_bank4_name"
+            nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
+            nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
+            fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
+            fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
+            fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
+            fee_send_percent = "@globals.country_fee_send_percent.toString"
+            >
+
+            <input type="hidden" id="hidden_form_validation_messages"
+            dashboard_url="@routes.Application.dashboard().url"
+            valuemustbenumerical="@Messages("directpay.formvalidation.valuemustbenumerical")"
+            valuemustbegreaterthanzero="@Messages("directpay.formvalidation.valuemustbegreaterthanzero")"
+            amountnotavailable="@Messages("directpay.formvalidation.amountnotavailable")"
+            bankinginformationisincomplete="@Messages("directpay.formvalidation.bankinginformationisincomplete")"
+            accountinformationisincomplete="@Messages("directpay.formvalidation.accountinformationisincomplete")"
+            youmustselectdepositfile="@Messages("directpay.formvalidation.youmustselectdepositfile")"
+            nofileselected="@Messages("directpay.formvalidation.nofileselected")"
+            >
+
+
             <!-- page content -->
-            <div class="right_col" role="main" style="@globals.country_appearance4">
+            <div class="right_col" role="main" style="background: @globals.country_appearance_background_2">
                 <div class="">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             @content
                         </div>
                     </div>

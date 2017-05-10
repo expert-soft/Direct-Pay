@@ -1,13 +1,11 @@
 @(title: String, scripts: Html = Html(""), styles: Html = Html(""), exchangeChrome:Boolean = false)(contentHtml: Html)(implicit request: RequestHeader, messages: Messages)
 
 @body = {
-<br>
-
-    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-0"></div>
-
+    <br><br><br>
+    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-0" style="background: @globals.country_appearance_background_1"></div>
 
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel" style="@globals.country_appearance1">
+        <div class="x_panel" style="@globals.country_appearance_background_4">
             <div class="x_title">
                 <h2 style="overflow: visible;">@title</h2>
                 <div class="clearfix"></div>
@@ -19,7 +17,6 @@
         </div>
     </div>
 }
-
 
 
 @if(exchangeChrome){

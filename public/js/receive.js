@@ -35,10 +35,9 @@ $(function() {
 
     $(document).ready(function () {
         $('#banks').val($('#hidden_bank').val());
-        //fillMessages();
+        fillMessages();
     });
     $('.triggers_submit').click(function () {submit_bankdata()});
 
 });
 
-function fillMessages() { /* do nothing. just that a error do not happen */ }

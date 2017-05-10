@@ -21,6 +21,18 @@ body {
     font-size: 11px
 }
 
+.red-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff0000;
+}
+
+.green-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #007700;
+}
+
 /* wallet style is created by me */
 .table-wallet  {
     text-align: right;
@@ -1620,7 +1632,7 @@ hr {
 }
 
 p {
-    margin: 0 0 10px
+    margin: 10px 0 10px
 }
 
 .lead {

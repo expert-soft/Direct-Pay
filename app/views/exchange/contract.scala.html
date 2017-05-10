@@ -1,0 +1,29 @@
+@(user: securesocial.core.SocialUser)(implicit request: RequestHeader, messages: Messages)
+
+@import helper._
+
+@scripts = {
+}
+
+@exchange._chrome(Messages("chrome.exchange.navigation.contract.title"), "contract", scripts) {
+        <!-- page content -->
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                <i class="fa fa-book"> &nbsp;</i> @Messages("directpay.navigation.termsandcontract.title")
+            </h3>
+        </div>
+    </div>
+
+
+
+
+    <div class="disclaimer-text">
+        <br>
+        <p>@Messages("terminology.disclaimer"):</p>
+        <p>@Messages("directpay.about.disclaimer1")</p>
+    </div>
+    <div class="clearfix"></div>
+    <!-- /page content -->
+}

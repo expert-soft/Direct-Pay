@@ -168,6 +168,8 @@ class Registration @Inject() (val messagesApi: MessagesApi) extends Controller w
               info.mailingList,
               false,
               None,
+              false,
+              Option(globals.country_code),
               false
             ), info.password, token, info.pgp)
             txbitsUserService.deleteToken(t.uuid)

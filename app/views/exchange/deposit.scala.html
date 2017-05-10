@@ -8,7 +8,7 @@
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
-    <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {D} else {DCS}"></input>
+    <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {D} else {DCS}">
         <!-- page content -->
 
     <div class="page-title">
@@ -23,16 +23,6 @@
         </div>
     </div>
 
-    <input type="hidden" id="hidden_fees_information"
-    currency_code="@globals.country_currency_code"
-    currency_crypto="@globals.country_currency_crypto"
-    decimal_separator = "@globals.country_decimal_separator"
-    minimum_value = "@globals.country_minimum_value.toString"
-    critical_value1 = "@globals.country_critical_value1.toString"
-    critical_value2 = "@globals.country_critical_value2.toString"
-    fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
-    fee_send_percent = "@globals.country_fee_send_percent.toString"
-    ></input>
 
 <style>
 .fileUpload { position: relative; overflow: hidden; margin: 10px; }
@@ -47,7 +37,7 @@
 
             <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance1">
+            <div class="x_panel" style="@globals.country_appearance_background_4">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-file-text-o"></i> &nbsp; @Messages("directpay.deposit.submitdepositreceipt")</h2>
                     <div class="clearfix"></div>
@@ -93,7 +83,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
+                                <button type="submit" id="submit_deposit_button" class="btn btn-primary does_not_triggers_submit">@Messages("terminology.submit")</button>
                             </div>
                         </div>
                     </form>
@@ -105,7 +95,7 @@
 
             <!-- Instructions -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance2">
+            <div class="x_panel" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>

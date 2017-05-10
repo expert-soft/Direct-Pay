@@ -55,7 +55,8 @@ object UsernamePasswordProvider {
   val loginForm = Form(
     tuple(
       "username" -> nonEmptyText,
-      "password" -> nonEmptyText
+      "password" -> nonEmptyText,
+      "user_country" -> nonEmptyText
     )
   )
 
