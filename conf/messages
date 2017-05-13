@@ -213,6 +213,7 @@ terminology.disabled=disabled
 terminology.complete=Complete
 terminology.previous=Previous
 terminology.next=Next
+terminology.ibancode=IBAN code
 
 directpay.frontpage.notyetsignedup=Not yet signed up?
 directpay.frontpage.carousel1.text1=Your direct access to the best in the world!
@@ -300,7 +301,7 @@ directpay.management.pendingorders=Pending Orders
 
 directpay.overview.systemoverview=System Overview
 directpay.overview.explanation1={0} is a community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
-directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
+directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a safe environment were you can do deposit, conversions, conections and withdraw operations.
 directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
 directpay.overview.explanation4=If you want the operations even simpler, you can set it to operate
 directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
@@ -500,7 +501,7 @@ directpay.formvalidation.bankinginformationisincomplete=Banking information is i
 directpay.formvalidation.accountinformationisincomplete=Account information is incomplete
 directpay.formvalidation.youmustselectdepositfile=You must select the deposit receipt file to be uploaded
 directpay.formvalidation.nofileselected=There are no new files selected
-
+directpay.formvalidation.bankinginformationisnotvalid=Banking information is not valid
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
 directpay.faq.1=O que é {0}?

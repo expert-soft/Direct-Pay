@@ -38,6 +38,7 @@
                                 <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
                             </div>
                         </div>
+                        @if(!globals.country_iban){
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                             <div class="col-md-8 col-sm-4 col-xs-12">
@@ -75,6 +76,14 @@
                             <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.account")</label>
                             <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
                         </div>
+                            <input type="hidden" id="is_iban" value="false">
+                        } else {
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.ibancode")</label>
+                                <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
+                            </div>
+                            <input type="hidden" id="is_iban" value="true">
+                        }
                         @if(globals.country_fee_withdrawal_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">

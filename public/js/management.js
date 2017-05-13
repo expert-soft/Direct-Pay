@@ -19,6 +19,7 @@ $(function(){
     show_management_info();
 
 
-    $(document).ready(function () {
-    });
 });
+// one sample of IBAN code CH9300762011623852957
+
+

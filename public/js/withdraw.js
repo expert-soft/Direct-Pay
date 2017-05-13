@@ -3,7 +3,7 @@ $(function() {
     function submit_withdraw(initial_value) {
         var order_type = $('#hidden_page').val();
         order_type = "W";
-        if ($('#banks').val() != country_settings.preferential_bank1_code && $('#banks').val() != country_settings.preferential_bank2_code && $('#banks').val() != country_settings.preferential_bank3_code && $('#banks').val() != country_settings.preferential_bank4_code)
+        if ($('#is_iban').val() == false && $('#banks').val() != country_settings.preferential_bank1_code && $('#banks').val() != country_settings.preferential_bank2_code && $('#banks').val() != country_settings.preferential_bank3_code && $('#banks').val() != country_settings.preferential_bank4_code)
             order_type = order_type + "."; // not preferential bank
         var total_fees = parseFloat($('#total_withdraw_fee').val());
         var wallet_available = parseFloat($('#hidden_fees_information').attr('wallet_available'));
@@ -65,12 +65,20 @@ $(function() {
                 //alert(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_withdraw_fee').val()));
                 if (parseFloat(value_s) <= parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) - parseFloat($('#total_withdraw_fee').val())) {
                     //alert(parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) - parseFloat($('#total_withdraw_fee').val()));
-                    if ($('#banks').val() != "00" && $('#agency').val() != "" && $('#account').val() != "")
+                    if($('#is_iban').val() == "true")
+                        if ($('#account').val() != "") // ### should be iban validation
+                            // calling API function:
+                            submit_withdraw(value);
+                        else {
+                            alert($('#hidden_form_validation_messages').attr('bankinginformationisnotvalid'));
+                        }
+                    else
+                        if ($('#banks').val() != "00" && $('#agency').val() != "" && $('#account').val() != "")
                         // calling API function:
-                        submit_withdraw(value);
-                    else {
-                        alert($('#hidden_form_validation_messages').attr('bankinginformationisincomplete'));
-                    }
+                            submit_withdraw(value);
+                        else {
+                            alert($('#hidden_form_validation_messages').attr('bankinginformationisincomplete'));
+                        }
                 } else {
                     alert($('#hidden_form_validation_messages').attr('amountnotavailable'));
                 }

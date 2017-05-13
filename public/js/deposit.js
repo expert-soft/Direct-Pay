@@ -81,7 +81,15 @@ $(function(){
         if ($.isNumeric(value_s)) {
             if (parseFloat(value_s) > 0 ) {
                 if($('#uploadText1').text() != "") {
-                    // accept value and submit form
+                    //(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_send_fee').val()));
+                    if ($('#hidden_page').val() == "D" || ($('#partner').val() != "00" && $('#partner_account').val() != ""))
+                        // calling API function:
+                        submit_send(value);
+                    else {
+                        event.preventDefault() ;
+                        event.stopPropagation();
+                        alert($('#hidden_form_validation_messages').attr('accountinformationisincomplete'));
+                    }
                 } else {
                     event.preventDefault() ;
                     event.stopPropagation();
@@ -99,3 +107,6 @@ $(function(){
         }
     });
 });
+
+
+
