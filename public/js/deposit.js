@@ -82,9 +82,10 @@ $(function(){
             if (parseFloat(value_s) > 0 ) {
                 if($('#uploadText1').text() != "") {
                     //(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_send_fee').val()));
-                    if ($('#hidden_page').val() == "D" || ($('#partner').val() != "00" && $('#partner_account').val() != ""))
+                    if ($('#hidden_page').val() == "D" || ($('#partner').val() != "00" && $('#partner_account').val() != "")) {
                         // calling API function:
-                        submit_send(value);
+                        if($('#hidden_page').val() == "DCS") submit_send(value);
+                    }
                     else {
                         event.preventDefault() ;
                         event.stopPropagation();

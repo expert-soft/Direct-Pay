@@ -245,7 +245,7 @@ directpay.legend.sendingtopartner=Sending to Partner
 directpay.legend.orderexecuted=Order Executed
 directpay.legend.executionmodified=Execution Modified
 directpay.legend.orderrejected=Order Rejected
-
+directpay.legend.uploadwithdrawreceipt=Upload Withdraw receipt
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -289,6 +289,7 @@ directpay.admin.orderslist.status.Op=Open
 directpay.admin.orderslist.status.Ch=Changed
 directpay.admin.orderslist.status.Rj=Rejected
 directpay.admin.orderdetails=Order Details
+directpay.admin.orderslist.withdrawreceipt=Withdraw receipt
 
 directpay.admin.userslist.userID=User ID
 
@@ -502,6 +503,7 @@ directpay.formvalidation.accountinformationisincomplete=Account information is i
 directpay.formvalidation.youmustselectdepositfile=You must select the deposit receipt file to be uploaded
 directpay.formvalidation.nofileselected=There are no new files selected
 directpay.formvalidation.bankinginformationisnotvalid=Banking information is not valid
+directpay.formvalidation.commentcannotbeempty=Comment information can not be empty
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
 directpay.faq.1=O que é {0}?

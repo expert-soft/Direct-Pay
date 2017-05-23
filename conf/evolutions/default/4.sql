@@ -184,6 +184,8 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
         update orders set status = 'Lk', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
       else
         if b_order_status = 'Lk' then
+        -- this part should not happen, as closing a withdraw order is done with picture update as well (update_order_with_picture)
+        -- but it is still enabled to OK without picture. ###
           update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
           update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
           b_update_fees = true;;
@@ -238,6 +240,55 @@ end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
 
+-- This function updates orders, updates balance fiat, updates balance crypto, updates system balances (fees) when withdraw approval/rejection
+create or replace function
+update_order_with_picture (
+  a_order_id bigint,
+  a_order_type varchar(4),
+  a_status varchar(2),
+  a_processed_value numeric(23,8),
+  a_local_fee numeric(23,8),
+  a_global_fee numeric(23,8),
+  a_comment varchar(128),
+  a_image_id bigint,
+  a_admin_id bigint
+) returns boolean as $$
+declare
+  b_user_id bigint;;
+  b_order_status text;;
+  b_currency varchar(16);;
+  b_initial_value numeric(23,8);;
+  b_total_fee numeric(23,8);;
+  b_global_fee numeric(23,8);;
+  a_partner_id bigint;;
+  a_local_admin_id bigint;;
+  a_global_admin_id bigint;;
+begin
+  a_partner_id = 0;;
+  a_local_admin_id = 1;;
+  a_global_admin_id = 2;;
+
+  select user_id, status, currency, initial_value, total_fee into b_user_id, b_order_status, b_currency, b_initial_value, b_total_fee from orders where order_id = a_order_id;;
+  b_global_fee = b_total_fee - a_local_fee;; -- to avoid rounding errors, care with total_fee and balances on hold
+  if a_status = 'OK' then
+    if (a_processed_value - b_initial_value) < 0.02 and (b_initial_value - a_processed_value) < 0.02 then -- ### need to test a range of 0.02 difference (@globals.country_minimum_difference)
+      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+      update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
+    else
+      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+      update orders set status = 'Ch', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
+    end if;;
+    update balances set balance = balance + a_local_fee where currency = b_currency and user_id = a_local_admin_id;; -- Local administrator account
+    update balances set balance = balance + a_global_fee where currency = b_currency and user_id = a_global_admin_id;; -- Global administrator account
+  end if;;
+
+  if a_status = 'Rj' then
+    update balances set hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+    update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
+  end if;;
+  return true;;
+end;;
+$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
 
 create or replace function
@@ -376,6 +427,7 @@ $$ language plpgsql volatile security invoker set search_path = public, pg_temp 
 drop function if exists currency_insert(varchar(16), integer, bool) cascade;
 drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), varchar(128)) cascade;
 drop function if exists update_order(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8)) cascade;
+drop function if exists update_order_with_picture(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8), numeric(23,8)) cascade;
 drop function if exists update_personal_info(Long, varchar(64), varchar(128), varchar(128)) cascade;
 drop function if exists update_user_doc(Long, varchar(8), Long, varchar(256)) cascade;
 drop function if exists update_bank_data(Long, varchar(16), varchar(16), varchar(64)) cascade;

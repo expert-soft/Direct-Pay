@@ -27,6 +27,7 @@ package object globals {
   val country_minimum_value = Play.current.configuration.getInt("country.country_minimum_value").getOrElse(0)
   val country_critical_value1 = Play.current.configuration.getInt("country.country_critical_value1").getOrElse(0)
   val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)
+  val country_minimum_difference = Play.current.configuration.getDouble("country_minimum_detectable_difference").getOrElse(0)
   val country_partner1 = Play.current.configuration.getString("country.country_partner1").getOrElse("Not Set")
   val country_partner1_url = Play.current.configuration.getString("country.country_partner1_url").getOrElse("Not Set")
   val country_partner1_info = Play.current.configuration.getString("country.country_partner1_info").getOrElse("Not Set")
@@ -224,6 +225,19 @@ package object globals {
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='test@yahoo.com.br'), '237', '65665', '00685343-0', '', '';
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='testru@gmail.ru'), '341', '352323-c', '67345-9', '', '';
 
+
+        commit;
+        """.execute()
+      })
+    }
+  } catch {
+
+    // XXX: any kind of error in the SQL above will cause this cryptic exception:
+    // org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
+    case error: Throwable => Logger.error(error.toString)
+  }
+
+  /*
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'br', 'RFW', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 4566.9808, 15.76, '', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 120, 4420.8, 'comment', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='a2terminator@mail.ru'), 'br', 'D', 'Op', '', '2016-12-22 01:18:59.842', 'BRL', 74.98, 0, 'recibo1.jpg', '', '237', '5454-0', '4645-8', '2016-12-22 01:18:59.842', 0, 0, '', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W', 'Rj', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '', '', 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 11:18:59.842', 12121, 0, 'bank info not correct', '', '', 0;
@@ -236,16 +250,8 @@ package object globals {
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='test@yahoo.com.br'), 'br', 'D', 'Ch', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 78.00, 0, 'recibo6.png', '', '341', '7876', '7897', '2016-12-22 01:18:59.842', 121212, 780, 'value declared wrong. confirmed at bank 780', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W.', 'Rj','' , '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '','' , 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 01:28:07.842', 12121, 0, 'bank info not correct', '', '', 0;
 
-        commit;
-        """.execute()
-      })
-    }
-  } catch {
 
-    // XXX: any kind of error in the SQL above will cause this cryptic exception:
-    // org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
-    case error: Throwable => Logger.error(error.toString)
-  }
+   */
 
   val userModel = new UserModel(masterDB)
   val logModel = new LogModel(masterDB)

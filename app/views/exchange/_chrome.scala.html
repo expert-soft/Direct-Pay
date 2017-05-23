@@ -235,6 +235,7 @@
             fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
             fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
             fee_send_percent = "@globals.country_fee_send_percent.toString"
+            country_minimum_difference = @globals.country_minimum_difference.toString"
             >
 
             <input type="hidden" id="hidden_form_validation_messages"
@@ -247,8 +248,24 @@
             youmustselectdepositfile="@Messages("directpay.formvalidation.youmustselectdepositfile")"
             nofileselected="@Messages("directpay.formvalidation.nofileselected")"
             bankinginformationisnotvalid="@Messages("directpay.formvalidation.bankinginformationisnotvalid")"
+            commentcannotbeempty="@Messages("directpay.formvalidation.commentcannotbeempty")"
+            confirmnewvalue="@Messages("directpay.formvalidation.confirmnewvalue")"
             >
 
+            <input type="hidden" id="hidden_general_messages"
+            withdraw="@Messages("directpay.legend.withdraw")"
+            receiveandwithdraw="@Messages("directpay.legend.receiveandwithdraw")"
+            deposit="@Messages("directpay.legend.deposit")"
+            sendtopartner="@Messages("directpay.legend.sendtopartner")"
+            depositandsend="@Messages("directpay.legend.depositandsend")"
+            documentverification = "@Messages("directpay.legend.documentverification")"
+            openorder="@Messages("directpay.legend.openorder")"
+            orderlocked="@Messages("directpay.legend.orderlocked")"
+            executionmodified="@Messages("directpay.legend.executionmodified")"
+            orderrejected="@Messages("directpay.legend.orderrejected")"
+            orderexecuted="@Messages("directpay.legend.orderexecuted")"
+            uploadwithdrawreceipt="@Messages("directpay.legend.uploadwithdrawreceipt")"
+            >
 
             <!-- page content -->
             <div class="right_col" role="main" style="background: @globals.country_appearance_background_2">

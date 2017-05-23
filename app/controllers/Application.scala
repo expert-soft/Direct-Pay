@@ -123,7 +123,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val user_id = request.user.id
         val position = file.key.indexOf("|")
         val position2 = file.key.substring(position + 1, file.key.length).indexOf("|") + position + 1
-        // need to treat string to double exceptions. If not double value, reject order creation
+        // ### need to treat string to double exceptions. If not double value, reject order creation
         //  = try { Some(s.toDouble) } catch { case _ => None }
         initial_value = try { ((file.key.substring(0, position)).replace(globals.country_decimal_separator, ".")).toDouble } catch { case _ => 0.0 }
         if (initial_value != 0.0) {
@@ -134,13 +134,57 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
             order_type = "D"
             partner = ""
             partner_account = ""
-            local_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+            /*            local_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
             global_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
           } else {
             local_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
             global_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
+*/
           }
+          local_fee = calculate_local_fee(order_type, initial_value).toDouble
+          global_fee = calculate_global_fee(order_type, initial_value).toDouble
           val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, order_type, "Op", partner, globals.country_currency_code, initial_value, local_fee, global_fee, "", "", partner_account, fileName, image_id)
+        }
+    }
+    Ok(views.html.exchange.dashboard(request.user))
+  }
+
+  def uploadWithdrawImage = SecuredAction(parse.multipartFormData) { implicit request =>
+    var processed_value = 0.0
+    var comment = ""
+    var OK_Rj = ""
+    var order_type = "ooo"
+    var order_id = 0L
+    var local_fee = 0.1
+    var global_fee = 0.1
+    request.body.files map {
+      file =>
+        val fileName = file.filename
+        val contentType = file.contentType
+        val user_id = request.user.id
+        val position = file.key.indexOf("|")
+        val position2 = file.key.substring(position + 1, file.key.length).indexOf("|") + position + 1
+        val position3 = file.key.substring(position2 + 1, file.key.length).indexOf("|") + position2 + 1
+        val position4 = file.key.substring(position3 + 1, file.key.length).indexOf("|") + position3 + 1
+        // ### need to treat string to double exceptions. If not double value, reject order creation
+        //  = try { Some(s.toDouble) } catch { case _ => None }
+        processed_value = try { ((file.key.substring(0, position)).replace(globals.country_decimal_separator, ".")).toDouble } catch { case _ => 0.0 }
+
+        comment = file.key.substring(position + 1, position2)
+        OK_Rj = file.key.substring(position2 + 1, position3)
+        order_type = file.key.substring(position3 + 1, position4)
+        order_id = (file.key.substring(position4 + 1, file.key.length)).toLong
+        val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+
+        if (processed_value != 0.0) {
+          local_fee = calculate_local_fee(order_type, processed_value).toDouble
+          global_fee = calculate_global_fee(order_type, processed_value).toDouble
+        } else {
+          local_fee = 0;
+          global_fee = 0;
+        }
+        if (processed_value != 0.0 || OK_Rj == "Rj") {
+          val success = globals.userModel.update_order_with_picture(order_id, order_type, OK_Rj, processed_value, local_fee, global_fee, comment, image_id, request.user.id)
         }
     }
     Ok(views.html.exchange.dashboard(request.user))
@@ -176,9 +220,46 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   val jsMessages = Action { implicit request =>
     Ok(messages(Some("window.Messages")))
   }
-}
 
-/*object ManualAuto {
+  def calculate_local_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    val percentage = (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+    var low_value_fee = 0.0
+    if (initial_value < globals.country_minimum_value) {
+      low_value_fee = globals.country_minimum_value * 0.02
+    }
+    if (order_type == "D") {
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+    } else if (order_type == "S") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "DCS") {
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
+    } else if (order_type == "W") { // withdrawal to a preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+    } else if (order_type == "W.") { // withdrawal to a non preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+    } else if (order_type == "RFW") { // withdrawal to a preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
+    } else if (order_type == "RFW.") { // withdrawal to a non preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
+    } else if (order_type == "F") {
+      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else return 0
+  }
 
+  def calculate_global_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    val percentage = globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
+    if (order_type == "D") {
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "S") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "DCS") {
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
+    } else if (order_type == "W" || order_type == "W.") {
+      return initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "RFW" || order_type == "RFW.") {
+      return initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
+    } else if (order_type == "F") {
+      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else return 0
+  }
 }
-*/ 

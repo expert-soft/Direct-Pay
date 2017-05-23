@@ -318,6 +318,12 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def update_order_with_picture(order_id: Long, order_type: String, status: String, processed_value: BigDecimal, local_fee: BigDecimal, global_fee: BigDecimal, comment: String, image_id: Long, admin_id: Long) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select update_order_with_picture as success from update_order_with_picture($order_id, $order_type, $status, $processed_value, $local_fee, $global_fee, $comment, ${image_id}, $admin_id)
+    """.execute()
+  }
+
   def update_personal_info(uid: Long, first_name: Option[String], middle_name: Option[String], last_name: Option[String], doc1: Option[String], doc2: Option[String], doc3: Option[String], doc4: Option[String], doc5: Option[String], bank: Option[String], agency: Option[String], account: Option[String], partner: Option[String], partner_account: Option[String], manualauto_mode: Option[Boolean]) = DB.withConnection(db) { implicit c =>
     val middle_name_s = middle_name.getOrElse("")
     val doc1_s = doc1.getOrElse("")

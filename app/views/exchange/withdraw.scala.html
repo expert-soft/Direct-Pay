@@ -39,50 +39,50 @@
                             </div>
                         </div>
                         @if(!globals.country_iban){
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                <input type="hidden" id="hidden_bank" value="{{bank}}">
-                                <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
-                                    <option value="00">@Messages("directpay.usersettings.notselected")</option>
-                                    @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
-                                    @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
-                                    @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
-                                    @if(globals.country_bank4_code != "") { <option value="@globals.country_bank4_code">@globals.country_bank4_code - @globals.country_bank4_name</option> }
-                                    @if(globals.country_bank5_code != "") { <option value="@globals.country_bank5_code">@globals.country_bank5_code - @globals.country_bank5_name</option> }
-                                    @if(globals.country_bank6_code != "") { <option value="@globals.country_bank6_code">@globals.country_bank6_code - @globals.country_bank6_name</option> }
-                                    @if(globals.country_bank7_code != "") { <option value="@globals.country_bank7_code">@globals.country_bank7_code - @globals.country_bank7_name</option> }
-                                    @if(globals.country_bank8_code != "") { <option value="@globals.country_bank8_code">@globals.country_bank8_code - @globals.country_bank8_name</option> }
-                                    @if(globals.country_bank9_code != "") { <option value="@globals.country_bank9_code">@globals.country_bank9_code - @globals.country_bank9_name</option> }
-                                    @if(globals.country_bank10_code != "") { <option value="@globals.country_bank10_code">@globals.country_bank10_code - @globals.country_bank10_name</option> }
-                                    @if(globals.country_bank11_code != "") { <option value="@globals.country_bank11_code">@globals.country_bank11_code - @globals.country_bank11_name</option> }
-                                    @if(globals.country_bank12_code != "") { <option value="@globals.country_bank12_code">@globals.country_bank12_code - @globals.country_bank12_name</option> }
-                                    @if(globals.country_bank13_code != "") { <option value="@globals.country_bank13_code">@globals.country_bank13_code - @globals.country_bank13_name</option> }
-                                    @if(globals.country_bank14_code != "") { <option value="@globals.country_bank14_code">@globals.country_bank14_code - @globals.country_bank14_name</option> }
-                                    @if(globals.country_bank15_code != "") { <option value="@globals.country_bank15_code">@globals.country_bank15_code - @globals.country_bank15_name</option> }
-                                    @if(globals.country_bank16_code != "") { <option value="@globals.country_bank16_code">@globals.country_bank16_code - @globals.country_bank16_name</option> }
-                                    @if(globals.country_bank17_code != "") { <option value="@globals.country_bank17_code">@globals.country_bank17_code - @globals.country_bank17_name</option> }
-                                    @if(globals.country_bank18_code != "") { <option value="@globals.country_bank18_code">@globals.country_bank18_code - @globals.country_bank18_name</option> }
-                                    @if(globals.country_bank19_code != "") { <option value="@globals.country_bank19_code">@globals.country_bank19_code - @globals.country_bank19_name</option> }
-                                    @if(globals.country_bank20_code != "") { <option value="@globals.country_bank20_code">@globals.country_bank20_code - @globals.country_bank20_name</option> }
-                                </select>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    <input type="hidden" id="hidden_bank" value="{{bank}}">
+                                    <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
+                                        <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                        @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
+                                        @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
+                                        @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
+                                        @if(globals.country_bank4_code != "") { <option value="@globals.country_bank4_code">@globals.country_bank4_code - @globals.country_bank4_name</option> }
+                                        @if(globals.country_bank5_code != "") { <option value="@globals.country_bank5_code">@globals.country_bank5_code - @globals.country_bank5_name</option> }
+                                        @if(globals.country_bank6_code != "") { <option value="@globals.country_bank6_code">@globals.country_bank6_code - @globals.country_bank6_name</option> }
+                                        @if(globals.country_bank7_code != "") { <option value="@globals.country_bank7_code">@globals.country_bank7_code - @globals.country_bank7_name</option> }
+                                        @if(globals.country_bank8_code != "") { <option value="@globals.country_bank8_code">@globals.country_bank8_code - @globals.country_bank8_name</option> }
+                                        @if(globals.country_bank9_code != "") { <option value="@globals.country_bank9_code">@globals.country_bank9_code - @globals.country_bank9_name</option> }
+                                        @if(globals.country_bank10_code != "") { <option value="@globals.country_bank10_code">@globals.country_bank10_code - @globals.country_bank10_name</option> }
+                                        @if(globals.country_bank11_code != "") { <option value="@globals.country_bank11_code">@globals.country_bank11_code - @globals.country_bank11_name</option> }
+                                        @if(globals.country_bank12_code != "") { <option value="@globals.country_bank12_code">@globals.country_bank12_code - @globals.country_bank12_name</option> }
+                                        @if(globals.country_bank13_code != "") { <option value="@globals.country_bank13_code">@globals.country_bank13_code - @globals.country_bank13_name</option> }
+                                        @if(globals.country_bank14_code != "") { <option value="@globals.country_bank14_code">@globals.country_bank14_code - @globals.country_bank14_name</option> }
+                                        @if(globals.country_bank15_code != "") { <option value="@globals.country_bank15_code">@globals.country_bank15_code - @globals.country_bank15_name</option> }
+                                        @if(globals.country_bank16_code != "") { <option value="@globals.country_bank16_code">@globals.country_bank16_code - @globals.country_bank16_name</option> }
+                                        @if(globals.country_bank17_code != "") { <option value="@globals.country_bank17_code">@globals.country_bank17_code - @globals.country_bank17_name</option> }
+                                        @if(globals.country_bank18_code != "") { <option value="@globals.country_bank18_code">@globals.country_bank18_code - @globals.country_bank18_name</option> }
+                                        @if(globals.country_bank19_code != "") { <option value="@globals.country_bank19_code">@globals.country_bank19_code - @globals.country_bank19_name</option> }
+                                        @if(globals.country_bank20_code != "") { <option value="@globals.country_bank20_code">@globals.country_bank20_code - @globals.country_bank20_name</option> }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6" for="agency">@Messages("terminology.agency")</label>
-                            <div class="col-md-5 col-sm-5"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.account")</label>
-                            <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-6" for="agency">@Messages("terminology.agency")</label>
+                                <div class="col-md-5 col-sm-5"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.account")</label>
+                                <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
+                            </div>
                             <input type="hidden" id="is_iban" value="false">
                         } else {
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.ibancode")</label>
                                 <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
                             </div>
-                            <input type="hidden" id="is_iban" value="true">
+                            <input type="hidden" id="is_iban" value="true"><input type="hidden" id="banks" value="IBAN"><input type="hidden" id="agency" value="">
                         }
                         @if(globals.country_fee_withdrawal_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
@@ -151,10 +151,12 @@
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.withdraw.explanation1") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_critical_value2">@globals.country_critical_value2</span>)</span>.</p>
                         <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
-                        <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
+                        @if(!globals.country_iban) {
+                            <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
                         <p>@Messages("directpay.withdraw.preferentialbanks"): <span id="calc_list_preferential_banks"></span>. @Messages("directpay.withdraw.yougetlowerfees")</p>
+                        }
+                        <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
                         @if(globals.country_minimum_value != 0) {
-                            <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
                             <p>@Messages("directpay.withdraw.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span></span> @Messages("directpay.withdraw.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span></span>.</p>
                         }
                     </div>

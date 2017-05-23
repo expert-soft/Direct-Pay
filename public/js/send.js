@@ -3,24 +3,17 @@ $(function() {
 
     function submit_send() {
 //treatment of , as decimal separator: parseFloat(str.replace(',','.').replace(' ',''))
-        if ($('#partner').val() != "00" && $('#value').val() > 0)
-        {   var order_type = "S";
-            var status = "Op";
-            var partner = $('#partner').val();
-            var initial_value = $('#value').val();
-            //alert(initial_value);
-            API.create_order(order_type, status, partner, initial_value, '', '', '', '').success(function () {
-                $.pnotify({
-                    title: Messages("messages.api.success"),
-                    text: Messages("messages.api.success.ordercreatedsuccessfully"),
-                    styling: 'bootstrap',
-                    type: 'success',
-                    text_escape: true
-                });
-            })
-        }
-        else
-            alert("Choose partner and value > 0");
+alert(9);
+        API.create_order("S", "Op", $('#partner').val(), $('#value').val(), '', '', '', '').success(function () {
+            $.pnotify({
+                title: Messages("messages.api.success"),
+                text: Messages("messages.api.success.ordercreatedsuccessfully"),
+                styling: 'bootstrap',
+                type: 'success',
+                text_escape: true
+            });
+        });
+        window.location.href = $('#hidden_form_validation_messages').attr('dashboard_url');
     }
 
     $(document).ready(function () {
@@ -41,7 +34,7 @@ $(function() {
             if (value > 0) {
                 //(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_send_fee').val()));
                 if (parseFloat(value_s) <= parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) - parseFloat($('#total_send_fee').val())) {
-                    if ($('#partner').val() != "00" && $('#account').val() != "")
+                    if ($('#partner').val() != "00" && $('#partner_account').val() != "")
                     // calling API function:
                         submit_send(value);
                     else {

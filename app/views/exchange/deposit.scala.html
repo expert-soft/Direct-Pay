@@ -7,6 +7,11 @@
     <script src="@routes.Assets.at("js/deposit.js")"></script>
 }
 
+<style>
+.fileUpload { position: relative; overflow: hidden; margin: 10px; }
+.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+</style>
+
 @exchange._chrome(Messages("chrome.exchange.navigation.deposit.title"), "dashboard", scripts) {
     <input type="hidden" id="hidden_page" value="@if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {D} else {DCS}">
         <!-- page content -->
@@ -22,13 +27,6 @@
             </h3>
         </div>
     </div>
-
-
-<style>
-.fileUpload { position: relative; overflow: hidden; margin: 10px; }
-.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
-</style>
-
 
 
     <div class="clearfix"></div>

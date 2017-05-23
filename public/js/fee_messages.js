@@ -126,33 +126,34 @@ function fillWithdrawMessages() {
     if ($('#hidden_page').val() == "RFW") { // automatic operation
         aux += parseFloat(country_settings.fee_tofiat_percent);
         $('#calc_convertion_rate').html(NumberFormat(parseFloat(100 - country_settings.fee_tofiat_percent) * 0.01, 3))
-    }
-    var value_s = $('#value').val().replace(country_settings.decimal_separator, ".");
-    if($.isNumeric(value_s) && parseFloat(value_s) > 0)
-        if (parseFloat(value_s) < parseFloat(country_settings.minimum_value))
-            aux2 = country_settings.minimum_value * 0.02;
-    if($('#banks').val() == "00" || $('#banks').val() == country_settings.preferential_bank1_code || $('#banks').val() == country_settings.preferential_bank2_code || $('#banks').val() == country_settings.preferential_bank3_code || $('#banks').val() == country_settings.preferential_bank4_code) {
-        if($.isNumeric(value_s) && parseFloat(value_s) > 0) {
-            $('#total_withdraw_fee').val((calc_value + parseFloat(value_s) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank) + aux2).toFixed(2));
-            $('#calc_withdraw_fee').html(NumberFormat($('#total_withdraw_fee').val(), 2));
-        } else {
-            $('#total_withdraw_fee').val(0);
-            $('#calc_withdraw_fee').html(" - - - ");
-        }
-        calc_value = (parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank)) * (1 - aux * 0.01);
-        if (calc_value < 0 ) calc_value = 0;
-        $('#calc_maximum_withdraw').html(NumberFormat(calc_value, 2));
     } else {
-        if($.isNumeric(value_s) && parseFloat(value_s) > 0) {
-            $('#total_withdraw_fee').val((calc_value + parseFloat(value_s) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank) + aux2).toFixed(2));
-            $('#calc_withdraw_fee').html(NumberFormat($('#total_withdraw_fee').val(), 2));
+        var value_s = $('#value').val().replace(country_settings.decimal_separator, ".");
+        if ($.isNumeric(value_s) && parseFloat(value_s) > 0)
+            if (parseFloat(value_s) < parseFloat(country_settings.minimum_value))
+                aux2 = country_settings.minimum_value * 0.02;
+        if ($('#banks').val() == "00" || $('#banks').val() == country_settings.preferential_bank1_code || $('#banks').val() == country_settings.preferential_bank2_code || $('#banks').val() == country_settings.preferential_bank3_code || $('#banks').val() == country_settings.preferential_bank4_code) {
+            if ($.isNumeric(value_s) && parseFloat(value_s) > 0) {
+                $('#total_withdraw_fee').val((calc_value + parseFloat(value_s) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank) + aux2).toFixed(2));
+                $('#calc_withdraw_fee').html(NumberFormat($('#total_withdraw_fee').val(), 2));
+            } else {
+                $('#total_withdraw_fee').val(0);
+                $('#calc_withdraw_fee').html(" - - - ");
+            }
+            calc_value = (parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat(country_settings.nominal_fee_withdrawal_preferential_bank)) * (1 - aux * 0.01);
+            if (calc_value < 0) calc_value = 0;
+            $('#calc_maximum_withdraw').html(NumberFormat(calc_value, 2));
         } else {
-            $('#total_withdraw_fee').val(0);
-            $('#calc_withdraw_fee').html(" - - - ");
+            if ($.isNumeric(value_s) && parseFloat(value_s) > 0) {
+                $('#total_withdraw_fee').val((calc_value + parseFloat(value_s) * aux * 0.01 + parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank) + aux2).toFixed(2));
+                $('#calc_withdraw_fee').html(NumberFormat($('#total_withdraw_fee').val(), 2));
+            } else {
+                $('#total_withdraw_fee').val(0);
+                $('#calc_withdraw_fee').html(" - - - ");
+            }
+            calc_value = (parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank)) * (1 - aux * 0.01);
+            if (calc_value < 0) calc_value = 0;
+            $('#calc_maximum_withdraw').html(NumberFormat(calc_value, 2));
         }
-        calc_value = (parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - parseFloat(country_settings.nominal_fee_withdrawal_not_preferential_bank)) * (1 - aux * 0.01);
-        if (calc_value < 0 ) calc_value = 0;
-        $('#calc_maximum_withdraw').html(NumberFormat(calc_value, 2));
     }
 
     calc_value = parseFloat($('#hidden_fees_information').attr('wallet_available')) + parseFloat($('#hidden_fees_information').attr('wallet_crypto')) - calc_value;
