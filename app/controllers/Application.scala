@@ -152,7 +152,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
   def uploadWithdrawImage = SecuredAction(parse.multipartFormData) { implicit request =>
     var processed_value = 0.0
     var comment = ""
-    var OK_Rj = ""
+    var OK_Ch_Rj = ""
     var order_type = "ooo"
     var order_id = 0L
     var local_fee = 0.1
@@ -171,7 +171,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         processed_value = try { ((file.key.substring(0, position)).replace(globals.country_decimal_separator, ".")).toDouble } catch { case _ => 0.0 }
 
         comment = file.key.substring(position + 1, position2)
-        OK_Rj = file.key.substring(position2 + 1, position3)
+        OK_Ch_Rj = file.key.substring(position2 + 1, position3)
         order_type = file.key.substring(position3 + 1, position4)
         order_id = (file.key.substring(position4 + 1, file.key.length)).toLong
         val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
@@ -183,8 +183,8 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
           local_fee = 0;
           global_fee = 0;
         }
-        if (processed_value != 0.0 || OK_Rj == "Rj") {
-          val success = globals.userModel.update_order_with_picture(order_id, order_type, OK_Rj, processed_value, local_fee, global_fee, comment, image_id, request.user.id)
+        if (processed_value != 0.0 || OK_Ch_Rj == "Rj") {
+          val success = globals.userModel.update_order_with_picture(order_id, order_type, OK_Ch_Rj, processed_value, local_fee, global_fee, comment, image_id, request.user.id)
         }
     }
     Ok(views.html.exchange.dashboard(request.user))
@@ -236,7 +236,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     } else if (order_type == "W") { // withdrawal to a preferential bank
       return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
     } else if (order_type == "W.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+      return globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
     } else if (order_type == "RFW") { // withdrawal to a preferential bank
       return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
     } else if (order_type == "RFW.") { // withdrawal to a non preferential bank

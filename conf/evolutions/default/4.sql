@@ -63,6 +63,7 @@ begin
   end if;;
   if a_order_type = 'W' or a_order_type = 'W.' then
     update balances set hold = hold + a_initial_value + b_total_fee where currency = a_currency and user_id = a_user_id;;
+    update users_connections set bank = a_bank, agency = a_agency, account = a_account where user_id = a_user_id;;
   end if;;
 
   if a_order_type = 'C' then
@@ -107,6 +108,7 @@ declare
   b_currency varchar(16);;
   b_initial_value numeric(23,8);;
   b_net_value numeric(23,8);;
+  b_total_fee numeric(23,8);;
   b_crypto_currency varchar(16);;
   b_update_fees boolean;;
   b_doc_number varchar(128);;
@@ -125,7 +127,7 @@ begin
   a_local_admin_id = 1;;
   a_global_admin_id = 2;;
 -- Update orders and balances and user records (if V)
-  select user_id, order_type, status, currency, initial_value, partner into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value, b_doc_number
+  select user_id, order_type, status, currency, initial_value, partner, total_fee into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value, b_doc_number, b_total_fee
     from orders where order_id = a_order_id;;
 b_crypto_currency = b_currency;; -- system update should be at crypto-currency. It is being done at fiat for a while ###
 
@@ -148,7 +150,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
     if b_order_type = 'D' then
       if b_order_status = 'Op' then
         update balances set balance = balance - b_initial_value + a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value where currency = b_currency and user_id = b_user_id;;
-        update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+        update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
         b_update_fees = true;;
       else
     -- Order already processed (maybe by another administrator) ###
@@ -159,7 +161,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
         -- deposit approval and convertion done in one single step
         update balances set balance = balance + 1000 - b_initial_value, hold = hold + 1000 - b_initial_value, balance_c = balance_c + a_processed_value, hold_c = hold_c + a_processed_value where currency = b_currency and user_id = b_user_id;;
         update balances set balance = balance + a_processed_value + 1000, balance_c = balance_c + 1000 - a_processed_value where currency = b_crypto_currency and user_id = a_partner_id;; -- Partner account
-        update orders set status = 'S', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+        update orders set status = 'S', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
       else
         if b_order_status = 'S' or b_order_type = 'S' then
         -- Sending process just happened (sent only processed value minus fees, discounted outside this function, when sending) ###
@@ -177,7 +179,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
       if b_order_status = 'F' then
         update balances set balance = balance + b_initial_value, balance_c = balance_c - b_initial_value where currency = b_currency and user_id = b_user_id;;
         update balances set balance = balance - b_initial_value, balance_c = balance_c + b_initial_value where currency = b_currency and user_id = a_partner_id;; -- Partner account
-        update orders set status = 'Op', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value - a_global_fee - a_local_fee, comment = a_comment where order_id = a_order_id;;
+        update orders set status = 'Op', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
       end if;;
 
       if b_order_status = 'Op' then
@@ -185,7 +187,7 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
       else
         if b_order_status = 'Lk' then
         -- this part should not happen, as closing a withdraw order is done with picture update as well (update_order_with_picture)
-        -- but it is still enabled to OK without picture. ###
+        -- but this code is still enabled to OK without picture (if future changes).
           update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
           update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, comment = a_comment where order_id = a_order_id;;
           b_update_fees = true;;
@@ -207,8 +209,22 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
 
 
 
--- After this point is order rejection
+-- After this point is order accepted with changes
 
+  if a_status = 'Ch' then
+    if b_order_type = 'D' or b_order_type = 'DCS' then
+      if b_order_status = 'Op' then
+        update balances set balance = balance - b_initial_value + a_processed_value - a_local_fee - a_global_fee, hold = hold - b_initial_value where currency = b_currency and user_id = b_user_id;;
+        update orders set status = 'Ch', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment where order_id = a_order_id;;
+
+        update balances set balance = balance + a_local_fee where currency = b_currency and user_id = a_local_admin_id;; -- Local administrator account
+        update balances set balance = balance + a_global_fee where currency = b_currency and user_id = a_global_admin_id;; -- Global administrator account
+      end if;;
+    end if;;
+  end if;;
+
+
+ -- After this point is order rejection
   if a_status = 'Rj' then
     if b_order_type = 'V' then
       update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, comment = a_comment where (status = 'Op' or status = 'Lk') and order_id = a_order_id;;
@@ -221,8 +237,9 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
     end if;;
     if b_order_type = 'W' or b_order_type = 'W.' then
       if b_order_status = 'Op' or b_order_status = 'Lk' then
-        update balances set hold = hold - a_initial_value - b_total_fee where currency = a_currency and user_id = a_user_id;;
-        update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = 0, total_fee = 0, comment = a_comment where order_id = a_order_id;;
+        update balances set hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
+        update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = 0, comment = a_comment where order_id = a_order_id;;
+        --update orders set status = 'Te', closed = current_timestamp, processed_by = a_admin_id, net_value = b_initial_value + b_total_fee, total_fee = b_total_fee, comment = a_comment where order_id = a_order_id;;
       end if;;
     end if;;
 
@@ -270,12 +287,13 @@ begin
 
   select user_id, status, currency, initial_value, total_fee into b_user_id, b_order_status, b_currency, b_initial_value, b_total_fee from orders where order_id = a_order_id;;
   b_global_fee = b_total_fee - a_local_fee;; -- to avoid rounding errors, care with total_fee and balances on hold
-  if a_status = 'OK' then
-    if (a_processed_value - b_initial_value) < 0.02 and (b_initial_value - a_processed_value) < 0.02 then -- ### need to test a range of 0.02 difference (@globals.country_minimum_difference)
-      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+  if a_status = 'OK' or a_status = 'Ch' then
+    if a_status = 'OK' then -- ### need to test a range of 0.02 difference (@globals.country_minimum_difference)
+      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
       update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
-    else
-      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
+    end if;;
+    if a_status = 'Ch' then
+      update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
       update orders set status = 'Ch', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
     end if;;
     update balances set balance = balance + a_local_fee where currency = b_currency and user_id = a_local_admin_id;; -- Local administrator account
@@ -283,8 +301,8 @@ begin
   end if;;
 
   if a_status = 'Rj' then
-    update balances set hold = hold - b_initial_value - a_global_fee - a_local_fee where currency = b_currency and user_id = b_user_id;;
-    update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
+    update balances set hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
+    update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = 0, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
   end if;;
   return true;;
 end;;

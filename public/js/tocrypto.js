@@ -10,7 +10,7 @@ $(function() {
                 type: 'success',
                 text_escape: true
             });
-            window.location.href=$('#hidden_form_validation_messages').attr('dashboard_url');
+            window.location.href=Messages('directpay.formvalidation.dashboard_url');
         });
     }
 
@@ -34,11 +34,11 @@ $(function() {
                 submit_tocrypto(value);
             }
             else {
-                alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+                alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
             }
         }
         else {
-            alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+            alert(Messages('directpay.formvalidation.valuemustbenumerical'));
         }
     }
 });

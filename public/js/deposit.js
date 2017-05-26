@@ -89,22 +89,22 @@ $(function(){
                     else {
                         event.preventDefault() ;
                         event.stopPropagation();
-                        alert($('#hidden_form_validation_messages').attr('accountinformationisincomplete'));
+                        alert(Messages('directpay.formvalidation.accountinformationisincomplete'));
                     }
                 } else {
                     event.preventDefault() ;
                     event.stopPropagation();
-                    alert($('#hidden_form_validation_messages').attr('youmustselectdepositfile'));
+                    alert(Messages('directpay.formvalidation.youmustselectdepositfile'));
                 }
             } else {
                 event.preventDefault() ;
                 event.stopPropagation();
-                alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+                alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
             }
         } else {
             event.preventDefault() ;
             event.stopPropagation();
-            alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+            alert(Messages('directpay.formvalidation.valuemustbenumerical'));
         }
     });
 });

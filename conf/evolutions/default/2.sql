@@ -783,6 +783,7 @@ end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
 
+
 create or replace function
   get_docs_info (
       a_id bigint,

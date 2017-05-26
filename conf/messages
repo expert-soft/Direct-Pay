@@ -504,6 +504,8 @@ directpay.formvalidation.youmustselectdepositfile=You must select the deposit re
 directpay.formvalidation.nofileselected=There are no new files selected
 directpay.formvalidation.bankinginformationisnotvalid=Banking information is not valid
 directpay.formvalidation.commentcannotbeempty=Comment information can not be empty
+directpay.formvalidation.confirmnewvalue=Confirm new value
+
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
 directpay.faq.1=O que é {0}?
@@ -689,8 +691,11 @@ messages.api.success=Success
 messages.api.success.ordercreatedsuccessfully=Order created successfully
 messages.api.success.bankinfosavedsuccessfully=Bank data saved successfully
 messages.api.success.manualautomodechanged=Manual / Automatic mode changed successfully
-messages.api.error.failedtocreateorder=Failed to create order.
 messages.api.success.orderupdatedsuccessfully=Order Updated Successfully
+messages.api.success.orderapproved=Order approved (executed)
+messages.api.success.orderapprovedwithchanges=Order approved (executed) with changes
+messages.api.success.orderrejected=Order rejected
+messages.api.error.failedtocreateorder=Failed to create order
 messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
 messages.api.error.failedtoupdateorder=Failed to update order
 

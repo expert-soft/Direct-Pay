@@ -176,7 +176,7 @@ function apply_docs_info() {
             } else {
                 event.preventDefault();
                 event.stopPropagation();
-                alert($('#hidden_form_validation_messages').attr('nofileselected'));
+                alert(Messages('directpay.formvalidation.nofileselected'));
             }
         });
     })

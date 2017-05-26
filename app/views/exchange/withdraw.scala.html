@@ -21,6 +21,7 @@
         </div>
     </div>
 
+
     <div class="clearfix"></div>
     <div class="row">
             <!-- Start of form -->
@@ -42,7 +43,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
                                 <div class="col-md-8 col-sm-4 col-xs-12">
-                                    <input type="hidden" id="hidden_bank" value="{{bank}}">
+                                    <input type="hidden" id="hidden_bank" value="">
                                     <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
                                         <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                         @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
@@ -70,11 +71,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-6" for="agency">@Messages("terminology.agency")</label>
-                                <div class="col-md-5 col-sm-5"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
+                                <div class="col-md-5 col-sm-5"><input type="text" id="agency" value="" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.account")</label>
-                                <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
+                                <div class="col-md-5 col-sm-5"><input type="text" id="account" value="" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
                             </div>
                             <input type="hidden" id="is_iban" value="false">
                         } else {

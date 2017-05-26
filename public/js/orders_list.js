@@ -198,11 +198,7 @@ $(function(){
         $( window ).resize(function() {
             resizeDiv()
         });
-
-        function resizeDiv (){
-            $('#popupInfoDiv').css('width', parseInt($( document ).width()*0.8));
-            $('#popupInfoDiv').css('height', parseInt($( document ).height()*0.5));
-        }
+        resizeDiv();
 
         $('.triggers_details').live('change', function() {
             $('#net_value' + $('#hidden_order_id').val()).val($('#popUpNet_value').val());
@@ -224,9 +220,9 @@ Op - OK or Rj - revision brings it to Op
 Deposit
 Op - Lock - OK, Ch or Rj - revision brings it to Lock
 DCS
-Op - Lock - C or Rj - S - OK or cancel S that goes to Changed - revision would require S and C undo if possible and than Lock
+Op - Lock - Ch or Rj - S - OK or cancel S that goes to Changed - revision would require S and C undo if possible and than Lock
 Conversion to Crypto
-Op - Ok (Ch possible?)
+Op - Ok
 Send
 Op - Ok or Rj
 Withdraw
@@ -236,11 +232,12 @@ Op - F or Rj - W - Lock - Ok, Ch or Rj - revision brings it to Lock
 Receive
 Op - OK or Rj
 Convert to Fiat
-Op - OK (Ch possible?)
+Op - OK
 
 */
     // Approving order
         $('.triggers_Approval').live('click', function() {
+alert(Messages("depositwithdraw.transfer.button"));
             var order_id = parseInt($(this).attr('order_id'));
             var order_type = $(this).attr('order_type');
             var status = "OK";
@@ -256,23 +253,28 @@ Op - OK (Ch possible?)
             if ($.isNumeric(net_value_s)) {
                 var net_value = parseFloat(net_value_s);
                 if (net_value > 0 || (order_type != "D" && order_type != "DCS")) {
-                    if(comment != "") {
-                        if (Math.abs(initial_value - net_value) > $('#hidden_fees_information').attr('country_minimum_difference') && (order_type == "D" || order_type == "DCS" || order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.")) {
+                    if(comment != "" || is_lock_button) {
+                        if (Math.abs(initial_value - net_value) > parseFloat($('#hidden_fees_information').attr('country_minimum_difference')) && (order_type == "D" || order_type == "DCS" || order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.")) {
                             status = "Ch"; //approved or executed value is significantly different
                             applyAPI = false;
-                            applyAPI = confirm($('#hidden_form_validation_messages').attr('confirmnewvalue') + '(' + NumberFormat(initial_value, 2) + ' -> ' + NumberFormat(net_value, 2) + ')');
+                            applyAPI = confirm(Messages('directpay.formvalidation.confirmnewvalue') + ' (' + NumberFormat(initial_value, 2) + ' -> ' + NumberFormat(net_value, 2) + ')');
                         }
                         if (order_type == "V")
                             net_value = 0;
-                        if ($('#popupType').val() == "requestPopUp" || is_lock_button)
-                            HideButtons(order_id, is_lock_button);
-applyAPI = false; //### temporary (only testing)
+//applyAPI = false; //### temporary (only testing)
                         if (applyAPI) {
+                            if ($('#popupType').val() == "requestPopUp" || is_lock_button || $('#popupType').val() == "")
+                                HideButtons(order_id, is_lock_button);
+                            $('#popupDetails').css('opacity', 0); // this hides the modal
                             // calling API function:
+                            if (status != "Ch")
+                                var success_message = messages.api.success.orderapproved;
+                            else
+                                var success_message = messages.api.success.orderapprovedwithchanges;
                             API.update_order(order_id, order_type, status, net_value, comment).success(function () {
                                 $.pnotify({
                                     title: Messages("messages.api.success"),
-                                    text: Messages("messages.api.success.orderupdatedsuccessfully"),
+                                    text: Messages(success_message),
                                     styling: 'bootstrap',
                                     type: 'success',
                                     text_escape: true
@@ -282,21 +284,19 @@ applyAPI = false; //### temporary (only testing)
                     } else {
                         event.preventDefault() ;
                         event.stopPropagation();
-                        alert($('#hidden_form_validation_messages').attr('commentcannotbeempty'));
+                        alert(Messages('directpay.formvalidation.commentcannotbeempty'));
                     }
                 } else {
                     event.preventDefault() ;
                     event.stopPropagation();
-                    alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+                    alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
                 }
             } else {
                 event.preventDefault() ;
                 event.stopPropagation();
-                alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+                alert(Messages('directpay.formvalidation.valuemustbenumerical'));
             }
         });
-
-
 
 
         $('.triggers_Rejection').live('click', function() {
@@ -305,27 +305,28 @@ applyAPI = false; //### temporary (only testing)
             var order_id = parseInt($(this).attr('order_id'));
             var order_type = $(this).attr('order_type');
             var status = "Rj";
+            var initial_value = parseFloat($('#hidden_initial_value' + order_id).val());
             var comment = $('#comment' + order_id).val();
-comment = ""; //### temporary (only testing)
+//comment = ""; //### temporary (only testing)
             if (comment != "") {
-                HideButtons (order_id);
-                API.update_order(order_id, order_type, status, 0, comment).success(function () {
+                HideButtons (order_id, false);
+                $('#popupDetails').css('opacity', 0);
+                API.update_order(order_id, order_type, status, initial_value, comment).success(function () {
                     $.pnotify({
                         title: Messages("messages.api.success"),
-                        text: Messages("messages.api.success.orderupdatedsuccessfully"),
+                        text: Messages("messages.api.success.orderrejected"),
                         styling: 'bootstrap',
                         type: 'success',
                         text_escape: true
                     });
                 });
             } else
-                alert($('#hidden_form_validation_messages').attr('commentcannotbeempty'));
+                alert(Messages('directpay.formvalidation.commentcannotbeempty'));
         });
 
         $('.triggers_Upload').live('click', function() {
             $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
             function do_transfer(e) { e.preventDefault() }
-alert("user= " + $(this).attr('user'))   ; //### temporary (only testing)
             transfer_details("requestBrowser", $(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc1'), $(this).attr('doc_type'));
         });
 
@@ -370,7 +371,6 @@ function transfer_details (popup_type, order_id, user_name, user_email, order_ty
         $('#popUpMessageValue').css('display', 'inline');
         $('#popUpNet_value').show();
     }
-
     if (popup_type == "requestPopUp") {
         $('#btnZoomIn').css('display', 'inline');
         $('#btnZoomOut').css('display', 'inline');
@@ -435,33 +435,37 @@ function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#popUpNet_v
 
 var pressedButton = "";
 
-// On submit click, set the value
+// saving pictures
 $('#btnApproveWithdraw').click(function() {
     var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
     var value_s = $('#popUpNet_value').val();
     var comment = $('#popUpComment').val();
-    pressedButton = "OK";
+    var initial_value = $('#hidden_initial_value' + $('#btnApproveWithdraw').attr('order_id')).val();
+    var processed_value = 0.0;
+    pressedButton = "Ch";
     if (decimal_separator == ",")
         value_s = value_s.replace(decimal_separator, ".");
     if ($.isNumeric(value_s)) {
         if (parseFloat(value_s) > 0) {
+            processed_value = parseFloat(value_s);
             if($('#uploadText1').text() != "") {
                 //(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_send_fee').val()));
                 if ($('#popUpComment').val() != "") {
+                    if ((processed_value - initial_value) < parseFloat($('#hidden_fees_information').attr('country_minimum_difference')) && (initial_value - processed_value) < parseFloat($('#hidden_fees_information').attr('country_minimum_difference'))) pressedButton = "OK";
                     // form will be submitted to upload withdraw picture
                     fillInfoIntoFileObject();
                     $('form#upload_picture_form').submit();
                 } else {
-                    alert($('#hidden_form_validation_messages').attr('commentcannotbeempty'));
+                    alert(Messages('directpay.formvalidation.commentcannotbeempty'));
                 }
             } else {
-                alert($('#hidden_form_validation_messages').attr('youmustselectdepositfile'));
+                alert(Messages('directpay.formvalidation.youmustselectdepositfile'));
             }
         } else {
-            alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+            alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
         }
     } else {
-        alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+        alert(Messages('directpay.formvalidation.valuemustbenumerical'));
     }
 });
 
@@ -469,27 +473,47 @@ $('#btnApproveWithdraw').click(function() {
 $('#btnRejectWithdraw').click(function(){
     pressedButton = "Rj";
     var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
+    var order_id = parseInt($(this).attr('order_id'));
+    var order_type = $(this).attr('order_type');
+    var status = "Rj";
+    var initial_value = parseFloat($('#hidden_initial_value' + order_id).val());
     var value_s = $('#popUpNet_value').val();
     var comment = $('#popUpComment').val();
+
     if (decimal_separator == ",")
         value_s = value_s.replace(decimal_separator, ".");
     if ($.isNumeric(value_s)) {
         if (parseFloat(value_s) >= 0) {
-            if($('#uploadText1').text() != "") {
-                if ($('#popUpComment').val() != "") {
+            if (comment != "") {
+                if($('#uploadText1').text() != "") {
                     // form will be submitted to upload withdraw picture
                     fillInfoIntoFileObject();
                     $('form#upload_picture_form').submit();
-                } else {
-                    alert($('#hidden_form_validation_messages').attr('commentcannotbeempty'));
+                } else { //update order without picture
+                    HideButtons (order_id, false);
+                    $('#popupDetails').css('opacity', 0);
+                    API.update_order(order_id, order_type, status, initial_value, comment).success(function () {
+                        $.pnotify({
+                            title: Messages("messages.api.success"),
+                            text: Messages("messages.api.success.orderrejected"),
+                            styling: 'bootstrap',
+                            type: 'success',
+                            text_escape: true
+                        });
+                    });
                 }
             } else {
-                alert($('#hidden_form_validation_messages').attr('youmustselectdepositfile'));
+                alert(Messages('directpay.formvalidation.commentcannotbeempty'));
             }
         } else {
-            alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+            alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
         }
     } else {
-        alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+        alert(Messages('directpay.formvalidation.valuemustbenumerical'));
     }
 });
+
+function resizeDiv (){
+    $('#popupInfoDiv').css('width', parseInt($( document ).width()*0.8));
+    $('#popupInfoDiv').css('height', parseInt($( document ).height()*0.5));
+}

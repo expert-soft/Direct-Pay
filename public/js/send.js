@@ -13,7 +13,7 @@ alert(9);
                 text_escape: true
             });
         });
-        window.location.href = $('#hidden_form_validation_messages').attr('dashboard_url');
+        window.location.href = Messages('directpay.formvalidation.dashboard_url');
     }
 
     $(document).ready(function () {
@@ -38,16 +38,16 @@ alert(9);
                     // calling API function:
                         submit_send(value);
                     else {
-                        alert($('#hidden_form_validation_messages').attr('accountinformationisincomplete'));
+                        alert(Messages('directpay.formvalidation.accountinformationisincomplete'));
                     }
                 } else {
-                    alert($('#hidden_form_validation_messages').attr('amountnotavailable'));
+                    alert(Messages('directpay.formvalidation.amountnotavailable'));
                 }
             } else {
-                alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+                alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
             }
         } else {
-            alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+            alert(Messages('directpay.formvalidation.valuemustbenumerical'));
         }
     }
 });
