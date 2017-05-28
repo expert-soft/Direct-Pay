@@ -74,7 +74,9 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Json.obj(
         "bank" -> c._1,
         "agency" -> c._2,
-        "account" -> c._3
+        "account" -> c._3,
+        "partner" -> c._4,
+        "partner_account" -> c._5
       )
     })
     ))

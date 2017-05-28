@@ -823,10 +823,12 @@ create or replace function
       a_id bigint,
   out bank varchar (16),
   out agency varchar (16),
-  out account varchar (64)
+  out account varchar (64),
+  out partner character varying(64),
+  out partner_account character varying(256)
 ) returns setof record as $$
 begin
-  return query select uc.bank, uc.agency, uc.account from users_connections uc where user_id = a_id;;
+  return query select uc.bank, uc.agency, uc.account, uc.partner, uc.partner_account from users_connections uc where user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 

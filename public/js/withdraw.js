@@ -53,7 +53,7 @@ $(function() {
                 });
             })
         }
-        window.location.href = Messages('directpay.formvalidation.dashboard_url');
+        window.location.href = ('/dashboard');
     }
 
 

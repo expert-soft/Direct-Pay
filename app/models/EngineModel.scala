@@ -53,7 +53,9 @@ class EngineModel(val db: String = "default") {
     SQL"""select * from get_bank_data($uid)"""().map(row => (
       row[Option[String]]("bank").getOrElse(""),
       row[Option[String]]("agency").getOrElse(""),
-      row[Option[String]]("account").getOrElse("")
+      row[Option[String]]("account").getOrElse(""),
+      row[Option[String]]("partner").getOrElse(""),
+      row[Option[String]]("partner_account").getOrElse("")
     )).toList
   }
 

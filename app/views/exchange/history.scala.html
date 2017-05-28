@@ -6,7 +6,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
 
 @scripts = {
-    <script src="@routes.Assets.at("js/history.js")" xmlns="http://www.w3.org/1999/html"></script>
+    <script src="@routes.Assets.at("js/history.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.history.label"), "dashboard", scripts) {
@@ -95,7 +95,8 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each this}}
+                <tr><td colspan="9" align="right">@Messages("terminology.wallet.available")</td><td align="right"><span id="final_sum"></span></td><td align="right"><span id="final_sum_c"></span></td></tr>
+            {{#each this}}
                 <tr id="{{order_id}}">
                     <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
                     <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
@@ -106,10 +107,11 @@
                     <td style="text-align: right;">{{total_fee_s}}</td>
                     <td>{{comment}}</td>
                     <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                    <td style="text-align: right;">###</td>
-                    <td style="text-align: right;">###</td>
+                    <td style="text-align: right;">{{initial_sum}}</td>
+                    <td style="text-align: right;">{{initial_sum_c}}</td>
                 </tr>
-                {{/each}}
+            {{/each}}
+                <tr><td colspan="9" align="right">@Messages("directpay.history.initialfundsposition")</td><td align="right"><span id="initial_sum"></span></td><td align="right"><span id="initial_sum_c"></span></td></tr>
             </tbody>
         </table>
     </script>

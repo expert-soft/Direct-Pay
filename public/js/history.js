@@ -1,4 +1,39 @@
 $(function(){
+    var initial_sum = 0;
+    var initial_sum_c = 0;
+    var final_sum = 0;
+    var final_sum_c = 0;
+
+    function show_balance() {
+        API.balance().success(function (balances) {
+            final_sum = balances[0].amount;
+            final_sum_c = balances[0].amount_c;
+            initial_sum = final_sum;
+            initial_sum_c = final_sum_c;
+            searchedOrders();
+
+/* This part of the code is not needed
+            balances[0].available = Number(balances[0].amount) - Number(balances[0].hold);
+            balances[0].amount = balances[0].amount;
+            balances[0].hold = balances[0].hold;
+            balances[0].amount_c = balances[0].amount_c;
+            balances[0].hold_c = balances[0].hold_c;
+
+            $("#available_fiat").html(NumberFormat(balances[0].available, 2));
+            $("#hold_fiat").html(NumberFormat(balances[0].hold, 2));
+            $('#hidden_fees_information').attr('wallet_available', balances[0].available);
+            $('#hidden_fees_information').attr('wallet_onhold', balances[0].hold);
+            $("#amount_crypto").html(NumberFormat(balances[0].amount_c, 2));
+            $('#hidden_fees_information').attr('wallet_crypto', balances[0].amount_c);
+            $('#hidden_fees_information').attr('wallet_crypto_onhold', balances[0].hold_c);
+
+            $("#amount_total").html(NumberFormat(parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c), 2));
+            $('#hidden_fees_information').attr('wallet_total', parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c));
+*/
+        });
+    }
+    show_balance();
+
 
     var data_variable = Handlebars.compile($("#orders-script-template").html());
     function searchedOrders(){
@@ -6,7 +41,6 @@ $(function(){
         var critical_value2 = $('#hidden_critical_value2').val();
         API.orders_list().success(function(data){
             for (var i = 0; i < data.length; i++) {
-
                 data[i].order_id = data[i].order_id;
                 data[i].user_id = data[i].user_id;
                 data[i].country_id = data[i].country_id;
@@ -23,7 +57,11 @@ $(function(){
                 data[i].bank = data[i].bank;
                 data[i].agency = data[i].agency;
                 data[i].account = data[i].account;
-                data[i].closed = moment(data[i].closed).format("YYYY-MM-DD HH:mm:ss");
+                if (data[i].status == 'OK' || data[i].status == 'Rj')
+                    data[i].closed = moment(data[i].closed).format("YYYY-MM-DD HH:mm:ss");
+                else
+                    data[i].closed = "";
+
                 data[i].comment = data[i].comment;
                 data[i].image_id = data[i].image_id;
                 data[i].email = data[i].email;
@@ -99,14 +137,33 @@ $(function(){
                     data[i].currency = "";
                     data[i].net_value = "";
                 }
+
+
+                if (data[i].order_type == "D")
+                    initial_sum += data[i].initial_value;
+                else if (data[i].order_type == "DCS" && data[i].status == "Op")
+                    initial_sum += data[i].initial_value;
+                else if (data[i].order_type == "W" || data[i].order_type == "W.")
+                    initial_sum -= data[i].initial_value;
+                else if (data[i].order_type == "RFW" || data[i].order_type == "RFW." )
+                    initial_sum -= data[i].initial_value;
+
+                data[i].initial_sum = NumberFormat(initial_sum, 2);
+                data[i].initial_sum_c = NumberFormat(initial_sum_c, 2);
             }
 
             $('#orders-script-position').html(data_variable(data));
+            showSum();
         });
     }
-    searchedOrders();
 
 
+    function showSum() {
+        $('#initial_sum').html(NumberFormat(initial_sum, 2));
+        $('#initial_sum_c').html(NumberFormat(initial_sum_c, 2));
+        $('#final_sum').html(NumberFormat(final_sum, 2));
+        $('#final_sum_c').html(NumberFormat(final_sum_c, 2));
+    }
 
     var data_log_variable = Handlebars.compile($("#log-script-template").html());
     function searchedLog(){
@@ -134,9 +191,8 @@ $(function(){
 
     $(document).ready(function () {
         $( window ).resize(function() {
-            resizeDiv()
+            resizeDiv();
         });
-
         function resizeDiv (){
             $('#popupInfoDiv').css('width', parseInt($( document ).width()*0.8));
             $('#popupInfoDiv').css('height', parseInt($( document ).height()*0.5));
@@ -149,10 +205,10 @@ $(function(){
         $('#btnZoomOut').live('click', function() {
             $('#the_picture').width(parseInt($('#the_picture').width() / 1.5));
         });
-
     });
-
 });
+
+
 
 function transfer_details (order_id, user_name, user_email, order_type, doc, attr4) {
     $('#hidden_order_id').val(order_id);

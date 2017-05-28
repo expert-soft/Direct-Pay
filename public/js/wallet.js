@@ -21,7 +21,7 @@ $(function() {
 
             $('#balance').html(template(balances));
 
-            fillMessages();  // due to assyncronous threads of API, need to run fillMessages after wallet completelly filled
+            fillMessages();  // due to asyncronous threads of API, need to run fillMessages after wallet completely filled
         });
     }
 

@@ -49,17 +49,23 @@ begin
 
   if a_order_type = 'V' then
     -- if one order for that document already exists, user replaced document, must consider only the last one. Old orders become Rj with system information
-    update orders set status = 'Rj', comment = '***** User replaced doc before analysis *****' where status = 'Op' and partner = a_partner and user_id = a_user_id and order_id != b_order_id;;
---    update users set docs_verified = false where id = a_user_id;;
---    if a_partner = 'doc1' then update users_name_info set ver1 = false where id = a_user_id;; end if;;
---    if a_partner = 'doc2' then update users_name_info set ver2 = false where id = a_user_id;; end if;;
---    if a_partner = 'doc3' then update users_name_info set ver3 = false where id = a_user_id;; end if;;
---    if a_partner = 'doc4' then update users_name_info set ver4 = false where id = a_user_id;; end if;;
---    if a_partner = 'doc5' then update users_name_info set ver5 = false where id = a_user_id;; end if;;
+    update orders set status = 'Rj', comment = '***** User replaced doc before analysis *****' where order_type = 'V' and partner = a_partner and status = 'Op' and partner = a_partner and user_id = a_user_id and order_id != b_order_id;;
+    update users set docs_verified = false where id = a_user_id;;
+    if a_partner = 'doc1' then update users_name_info set ver1 = false where user_id = a_user_id;; end if;;
+    if a_partner = 'doc2' then update users_name_info set ver2 = false where user_id = a_user_id;; end if;;
+    if a_partner = 'doc3' then update users_name_info set ver3 = false where user_id = a_user_id;; end if;;
+    if a_partner = 'doc4' then update users_name_info set ver4 = false where user_id = a_user_id;; end if;;
+    if a_partner = 'doc5' then update users_name_info set ver5 = false where user_id = a_user_id;; end if;;
+
+
   end if;;
 -- for deposit and withdraw fees should be charged when order update and at send when sending. To fiat when order creation
   if a_order_type = 'D' or a_order_type = 'DCS' then
     update balances set balance = balance + a_initial_value, hold = hold + a_initial_value where currency = a_currency and user_id = a_user_id;;
+    if a_order_type = 'DCS' then
+      update users set partner = a_partner where id = a_user_id;;
+      update users_connections set partner = a_partner, partner_account = a_account where user_id = a_user_id;;
+    end if;;
   end if;;
   if a_order_type = 'W' or a_order_type = 'W.' then
     update balances set hold = hold + a_initial_value + b_total_fee where currency = a_currency and user_id = a_user_id;;
@@ -72,7 +78,7 @@ begin
     update orders set status = 'OK', closed = current_timestamp, processed_by = a_partner_id, net_value = a_initial_value, comment = '***** System-processed Order *****' where order_id = b_order_id;;
   end if;;
   if a_order_type = 'S' then
-  -- This creates a comunication to partner system. Fees will be charged when order update (closing)
+  -- This creates a communication to partner system. Fees will be charged when order update (closing)
   end if;;
   if a_order_type = 'F' then
     update balances set balance = balance + a_initial_value - b_total_fee, balance_c = balance_c - a_initial_value where currency = a_currency and user_id = a_user_id;;
@@ -130,6 +136,7 @@ begin
   select user_id, order_type, status, currency, initial_value, partner, total_fee into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value, b_doc_number, b_total_fee
     from orders where order_id = a_order_id;;
 b_crypto_currency = b_currency;; -- system update should be at crypto-currency. It is being done at fiat for a while ###
+
 
   b_update_fees = false;;
 -- At this point starts Order approved
@@ -210,7 +217,6 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
 
 
 -- After this point is order accepted with changes
-
   if a_status = 'Ch' then
     if b_order_type = 'D' or b_order_type = 'DCS' then
       if b_order_status = 'Op' then
@@ -223,11 +229,11 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
     end if;;
   end if;;
 
-
  -- After this point is order rejection
   if a_status = 'Rj' then
     if b_order_type = 'V' then
-      update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, comment = a_comment where (status = 'Op' or status = 'Lk') and order_id = a_order_id;;
+--    update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, comment = a_comment where order_id = a_order_id;;
+      update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, comment = a_comment where status = 'Op' and order_id = a_order_id;;
     end if;;
     if b_order_type = 'D' or b_order_type = 'DCS' then
       if b_order_status = 'Op' then
@@ -239,7 +245,6 @@ b_crypto_currency = b_currency;; -- system update should be at crypto-currency. 
       if b_order_status = 'Op' or b_order_status = 'Lk' then
         update balances set hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
         update orders set status = 'Rj', closed = current_timestamp, processed_by = a_admin_id, net_value = 0, comment = a_comment where order_id = a_order_id;;
-        --update orders set status = 'Te', closed = current_timestamp, processed_by = a_admin_id, net_value = b_initial_value + b_total_fee, total_fee = b_total_fee, comment = a_comment where order_id = a_order_id;;
       end if;;
     end if;;
 

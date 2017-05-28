@@ -1,56 +1,18 @@
 
 $(function() {
-    // this function is not being used. Submission is being done through uploadImage
-/*    function submit_deposit() {
-        if ($('#partner').val() != "00" && $('#value').val() > 0) {
-            var order_type = $('#hidden_page').val();
-            var partner = '';
-            var doc1 = 'XXX';
-            submit_image();
-            if (order_type == "DCS") {
-                partner = $('#partner').val();
-            }
-            var status = "Op";
-            doc1 = $('#doc1').val();
-            var initial_value = $('#value').val();
-            API.create_order(order_type, status, partner, initial_value, '', '', '', doc1).success(function () {
-                $.pnotify({
-                    title: Messages("messages.api.success"),
-                    text: Messages("messages.api.success.ordercreatedsuccessfully"),
-                    styling: 'bootstrap',
-                    type: 'success',
-                    text_escape: true
-                });
-            });
-        }
-        else
-            alert("Choose file name and value > 0");
-    }
-*/
 
-/*
-    function submit_image() {
-        API.upload_image($('#uploadBtn1'));
-        $.pnotify({
-            title: Messages("messages.api.success"),
-            text: Messages("messages.api.success.manualautomodechanged"),
-            styling: 'bootstrap',
-            type: 'success',
-            text_escape: true
+    function show_bank_data() {
+        API.get_bank_data().success(function(data){
+            $('#partner').val(data[0].partner);
+            $('#partner_account').val(data[0].partner_account);
         });
     }
-*/
+    show_bank_data();
+
 
     $(document).ready(function () {
         fillMessages();
     });
-
-/*    $('.triggers_submit').click(function () {
-alert(3);
-        submit_deposit($('#uploadBtn1'));
-    });
-*/
-
 });
 
 

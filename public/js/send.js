@@ -1,9 +1,17 @@
-
 $(function() {
+
+    function show_bank_data() {
+        API.get_bank_data().success(function(data){
+            $('#partner').val(data[0].partner);
+            $('#partner_account').val(data[0].partner_account);
+        });
+    }
+    show_bank_data();
+
+
 
     function submit_send() {
 //treatment of , as decimal separator: parseFloat(str.replace(',','.').replace(' ',''))
-alert(9);
         API.create_order("S", "Op", $('#partner').val(), $('#value').val(), '', '', '', '').success(function () {
             $.pnotify({
                 title: Messages("messages.api.success"),
@@ -13,7 +21,7 @@ alert(9);
                 text_escape: true
             });
         });
-        window.location.href = Messages('directpay.formvalidation.dashboard_url');
+        window.location.href = '/dashboard';
     }
 
     $(document).ready(function () {

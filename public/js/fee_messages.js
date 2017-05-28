@@ -24,7 +24,6 @@ var country_settings = {
 
 $(function(){
     $(document).ready(function () {
-//        fillMessages();
     });
 
     $('.triggers_fee_calculation').change(function () {fillMessages()});

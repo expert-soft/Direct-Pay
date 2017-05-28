@@ -33,7 +33,7 @@ $(function(){
                     title: Messages("messages.api.success"),
                     text: Messages("messages.api.success.manualautomodechanged"),
                     styling: 'bootstrap',
-                    type: 'success',
+                    type: 'info',
                     text_escape: true
                 });
             });

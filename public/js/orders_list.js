@@ -74,6 +74,7 @@ $(function(){
                 else if (data[i].order_type == "DCS") {
                     data[i].class_type = "class=bgn_green";
                     data[i].explained_type = $('#hidden_general_messages').attr('depositandsend')
+                    data[i].bank_info = data[i].partner + ", " + data[i].account;
                 }
                 else if(data[i].order_type == "V") {
                     data[i].class_type = "class=bgn_blue";
@@ -84,10 +85,14 @@ $(function(){
                     data[i].currency = "";
                     data[i].net_value = "";
                     data[i].doc_type = data[i].partner;
+                    if (data[i].doc_type == "doc1") data[i].bank_info = $('#popUpPictureDoc1').val(); else
+                    if (data[i].doc_type == "doc2") data[i].bank_info = $('#popUpPictureDoc2').val(); else
+                    if (data[i].doc_type == "doc3") data[i].bank_info = $('#popUpPictureDoc3').val(); else
+                    if (data[i].doc_type == "doc4") data[i].bank_info = $('#popUpPictureDoc4').val(); else
+                    if (data[i].doc_type == "doc5") data[i].bank_info = $('#popUpPictureDoc5').val();
                 }
                 else
                     data[i].class_type = "class=center_bold";
-
             }
             $('#orders-open').html(orders_open_template(data));
 
@@ -153,7 +158,6 @@ $(function(){
                 }
                 else
                     data[i].class_type = "class=center_bold";
-
 
                 if(data[i].status == "Op") {
                     data[i].class_status = "class=bgn_yellow";  //Bootstrap line 2844
@@ -237,7 +241,6 @@ Op - OK
 */
     // Approving order
         $('.triggers_Approval').live('click', function() {
-alert(Messages("depositwithdraw.transfer.button"));
             var order_id = parseInt($(this).attr('order_id'));
             var order_type = $(this).attr('order_type');
             var status = "OK";
@@ -250,8 +253,10 @@ alert(Messages("depositwithdraw.transfer.button"));
             var applyAPI = true;
             if (decimal_separator == ",")
                 net_value_s = net_value_s.replace(decimal_separator, ".");
-            if ($.isNumeric(net_value_s)) {
-                var net_value = parseFloat(net_value_s);
+            if ($.isNumeric(net_value_s) || order_type == "V") {
+                var net_value = 0;
+                if (order_type != "V")
+                    net_value = parseFloat(net_value_s);
                 if (net_value > 0 || (order_type != "D" && order_type != "DCS")) {
                     if(comment != "" || is_lock_button) {
                         if (Math.abs(initial_value - net_value) > parseFloat($('#hidden_fees_information').attr('country_minimum_difference')) && (order_type == "D" || order_type == "DCS" || order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.")) {
@@ -259,24 +264,30 @@ alert(Messages("depositwithdraw.transfer.button"));
                             applyAPI = false;
                             applyAPI = confirm(Messages('directpay.formvalidation.confirmnewvalue') + ' (' + NumberFormat(initial_value, 2) + ' -> ' + NumberFormat(net_value, 2) + ')');
                         }
-                        if (order_type == "V")
-                            net_value = 0;
 //applyAPI = false; //### temporary (only testing)
                         if (applyAPI) {
-                            if ($('#popupType').val() == "requestPopUp" || is_lock_button || $('#popupType').val() == "")
+                            if ($('#popupType').val() == "requestPopUp" || is_lock_button || $('#popupType').val() == "" || order_type == "V")
                                 HideButtons(order_id, is_lock_button);
                             $('#popupDetails').css('opacity', 0); // this hides the modal
                             // calling API function:
-                            if (status != "Ch")
-                                var success_message = messages.api.success.orderapproved;
+                            var success_message_type = "success";
+                            var success_message = "";
+                            if (order_type == "V")
+                                success_message = "messages.api.success.documentapproved";
+                            else if (status != "Ch")
+                                success_message = "messages.api.success.orderapproved";
                             else
-                                var success_message = messages.api.success.orderapprovedwithchanges;
+                                success_message = "messages.api.success.orderapprovedwithchanges";
+                            if (is_lock_button) {
+                                success_message_type = "info";
+                                success_message = "messages.api.success.orderlockedtobeprocessed";
+                            }
                             API.update_order(order_id, order_type, status, net_value, comment).success(function () {
                                 $.pnotify({
                                     title: Messages("messages.api.success"),
                                     text: Messages(success_message),
                                     styling: 'bootstrap',
-                                    type: 'success',
+                                    type: success_message_type,
                                     text_escape: true
                                 });
                             })
@@ -311,12 +322,18 @@ alert(Messages("depositwithdraw.transfer.button"));
             if (comment != "") {
                 HideButtons (order_id, false);
                 $('#popupDetails').css('opacity', 0);
+                if (order_type == "V") {
+                    var success_message = "messages.api.success.documentrejected";
+                    initial_value = 0;
+                }
+                else
+                    var success_message = "messages.api.success.orderrejected";
                 API.update_order(order_id, order_type, status, initial_value, comment).success(function () {
                     $.pnotify({
                         title: Messages("messages.api.success"),
-                        text: Messages("messages.api.success.orderrejected"),
+                        text: Messages(success_message),
                         styling: 'bootstrap',
-                        type: 'success',
+                        type: 'notice',
                         text_escape: true
                     });
                 });
@@ -497,7 +514,7 @@ $('#btnRejectWithdraw').click(function(){
                             title: Messages("messages.api.success"),
                             text: Messages("messages.api.success.orderrejected"),
                             styling: 'bootstrap',
-                            type: 'success',
+                            type: 'notice',
                             text_escape: true
                         });
                     });

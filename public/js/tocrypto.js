@@ -10,7 +10,7 @@ $(function() {
                 type: 'success',
                 text_escape: true
             });
-            window.location.href=Messages('directpay.formvalidation.dashboard_url');
+            window.location.href = '/dashboard';
         });
     }
 

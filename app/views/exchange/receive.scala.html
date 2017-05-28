@@ -50,7 +50,10 @@
                             country_doc4="@Messages(globals.country_doc4_name)"
                             country_doc5="@Messages(globals.country_doc5_name)"
                         >
-                        @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {<p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youroperationwillonlybeexecuted", globals.country_currency_crypto)</p>}
+                        @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {
+                            <p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youroperationwillonlybeexecuted", globals.country_currency_crypto)</p>
+                            <p><a href="@routes.Application.documents().url">@Messages("directpay.withdraw.uploadyourdocuments")</a> @Messages("directpay.withdraw.orwaitthemtobeverified").</p>
+                        }
                         <p>@Messages("directpay.receive.toreceivefrompartners4")</p>
 
                             <!-- Beginning of the form -->
