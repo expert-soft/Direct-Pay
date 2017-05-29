@@ -493,6 +493,7 @@ directpay.security.disclaimer1={0} system provides a good set of protection tool
 directpay.security.disclaimer2=All internet systems have vulnerabilities. Even banks, big exchanges or high tech systems can be target for cyber attacks. {0} implements the state of the art security practices, tested and verified. Be sure you are secured the best. Nevertheless, being known that even the best systems suffer attacks, user is advised {0} does not assume the risks and possible losses caused by others than the people directly involved with administration of the system.
 
 directpay.history.usersoperationshistory=User''s Operations History
+directpay.history.currentfundsposition=Current funds position
 directpay.history.initialfundsposition=Initial funds position
 directpay.history.loghistory=Log History
 directpay.history.imagedetails=Image Details

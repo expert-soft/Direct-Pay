@@ -97,7 +97,9 @@ $(function(){
             $('#orders-open').html(orders_open_template(data));
 
             $('#requestPopupDetails').live('click', function() {
-                $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
+                if ($(this).attr('image_id') != "0") {
+                    $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
+                }
                 function do_transfer(e) { e.preventDefault() }
                 transfer_details($(this).attr('popup_type'), $(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc1'), $(this).attr('doc_type'));
             });
@@ -111,7 +113,6 @@ $(function(){
         var critical_value2 = $('#hidden_critical_value2').val();
         API.orders_list().success(function(data){
             for (var i = 0; i < data.length; i++) {
-
                 data[i].created = moment(data[i].created).format("YYYY-MM-DD HH:mm:ss");
 
                 data[i].class_value = "";
@@ -259,7 +260,7 @@ Op - OK
                     net_value = parseFloat(net_value_s);
                 if (net_value > 0 || (order_type != "D" && order_type != "DCS")) {
                     if(comment != "" || is_lock_button) {
-                        if (Math.abs(initial_value - net_value) > parseFloat($('#hidden_fees_information').attr('country_minimum_difference')) && (order_type == "D" || order_type == "DCS" || order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.")) {
+                        if (Math.abs(initial_value - net_value) > parseFloat($('#hidden_fees_information').attr('minimum_difference')) && (order_type == "D" || order_type == "DCS" || order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.")) {
                             status = "Ch"; //approved or executed value is significantly different
                             applyAPI = false;
                             applyAPI = confirm(Messages('directpay.formvalidation.confirmnewvalue') + ' (' + NumberFormat(initial_value, 2) + ' -> ' + NumberFormat(net_value, 2) + ')');
@@ -268,7 +269,7 @@ Op - OK
                         if (applyAPI) {
                             if ($('#popupType').val() == "requestPopUp" || is_lock_button || $('#popupType').val() == "" || order_type == "V")
                                 HideButtons(order_id, is_lock_button);
-                            $('#popupDetails').css('opacity', 0); // this hides the modal
+                            $('#popupDetails').modal('hide');
                             // calling API function:
                             var success_message_type = "success";
                             var success_message = "";
@@ -321,7 +322,7 @@ Op - OK
 //comment = ""; //### temporary (only testing)
             if (comment != "") {
                 HideButtons (order_id, false);
-                $('#popupDetails').css('opacity', 0);
+                $('#popupDetails').modal('hide');
                 if (order_type == "V") {
                     var success_message = "messages.api.success.documentrejected";
                     initial_value = 0;
@@ -342,7 +343,9 @@ Op - OK
         });
 
         $('.triggers_Upload').live('click', function() {
-            $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
+            if ($(this).attr('image_id') != "0") {
+                $('#the_picture')[0].attributes[0].nodeValue = "/images/" + $(this).attr('image_id');
+            }
             function do_transfer(e) { e.preventDefault() }
             transfer_details("requestBrowser", $(this).attr('order_id'), $(this).attr('user'), $(this).attr('email'), $(this).attr('order_type'), $(this).attr('doc1'), $(this).attr('doc_type'));
         });
@@ -416,6 +419,7 @@ function transfer_details (popup_type, order_id, user_name, user_email, order_ty
         $('#btnRejectWithdraw').attr('order_id', order_id);
         $('#uploadBtn1').val("");
         $('#uploadText1').html("");
+
     }
     resizeDiv()
 }
@@ -468,7 +472,7 @@ $('#btnApproveWithdraw').click(function() {
             if($('#uploadText1').text() != "") {
                 //(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_send_fee').val()));
                 if ($('#popUpComment').val() != "") {
-                    if ((processed_value - initial_value) < parseFloat($('#hidden_fees_information').attr('country_minimum_difference')) && (initial_value - processed_value) < parseFloat($('#hidden_fees_information').attr('country_minimum_difference'))) pressedButton = "OK";
+                    if ((processed_value - initial_value) < parseFloat($('#hidden_fees_information').attr('minimum_difference')) && (initial_value - processed_value) < parseFloat($('#hidden_fees_information').attr('minimum_difference'))) pressedButton = "OK";
                     // form will be submitted to upload withdraw picture
                     fillInfoIntoFileObject();
                     $('form#upload_picture_form').submit();
@@ -508,7 +512,7 @@ $('#btnRejectWithdraw').click(function(){
                     $('form#upload_picture_form').submit();
                 } else { //update order without picture
                     HideButtons (order_id, false);
-                    $('#popupDetails').css('opacity', 0);
+                    $('#popupDetails').modal('hide');
                     API.update_order(order_id, order_type, status, initial_value, comment).success(function () {
                         $.pnotify({
                             title: Messages("messages.api.success"),

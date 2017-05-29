@@ -27,7 +27,7 @@ package object globals {
   val country_minimum_value = Play.current.configuration.getInt("country.country_minimum_value").getOrElse(0)
   val country_critical_value1 = Play.current.configuration.getInt("country.country_critical_value1").getOrElse(0)
   val country_critical_value2 = Play.current.configuration.getInt("country.country_critical_value2").getOrElse(0)
-  val country_minimum_difference = Play.current.configuration.getDouble("country_minimum_detectable_difference").getOrElse(0)
+  val country_minimum_difference = Play.current.configuration.getDouble("country.country_minimum_difference").getOrElse(0.03)
   val country_partner1 = Play.current.configuration.getString("country.country_partner1").getOrElse("Not Set")
   val country_partner1_url = Play.current.configuration.getString("country.country_partner1_url").getOrElse("Not Set")
   val country_partner1_info = Play.current.configuration.getString("country.country_partner1_info").getOrElse("Not Set")

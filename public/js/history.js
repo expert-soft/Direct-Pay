@@ -1,24 +1,31 @@
 $(function(){
     var initial_sum = 0;
+    var initial_sum_hold = 0;
     var initial_sum_c = 0;
+    var initial_sum_hold_c = 0;
     var final_sum = 0;
+    var final_sum_hold = 0;
     var final_sum_c = 0;
+    var final_sum_hold_c = 0;
 
     function show_balance() {
         API.balance().success(function (balances) {
-            final_sum = balances[0].amount;
-            final_sum_c = balances[0].amount_c;
+            final_sum = parseFloat(balances[0].amount) - parseFloat(balances[0].hold);
+            final_sum_hold = parseFloat(balances[0].hold);
+            final_sum_c = parseFloat(balances[0].amount_c);
+            final_sum_hold_c = parseFloat(balances[0].hold_c);
             initial_sum = final_sum;
+            initial_sum_hold = final_sum_hold;
             initial_sum_c = final_sum_c;
+            initial_sum_hold_c = final_sum_hold_c;
             searchedOrders();
 
-/* This part of the code is not needed
+/* This part of the code is not needed ###
             balances[0].available = Number(balances[0].amount) - Number(balances[0].hold);
             balances[0].amount = balances[0].amount;
             balances[0].hold = balances[0].hold;
             balances[0].amount_c = balances[0].amount_c;
             balances[0].hold_c = balances[0].hold_c;
-
             $("#available_fiat").html(NumberFormat(balances[0].available, 2));
             $("#hold_fiat").html(NumberFormat(balances[0].hold, 2));
             $('#hidden_fees_information').attr('wallet_available', balances[0].available);
@@ -26,7 +33,6 @@ $(function(){
             $("#amount_crypto").html(NumberFormat(balances[0].amount_c, 2));
             $('#hidden_fees_information').attr('wallet_crypto', balances[0].amount_c);
             $('#hidden_fees_information').attr('wallet_crypto_onhold', balances[0].hold_c);
-
             $("#amount_total").html(NumberFormat(parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c), 2));
             $('#hidden_fees_information').attr('wallet_total', parseFloat(balances[0].amount) + parseFloat(balances[0].amount_c));
 */
@@ -57,7 +63,7 @@ $(function(){
                 data[i].bank = data[i].bank;
                 data[i].agency = data[i].agency;
                 data[i].account = data[i].account;
-                if (data[i].status == 'OK' || data[i].status == 'Rj')
+                if (data[i].status == 'OK' || data[i].status == 'Ch' || data[i].status == 'Rj')
                     data[i].closed = moment(data[i].closed).format("YYYY-MM-DD HH:mm:ss");
                 else
                     data[i].closed = "";
@@ -76,14 +82,12 @@ $(function(){
                     data[i].explained_type = "withdraw";
                     data[i].popupType = "requestBrowse";
                     data[i].popupHash = "#popupBrowse";
-                    data[i].doc1 = "upload";
                 }
                 else if(data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "receive + withdraw";
                     data[i].popupType = "requestBrowse";
                     data[i].popupHash = "#popupBrowse";
-                    data[i].doc1 = "upload";
                 }
                 else if(data[i].order_type == "D") {
                     data[i].class_type = "class=bgn_green";
@@ -138,18 +142,40 @@ $(function(){
                     data[i].net_value = "";
                 }
 
-
-                if (data[i].order_type == "D")
-                    initial_sum += data[i].initial_value;
-                else if (data[i].order_type == "DCS" && data[i].status == "Op")
-                    initial_sum += data[i].initial_value;
-                else if (data[i].order_type == "W" || data[i].order_type == "W.")
-                    initial_sum -= data[i].initial_value;
-                else if (data[i].order_type == "RFW" || data[i].order_type == "RFW." )
-                    initial_sum -= data[i].initial_value;
-
                 data[i].initial_sum = NumberFormat(initial_sum, 2);
+                data[i].initial_sum_hold = NumberFormat(initial_sum_hold, 2);
                 data[i].initial_sum_c = NumberFormat(initial_sum_c, 2);
+                data[i].initial_sum_hold_c = NumberFormat(initial_sum_hold_c, 2);
+
+//alert(initial_sum);
+// ### this code still being developped
+                if (data[i].order_type == "D") {
+                    if (data[i].status == "Op")
+                        initial_sum_hold -= parseFloat(data[i].initial_value);
+                    else if(data[i].status == "OK" || data[i].status == "Ch")
+                        initial_sum -= parseFloat(data[i].net_value) - parseFloat(data[i].total_fee);
+                    else //  || data[i].status == "Rj")
+                        initial_sum += 0;
+                } else if (data[i].order_type == "DCS" && data[i].status == "Op") { //### need verification
+                    initial_sum -= parseFloat(data[i].initial_value);
+                    if (data[i].status == "Op")
+                        initial_sum_hold -= parseFloat(data[i].initial_value);
+                    else if (data[i].status == "S")
+                        initial_sum += parseFloat(data[i].total_fee);
+                    else // if(data[i].status == "OK" || data[i].status == "Ch" || data[i].status == "Rj")
+                        initial_sum -= parseFloat(data[i].net_value);
+                } else if (data[i].order_type == "W" || data[i].order_type == "W.") {  //### need verification
+                    if (data[i].status == "Op" || data[i].status == "Lk") {
+                        initial_sum_hold -= parseFloat(data[i].initial_value) + parseFloat(data[i].total_fee);
+                        initial_sum += parseFloat(data[i].initial_value) + parseFloat(data[i].total_fee);
+                    } else if(data[i].status == "OK" || data[i].status == "Ch")
+                        initial_sum += parseFloat(data[i].net_value) + parseFloat(data[i].total_fee);
+                    else //  || data[i].status == "Rj")
+                        initial_sum += 0;
+                } else if (data[i].order_type == "RFW" || data[i].order_type == "RFW." ) {  //### need verification
+                    initial_sum += parseFloat(data[i].initial_value);
+                }
+//alert(initial_sum);
             }
 
             $('#orders-script-position').html(data_variable(data));
@@ -160,9 +186,16 @@ $(function(){
 
     function showSum() {
         $('#initial_sum').html(NumberFormat(initial_sum, 2));
+        $('#initial_sum_hold').html(NumberFormat(initial_sum, 2));
         $('#initial_sum_c').html(NumberFormat(initial_sum_c, 2));
+        $('#initial_sum_hold_c').html(NumberFormat(initial_sum_c, 2));
         $('#final_sum').html(NumberFormat(final_sum, 2));
         $('#final_sum_c').html(NumberFormat(final_sum_c, 2));
+        // title="@Messages("terminology.wallet.available") = {{initial_sum}}, @Messages("terminology.wallet.onhold") = {{initial_sum_hold}}"
+        $('#final_sum').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(final_sum, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(final_sum_hold, 2)));
+        $('#final_sum_c').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(final_sum_c, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(final_sum_hold_c, 2)));
+        $('#initial_sum').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(initial_sum, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(initial_sum_hold, 2)));
+        $('#initial_sum_c').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(initial_sum_c, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(initial_sum_hold_c, 2)));
     }
 
     var data_log_variable = Handlebars.compile($("#log-script-template").html());

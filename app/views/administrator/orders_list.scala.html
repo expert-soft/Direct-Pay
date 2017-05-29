@@ -42,56 +42,6 @@
 
 
 
-        <!-- Modal page for order details -->
-    <div id="popupDetails" class="overlay">
-        <div id="popupInfoDiv" class="popup">
-            <div class="title_left">
-                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.admin.orderdetails")</h3>
-            </div>
-            <h2><span id="popUpPictureTitle"></span></h2>
-            <input type="hidden" id="hidden_order_id"><input type="hidden" id="popupType" value="">
-
-            <div id="buttonsDiv" class="popupTopButtons">
-                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
-                <button id="btnApprove" order_id="" order_type="" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnReject" order_id="" order_type="" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
-            </div>
-            <a class="popupClose" href="#">&times;</a>
-            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
-            <table width="100%" cellpadding="10"><tr>
-                <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
-                <td><span id="popUpPictureInfo3"></span></td>
-                <td><span id="popUpMessageValue">@Messages("terminology.value"): </span><input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
-            </tr><tr>
-                <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
-                <td><span id="popUpPictureInfo4"></span></td>
-                <td>@Messages("terminology.comment"): <input id="popUpComment" value="" title="" type="text" style="width: 200px;" class="triggers_details"></td>
-            </tr></table>
-            <p><img src="placeholder" id="the_picture"></p>
-            <p><span id="popUpPictureInfo3"></span></p>
-
-            <form id="upload_picture_form" action="@routes.Application.uploadWithdrawImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
-                @CSRF.formField
-                <div class="form-group"> <!-- http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/ -->
-                    <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.admin.orderslist.withdrawreceipt")</label>
-                    <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
-                    <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
-                        <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
-                        <input type="file" name="info_holder" id="uploadBtn1" class="upload"/>
-                    </div>
-                    <span id="uploadText1"></span>
-                </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                        <button id="btnApproveWithdraw" order_id="" order_type="" type="button" class="btn btn-primary btn-xs" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnRejectWithdraw" order_id="" order_type="" type="button" class="btn btn-warning btn-xs" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
-                    </div>
-                </div>
-            </form>
-
-            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
-        </div>
-    </div>
-        <!-- end of Modal page for order details -->
 
 
     <script id="orders-open-template" type="text/x-handlebars-template">
@@ -218,5 +168,57 @@
             </div>
         </div>
     </div>
+
+
+        <!-- Modal page for order details -->
+    <div id="popupDetails" class="overlay">
+        <div id="popupInfoDiv" class="popup">
+            <div class="title_left">
+                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.admin.orderdetails")</h3>
+            </div>
+            <h2><span id="popUpPictureTitle"></span></h2>
+            <input type="hidden" id="hidden_order_id"><input type="hidden" id="popupType" value="">
+
+            <div id="buttonsDiv" class="popupTopButtons">
+                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
+                <button id="btnApprove" order_id="" order_type="" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnReject" order_id="" order_type="" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
+            </div>
+            <a class="popupClose" href="#">&times;</a>
+            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
+            <table width="100%" cellpadding="10"><tr>
+                <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
+                <td><span id="popUpPictureInfo3"></span></td>
+                <td><span id="popUpMessageValue">@Messages("terminology.value"): </span><input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
+            </tr><tr>
+                <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
+                <td><span id="popUpPictureInfo4"></span></td>
+                <td>@Messages("terminology.comment"): <input id="popUpComment" value="" title="" type="text" style="width: 200px;" class="triggers_details"></td>
+            </tr></table>
+            <p><img src="placeholder" id="the_picture"></p>
+            <p><span id="popUpPictureInfo3"></span></p>
+
+            <form id="upload_picture_form" action="@routes.Application.uploadWithdrawImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                @CSRF.formField
+                <div class="form-group"> <!-- http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/ -->
+                    <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.admin.orderslist.withdrawreceipt")</label>
+                    <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
+                    <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
+                        <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                        <input type="file" name="info_holder" id="uploadBtn1" class="upload"/>
+                    </div>
+                    <span id="uploadText1"></span>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                        <button id="btnApproveWithdraw" order_id="" order_type="" type="button" class="btn btn-primary btn-xs" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnRejectWithdraw" order_id="" order_type="" type="button" class="btn btn-warning btn-xs" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
+        </div>
+    </div>
+        <!-- end of Modal page for order details -->
 
 }

@@ -44,13 +44,13 @@
                     <form id="deposit_form" action="@routes.Application.uploadDepositImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
                         @CSRF.formField
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
                             <div class="col-md-4 col-sm-4">
-                                <input id="value" class="form-control col-md-3 col-xs-6 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
+                                <input id="value" class="form-control col-md-8 col-xs-12 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group"> <!-- http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/ -->
-                            <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.deposit.depositreceipt")</label>
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4" for="doc1">@Messages("directpay.deposit.depositreceipt")</label>
                             <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
                             <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
@@ -61,9 +61,9 @@
 
                         @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
                             <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("terminology.partner")</label>
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("terminology.partner")</label>
                                 <div class="col-md-8 col-sm-4 col-xs-12">
-                                    <select class="form-control" id="partner" title="@Messages("directpay.usersettings.partner.title")">
+                                    <select class="form-control col-md-8 col-xs-12" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                         <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                         @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
                                         @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
@@ -71,9 +71,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-4 col-xs-6">@Messages("directpay.deposit.accountatpartner")</label>
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.deposit.accountatpartner")</label>
                                 <div class="col-md-4 col-sm-3">
-                                    <input id="partner_account" class="form-control col-md-3 col-xs-6" type="text" title="@Messages("directpay.deposit.youraccountatpartner")">
+                                    <input id="partner_account" class="form-control col-md-8 col-xs-12" type="text" title="@Messages("directpay.deposit.youraccountatpartner")">
                                 </div>
                             </div>
                         }

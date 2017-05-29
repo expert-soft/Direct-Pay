@@ -29,9 +29,9 @@
                 <div class="x_content">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <label class="control-label col-md-6 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_crypto)</label>
+                            <label class="control-label col-md-6 col-sm-6 col-xs-5">@Messages("terminology.value") (@globals.country_currency_crypto)</label>
                             <div class="col-md-4 col-sm-6">
-                                <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation" type="text" title="@Messages("directpay.tofiat.valuetobeconverted")" autocomplete="off">
+                                <input id="value" class="form-control col-md-8 col-xs-12 triggers_fee_calculation" type="text" title="@Messages("directpay.tofiat.valuetobeconverted")" autocomplete="off">
                             </div>
                         </div>
                         @if(globals.country_fee_tofiat_percent != 0) {<p align="right">@Messages("directpay.overview.netresultvalue"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_convertion_net" class="calc_destak_info"></span></p>}
