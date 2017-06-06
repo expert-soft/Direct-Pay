@@ -276,7 +276,7 @@ directpay.navigation.overview.title=Actions Overview
 directpay.admin.orderslist.openorders.title=Open Orders
 directpay.admin.orderslist.ordersfromsearch.title=Result from search:
 directpay.admin.orderslist.orderID=Order ID
-directpay.admin.orderslist.doc=doc
+directpay.admin.orderslist.document=Document
 directpay.admin.orderslist.lock=Lock
 directpay.admin.orderslist.lockorder=Lock order. Confirmation required in 48 h.
 directpay.admin.orderslist.ok=OK
@@ -492,12 +492,16 @@ directpay.security.extrainfo.explanation4=Our Mailing List is a good channel you
 directpay.security.disclaimer1={0} system provides a good set of protection tools to your account. Some of the features are mandatory and others are optional, what allows user to set the account according to his needs. {0} can not be accounted for poor management of the security features provided to users.
 directpay.security.disclaimer2=All internet systems have vulnerabilities. Even banks, big exchanges or high tech systems can be target for cyber attacks. {0} implements the state of the art security practices, tested and verified. Be sure you are secured the best. Nevertheless, being known that even the best systems suffer attacks, user is advised {0} does not assume the risks and possible losses caused by others than the people directly involved with administration of the system.
 
+directpay.history.requested=Requested ({0})
+directpay.history.value=Value ({0})
+directpay.history.fee=Fees ({0})
 directpay.history.usersoperationshistory=User''s Operations History
 directpay.history.currentfundsposition=Current funds position
 directpay.history.initialfundsposition=Initial funds position
 directpay.history.loghistory=Log History
 directpay.history.imagedetails=Image Details
 directpay.history.sum=Sum ({0})
+directpay.history.hold=Hold ({0})
 
 directpay.formvalidation.valuemustbenumerical=Value must be numerical
 directpay.formvalidation.valuemustbegreaterthanzero=Value must be greater than 0
@@ -509,6 +513,17 @@ directpay.formvalidation.nofileselected=There are no new files selected
 directpay.formvalidation.bankinginformationisnotvalid=Banking information is not valid
 directpay.formvalidation.commentcannotbeempty=Comment information can not be empty
 directpay.formvalidation.confirmnewvalue=Confirm new value
+
+directpay.search.search=Search
+directpay.search.searchcriteria=Search Criteria
+directpay.search.searchfor=Search for
+directpay.search.valueyouaresearchingfor=Value you are searching for
+directpay.search.orderid=Order ID
+directpay.search.useridemail=User ID / email
+directpay.search.ordertype=Order Type
+directpay.search.orderstatus=Order Status
+directpay.search.ordercreatedafter=Order created after
+directpay.search.valueprocessedgreaterthan=Value processed greater than
 
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions

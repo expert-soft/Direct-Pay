@@ -18,7 +18,7 @@ $(function(){
         $('#calc_convertion_rate').html(NumberFormat((100 - parseFloat($('#hidden_fees_information').attr('fee_tofiat_percent'))) * 0.01, 3));
         $('#calc_withdraw_preferential_bank_fee').html(NumberFormat($('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank'), 2));
         $('#calc_withdraw_not_preferential_bank_extra_fee').html(NumberFormat(parseFloat($('#hidden_fees_information').attr('nominal_fee_withdrawal_not_preferential_bank') - parseFloat($('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank'))), 2));
-        $('#calc_convertion_rate2').html($('#calc_convertion_rate').text());
+        $('#calc_convertion_rate2').html(NumberFormat((100 - parseFloat($('#hidden_fees_information').attr('fee_tofiat_percent'))) * 0.01, 3));
         $('#calc_withdraw_preferential_bank_fee2').html($('#calc_withdraw_preferential_bank_fee').text());
         $('#calc_withdraw_not_preferential_bank_extra_fee2').html($('#calc_withdraw_not_preferential_bank_extra_fee').text());
     }

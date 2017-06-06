@@ -41,10 +41,6 @@ var API;
             return $.get(iapi_prefix+'get_bank_data', 'json');
         }),
 
-        orders_list: APIWrap(function() {
-            return $.get(iapi_prefix+'orders_list', 'json');
-        }),
-
         users_list: APIWrap(function() {
             return $.get(iapi_prefix+'users_list', 'json');
         }),
@@ -174,7 +170,18 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
+        }),
+
+        orders_list: APIWrap(function(search_criteria, search_value) {
+            return $.ajax(iapi_prefix+'orders_list', {
+                type: 'POST',
+                data: JSON.stringify({search_criteria: search_criteria, search_value: search_value}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
         })
+
+
 
     };
 })();

@@ -62,7 +62,7 @@ function fillMessages() {
     }
     else if ($('#hidden_page').val() == "D" || $('#hidden_page').val() == "DCS")
         fillDepositMessages()
-    else if ($('#hidden_page').val() == "S")
+    else if ($('#hidden_page').val() == "S" || $('#hidden_page').val() == "S.")
         fillSendMessages()
     else if ($('#hidden_page').val() == "W" || $('#hidden_page').val() == "RFW")
         fillWithdrawMessages()

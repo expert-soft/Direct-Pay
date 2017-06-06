@@ -870,6 +870,10 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 create or replace function
 get_orders_list (
+  in a_user_id bigint,
+  in a_country_id varchar(4),
+  in a_search_criteria varchar(256),
+  in a_search_value varchar(256),
   out order_id bigint,
   out user_id bigint,
   out country_id varchar(4),
@@ -894,11 +898,61 @@ get_orders_list (
   out middle_name varchar(128),
   out last_name varchar(128)
 ) returns setof record as $$
+declare
+  b_value numeric(23,8);;
+  b_timestamp timestamp(3);;
 begin
-  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
-  from orders o
-  left join users u on o.user_id = u.id
-  left join users_name_info un on o.user_id = un.user_id;;
+
+  if a_search_criteria = 'history' then
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and o.user_id = a_user_id order by o.created desc;;
+  end if;;
+
+  if a_search_criteria = 'orderstatus' then
+    if a_search_value = 'pending_orders' then
+      return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+      from orders o
+      left join users u on o.user_id = u.id
+      left join users_name_info un on o.user_id = un.user_id
+      where o.country_id = a_country_id and (o.status = 'Op' or o.status = 'Lk') order by o.created;;
+    else
+      return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+      from orders o
+      left join users u on o.user_id = u.id
+      left join users_name_info un on o.user_id = un.user_id
+      where o.country_id = a_country_id and o.status = a_search_value order by o.created;;
+    end if;;
+  end if;;
+
+  if a_search_criteria = 'ordertype' then
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and o.order_type = a_searched_value order by o.created;;
+  end if;;
+
+  if a_search_criteria = 'ordercreated' then
+    b_timestamp = to_timestamp(a_search_value, 'DD-MM-YYYY');;
+
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and (o.net_value >= b_value or o.initial_value >= b_value) order by o.created;;
+  end if;;
+
+  if a_search_criteria = 'processedvalue' then
+    b_value = to_number(a_search_value, 'S999999999D99');;
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and (o.net_value >= b_value or o.initial_value >= b_value) order by o.created;;
+  end if;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
@@ -947,5 +1001,5 @@ drop function if exists get_user_name_info(bigint) cascade;
 drop function if exists get_docs_info(bigint) cascade;
 drop function if exists get_bank_data(bigint) cascade;
 drop function if exists get_users_list() cascade;
-drop function if exists get_orders_list() cascade;
+drop function if exists get_orders_list(bigint, varchar(4), varchar(256), varchar(256)) cascade;
 drop function if exists get_balance_by_id_and_currency(bigint, text, text) cascade;

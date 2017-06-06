@@ -85,8 +85,8 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def OrderList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from get_orders_list()"""().map(row => ( //See 2.sql at lines 787 and 848
+  def OrderList(uid: Option[Long], search_criteria: Option[String], search_value: Option[String]) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_orders_list($uid, ${globals.country_code}, ${search_criteria.get}, ${search_value.get})"""().map(row => ( //See 2.sql at lines 787 and 848
       row[Long]("order_id"),
       row[Long]("user_id"),
       row[String]("country_id"),

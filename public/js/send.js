@@ -12,7 +12,13 @@ $(function() {
 
     function submit_send() {
 //treatment of , as decimal separator: parseFloat(str.replace(',','.').replace(' ',''))
-        API.create_order("S", "Op", $('#partner').val(), $('#value').val(), '', '', '', '').success(function () {
+        var order_type = "S"; // send fiat direct, without converting
+        if($('#hidden_fees_information').attr('country_operations_organized') == "convert")
+            order_type = "S."; // sending crypto-currency
+        else
+            order_type = "S"; // sending fiat
+
+        API.create_order(order_type, "Op", $('#partner').val(), $('#value').val(), '', '', '', '').success(function () {
             $.pnotify({
                 title: Messages("messages.api.success"),
                 text: Messages("messages.api.success.ordercreatedsuccessfully"),

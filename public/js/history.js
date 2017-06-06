@@ -45,7 +45,7 @@ $(function(){
     function searchedOrders(){
         var critical_value1 = $('#hidden_critical_value1').val();
         var critical_value2 = $('#hidden_critical_value2').val();
-        API.orders_list().success(function(data){
+        API.orders_list('history', '').success(function(data){
             for (var i = 0; i < data.length; i++) {
                 data[i].order_id = data[i].order_id;
                 data[i].user_id = data[i].user_id;
@@ -83,7 +83,7 @@ $(function(){
                     data[i].popupType = "requestBrowse";
                     data[i].popupHash = "#popupBrowse";
                 }
-                else if(data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
+                else if(data[i].order_type == "RW" || data[i].order_type == "RW." ||data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
                     data[i].class_type = "class=bgn_yellow";
                     data[i].explained_type = "receive + withdraw";
                     data[i].popupType = "requestBrowse";
@@ -93,7 +93,7 @@ $(function(){
                     data[i].class_type = "class=bgn_green";
                     data[i].explained_type = "deposit"
                 }
-                else if (data[i].order_type == "DCS") {
+                else if (data[i].order_type == "DS" || data[i].order_type == "DCS") {
                     data[i].class_type = "class=bgn_green";
                     data[i].explained_type = "deposit + send"
                 }
@@ -112,23 +112,27 @@ $(function(){
 
                 if(data[i].status == "Op") {
                     data[i].class_status = "class=bgn_yellow";  //Bootstrap line 2844
-                    data[i].explained_status = "Open order"
+                    data[i].explained_status = Messages('directpay.legend.openorder')
                 }
                 else if(data[i].status == "Lk") {
                     data[i].class_status = "class=bgn_brown";
-                    data[i].explained_status = "Order Locked"
+                    data[i].explained_status = Messages('directpay.legend.orderlocked')
                 }
                 else if(data[i].status == "Ch") {
                     data[i].class_status = "class=bgn_blue";
-                    data[i].explained_status = "Order Changed"
+                    data[i].explained_status = Messages('directpay.legend.executionmodified')
                 }
                 else if(data[i].status == "Rj") {
                     data[i].class_status = "class=bgn_red";
-                    data[i].explained_status = "Order Rejected"
+                    data[i].explained_status = Messages('directpay.legend.orderrejected')
                 }
                 else if(data[i].status == "OK") {
                     data[i].class_status = "class=bgn_green";
-                    data[i].explained_status = "Executed order"
+                    data[i].explained_status = Messages('directpay.legend.orderexecuted')
+                }
+                else if(data[i].status == "S") {
+                    data[i].class_status = "class=center_bold";
+                    data[i].explained_status = Messages('directpay.legend.sendingtopartner')
                 }
                 else
                     data[i].class_status = "class=center_bold";
@@ -145,6 +149,7 @@ $(function(){
                 data[i].initial_sum = NumberFormat(initial_sum, 2);
                 data[i].initial_sum_hold = NumberFormat(initial_sum_hold, 2);
                 data[i].initial_sum_c = NumberFormat(initial_sum_c, 2);
+                data[i].initial_sum_available_c = NumberFormat(initial_sum_c - initial_sum_hold_c, 2);
                 data[i].initial_sum_hold_c = NumberFormat(initial_sum_hold_c, 2);
 
 //alert(initial_sum);
@@ -156,15 +161,16 @@ $(function(){
                         initial_sum -= parseFloat(data[i].net_value) - parseFloat(data[i].total_fee);
                     else //  || data[i].status == "Rj")
                         initial_sum += 0;
-                } else if (data[i].order_type == "DCS" && data[i].status == "Op") { //### need verification
-                    initial_sum -= parseFloat(data[i].initial_value);
+                } else if (data[i].order_type == "DS" || data[i].order_type == "DCS") { //### need verification
                     if (data[i].status == "Op")
                         initial_sum_hold -= parseFloat(data[i].initial_value);
-                    else if (data[i].status == "S")
-                        initial_sum += parseFloat(data[i].total_fee);
-                    else // if(data[i].status == "OK" || data[i].status == "Ch" || data[i].status == "Rj")
+                    else if (data[i].order_type == "DS" && data[i].status == "S") {
+                        initial_sum_hold -= parseFloat(data[i].net_value); //### need verification
+                    } else if (data[i].order_type == "DCS" && data[i].status == "S") {
+                        initial_sum_c -= parseFloat(data[i].net_value);
+                    } else // if(data[i].status == "OK" || data[i].status == "Ch" || data[i].status == "Rj")
                         initial_sum -= parseFloat(data[i].net_value);
-                } else if (data[i].order_type == "W" || data[i].order_type == "W.") {  //### need verification
+                } else if (data[i].order_type == "W" || data[i].order_type == "W.") {
                     if (data[i].status == "Op" || data[i].status == "Lk") {
                         initial_sum_hold -= parseFloat(data[i].initial_value) + parseFloat(data[i].total_fee);
                         initial_sum += parseFloat(data[i].initial_value) + parseFloat(data[i].total_fee);
@@ -172,8 +178,16 @@ $(function(){
                         initial_sum += parseFloat(data[i].net_value) + parseFloat(data[i].total_fee);
                     else //  || data[i].status == "Rj")
                         initial_sum += 0;
+                } else if (data[i].order_type == "RW" || data[i].order_type == "RW." ) {  //### need verification
+                    initial_sum += parseFloat(data[i].initial_value);
                 } else if (data[i].order_type == "RFW" || data[i].order_type == "RFW." ) {  //### need verification
                     initial_sum += parseFloat(data[i].initial_value);
+                } else if (data[i].order_type == "C") {
+                    initial_sum += parseFloat(data[i].initial_value);
+                    initial_sum_c -= parseFloat(data[i].initial_value);
+                } else if (data[i].order_type == "F") {
+                    initial_sum -= parseFloat(data[i].initial_value) - parseFloat(data[i].total_fee);
+                    initial_sum_c += parseFloat(data[i].initial_value);
                 }
 //alert(initial_sum);
             }
@@ -186,12 +200,14 @@ $(function(){
 
     function showSum() {
         $('#initial_sum').html(NumberFormat(initial_sum, 2));
-        $('#initial_sum_hold').html(NumberFormat(initial_sum, 2));
+        $('#initial_sum_hold').html(NumberFormat(initial_sum_hold, 2));
         $('#initial_sum_c').html(NumberFormat(initial_sum_c, 2));
-        $('#initial_sum_hold_c').html(NumberFormat(initial_sum_c, 2));
+        $('#initial_sum_hold_c').html(NumberFormat(initial_sum_hold_c, 2));
         $('#final_sum').html(NumberFormat(final_sum, 2));
+        $('#final_sum_hold').html(NumberFormat(final_sum_hold, 2));
         $('#final_sum_c').html(NumberFormat(final_sum_c, 2));
-        // title="@Messages("terminology.wallet.available") = {{initial_sum}}, @Messages("terminology.wallet.onhold") = {{initial_sum_hold}}"
+        $('#final_sum_hold_c').html(NumberFormat(final_sum_hold_c, 2));
+
         $('#final_sum').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(final_sum, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(final_sum_hold, 2)));
         $('#final_sum_c').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(final_sum_c, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(final_sum_hold_c, 2)));
         $('#initial_sum').attr('title', (Messages("terminology.wallet.available") + " = " + NumberFormat(initial_sum, 2) + ", " + Messages("terminology.wallet.onhold") + " = " + NumberFormat(initial_sum_hold, 2)));

@@ -82,8 +82,10 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
-  def orders_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val orders_list_info = globals.engineModel.OrderList()
+  def orders_list = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val search_criteria = (request.request.body \ "search_criteria").asOpt[String]
+    val search_value = (request.request.body \ "search_value").asOpt[String]
+    val orders_list_info = globals.engineModel.OrderList(Some(request.user.id), search_criteria, search_value)
     Ok(Json.toJson(orders_list_info.map({ c =>
       Json.obj(
         "order_id" -> c._1,
@@ -309,8 +311,8 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val status = (request.request.body \ "status").asOpt[String]
     val partner = (request.request.body \ "partner").asOpt[String]
     val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
-    val local_fee: BigDecimal = calculate_local_fee(order_type.get, initial_value.get)
-    val global_fee: BigDecimal = calculate_global_fee(order_type.get, initial_value.get)
+    val local_fee: BigDecimal = globals.calculate_local_fee(order_type.get, initial_value.get)
+    val global_fee: BigDecimal = globals.calculate_global_fee(order_type.get, initial_value.get)
     val bank = (request.request.body \ "bank").asOpt[String]
     val agency = (request.request.body \ "agency").asOpt[String]
     val account = (request.request.body \ "account").asOpt[String]
@@ -330,7 +332,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val comment = (request.request.body \ "comment").validate[String]
     // This function updates orders, updates balance fiat, updates balance crypto, updates system balances (fees)
 
-    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, calculate_local_fee(order_type.get, net_value.get), calculate_global_fee(order_type.get, net_value.get), request.user.id)) {
+    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, globals.calculate_local_fee(order_type.get, net_value.get), globals.calculate_global_fee(order_type.get, net_value.get), request.user.id)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoupdateorder")))
@@ -378,48 +380,6 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtochangemanualautomode")))
     }
-  }
-
-  def calculate_local_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
-    val percentage = (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
-    var low_value_fee = 0.0
-    if (initial_value < globals.country_minimum_value) {
-      low_value_fee = globals.country_minimum_value * 0.02
-    }
-    if (order_type == "D") {
-      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
-    } else if (order_type == "S") {
-      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "DCS") {
-      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
-    } else if (order_type == "W") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
-    } else if (order_type == "W.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
-    } else if (order_type == "RFW") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
-    } else if (order_type == "RFW.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
-    } else if (order_type == "F") {
-      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else return 0
-  }
-
-  def calculate_global_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
-    val percentage = globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
-    if (order_type == "D") {
-      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "S") {
-      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "DCS") {
-      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
-    } else if (order_type == "W" || order_type == "W.") {
-      return initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "RFW" || order_type == "RFW.") {
-      return initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
-    } else if (order_type == "F") {
-      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else return 0
   }
 
   def return_all_images = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>

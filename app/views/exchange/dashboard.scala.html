@@ -30,7 +30,9 @@
                     <table id="table_wallet" class="table-wallet">
                         <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
                         <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        @if(globals.country_operations_organized == "convert") {
+                            <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        }
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
                 </div>
@@ -105,7 +107,7 @@
 
             <!-- Manual Operations -->
     <div class="row" id="manual_operations">
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="@Messages(if(globals.country_operations_organized == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
             <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-plus"></i> &nbsp; @Messages("chrome.exchange.navigation.deposit.label")</h2>
@@ -122,24 +124,28 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttocrypto.title") </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.tocrypto.explanation1", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>.</p>
-                    <p>@Messages("directpay.overview.nofeesarecharged")</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.tocrypto().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+        @if(globals.country_operations_organized == "convert") {
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttocrypto.title") </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.tocrypto.explanation1", globals.country_currency_symbol, globals.country_currency_crypto)</p>
+                        <p>@Messages("directpay.overview.convertionrate")
+                            : <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> &nbsp; <i class="fa fa-arrow-right"></i> &nbsp; <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>
+                            .</p>
+                        <p>@Messages("directpay.overview.nofeesarecharged")</p>
+                        <div class="text-center">
+                            <a href="@routes.Application.tocrypto().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="@Messages(if(globals.country_operations_organized == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
             <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.send.sendtopartner") </h2>
@@ -155,7 +161,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="@Messages(if(globals.country_operations_organized == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
             <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.navigation.receivefunds.title") </h2>
@@ -177,23 +183,27 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttofiat.title", globals.country_currency_symbol)</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.tofiat.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
-                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.tofiat().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+        @if(globals.country_operations_organized == "convert") {
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttofiat.title", globals.country_currency_symbol)</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.tofiat.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
+                        <p>@Messages("directpay.overview.convertionrate")
+                            : <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span> &nbsp; <i class="fa fa-arrow-right"></i> &nbsp; <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>
+                            .</p>
+                        <div class="text-center">
+                            <a href="@routes.Application.tofiat().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="@Messages(if(globals.country_operations_organized == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
             <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-minus"></i> &nbsp; @Messages("chrome.exchange.navigation.withdraw.label")</h2>
@@ -219,7 +229,7 @@
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel variable_height2" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i> &nbsp; @Messages("directpay.depositsend.depositconvertandsend")</h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i> &nbsp; @Messages(if(globals.country_operations_organized == "convert"){ "directpay.depositsend.depositconvertandsend" }else{ "directpay.navigation.depositsend.title" })</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -238,7 +248,7 @@
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel variable_height2" style="background: @globals.country_appearance_background_5">
                 <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> &nbsp; @Messages("directpay.receivewithdraw.receiveconvertandwithdraw") </h2>
+                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> &nbsp; @Messages(if(globals.country_operations_organized == "convert"){ "directpay.receivewithdraw.receiveconvertandwithdraw" }else{ "directpay.navigation.receivewithdraw.title" })</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">

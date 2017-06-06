@@ -1,12 +1,15 @@
 $(function(){
 
+    url = location.href;
+    search_criteria = url.split('/')[4];
+    search_value = url.split('/')[5];
 
     var orders_open_template = Handlebars.compile($("#orders-open-template").html());
     function openOrders(){
         var critical_value1 = $('#hidden_critical_value1').val();
         var critical_value2 = $('#hidden_critical_value2').val();
         var temp_s = "";
-        API.orders_list().success(function(data){
+        API.orders_list(search_criteria, search_value).success(function(data){
             for (var i = 0; i < data.length; i++) {
                 temp_s = "";
                 data[i].class_value = "";
@@ -25,9 +28,11 @@ $(function(){
                 data[i].popupType="requestPopUp";
                 data[i].input_visible = "inline";
                 data[i].doc_type = "";
-                if (data[i].net_value == 0 && data[i].status != "Rj") {
+                if (data[i].net_value == 0)
                     data[i].net_value = NumberFormat(data[i].initial_value, 2);
-                } else data[i].net_value = NumberFormat(data[i].initial_value, 2);
+                else
+                    data[i].net_value = NumberFormat(data[i].net_value, 2);
+
                 data[i].popupButtonOKDisplay = "inline";
                 data[i].popupButtonRjDisplay = "inline";
                 data[i].popupButtonLockDisplay = "none";
@@ -37,11 +42,11 @@ $(function(){
 //                data[i].doc1 = "";
                 if(data[i].order_type == "W" || data[i].order_type == "W.") {
                     data[i].class_type = "class=bgn_yellow";
-                    data[i].explained_type = $('#hidden_general_messages').attr('withdraw');
+                    data[i].explained_type = Messages('directpay.legend.withdraw');
                     data[i].popupType = "requestBrowser";
                     data[i].doc1_text_visible = "none";
                     data[i].doc1_i_visible = "inline";
-                    data[i].doc1 = $('#hidden_general_messages').attr('uploadwithdrawreceipt');
+                    data[i].doc1 = Messages('directpay.legend.uploadwithdrawreceipt');
                     if (data[i].status == "Op") {
                         data[i].popupButtonOKDisplay = "none";
                         data[i].popupButtonLockDisplay = "inline";
@@ -51,13 +56,13 @@ $(function(){
                         data[i].popupButtonUploadDisplay = "inline";
                     }
                 }
-                else if(data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
+                else if(data[i].order_type == "RW" || data[i].order_type == "RW." || data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
                     data[i].class_type = "class=bgn_yellow";
-                    data[i].explained_type = $('#hidden_general_messages').attr('receiveandwithdraw');
+                    data[i].explained_type = Messages('directpay.legend.receiveandwithdraw');
                     data[i].popupType = "requestBrowser";
                     data[i].doc1_text_visible = "none";
                     data[i].doc1_i_visible = "inline";
-                    data[i].doc1 = $('#hidden_general_messages').attr('uploadwithdrawreceipt');
+                    data[i].doc1 = Messages('directpay.legend.uploadwithdrawreceipt');
                     if (data[i].status == "Op") {
                         data[i].popupButtonOKDisplay = "none";
                         data[i].popupButtonLockDisplay = "inline";
@@ -69,16 +74,16 @@ $(function(){
                 }
                 else if(data[i].order_type == "D") {
                     data[i].class_type = "class=bgn_green";
-                    data[i].explained_type = $('#hidden_general_messages').attr('deposit')
+                    data[i].explained_type = Messages('directpay.legend.deposit')
                 }
-                else if (data[i].order_type == "DCS") {
+                else if (data[i].order_type == "DS" || data[i].order_type == "DCS") {
                     data[i].class_type = "class=bgn_green";
-                    data[i].explained_type = $('#hidden_general_messages').attr('depositandsend')
+                    data[i].explained_type = Messages('directpay.legend.depositandsend')
                     data[i].bank_info = data[i].partner + ", " + data[i].account;
                 }
                 else if(data[i].order_type == "V") {
                     data[i].class_type = "class=bgn_blue";
-                    data[i].explained_type = $('#hidden_general_messages').attr('documentverification');
+                    data[i].explained_type = Messages('directpay.legend.documentverification');
                     data[i].input_visible = "none";
                     data[i].initial_value = "";
                     data[i].total_fee = "";
@@ -105,13 +110,16 @@ $(function(){
             });
         });
     }
-    openOrders();
+
+
+    if (search_value == "pending_orders") // the default management orders list
+        openOrders();
 
     var orders_search_template = Handlebars.compile($("#orders-search-template").html());
     function searchedOrders(){
         var critical_value1 = $('#hidden_critical_value1').val();
         var critical_value2 = $('#hidden_critical_value2').val();
-        API.orders_list().success(function(data){
+        API.orders_list(search_criteria, search_value).success(function(data){
             for (var i = 0; i < data.length; i++) {
                 data[i].created = moment(data[i].created).format("YYYY-MM-DD HH:mm:ss");
 
@@ -131,15 +139,15 @@ $(function(){
                 data[i].doc1 = "";
                 if(data[i].order_type == "W" || data[i].order_type == "W.") {
                     data[i].class_type = "class=bgn_yellow";
-                    data[i].explained_type = $('#hidden_general_messages').attr('withdraw');
+                    data[i].explained_type = Messages('directpay.legend.withdraw');
                     data[i].popupType = "requestBrowse";
                     data[i].popupHash = "#popupBrowse";
 //                    data[i].doc1_text_visible = "none";
 //                    data[i].doc1_i_visible = "inline";
                 }
-                else if(data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
+                else if(data[i].order_type == "RW" || data[i].order_type == "RW." || data[i].order_type == "RFW" || data[i].order_type == "RFW.") {
                     data[i].class_type = "class=bgn_yellow";
-                    data[i].explained_type = $('#hidden_general_messages').attr('receiveandwithdraw');
+                    data[i].explained_type = Messages('directpay.legend.receiveandwithdraw');
                     data[i].popupType = "requestBrowse";
                     data[i].popupHash = "#popupBrowse";
 //                    data[i].doc1_text_visible = "none";
@@ -147,38 +155,42 @@ $(function(){
                 }
                 else if(data[i].order_type == "D") {
                     data[i].class_type = "class=bgn_green";
-                    data[i].explained_type = $('#hidden_general_messages').attr('deposit')
+                    data[i].explained_type = Messages('directpay.legend.deposit')
                 }
-                else if (data[i].order_type == "DCS") {
+                else if (data[i].order_type == "DS" || data[i].order_type == "DCS") {
                     data[i].class_type = "class=bgn_green";
-                    data[i].explained_type = $('#hidden_general_messages').attr('depositandsend')
+                    data[i].explained_type = Messages('directpay.legend.depositandsend')
                 }
                 else if(data[i].order_type == "V") {
                     data[i].class_type = "class=bgn_blue";
-                    data[i].explained_type = $('#hidden_general_messages').attr('documentverification')
+                    data[i].explained_type = Messages('directpay.legend.documentverification')
                 }
                 else
                     data[i].class_type = "class=center_bold";
 
                 if(data[i].status == "Op") {
                     data[i].class_status = "class=bgn_yellow";  //Bootstrap line 2844
-                    data[i].explained_status = $('#hidden_general_messages').attr('openorder')
+                    data[i].explained_status = Messages('directpay.legend.openorder')
                 }
                 else if(data[i].status == "Lk") {
                     data[i].class_status = "class=bgn_brown";
-                    data[i].explained_status = $('#hidden_general_messages').attr('orderlocked')
+                    data[i].explained_status = Messages('directpay.legend.orderlocked')
                 }
                 else if(data[i].status == "Ch") {
                     data[i].class_status = "class=bgn_blue";
-                    data[i].explained_status = $('#hidden_general_messages').attr('executionmodified')
+                    data[i].explained_status = Messages('directpay.legend.executionmodified')
                 }
                 else if(data[i].status == "Rj") {
                     data[i].class_status = "class=bgn_red";
-                    data[i].explained_status = $('#hidden_general_messages').attr('orderrejected')
+                    data[i].explained_status = Messages('directpay.legend.orderrejected')
                 }
                 else if(data[i].status == "OK") {
                     data[i].class_status = "class=bgn_green";
-                    data[i].explained_status = $('#hidden_general_messages').attr('orderexecuted')
+                    data[i].explained_status = Messages('directpay.legend.orderexecuted')
+                }
+                else if(data[i].status == "S") {
+                    data[i].class_status = "class=center_bold";
+                    data[i].explained_status = Messages('directpay.legend.sendingtopartner')
                 }
                 else
                     data[i].class_status = "class=center_bold";
@@ -195,8 +207,10 @@ $(function(){
             $('#orders-search').html(orders_search_template(data));
         });
     }
-    searchedOrders();
-
+    if (search_value != "pending_orders") { // from a search
+        searchedOrders();
+        $('#orders_list_title').html(Messages('directpay.admin.orderslist.ordersfromsearch.title'));
+    }
 
 
     $(document).ready(function () {
@@ -224,7 +238,7 @@ Verification
 Op - OK or Rj - revision brings it to Op
 Deposit
 Op - Lock - OK, Ch or Rj - revision brings it to Lock
-DCS
+DS and DCS
 Op - Lock - Ch or Rj - S - OK or cancel S that goes to Changed - revision would require S and C undo if possible and than Lock
 Conversion to Crypto
 Op - Ok
@@ -232,7 +246,7 @@ Send
 Op - Ok or Rj
 Withdraw
 Op - Lock - Ok, Ch or Rj - revision brings it to Lock
-RFW
+RW, RW., RFW, RFW.
 Op - F or Rj - W - Lock - Ok, Ch or Rj - revision brings it to Lock
 Receive
 Op - OK or Rj
@@ -258,7 +272,7 @@ Op - OK
                 var net_value = 0;
                 if (order_type != "V")
                     net_value = parseFloat(net_value_s);
-                if (net_value > 0 || (order_type != "D" && order_type != "DCS")) {
+                if (net_value > 0 || (order_type != "D" && order_type != "DS" && order_type != "DCS")) {
                     if(comment != "" || is_lock_button) {
                         if (Math.abs(initial_value - net_value) > parseFloat($('#hidden_fees_information').attr('minimum_difference')) && (order_type == "D" || order_type == "DCS" || order_type == "W" || order_type == "W." || order_type == "RFW" || order_type == "RFW.")) {
                             status = "Ch"; //approved or executed value is significantly different

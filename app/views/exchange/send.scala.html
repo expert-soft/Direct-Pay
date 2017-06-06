@@ -29,15 +29,15 @@
                 <div class="x_content">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_crypto)</label>
-                            <div class="col-md-4 col-sm-6">
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("terminology.value") (@globals.country_currency_crypto)</label>
+                            <div class="col-md-4 col-sm-4">
                                 <input id="value" class="form-control col-md-8 col-xs-12 triggers_fee_calculation"  type="text" title="@Messages("directpay.send.valuetobesent")" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.partner")</label>
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                <select class="form-control col-md-8 col-xs-12" id="partner" title="@Messages("directpay.usersettings.partner.title")">
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("terminology.partner")</label>
+                            <div class="col-md-7 col-sm-7 col-xs-8">
+                                <select class="form-control col-md-8 col-xs-8" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                     <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                     @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
                                     @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }
@@ -45,8 +45,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-6">@Messages("directpay.deposit.accountatpartner")</label>
-                            <div class="col-md-4 col-sm-3">
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.deposit.accountatpartner")</label>
+                            <div class="col-md-7 col-sm-7 col-xs-8">
                                 <input id="partner_account" class="form-control col-md-8 col-xs-12" type="text" title="@Messages("directpay.deposit.youraccountatpartner")">
                             </div>
                         </div>
@@ -77,7 +77,9 @@
                     <table id="table_wallet" class="table-wallet">
                         <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
                         <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        @if(globals.country_operations_organized == "convert") {
+                            <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        }
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
                 </div>

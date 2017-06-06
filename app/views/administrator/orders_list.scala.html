@@ -28,11 +28,11 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div id="orders_list" class="x_panel">
                 <div class="x_title">
-                    <h2><i class="fa fa-list-alt"></i> @Messages("directpay.admin.orderslist.openorders.title")</h2>
+                    <h2><i class="fa fa-list-alt"></i> <span id="orders_list_title">@Messages("directpay.admin.orderslist.openorders.title")</span></h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 <div class="x_content">
                     <input type="hidden" id="hidden_critical_value1" value="@globals.country_critical_value1"><input type="hidden" id="hidden_critical_value2" value="@globals.country_critical_value2">
-                    <p id="orders-open"></p>  <!-- Script for open orders is called here -->
+                    <p id="orders-open"></p>    <!-- Script for open orders is called here -->
                     <br>
                     <p id="orders-search"></p>  <!-- Script for searched orders is called here -->
                 </div>
@@ -42,17 +42,13 @@
 
 
 
-
-
     <script id="orders-open-template" type="text/x-handlebars-template">
-        <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
-
         <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
             <thead>
                 <tr>
                     <th>@Messages("terminology.type")</th>
                     <th>@Messages("terminology.name")<br> &nbsp; @Messages("terminology.email")</th>
-                    <th>@Messages("directpay.admin.orderslist.doc")</th>
+                    <th>@Messages("directpay.admin.orderslist.document")</th>
                     <th>@Messages("directpay.usersettings.bank.item")<br> &nbsp; @Messages("directpay.usersettings.bankagency.item"), @Messages("directpay.usersettings.bankaccount.item")</th>
                     <th align="right">@Messages("terminology.requested")<br> &nbsp; @Messages("terminology.fee")</th>
                     <th>@Messages("terminology.created")</th>
@@ -72,9 +68,9 @@
                     <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
                     <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")">@Messages("directpay.admin.orderslist.lock")</button>
                         <button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" style="display: {{popupButtonOKDisplay}};" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
-    <a href="#popupDetails"><button id="btnUpload{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" image_id="{{image_id}}" doc1="{{doc1}}" doc_type="{{doc_type}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" initial_value="{{initial_value}}" fee="{{total_fee}}"
+                        <a href="#popupDetails"><button id="btnUpload{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" image_id="{{image_id}}" doc1="{{doc1}}" doc_type="{{doc_type}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" initial_value="{{initial_value}}" fee="{{total_fee}}"
                             type="button" class="btn btn-primary btn-xs triggers_Upload" style="display: {{popupButtonUploadDisplay}};" title="{{doc1}}">@Messages("terminology.upload")</button>
-    </a>
+                        </a>
                         <button id="btnReject{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" style="display: {{popupButtonRjDisplay}};" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
                 </tr>
             {{/each}}
@@ -84,7 +80,6 @@
 
 
     <script id="orders-search-template" type="text/x-handlebars-template">
-        <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
         <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
             <thead>
                 <tr>
@@ -96,7 +91,7 @@
                     <th>@Messages("terminology.executed")</th>
                     <th align="right">@Messages("terminology.value")</th>
                     <th>@Messages("terminology.comment")</th>
-                    <th>@Messages("directpay.admin.orderslist.doc")</th>
+                    <th>@Messages("directpay.admin.orderslist.document")</th>
                     <th>@Messages("terminology.revision")</th>
                 </tr>
             </thead>
@@ -124,12 +119,12 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Orders <small>@Messages("directpay.admin.orderslist.openorders.title")</small></h2>
+                <h2>only example of timestamp alert</h2>
                 <div class="clearfix"></div>
             </div>
 
             <div class="x_content">
-                <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
+                <div class="panel-heading">only example of timestamp alert</div>
                 <div class="table-responsive">
                     <table id="table_searched_orders" class="table table-striped responsive jambo_table bulk_action">
                         <thead>

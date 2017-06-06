@@ -357,4 +357,27 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def search(column: Option[String], value: String) = DB.withConnection(db) { implicit c =>
+    var SQLTEST = ""
+    if (column == "status") {
+      SQL"""SELECT order_id, user_id, country_id, order_type, status, partner, created,
+       currency, initial_value, total_fee, doc1, doc2, bank, agency,
+       account, closed, processed_by, net_value, comment, key1, key2,
+       image_id
+       FROM public.orders where status = $value"""().map(row => (
+        row[Long]("order_id"),
+        row[Long]("user_id")
+      )).toList
+    } else {
+      SQL"""SELECT order_id, user_id, country_id, order_type, status, partner, created,
+       currency, initial_value, total_fee, doc1, doc2, bank, agency,
+       account, closed, processed_by, net_value, comment, key1, key2,
+       image_id
+       FROM public.orders where status = $value"""().map(row => (
+        row[Long]("order_id"),
+        row[Long]("user_id")
+      )).toList
+    }
+
+  }
 }

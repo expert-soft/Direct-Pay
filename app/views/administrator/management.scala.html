@@ -22,10 +22,54 @@
 
 
 
+    <div class="clearfix"></div>
+    <div class="row">
+            <!-- Start of form -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel" style="@globals.country_appearance_background_4">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.search.search")</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.search.searchcriteria")</label>
+                            <div class="col-md-7 col-sm-7 col-xs-8">
+                                <select class="form-control col-md-8 col-xs-8" id="search_criteria" title="@Messages("directpay.")">
+                                    <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                    <option value="orderid">@Messages("directpay.search.orderid")</option>
+                                    <option value="userid">@Messages("directpay.search.useridemail")</option>
+                                    <option value="ordertype">@Messages("directpay.search.ordertype")</option>
+                                    <option value="orderstatus">@Messages("directpay.search.orderstatus")</option>
+                                    <option value="ordercreated">@Messages("directpay.search.ordercreatedafter")</option>
+                                    <option value="processedvalue">@Messages("directpay.search.valueprocessedgreaterthan")</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.search.searchfor")</label>
+                            <div class="col-md-7 col-sm-7 col-xs-8">
+                                <input id="search_value" class="form-control col-md-8 col-xs-8" type="text" title="@Messages("directpay.search.valueyouaresearchingfor")" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                                <button type="button" id="submit_search" class="btn btn-primary triggers_submit">@Messages("directpay.search.search")</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+            <!-- End of form -->
+    </div>
 
 
 
-    <p id="script-position"></p>
+
+        <p id="script-position"></p>
 
     <script id="script-template" type="text/x-handlebars-template">
         {{#each this}}

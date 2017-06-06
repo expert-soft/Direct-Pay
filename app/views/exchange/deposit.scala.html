@@ -62,8 +62,8 @@
                         @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
                             <div class="form-group">
                                 <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("terminology.partner")</label>
-                                <div class="col-md-8 col-sm-4 col-xs-12">
-                                    <select class="form-control col-md-8 col-xs-12" id="partner" title="@Messages("directpay.usersettings.partner.title")">
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <select class="form-control col-md-8 col-xs-8" id="partner" title="@Messages("directpay.usersettings.partner.title")">
                                         <option value="00">@Messages("directpay.usersettings.notselected")</option>
                                         @if(globals.country_partner1 != "Not Set") { <option value="@globals.country_partner1">@globals.country_partner1</option> }
                                         @if(globals.country_partner2 != "Not Set") { <option value="@globals.country_partner2">@globals.country_partner2</option> }

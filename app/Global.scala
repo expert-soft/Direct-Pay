@@ -127,7 +127,9 @@ package object globals {
   val country_fee_deposit_percent = Play.current.configuration.getDouble("country.country_fee_deposit_percent").getOrElse(0)
   val country_fee_withdrawal_percent = Play.current.configuration.getDouble("country.country_fee_withdrawal_percent").getOrElse(0)
   val country_fee_send_percent = Play.current.configuration.getDouble("country.country_fee_send_percent").getOrElse(0)
-  val country_fee_tofiat_percent = Play.current.configuration.getDouble("country.country_fee_tofiat_percent").getOrElse(0)
+
+  val country_fee_tofiat_percent = if (country_operations_organized == "direct") { 0 } else { Play.current.configuration.getDouble("country.country_fee_tofiat_percent").getOrElse(0) }
+
   val country_fee_tofiat_minimum_rate_percent = Play.current.configuration.getDouble("country.country_fee_tofiat_minimum_rate_percent").getOrElse(0)
   val country_appearance_pic1 = Play.current.configuration.getString("country.country_appearance_pic1").getOrElse("Not Set")
   val country_appearance_pic2 = Play.current.configuration.getString("country.country_appearance_pic2").getOrElse("Not Set")
@@ -225,7 +227,6 @@ package object globals {
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='test@yahoo.com.br'), '237', '65665', '00685343-0', '', '';
         insert into users_connections (user_id, bank, agency, account, partner, partner_account) select (select id from users where email='testru@gmail.ru'), '341', '352323-c', '67345-9', '', '';
 
-
         commit;
         """.execute()
       })
@@ -258,6 +259,52 @@ package object globals {
   val engineModel = new EngineModel(masterDB)
 
   val userTrustModel = new UserTrustModel(masterDBTrusted)
+
+  def calculate_local_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    val percentage = (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
+    var low_value_fee = 0.0
+    if (initial_value < globals.country_minimum_value) {
+      low_value_fee = globals.country_minimum_value * 0.02
+    }
+    if (order_type == "D") {
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+    } else if (order_type == "S") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "S.") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "DCS") {
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
+    } else if (order_type == "W") { // withdrawal to a preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+    } else if (order_type == "W.") { // withdrawal to a non preferential bank
+      return globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
+    } else if (order_type == "RFW") { // withdrawal to a preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
+    } else if (order_type == "RFW.") { // withdrawal to a non preferential bank
+      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
+    } else if (order_type == "F") {
+      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else return 0
+  }
+
+  def calculate_global_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
+    val percentage = globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
+    if (order_type == "D") {
+      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "S") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "S.") {
+      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "DCS") {
+      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
+    } else if (order_type == "W" || order_type == "W.") {
+      return initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else if (order_type == "RFW" || order_type == "RFW.") {
+      return initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
+    } else if (order_type == "F") {
+      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
+    } else return 0
+  }
 
   // create UserTrust actor
   val userTrustActor = current.configuration.getBoolean("usertrustservice.enabled").getOrElse(false) match {
