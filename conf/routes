@@ -43,6 +43,7 @@ GET         /iapi/1                                    controllers.IAPI.APIv1.in
 GET         /iapi/1/user                               controllers.IAPI.APIv1.user
 GET         /iapi/1/user_name_info                     controllers.IAPI.APIv1.user_name_info
 GET         /iapi/1/get_bank_data                      controllers.IAPI.APIv1.get_bank_data
+GET         /iapi/1/get_admins                         controllers.IAPI.APIv1.get_admins
 GET         /iapi/1/users_list                         controllers.IAPI.APIv1.users_list
 GET         /iapi/1/get_docs_info                      controllers.IAPI.APIv1.get_docs_info
 GET         /iapi/1/get_log_events                     controllers.IAPI.APIv1.get_log_events

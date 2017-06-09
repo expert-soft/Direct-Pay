@@ -217,6 +217,27 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     ))
   }
 
+  def get_admins = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val admins = globals.engineModel.GetAdmins(globals.country_code)
+    Ok(Json.toJson(admins.map({ c =>
+      Json.obj(
+        "admin_g1" -> c._1,
+        "admin_g2" -> c._2,
+        "admin_l1" -> c._3,
+        "admin_l2" -> c._4,
+        "admin_o1" -> c._5,
+        "admin_o2" -> c._6,
+        "email_g1" -> c._7,
+        "email_g2" -> c._8,
+        "email_l1" -> c._9,
+        "email_l2" -> c._10,
+        "email_o1" -> c._11,
+        "email_o2" -> c._12
+      )
+    })
+    ))
+  }
+
   def user = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
     Ok(Json.toJson(request.user))
   }

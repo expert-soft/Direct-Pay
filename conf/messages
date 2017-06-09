@@ -334,6 +334,8 @@ directpay.overview.nofeesarecharged=No fees are charged for this operation.
 directpay.overview.convertionrate=Convertion Rate
 directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of
 directpay.overview.convertionsareperformedbypartners2=That means you will always be able to convert your money at a competitive rate.
+directpay.overview.showoperationstutorial=Show Operations Tutorial
+directpay.overview.hideoperationstutorial=Hide Operations Tutorial
 
 directpay.deposit.depositconvertsend=Deposit, Convert and Send
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt

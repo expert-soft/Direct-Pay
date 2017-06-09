@@ -58,7 +58,8 @@ class UserModel(val db: String = "default") {
           row[Boolean]("manualauto_mode"),
           row[Option[String]]("user_country"),
           row[Boolean]("docs_verified"),
-          row[Option[String]]("partner")
+          row[Option[String]]("partner"),
+          row[Option[String]]("admin_xx")
         )
       ).headOption
     }

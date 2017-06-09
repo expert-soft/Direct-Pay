@@ -164,13 +164,17 @@
                                         <li><a href="@routes.Application.contract().url"><i class="fa fa-book"></i> @Messages("directpay.navigation.termsandcontract.title") </a></li>
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="@routes.Application.management().url"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
-                                        <li><a href="@routes.Application.users_list().url"><i class="fa fa-users"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
-                                        <li><a href="@routes.Application.orders_list("orderstatus","pending_orders").url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
-                                    </ul>
-                                </li>
+                                @if(securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_g1")
+                                        || securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_g2")
+                                        || securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_l1")) {
+                                    <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="@routes.Application.management().url"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
+                                            <li><a href="@routes.Application.users_list().url"><i class="fa fa-users"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
+                                            <li><a href="@routes.Application.orders_list("orderstatus", "pending_orders").url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
+                                        </ul>
+                                    </li>
+                                }
                                 <li><a><i class="fa fa-flag"></i>  @Messages("terminology.language")<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                     @for(lang <- Lang.availables) {
@@ -212,6 +216,7 @@
 
 
             <input type="hidden" id="hidden_fees_information"
+            country_code="@globals.country_code"
             currency_code="@globals.country_currency_code"
             currency_crypto="@globals.country_currency_crypto"
             wallet_available="0"

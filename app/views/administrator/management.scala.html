@@ -102,4 +102,26 @@
 
 
 
+
+    <p id="script_admins-position"></p>
+
+    <script id="script_admins-template" type="text/x-handlebars-template">
+    <!-- Admins Info -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <div class="x_panel" style="@globals.country_appearance_background_4">
+                <div class="x_title">
+                    <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; {{country_code}}</h2>
+                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <p>{{admin_g1}} - {{email_g1}}</p>
+                <p>{{admin_g2}} - {{email_g2}}</p>
+                <p>{{admin_l1}} - {{email_l1}}</p>
+                </div>
+            </div>
+        </div>
+    <!-- end of Admins list -->
+    </script>
+
+
 }

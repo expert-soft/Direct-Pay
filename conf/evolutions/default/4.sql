@@ -5,13 +5,50 @@
 -- create balances associated with currencies
 create or replace function
 currency_insert (
+  a_position integer,
   a_currency varchar(16),
-  a_position integer
+  a_country varchar(4),
+  a_admin_g1 bigint,
+  a_admin_l1 bigint
 ) returns void as $$
 declare
 begin
-  insert into currencies (currency, position) values (a_currency, a_position);;
+  insert into currencies (position, currency, country, admin_g1, admin_l1) values (a_position, a_currency, a_country, a_admin_g1, a_admin_l1);;
+  -- ### this insert should be changed... Each user only one country for now. Must change in the future
   insert into balances (user_id, currency) select id, a_currency from users;;
+end;;
+$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
+
+
+
+create or replace function
+insert_as_admin (
+  a_country varchar(4),
+  a_email varchar(256),
+  a_glo_n varchar(8)
+) returns void as $$
+declare
+  b_user_id bigint;;
+begin
+  select id into b_user_id from users where email = a_email;;
+  if a_glo_n = 'admin_g1' then
+    update currencies set admin_g1 = b_user_id where country = a_country;;
+  end if;;
+  if a_glo_n = 'admin_g2' then
+    update currencies set admin_g2 = b_user_id where country = a_country;;
+  end if;;
+  if a_glo_n = 'admin_l1' then
+    update currencies set admin_l1 = b_user_id where country = a_country;;
+  end if;;
+  if a_glo_n = 'admin_l2' then
+    update currencies set admin_l2 = b_user_id where country = a_country;;
+  end if;;
+  if a_glo_n = 'admin_o1' then
+    update currencies set admin_o1 = b_user_id where country = a_country;;
+  end if;;
+  if a_glo_n = 'admin_o2' then
+    update currencies set admin_o2 = b_user_id where country = a_country;;
+  end if;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
@@ -303,20 +340,22 @@ update_order_with_picture (
 ) returns boolean as $$
 declare
   b_user_id bigint;;
+  b_country varchar(4);;
   b_order_status text;;
   b_currency varchar(16);;
   b_initial_value numeric(23,8);;
   b_total_fee numeric(23,8);;
   b_global_fee numeric(23,8);;
   a_partner_id bigint;;
-  a_local_admin_id bigint;;
-  a_global_admin_id bigint;;
+  b_local_admin_id bigint;;
+  b_global_admin_id bigint;;
 begin
   a_partner_id = 0;;
-  a_local_admin_id = 1;;
-  a_global_admin_id = 2;;
 
-  select user_id, status, currency, initial_value, total_fee into b_user_id, b_order_status, b_currency, b_initial_value, b_total_fee from orders where order_id = a_order_id;;
+  select user_id, country_id, status, currency, initial_value, total_fee into b_user_id, b_country, b_order_status, b_currency, b_initial_value, b_total_fee from orders where order_id = a_order_id;;
+
+  select admin_g1, admin_l1 into b_global_admin_id, b_local_admin_id from currencies where country = b_country;;
+
   b_global_fee = b_total_fee - a_local_fee;; -- to avoid rounding errors, care with total_fee and balances on hold
   if a_status = 'OK' or a_status = 'Ch' then
     if a_status = 'OK' then -- ### need to test a range of 0.02 difference (@globals.country_minimum_difference)
@@ -327,8 +366,8 @@ begin
       update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
       update orders set status = 'Ch', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
     end if;;
-    update balances set balance = balance + a_local_fee where currency = b_currency and user_id = a_local_admin_id;; -- Local administrator account
-    update balances set balance = balance + a_global_fee where currency = b_currency and user_id = a_global_admin_id;; -- Global administrator account
+    update balances set balance = balance + a_local_fee where currency = b_currency and user_id = b_local_admin_id;; -- Local administrator account
+    update balances set balance = balance + a_global_fee where currency = b_currency and user_id = b_global_admin_id;; -- Global administrator account
   end if;;
 
   if a_status = 'Rj' then
@@ -419,7 +458,7 @@ $$ language plpgsql volatile security definer set search_path = public, pg_temp 
 create or replace function
   management_data (
       a_user_id bigint,
-  out country_code varchar(16),
+  out country_code varchar(4),
   out number_users integer,
   out fiat_funds numeric(23,8),
   out crypto_funds numeric(23,8),
@@ -427,14 +466,14 @@ create or replace function
   out number_pending_orders integer
 ) returns setof record as $$
 declare
-b_currency varchar(4);;
+  b_currency varchar(4);;
 begin
   --  return query select currency into b_currency from users u where id = a_user_id
   --    left join sum(b.balance) as fiat_funds, sum(b.balance_c) as crypto_funds
   --      from balances b where currency = b_currency;;
 
   --  select user_id, order_type, status, currency, initial_value into b_user_id, b_order_type, b_order_status, b_currency, b_initial_value    from orders where order_id = a_order_id;;
-
+-- ### this function must be revised
   return query select currency, 6, balance, balance_c, balance + 1000, 8 from balances where user_id = a_user_id;;
 
 end;;
@@ -472,8 +511,9 @@ $$ language plpgsql volatile security invoker set search_path = public, pg_temp 
 
 
 # --- !Downs
-
-drop function if exists currency_insert(varchar(16), integer, bool) cascade;
+drop function if exists insert_as_admin(varchar(4), varchar(256), varchar(8)) cascade;
+drop function if exists currency_insert(integer, varchar(16), varchar(4)) cascade;
+drop function if exists insert_admin(integer, varchar(16), varchar(4)) cascade;
 drop function if exists create_order(Long, varchar(4), varchar(4), varchar(2), varchar(128)) cascade;
 drop function if exists update_order(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8)) cascade;
 drop function if exists update_order_with_picture(Long, varchar(2), numeric(23,8), varchar(128), numeric(23,8), numeric(23,8)) cascade;

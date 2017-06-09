@@ -156,9 +156,26 @@ class EngineModel(val db: String = "default") {
   }
 
   def return_all_images(uid: Option[Long]) = DB.withConnection(db) { implicit c =>
-    SQL"""SELECT image_id, name  FROM public.image;"""().map(row => (
+    SQL"""SELECT image_id, name FROM public.image;"""().map(row => (
       row[Long]("image_id"),
       row[String]("name")
+    )).toList
+  }
+
+  def GetAdmins(country: String) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_admins($country)"""().map(row => (
+      row[Option[Long]]("admin_g1").getOrElse(0L),
+      row[Option[Long]]("admin_g2").getOrElse(0L),
+      row[Option[Long]]("admin_l1").getOrElse(0L),
+      row[Option[Long]]("admin_l2").getOrElse(0L),
+      row[Option[Long]]("admin_o1").getOrElse(0L),
+      row[Option[Long]]("admin_o2").getOrElse(0L),
+      row[Option[String]]("email_g1").getOrElse(""),
+      row[Option[String]]("email_g2").getOrElse(""),
+      row[Option[String]]("email_l1").getOrElse(""),
+      row[Option[String]]("email_l2").getOrElse(""),
+      row[Option[String]]("email_o1").getOrElse(""),
+      row[Option[String]]("email_o2").getOrElse("")
     )).toList
   }
 

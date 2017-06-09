@@ -13,8 +13,22 @@ $(function(){
         }
     }
 
-    function showFeeMessages()
-    {
+    var operations_panels_visible = false;
+    $('#btn_operation_panels').click(function () {
+        if (operations_panels_visible) {
+            $('#operation_panels').hide();
+            $('#btn_operation_panels_caption').html(Messages('directpay.overview.showoperationstutorial'));
+            operations_panels_visible = false;
+        } else {
+            $('#operation_panels').show();
+            operations_panels_visible = true;
+            $('#btn_operation_panels_caption').html(Messages('directpay.overview.hideoperationstutorial'));
+            resizeDiv();
+        }
+    });
+
+
+    function showFeeMessages() {
         $('#calc_convertion_rate').html(NumberFormat((100 - parseFloat($('#hidden_fees_information').attr('fee_tofiat_percent'))) * 0.01, 3));
         $('#calc_withdraw_preferential_bank_fee').html(NumberFormat($('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank'), 2));
         $('#calc_withdraw_not_preferential_bank_extra_fee').html(NumberFormat(parseFloat($('#hidden_fees_information').attr('nominal_fee_withdrawal_not_preferential_bank') - parseFloat($('#hidden_fees_information').attr('nominal_fee_withdrawal_preferential_bank'))), 2));

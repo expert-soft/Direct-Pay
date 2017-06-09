@@ -180,8 +180,8 @@ package object globals {
         delete from users;
         delete from image;
 
-        select currency_insert('BRL', 1);
-        select currency_insert('USD', 2);
+        select currency_insert(1, 'BRL', 'br', 0, 0);
+        select currency_insert(2, 'USD', 'us', 0, 0);
 
         insert into users(id, email) values (0, '');
         insert into balances (user_id, currency) select 0, currency from currencies;
@@ -208,8 +208,6 @@ package object globals {
         update balances set balance = 1000 where currency = 'BRL' and user_id = (select id from users where email='a2terminator@mail.ru');;
 
         insert into image (image_id, name) values (0, 'null');;
-
-
 
         select create_user('a', 'a', true, null, 'en', 'br', false, '');
         select create_user('test@hotmail.ru', 'pass01', true, null, 'ru', 'br', false, '');
@@ -239,6 +237,21 @@ package object globals {
   }
 
   /*
+        --select create_user($country_local_administrator, 'Fada00Fada', true, null, 'en', 'br', true, '');
+        --insert into balances (user_id, currency) select (select id from users where email=$country_local_administrator), currency from currencies;;
+        --insert into users_passwords (user_id, password) values ((select id from users where email=$country_local_administrator), crypt('qwe', gen_salt('bf', 8)));;
+
+        --select create_user($country_global_administrator, 'qwerty123', true, null, 'en', 'ru', false, '');
+        --insert into balances (user_id, currency) select (select id from users where email=$country_global_administrator), currency from currencies;;
+        --insert into users_passwords (user_id, password) values ((select id from users where email=$country_global_administrator), crypt('qwe', gen_salt('bf', 8)));;
+
+        select insert_as_admin('us', $country_global_administrator, 'admin_g1');
+        select insert_as_admin('us', $country_local_administrator, 'admin_l1');
+        select insert_as_admin('br', $country_global_administrator, 'admin_g1');
+        select insert_as_admin('br', $country_local_administrator, 'admin_l1');
+        select insert_as_admin('br', $country_local_administrator, 'admin_o1');
+
+
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'br', 'RFW', 'Op', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'BRL', 4566.9808, 15.76, '', '', '001 - Banco do Brasil', '78887-x', '213.423.2-9', '2016-12-22 01:18:59.842', 120, 4420.8, 'comment', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='a2terminator@mail.ru'), 'br', 'D', 'Op', '', '2016-12-22 01:18:59.842', 'BRL', 74.98, 0, 'recibo1.jpg', '', '237', '5454-0', '4645-8', '2016-12-22 01:18:59.842', 0, 0, '', '', '', 0;
         insert into orders (user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id) select (select id from users where email='mboczko@yahoo.com'), 'us', 'W', 'Rj', 'Crypto-Trade.net', '2016-12-22 01:18:59.842', 'USD', 320, 0.55, '', '', 'City-090', 'bvbvb', 'bvbvb', '2016-12-22 11:18:59.842', 12121, 0, 'bank info not correct', '', '', 0;
