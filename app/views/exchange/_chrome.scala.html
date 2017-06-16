@@ -164,9 +164,7 @@
                                         <li><a href="@routes.Application.contract().url"><i class="fa fa-book"></i> @Messages("directpay.navigation.termsandcontract.title") </a></li>
                                     </ul>
                                 </li>
-                                @if(securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_g1")
-                                        || securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_g2")
-                                        || securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_l1")) {
+                                @if(securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("")) {
                                     <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href="@routes.Application.management().url"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>

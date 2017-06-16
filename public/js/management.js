@@ -1,10 +1,32 @@
 $(function(){
 
-    function submit_search(search_criteria, search_value) {
-        window.location.href = '/orders_list/' + search_criteria + '/' + search_value;
+
+    $('#submit_search').live('click', function() {
+        submit_search();
+    });
+
+    $('#submit_admin_form').live('click', function() {
+        submit_admin_form();
+    });
+
+    function submit_admin_form() {
+        if ($('#admin_g1').val() != "" && $('#admin_l1').val() != "") {
+            alert(8);
+            API.save_admins($('#hidden_fees_information').attr('country_code'), $('#admin_g1').val(), $('#admin_g2').val(), $('#admin_l1').val(), $('#admin_l2').val(), $('#admin_o1').val(), $('#admin_o2').val()).success(function () {
+                $.pnotify({
+                    title: Messages("messages.api.success"),
+                    text: Messages("messages.api.success.administratorssavedsuccessfully"),
+                    styling: 'bootstrap',
+                    type: 'success',
+                    text_escape: true
+                });
+            });
+        }
+        else
+            alert(Messages('directpay.formvalidation.global1andlocal1administratorsmustnotbeempty'));
     }
 
-    $('.triggers_submit').click(function () {
+    function submit_search(){
         var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
         var search_criteria = $('#search_criteria').val();
         var search_value = ($('#search_value').val());
@@ -12,23 +34,19 @@ $(function(){
         if (search_criteria != "00")
             if (search_value != "")
                 if (search_criteria == "orderid") {
-//
                 } else if (search_criteria == "userid") {
-//
+// ### not implemented
                 } else if (search_criteria == "ordertype") {
                     apply_submit = true;
-//
                 } else if (search_criteria == "orderstatus") {
                     apply_submit = true;
-//
                 } else if (search_criteria == "ordercreated") {
-//
                     if (Date.parse(search_value)) {
                         //alert("valid date"); // must be DD-MM-YYYY format
                         apply_submit = true;
                     }
                     else
-                        alert(Messages('directpay.formvalidation.### not valid date'));
+                        alert(Messages('directpay.formvalidation.thisisnotavaliddate'));
                 } else if (search_criteria == "processedvalue") {
                     if (decimal_separator == ",")
                         search_value = search_value.replace(decimal_separator, ".");
@@ -42,20 +60,21 @@ $(function(){
         else
             alert(Messages('directpay.formvalidation.###valuemustbegreaterthanzero'));
         if (apply_submit)
-            submit_search(search_criteria, search_value);
-    });
+            window.location.href = '/orders_list/' + search_criteria + '/' + search_value;
+    }
 
 
     var data_variable = Handlebars.compile($("#script-template").html());
     function show_management_info(){
         API.management_data().success(function(data){
             for (var i = 0; i < data.length; i++) {
-
                 data[i].country_code = data[i].country_code;
+                data[i].currency = data[i].currency;
+                data[i].expected_bank_balance = NumberFormat(parseFloat(data[i].fiat_funds) - parseFloat(data[i].system_balance), 2);
                 data[i].number_users = data[i].number_users;
-                data[i].fiat_funds = data[i].fiat_funds;
-                data[i].crypto_funds = data[i].crypto_funds;
-                data[i].partners_balance = data[i].partners_balance;
+                data[i].fiat_funds = NumberFormat(data[i].fiat_funds, 2);
+                data[i].crypto_funds = NumberFormat(data[i].crypto_funds, 2);
+                data[i].system_balance = NumberFormat(data[i].system_balance, 2);
                 data[i].number_pending_orders = data[i].number_pending_orders;
             }
 
@@ -81,6 +100,13 @@ $(function(){
             admin_info.email_l2 = data[0].email_l2;
             admin_info.email_o1 = data[0].email_o1;
             admin_info.email_o2 = data[0].email_o2;
+/*            if(admin_info.admin_g1 == "0") admin_info.display_g1 = "none"; else admin_info.display_g1 = "block";
+            if(admin_info.admin_g2 == "0") admin_info.display_g2 = "none"; else admin_info.display_g2 = "block";
+            if(admin_info.admin_l1 == "0") admin_info.display_l1 = "none"; else admin_info.display_l1 = "block";
+            if(admin_info.admin_l2 == "0") admin_info.display_l2 = "none"; else admin_info.display_l2 = "block";
+            if(admin_info.admin_o1 == "0") admin_info.display_o1 = "none"; else admin_info.display_o1 = "block";
+            if(admin_info.admin_o2 == "0") admin_info.display_o2 = "none"; else admin_info.display_o2 = "block";
+*/
             $('#script_admins-position').html(admins_variable(admin_info));
         });
     }

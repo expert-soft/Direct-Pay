@@ -137,10 +137,11 @@ class EngineModel(val db: String = "default") {
   def ManagementData(user_id: Option[Long]) = DB.withConnection(db) { implicit c =>
     SQL"""select * from management_data($user_id)"""().map(row => (
       row[String]("country_code"),
+      row[String]("currency"),
       row[Int]("number_users"),
-      row[BigDecimal]("fiat_funds"),
-      row[BigDecimal]("crypto_funds"),
-      row[BigDecimal]("partners_balance"),
+      row[Option[BigDecimal]]("fiat_funds"),
+      row[Option[BigDecimal]]("crypto_funds"),
+      row[Option[BigDecimal]]("system_balance"),
       row[Int]("number_pending_orders")
     )).toList
   }

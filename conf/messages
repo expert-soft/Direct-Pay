@@ -184,6 +184,7 @@ terminology.bank=Bank
 terminology.agency=Agency
 terminology.account=Account
 terminology.submit=Submit
+terminology.save=Save
 terminology.convert=Convert
 terminology.send=Send
 terminology.receive=Receive
@@ -214,6 +215,7 @@ terminology.complete=Complete
 terminology.previous=Previous
 terminology.next=Next
 terminology.ibancode=IBAN code
+terminology.administrator=Administrator
 
 directpay.frontpage.notyetsignedup=Not yet signed up?
 directpay.frontpage.carousel1.text1=Your direct access to the best in the world!
@@ -515,6 +517,8 @@ directpay.formvalidation.nofileselected=There are no new files selected
 directpay.formvalidation.bankinginformationisnotvalid=Banking information is not valid
 directpay.formvalidation.commentcannotbeempty=Comment information can not be empty
 directpay.formvalidation.confirmnewvalue=Confirm new value
+directpay.formvalidation.thisisnotavaliddate=This is not a valid date
+directpay.formvalidation.global1andlocal1administratorsmustnotbeempty=Global-1 and Local-1 administrators must not be empty
 
 directpay.search.search=Search
 directpay.search.searchcriteria=Search Criteria
@@ -526,7 +530,9 @@ directpay.search.ordertype=Order Type
 directpay.search.orderstatus=Order Status
 directpay.search.ordercreatedafter=Order created after
 directpay.search.valueprocessedgreaterthan=Value processed greater than
-
+directpay.management.globaladministrator=Global Administrator
+directpay.management.localadministrator=Local Administrator
+directpay.management.operator=Operator
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
 directpay.faq.1=O que é {0}?
@@ -720,10 +726,11 @@ messages.api.success.orderapprovedwithchanges=Order approved (executed) with cha
 messages.api.success.orderlockedtobeprocessed=Order locked to be processed
 messages.api.success.orderrejected=Order rejected
 messages.api.success.documentrejected=Document rejected
+messages.api.success.administratorssavedsuccessfully=Administrators saved successfully
 messages.api.error.failedtocreateorder=Failed to create order
 messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
 messages.api.error.failedtoupdateorder=Failed to update order
-
+messages.api.error.failedtosaveadministrators=Failed to save administrators
 
 
 # API error messages

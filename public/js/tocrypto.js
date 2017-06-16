@@ -24,9 +24,7 @@ $(function() {
 
     function FormValidating() {
         var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
-        var value_s = $('#value').val();
-        if (decimal_separator == ",")
-            value_s = value_s.replace(decimal_separator, ".");
+        var value_s = UnformatNumber($('#value').val());
         if ($.isNumeric(value_s)) {
             var value = parseFloat(value_s);
             if (value > 0) {

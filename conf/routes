@@ -61,6 +61,7 @@ POST        /iapi/1/update_order                       controllers.IAPI.APIv1.up
 POST        /iapi/1/update_personal_info               controllers.IAPI.APIv1.update_personal_info
 POST        /iapi/1/update_bank_data                   controllers.IAPI.APIv1.update_bank_data
 POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
+POST        /iapi/1/save_admins                        controllers.IAPI.APIv1.save_admins
 POST        /dashboard                                 controllers.Application.uploadDepositImage()
 POST        /documents                                 controllers.Application.uploadDocImage()
 GET         /images/*image_id                          controllers.Application.getimage(image_id)

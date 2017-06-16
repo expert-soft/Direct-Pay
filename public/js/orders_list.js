@@ -266,8 +266,7 @@ Op - OK
 
             var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
             var applyAPI = true;
-            if (decimal_separator == ",")
-                net_value_s = net_value_s.replace(decimal_separator, ".");
+            net_value_s = UnformatNumber(net_value_s);
             if ($.isNumeric(net_value_s) || order_type == "V") {
                 var net_value = 0;
                 if (order_type != "V")
@@ -473,13 +472,11 @@ var pressedButton = "";
 // saving pictures
 $('#btnApproveWithdraw').click(function() {
     var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
-    var value_s = $('#popUpNet_value').val();
     var comment = $('#popUpComment').val();
     var initial_value = $('#hidden_initial_value' + $('#btnApproveWithdraw').attr('order_id')).val();
     var processed_value = 0.0;
     pressedButton = "Ch";
-    if (decimal_separator == ",")
-        value_s = value_s.replace(decimal_separator, ".");
+    var value_s = UnformatNumber($('#popUpNet_value').val());
     if ($.isNumeric(value_s)) {
         if (parseFloat(value_s) > 0) {
             processed_value = parseFloat(value_s);
@@ -512,11 +509,9 @@ $('#btnRejectWithdraw').click(function(){
     var order_type = $(this).attr('order_type');
     var status = "Rj";
     var initial_value = parseFloat($('#hidden_initial_value' + order_id).val());
-    var value_s = $('#popUpNet_value').val();
     var comment = $('#popUpComment').val();
 
-    if (decimal_separator == ",")
-        value_s = value_s.replace(decimal_separator, ".");
+    var value_s = UnformatNumber($('#popUpNet_value').val());
     if ($.isNumeric(value_s)) {
         if (parseFloat(value_s) >= 0) {
             if (comment != "") {

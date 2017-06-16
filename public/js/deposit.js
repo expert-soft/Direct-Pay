@@ -37,9 +37,7 @@ function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#value').va
 $(function(){
     $('#deposit_form').on('submit',function(event){
         var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
-        var value_s = $('#value').val();
-        if (decimal_separator == ",")
-            value_s = value_s.replace(decimal_separator, ".");
+        var value_s = UnformatNumber($('#value').val());
         if ($.isNumeric(value_s)) {
             if (parseFloat(value_s) > 0 ) {
                 if($('#uploadText1').text() != "") {

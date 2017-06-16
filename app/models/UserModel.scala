@@ -358,22 +358,22 @@ class UserModel(val db: String = "default") {
     """.execute()
   }
 
+  def save_admins(country: Option[String], admin_g1: Option[String], admin_g2: Option[String], admin_l1: Option[String], admin_l2: Option[String], admin_o1: Option[String], admin_o2: Option[String]) = DB.withConnection(db) { implicit c =>
+    SQL"""
+     select save_admins as success from save_admins(${country.get}, ${admin_g1.get}, ${admin_g2.get}, ${admin_l1.get}, ${admin_l2.get}, ${admin_o1.get}, ${admin_o2.get})
+    """.execute()
+  }
+
   def search(column: Option[String], value: String) = DB.withConnection(db) { implicit c =>
     var SQLTEST = ""
     if (column == "status") {
-      SQL"""SELECT order_id, user_id, country_id, order_type, status, partner, created,
-       currency, initial_value, total_fee, doc1, doc2, bank, agency,
-       account, closed, processed_by, net_value, comment, key1, key2,
-       image_id
+      SQL"""SELECT order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id
        FROM public.orders where status = $value"""().map(row => (
         row[Long]("order_id"),
         row[Long]("user_id")
       )).toList
     } else {
-      SQL"""SELECT order_id, user_id, country_id, order_type, status, partner, created,
-       currency, initial_value, total_fee, doc1, doc2, bank, agency,
-       account, closed, processed_by, net_value, comment, key1, key2,
-       image_id
+      SQL"""SELECT order_id, user_id, country_id, order_type, status, partner, created, currency, initial_value, total_fee, doc1, doc2, bank, agency, account, closed, processed_by, net_value, comment, key1, key2, image_id
        FROM public.orders where status = $value"""().map(row => (
         row[Long]("order_id"),
         row[Long]("user_id")

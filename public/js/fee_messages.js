@@ -73,13 +73,13 @@ function fillMessages() {
 
 /* Fills the spaces for fees and values information inside Deposit page */
 function fillDepositMessages() {
-    var value_s = $('#value').val().replace(country_settings.decimal_separator, ".");
+    var value_s = UnformatNumber($('#value').val());
     var aux = parseFloat(country_settings.fee_deposit_percent);
     if($('#hidden_page').val() == "DCS")  // automatic operation
         aux += parseFloat(country_settings.fee_send_percent);
     if (aux != 0 && $.isNumeric(value_s) && parseFloat(value_s) > 0) {
         if (parseFloat(value_s) < parseFloat(country_settings.minimum_value))
-            $('#calc_deposit_fee').html(NumberFormat(parseFloat(value_s) * aux * 0.01 + country_settings.minimum_value * 0.02, 2));
+            $('#calc_deposit_fee').html(NumberFormat(parseFloat(value_s) * aux * 0.01 + country_settings.minimum_value * 0.02, 2, '.'));
         else
             $('#calc_deposit_fee').html(NumberFormat(parseFloat(value_s) * aux * 0.01, 2))
     }
@@ -93,7 +93,7 @@ function fillDepositMessages() {
 
 /* Fills the spaces for fees and values information inside Send page */
 function fillSendMessages() {
-    var value_s = $('#value').val().replace(country_settings.decimal_separator, ".");
+    var value_s = UnformatNumber($('#value').val());
     if (country_settings.fee_send_percent != 0 && $.isNumeric(value_s) && parseFloat(value_s) > 0){
         $('#total_send_fee').val(parseFloat(value_s) * parseFloat(country_settings.fee_send_percent) * 0.01);
         $('#calc_send_fee').html(NumberFormat(parseFloat(value_s) * parseFloat(country_settings.fee_send_percent) * 0.01, 2));
@@ -108,7 +108,7 @@ function fillSendMessages() {
 
 /* Fills the spaces for fees and values information inside Convert to Fiat page */
 function fillToFiatMessages() {
-    var value_s = $('#value').val().replace(country_settings.decimal_separator, ".");
+    var value_s = UnformatNumber($('#value').val());
     if (country_settings.fee_tofiat_percent != 0 && $.isNumeric(value_s) && parseFloat(value_s) > 0 && parseFloat(value_s) <= parseFloat($('#hidden_fees_information').attr('wallet_crypto')))
         $('#calc_convertion_net').html(NumberFormat((value_s * (100 - country_settings.fee_tofiat_percent) * 0.01), 2))
     else
@@ -126,7 +126,7 @@ function fillWithdrawMessages() {
         aux += parseFloat(country_settings.fee_tofiat_percent);
         $('#calc_convertion_rate').html(NumberFormat(parseFloat(100 - country_settings.fee_tofiat_percent) * 0.01, 3))
     } else {
-        var value_s = $('#value').val().replace(country_settings.decimal_separator, ".");
+        var value_s = UnformatNumber($('#value').val());
         if ($.isNumeric(value_s) && parseFloat(value_s) > 0)
             if (parseFloat(value_s) < parseFloat(country_settings.minimum_value))
                 aux2 = country_settings.minimum_value * 0.02;

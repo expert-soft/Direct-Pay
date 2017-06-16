@@ -176,6 +176,15 @@ var API;
             });
         }),
 
+        save_admins: APIWrap(function(country, admin_g1, admin_g2, admin_l1, admin_l2, admin_o1, admin_o2) {
+            return $.ajax(iapi_prefix+'save_admins', {
+                type: 'POST',
+                data: JSON.stringify({country: country, admin_g1: admin_g1, admin_g2: admin_g2, admin_l1: admin_l1, admin_l2: admin_l2, admin_o1: admin_o1, admin_o2: admin_o2}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
         orders_list: APIWrap(function(search_criteria, search_value) {
             return $.ajax(iapi_prefix+'orders_list', {
                 type: 'POST',

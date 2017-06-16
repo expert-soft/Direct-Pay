@@ -7,7 +7,6 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/management.js")"></script>
-    <script src="@routes.Assets.at("js/iban.js")"></script>
 }
 
 @exchange._chrome(Messages("directpay.navigation.admin.management.title"), "user", scripts) {
@@ -24,7 +23,7 @@
 
     <div class="clearfix"></div>
     <div class="row">
-            <!-- Start of form -->
+            <!-- Start of Search form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel" style="@globals.country_appearance_background_4">
                 <div class="x_title">
@@ -32,7 +31,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form id="search-form" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
                             <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.search.searchcriteria")</label>
                             <div class="col-md-7 col-sm-7 col-xs-8">
@@ -63,65 +62,127 @@
                 </div>
             </div>
         </div>
-            <!-- End of form -->
-    </div>
+            <!-- End of Search form -->
 
 
 
+    @if(securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("admin_o1") && securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("admin_o2")) {
+        <div id="script_admins-position"></div>
 
-        <p id="script-position"></p>
-
-    <script id="script-template" type="text/x-handlebars-template">
-        {{#each this}}
-            <!-- Country Info -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; {{country_code}}</h2>
-    <!-- panel controls do not work due to being inside script -->
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.management.numberofusers"): <span class="calc_mid_destak_info">{{number_users}}</span></p>
-                    <p>@Messages("directpay.management.currentfiatfunds"): <span class="calc_mid_destak_info">{{country_code}} {{fiat_funds}}</span></p>
-                    <p>@Messages("directpay.management.currentcryptofunds"): <span class="calc_mid_destak_info">{{crypto_funds}}</span></p>
-                    <p>@Messages("directpay.management.partnersbalance"): <span class="calc_mid_destak_info">{{partners_balance}}</span></p>
-                    <p>@Messages("directpay.management.expectedbankbalance"): <span class="calc_mid_destak_info">{{partners_balance}}</span></p>
-                    <p>@Messages("directpay.management.pendingorders"): <span class="calc_mid_destak_info">{{number_pending_orders}}</span></p>
-
-                    <div class="x_extrainfo_content" style="display: none;">
-                        <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+        <script id="script_admins-template" type="text/x-handlebars-template">
+        <!-- Admins Form -->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel" style="@globals.country_appearance_background_4">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; @Messages("directpay.usersettings.country.item"): {{country_code}}</h2>
+                        <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form id="admin_form" data-parsley-validate class="form-horizontal form-label-left">
+      <!--                      <p style="display: {{display_g1}}"><span class="calc_low_destak_info">@Messages("terminology.administrator") G1: </span>{{admin_g1}} - {{email_g1}}</p>
+                            <p style="display: {{display_g2}}"><span class="calc_low_destak_info">@Messages("terminology.administrator") G2: </span>{{admin_g2}} - {{email_g2}}</p>
+                            <p style="display: {{display_l1}}"><span class="calc_low_destak_info">@Messages("terminology.administrator") L1: </span>{{admin_l1}} - {{email_l1}}</p>
+                            <p style="display: {{display_l2}}"><span class="calc_low_destak_info">@Messages("terminology.administrator") L2: </span>{{admin_l2}} - {{email_l2}}</p>
+                            <p style="display: {{display_o1}}"><span class="calc_low_destak_info">@Messages("terminology.administrator") O1: </span>{{admin_o1}} - {{email_o1}}</p>
+                            <p style="display: {{display_o2}}"><span class="calc_low_destak_info">@Messages("terminology.administrator") O2: </span>{{admin_o2}} - {{email_o2}}</p>
+      -->
+                            @if(securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_g1") || securesocial.core.SecureSocial.currentUser.get.admin_xx==Option("admin_g2")) {                            <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.globaladministrator") 1</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input id="admin_g1" class="form-control col-md-8 col-xs-8" type="text" value="{{email_g1}}" title="@Messages("directpay.management.globaladministrator")" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.globaladministrator") 2</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input id="admin_g2" class="form-control col-md-8 col-xs-8" type="text" value="{{email_g2}}" title="@Messages("directpay.management.globaladministrator")" autocomplete="off">
+                                </div>
+                            </div>
+                            } else {
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.globaladministrator") 1</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">{{email_g1}}</div><input type="hidden" id="admin_g1" value="{{email_g1}}">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.globaladministrator") 2</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">{{email_g2}}</div><input type="hidden" id="admin_g2" value="{{email_g2}}">
+                            </div>
+                            }
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.localadministrator") 1</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input id="admin_l1" class="form-control col-md-8 col-xs-8" type="text" value="{{email_l1}}" title="@Messages("directpay.management.localadministrator")" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.localadministrator") 2</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input id="admin_l2" class="form-control col-md-8 col-xs-8" type="text" value="{{email_l2}}" title="@Messages("directpay.management.localadministrator")" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.operator") 1</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input id="admin_o1" class="form-control col-md-8 col-xs-8" type="text" value="{{email_o1}}" title="@Messages("directpay.management.localadministrator")" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.management.operator") 2</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input id="admin_o2" class="form-control col-md-8 col-xs-8" type="text" value="{{email_o2}}" title="@Messages("directpay.management.localadministrator")" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                                    <button type="button" id="submit_admin_form" class="btn btn-primary triggers_submit">@Messages("terminology.save")</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-            <!-- end of Country Info -->
-
-        {{/each}}
-    </script>
-
+        <!-- end of Admins Form -->
+        </script>
+    }
+    </div>
 
 
+    @if(securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("admin_o1") && securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("admin_o2")) {
+        <input type="hidden" id="initial_crypto_capital" value="@globals.country_system_initial_crypto_capital">
+        <p id="script-position"></p>
 
-    <p id="script_admins-position"></p>
+        <script id="script-template" type="text/x-handlebars-template">
+            {{#each this}}
+            <!-- Country Info -->
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                <div class="x_panel" style="background: @globals.country_appearance_background_6">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; {{country_code}} ({{currency}})</h2>
+                            <!-- panel controls do not work due to being inside script -->
+                        <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.management.numberofusers"): <span class="calc_mid_destak_info">{{number_users}}</span></p>
+                        <p>@Messages("directpay.management.currentfiatfunds"): <span class="calc_mid_destak_info">{{currency}} {{fiat_funds}}</span></p>
+                        <p>@Messages("directpay.management.currentcryptofunds"): <span class="calc_mid_destak_info">{{crypto_funds}}</span></p>
+                        <p>@Messages("directpay.management.partnersbalance"): <span class="calc_mid_destak_info">{{system_balance}}</span></p>
+                        <p>@Messages("directpay.management.expectedbankbalance"): <span class="calc_mid_destak_info">{{expected_bank_balance}}</span></p>
+                        <p>@Messages("directpay.management.pendingorders"): <span class="calc_mid_destak_info">{{number_pending_orders}}</span></p>
 
-    <script id="script_admins-template" type="text/x-handlebars-template">
-    <!-- Admins Info -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; {{country_code}}</h2>
-                    <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                <p>{{admin_g1}} - {{email_g1}}</p>
-                <p>{{admin_g2}} - {{email_g2}}</p>
-                <p>{{admin_l1}} - {{email_l1}}</p>
+                        <div class="x_extrainfo_content" style="display: none;">
+                            <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    <!-- end of Admins list -->
-    </script>
+                <!-- end of Country Info -->
+
+                {{/each}}
+        </script>
+    }
+
 
 
 }

@@ -178,12 +178,12 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     Ok(Json.toJson(management_data_info.map({ c =>
       Json.obj(
         "country_code" -> c._1,
-        "number_users" -> c._2,
-        "fiat_funds" -> c._3,
-        "crypto_funds" -> c._4,
-        "partners_balance" -> c._5,
-        "number_pending_orders" -> c._6
-
+        "currency" -> c._2,
+        "number_users" -> c._3,
+        "fiat_funds" -> c._4,
+        "crypto_funds" -> c._5,
+        "system_balance" -> c._6,
+        "number_pending_orders" -> c._7
       )
     })
     ))
@@ -330,7 +330,9 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   def create_order = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
     val order_type = (request.request.body \ "order_type").asOpt[String]
     val status = (request.request.body \ "status").asOpt[String]
-    val partner = (request.request.body \ "partner").asOpt[String]
+    var partner = (request.request.body \ "partner").asOpt[String]
+    if (partner == "undefined")
+      partner = globals.country_partner1_account.asInstanceOf[Option[String]] // this is the preferred partner ### should find another way in the future, specially for F orders
     val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
     val local_fee: BigDecimal = globals.calculate_local_fee(order_type.get, initial_value.get)
     val global_fee: BigDecimal = globals.calculate_global_fee(order_type.get, initial_value.get)
@@ -400,6 +402,21 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtochangemanualautomode")))
+    }
+  }
+
+  def save_admins = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val country = (request.request.body \ "country").asOpt[String]
+    val admin_g1 = (request.request.body \ "admin_g1").asOpt[String]
+    val admin_g2 = (request.request.body \ "admin_g2").asOpt[String]
+    val admin_l1 = (request.request.body \ "admin_l1").asOpt[String]
+    val admin_l2 = (request.request.body \ "admin_l2").asOpt[String]
+    val admin_o1 = (request.request.body \ "admin_o1").asOpt[String]
+    val admin_o2 = (request.request.body \ "admin_o2").asOpt[String]
+    if (globals.userModel.save_admins(country, admin_g1, admin_g2, admin_l1, admin_l2, admin_o1, admin_o2)) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtosaveadministrators")))
     }
   }
 
