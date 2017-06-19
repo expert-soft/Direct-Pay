@@ -24,7 +24,7 @@
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
+            <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-key"></i> &nbsp; @Messages("directpay.security.securitysettings")</h2>
                     <div class="clearfix"></div>
@@ -40,13 +40,13 @@
 
             <!-- Instructions -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="background: @globals.country_appearance_background_5">
+            <div class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.security.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.security.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
 
                     <br><span class="calc_mid_destak_info">@Messages("directpay.security.step1")</span>
                     <p>@Messages("directpay.security.step1.explanation1")</p>
@@ -58,13 +58,13 @@
                     <p>@Messages("directpay.security.step3.explanation1")</p>
 
                     <br><span class="calc_mid_destak_info">@Messages("directpay.security.step4")</span>
-                    <p>@Messages("directpay.security.step4.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.security.step4.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
                         <p>@Messages("directpay.security.extrainfo.explanation1")</p>
-                        <p>@Messages("directpay.security.extrainfo.explanation2", globals.country_system_name)</p>
+                        <p>@Messages("directpay.security.extrainfo.explanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
                         <p>@Messages("directpay.security.extrainfo.explanation3")</p>
-                        <p>@Messages("directpay.security.extrainfo.explanation4", globals.country_system_name)</p>
+                        <p>@Messages("directpay.security.extrainfo.explanation4", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
                     </div>
                 </div>
             </div>
@@ -77,8 +77,8 @@
     <div class="disclaimer-text">
         <br>
         <p>@Messages("terminology.disclaimer"):</p>
-        <p>@Messages("directpay.security.disclaimer1", globals.country_system_name)</p>
-        <p>@Messages("directpay.security.disclaimer2", globals.country_system_name)</p>
+        <p>@Messages("directpay.security.disclaimer1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
+        <p>@Messages("directpay.security.disclaimer2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
     </div>
     <div class="clearfix"></div>
 
@@ -293,11 +293,11 @@
 
         <p>
             {{#onMailingList}}
-            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.enabled")</span></p>
+            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String]): <span class="calc_mid_destak_info">@Messages("terminology.enabled")</span></p>
             <button type="submit" class="btn btn-default" id="turnoff-emails">@Messages("emails.off.title")</button>
             {{/onMailingList}}
             {{^onMailingList}}
-            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.country_system_name): <span class="calc_mid_destak_info">@Messages("terminology.disabled")</span></p>
+            <p>@Messages("directpay.security.receiveupdatesfrommailinglist", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String]): <span class="calc_mid_destak_info">@Messages("terminology.disabled")</span></p>
             <button type="submit" class="btn btn-default" id="turnon-emails">@Messages("emails.on.title")</button>
             {{/onMailingList}}
         </p>

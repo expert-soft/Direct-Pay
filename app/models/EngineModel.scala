@@ -59,8 +59,8 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def UsersList() = DB.withConnection(db) { implicit c =>
-    SQL"""select * from get_users_list(${globals.country_currency_code})"""().map(row => (
+  def UsersList(country: String) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_users_list($country)"""().map(row => (
       row[Long]("id"),
       row[DateTime]("created"),
       row[String]("email"),
@@ -85,8 +85,8 @@ class EngineModel(val db: String = "default") {
     )).toList
   }
 
-  def OrderList(uid: Option[Long], search_criteria: Option[String], search_value: Option[String]) = DB.withConnection(db) { implicit c =>
-    SQL"""select * from get_orders_list($uid, ${globals.country_code}, ${search_criteria.get}, ${search_value.get})"""().map(row => ( //See 2.sql at lines 787 and 848
+  def OrderList(uid: Option[Long], country: String, search_criteria: Option[String], search_value: Option[String]) = DB.withConnection(db) { implicit c =>
+    SQL"""select * from get_orders_list($uid, $country, ${search_criteria.get}, ${search_value.get})"""().map(row => ( //See 2.sql at lines 787 and 848
       row[Long]("order_id"),
       row[Long]("user_id"),
       row[String]("country_id"),

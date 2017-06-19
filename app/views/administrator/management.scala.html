@@ -25,7 +25,7 @@
     <div class="row">
             <!-- Start of Search form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
+            <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.search.search")</h2>
                     <div class="clearfix"></div>
@@ -72,7 +72,7 @@
         <script id="script_admins-template" type="text/x-handlebars-template">
         <!-- Admins Form -->
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel" style="@globals.country_appearance_background_4">
+                <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                     <div class="x_title">
                         <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; @Messages("directpay.usersettings.country.item"): {{country_code}}</h2>
                         <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -150,14 +150,14 @@
 
 
     @if(securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("admin_o1") && securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("admin_o2")) {
-        <input type="hidden" id="initial_crypto_capital" value="@globals.country_system_initial_crypto_capital">
+        <input type="hidden" id="initial_crypto_capital" value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_initial_crypto_capital")">
         <p id="script-position"></p>
 
         <script id="script-template" type="text/x-handlebars-template">
             {{#each this}}
             <!-- Country Info -->
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                <div class="x_panel" style="background: @globals.country_appearance_background_6">
+                <div class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_6")">
                     <div class="x_title">
                         <h2 style="overflow: visible;"><i class="fa fa-globe"></i> &nbsp; {{country_code}} ({{currency}})</h2>
                             <!-- panel controls do not work due to being inside script -->

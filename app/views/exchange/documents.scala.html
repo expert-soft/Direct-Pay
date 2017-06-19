@@ -26,7 +26,7 @@
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
+            <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-file-text"> &nbsp;</i> @Messages("directpay.documents.requireddocuments")</h2>
                     <div class="clearfix"></div>
@@ -34,40 +34,40 @@
                 <div class="x_content">
                     <form id="documents_form" action="@routes.Application.uploadDocImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
                         @CSRF.formField
-                        <div id="div_doc_1" class="form-group" style="display: @if(globals.country_doc1_required && globals.country_doc1_ispicture) {block} else {none}">
-                            <label class="col-sm-3 col-md-3 control-label" for="doc1">@Messages(globals.country_doc1_name)</label>
+                        <div id="div_doc_1" class="form-group" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc1">@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])</label>
                             <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
                                 <input type="file" name="doc1" id="uploadBtn1" class="upload"/><input type="hidden" id="uploadOriginalText1">
                             </div>
                         <a href="#popupDetails" id="requestPopupDetails1" class="requestPopUp" doc="1" image_id="" fileName="" verified=""><span id="uploadText1"></span></a> &nbsp; <i id="docCheck1" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
                         </div>
-                        <div id="div_doc_2" class="form-group" style="display: @if(globals.country_doc2_required && globals.country_doc2_ispicture) {block} else {none}">
-                            <label class="col-sm-3 col-md-3 control-label" for="doc2">@Messages(globals.country_doc2_name)</label>
+                        <div id="div_doc_2" class="form-group" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc2">@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])</label>
                             <div id="uploadDiv2" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption2" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
                                 <input type="file" name="doc2" id="uploadBtn2" class="upload"/><input type="hidden" id="uploadOriginalText2">
                             </div>
                             <a href="#popupDetails" id="requestPopupDetails2" class="requestPopUp" doc="2" image_id="" fileName="" verified=""><span id="uploadText2"></span></a> &nbsp; <i id="docCheck2" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
                         </div>
-                        <div id="div_doc_3" class="form-group" style="display: @if(globals.country_doc3_required && globals.country_doc3_ispicture) {block} else {none}">
-                            <label class="col-sm-3 col-md-3 control-label" for="doc3">@Messages(globals.country_doc3_name)</label>
+                        <div id="div_doc_3" class="form-group" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc3">@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])</label>
                             <div id="uploadDiv3" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption3" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
                                 <input type="file" name="doc3" id="uploadBtn3" class="upload"/><input type="hidden" id="uploadOriginalText3">
                             </div>
                             <a href="#popupDetails" id="requestPopupDetails3" class="requestPopUp" doc="3" image_id="" fileName="" verified=""><span id="uploadText3"></span></a> &nbsp; <i id="docCheck3" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
                         </div>
-                        <div id="div_doc_4" class="form-group" style="display: @if(globals.country_doc4_required && globals.country_doc4_ispicture) {block} else {none}">
-                            <label class="col-sm-3 col-md-3 control-label" for="doc4">@Messages(globals.country_doc4_name)</label>
+                        <div id="div_doc_4" class="form-group" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc4">@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])</label>
                             <div id="uploadDiv4" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption4" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
                                 <input type="file" name="doc4" id="uploadBtn4" class="upload"/><input type="hidden" id="uploadOriginalText4">
                             </div>
                             <a href="#popupDetails" id="requestPopupDetails4" class="requestPopUp" doc="4" image_id="" fileName="" verified=""><span id="uploadText4"></span></a> &nbsp; <i id="docCheck4" class="fa fa-check" style="display: none; font-size: 18px; color: yellowgreen;" title="@Messages("directpay.documents.documentverified")"></i>
                         </div>
-                        <div id="div_doc_5" class="form-group" style="display: @if(globals.country_doc5_required && globals.country_doc5_ispicture) {block} else {none}">
-                            <label class="col-sm-3 col-md-3 control-label" for="doc5">@Messages(globals.country_doc5_name)</label>
+                        <div id="div_doc_5" class="form-group" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}">
+                            <label class="col-sm-3 col-md-3 control-label" for="doc5">@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])</label>
                             <div id="uploadDiv5" class="fileUpload btn btn-info" style="top: -6px;">
                                 <span id="uploadButtonCaption5" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
                                 <input type="file" name="doc5" id="uploadBtn5" class="upload"/><input type="hidden" id="uploadOriginalText5">
@@ -91,27 +91,27 @@
 
             <!-- Instructions -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="background: @globals.country_appearance_background_5">
+            <div class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <p>@Messages("directpay.documents.explanation1", globals.country_system_name)</p>
+                    <p>@Messages("directpay.documents.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
                     <ul>
-                        <li id="p_expl_doc_1" style="display: @if(globals.country_doc1_required && globals.country_doc1_ispicture) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.country_doc1_name) </span></li>
-                        <li id="p_expl_doc_2" style="display: @if(globals.country_doc2_required && globals.country_doc2_ispicture) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.country_doc2_name) </span></li>
-                        <li id="p_expl_doc_3" style="display: @if(globals.country_doc3_required && globals.country_doc3_ispicture) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.country_doc3_name) </span></li>
-                        <li id="p_expl_doc_4" style="display: @if(globals.country_doc4_required && globals.country_doc4_ispicture) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.country_doc4_name) </span></li>
-                        <li id="p_expl_doc_5" style="display: @if(globals.country_doc5_required && globals.country_doc5_ispicture) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.country_doc5_name) </span></li>
+                        <li id="p_expl_doc_1" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String]) </span></li>
+                        <li id="p_expl_doc_2" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String]) </span></li>
+                        <li id="p_expl_doc_3" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String]) </span></li>
+                        <li id="p_expl_doc_4" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String]) </span></li>
+                        <li id="p_expl_doc_5" style="display: @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_required", 0).asInstanceOf[Boolean] && globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_ispicture", 0).asInstanceOf[Boolean]) {block} else {none}"><span class="calc_low_destak_info">- @Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String]) </span></li>
                     </ul>
                     <p>@Messages("directpay.documents.explanation2") <span class="calc_low_destak_info">@Messages("directpay.documents.supportedfiletypes")</span></p>
                     <p>@Messages("directpay.documents.explanation3")</p>
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
-                        <p>@Messages("directpay.documents.extraexplanation1", globals.country_system_name)</p>
-                        <p>@Messages("directpay.documents.extraexplanation2", globals.country_system_name)</p>
-                        <p>@Messages("directpay.documents.extraexplanation3", globals.country_system_name)</p>
+                        <p>@Messages("directpay.documents.extraexplanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.documents.extraexplanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.documents.extraexplanation3", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
                     </div>
                 </div>
             </div>
@@ -126,8 +126,8 @@
     <div class="disclaimer-text">
         <br>
         <p>@Messages("terminology.disclaimer"):</p>
-        <p>@Messages("directpay.user_settings.disclaimer1", globals.country_system_name)</p>
-        <p>@Messages("directpay.user_settings.disclaimer3", globals.country_system_name)</p>
+        <p>@Messages("directpay.user_settings.disclaimer1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
+        <p>@Messages("directpay.user_settings.disclaimer3", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
     </div>
     <div class="clearfix"></div>
         <!-- /page content -->
@@ -146,7 +146,7 @@
                 <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
             </div>
             <a class="popupClose" href="#">&times;</a>
-            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
+            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])">
             <p>@Messages("directpay.documents.verified"): <span id="popUpPictureInfo1"></span> &nbsp; <i id="popupCheck" class="fa fa-check"  style="display: none; font-size: 14px; color: yellowgreen;"></i></p>
             <p>@Messages("directpay.documents.filename"): <span id="popUpPictureInfo2"></span></p>
             <p><img src="placeholder" id="the_picture"></p>

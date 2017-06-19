@@ -433,7 +433,7 @@ begin
 
   b_global_fee = b_total_fee - a_local_fee;; -- to avoid rounding errors, care with total_fee and balances on hold
   if a_status = 'OK' or a_status = 'Ch' then
-    if a_status = 'OK' then -- ### need to test a range of 0.02 difference (@globals.country_minimum_difference)
+    if a_status = 'OK' then -- ### need to test a range of 0.02 difference (@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "minimum_difference)
       update balances set balance = balance - a_processed_value - a_global_fee - a_local_fee, hold = hold - b_initial_value - b_total_fee where currency = b_currency and user_id = b_user_id;;
       update orders set status = 'OK', closed = current_timestamp, processed_by = a_admin_id, net_value = a_processed_value, total_fee = a_local_fee + a_global_fee, comment = a_comment, image_id = a_image_id where order_id = a_order_id and status = 'Lk';;
     end if;;

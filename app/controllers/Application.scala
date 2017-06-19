@@ -115,9 +115,11 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     var partner = ""
     var partner_account = ""
     var order_type = "DS"
-    if (globals.country_operations_organized == "convert") order_type = "DCS"
+    if (globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert") order_type = "DCS"
     var local_fee = 0.1
     var global_fee = 0.1
+    val decimal_separator = globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String]
+    val country_id = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
     request.body.files map {
       file =>
         val fileName = file.filename
@@ -128,7 +130,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         // ### need to treat string to double exceptions. If not double value, reject order creation
         //  = try { Some(s.toDouble) } catch { case _ => None }
         initial_value = try {
-          ((file.key.substring(0, position)).replace(globals.country_decimal_separator, ".")).toDouble
+          ((file.key.substring(0, position)).replace(decimal_separator, ".")).toDouble
         } catch {
           case _ => 0.0
         }
@@ -140,16 +142,10 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
             order_type = "D"
             partner = ""
             partner_account = ""
-            /*            local_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
-            global_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
-          } else {
-            local_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
-            global_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
-*/
           }
           local_fee = globals.calculate_local_fee(order_type, initial_value).toDouble
           global_fee = globals.calculate_global_fee(order_type, initial_value).toDouble
-          val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, order_type, "Op", partner, globals.country_currency_code, initial_value, local_fee, global_fee, "", "", partner_account, fileName, image_id)
+          val success = globals.userModel.create_order_with_picture(request.user.id, country_id, order_type, "Op", partner, globals.settings(Option(securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")), "country_currency_code", 2).asInstanceOf[String], initial_value, local_fee, global_fee, "", "", partner_account, fileName, image_id)
         }
     }
     Ok(views.html.exchange.dashboard(request.user))
@@ -172,10 +168,11 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val position2 = file.key.substring(position + 1, file.key.length).indexOf("|") + position + 1
         val position3 = file.key.substring(position2 + 1, file.key.length).indexOf("|") + position2 + 1
         val position4 = file.key.substring(position3 + 1, file.key.length).indexOf("|") + position3 + 1
-        // ### need to treat string to double exceptions. If not double value, reject order creation
+        val decimal_separator = globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String]
+        //val country_id = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
         //  = try { Some(s.toDouble) } catch { case _ => None }
         processed_value = try {
-          ((file.key.substring(0, position)).replace(globals.country_decimal_separator, ".")).toDouble
+          ((file.key.substring(0, position)).replace(decimal_separator, ".")).toDouble
         } catch {
           case _ => 0.0
         }
@@ -208,7 +205,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val docNumber = file.key
         val user_id = request.user.id
         val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
-        var success = globals.userModel.create_order_with_picture(user_id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName, image_id)
+        var success = globals.userModel.create_order_with_picture(user_id, securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br"), "V", "Op", docNumber, globals.settings(Option(securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")), "country_currency_code", 2).asInstanceOf[String], 0, 0, 0, "", "", "", fileName, image_id)
         success = globals.userModel.update_user_doc(user_id, docNumber, image_id, fileName)
     }
     Ok(views.html.exchange.dashboard(request.user))

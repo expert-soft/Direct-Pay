@@ -83,9 +83,10 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def orders_list = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val country = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
     val search_criteria = (request.request.body \ "search_criteria").asOpt[String]
     val search_value = (request.request.body \ "search_value").asOpt[String]
-    val orders_list_info = globals.engineModel.OrderList(Some(request.user.id), search_criteria, search_value)
+    val orders_list_info = globals.engineModel.OrderList(Some(request.user.id), country, search_criteria, search_value)
     Ok(Json.toJson(orders_list_info.map({ c =>
       Json.obj(
         "order_id" -> c._1,
@@ -119,7 +120,8 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def users_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val users_list_info = globals.engineModel.UsersList()
+    val country = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
+    val users_list_info = globals.engineModel.UsersList(country)
     Ok(Json.toJson(users_list_info.map({ c =>
       Json.obj(
         "id" -> c._1,
@@ -204,7 +206,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.country_currency_code)
+    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_code", 2).asInstanceOf[String])
     Ok(Json.toJson(balances.map({ c =>
       Json.obj(
         "currency" -> c._1,
@@ -218,7 +220,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def get_admins = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val admins = globals.engineModel.GetAdmins(globals.country_code)
+    val admins = globals.engineModel.GetAdmins(securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br"))
     Ok(Json.toJson(admins.map({ c =>
       Json.obj(
         "admin_g1" -> c._1,
@@ -332,7 +334,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val status = (request.request.body \ "status").asOpt[String]
     var partner = (request.request.body \ "partner").asOpt[String]
     if (partner == "undefined")
-      partner = globals.country_partner1_account.asInstanceOf[Option[String]] // this is the preferred partner ### should find another way in the future, specially for F orders
+      partner = Option(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_account", 2).asInstanceOf[String]) // this is the preferred partner ### should find another way in the future, specially for F orders
     val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
     val local_fee: BigDecimal = globals.calculate_local_fee(order_type.get, initial_value.get)
     val global_fee: BigDecimal = globals.calculate_global_fee(order_type.get, initial_value.get)
@@ -340,7 +342,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val agency = (request.request.body \ "agency").asOpt[String]
     val account = (request.request.body \ "account").asOpt[String]
     val doc1 = (request.request.body \ "doc1").asOpt[String]
-    if (globals.userModel.create_order(request.user.id, globals.country_code, order_type, status, partner, globals.country_currency_code, initial_value, Option(local_fee), Option(global_fee), bank, agency, account, doc1)) {
+    if (globals.userModel.create_order(request.user.id, securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br"), order_type, status, partner, globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_code", 2).asInstanceOf[String], initial_value, Option(local_fee), Option(global_fee), bank, agency, account, doc1)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtocreateorder")))

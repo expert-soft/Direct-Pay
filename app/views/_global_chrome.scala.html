@@ -1,6 +1,10 @@
 @(title: String, scripts: Html = Html(""), styles: Html = Html(""))(content: Html)(implicit request: RequestHeader, messages: Messages)
 @import securesocial.core.UsernamePasswordProvider
 
+
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -32,9 +36,10 @@
           <script src="@routes.Assets.at("js/vendor/respond.min.js")"></script>
         <![endif]-->
     </head>
-    <body class="nav-md" style="background: @globals.country_appearance_background_1; color: @globals.country_appearance_text_5">
+    <body class="nav-md" style="background: @globals.settings(Option("br"), "country_appearance_background_1", 2).asInstanceOf[String]"; color: @globals.settings(Option("br"), "country_appearance_text_5", 2).asInstanceOf[String]">
 
         @content
+
 
         <script src="@routes.Assets.at("js/vendor/jquery-2.1.1.min.js")"></script>
         <script src="@routes.Assets.at("js/vendor/jquery-migrate-1.2.1.min.js")"></script>
