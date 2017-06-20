@@ -169,7 +169,7 @@ class Registration @Inject() (val messagesApi: MessagesApi) extends Controller w
               false,
               None,
               false,
-              Option(globals.country_code),
+              securesocial.core.SecureSocial.currentUser.get.user_country,
               false
             ), info.password, token, info.pgp)
             txbitsUserService.deleteToken(t.uuid)

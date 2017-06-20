@@ -25,8 +25,11 @@ GET         /contract                                  controllers.Application.c
 
 # Administrator's pages
 GET         /management                                controllers.Application.management
+GET         /iapi/1/management_data                    controllers.IAPI.APIv1.management_data
 GET         /users_list                                controllers.Application.users_list
-GET         /orders_list                               controllers.Application.orders_list
+GET         /orders_list/:search_criteria/:search_value controllers.Application.orders_list(search_criteria, search_value)
+POST        /iapi/1/orders_list                        controllers.IAPI.APIv1.orders_list
+POST        /orders_list                               controllers.Application.uploadWithdrawImage()
 
 
 # Route for changing the language cookie
@@ -40,9 +43,8 @@ GET         /iapi/1                                    controllers.IAPI.APIv1.in
 GET         /iapi/1/user                               controllers.IAPI.APIv1.user
 GET         /iapi/1/user_name_info                     controllers.IAPI.APIv1.user_name_info
 GET         /iapi/1/get_bank_data                      controllers.IAPI.APIv1.get_bank_data
+GET         /iapi/1/get_admins                         controllers.IAPI.APIv1.get_admins
 GET         /iapi/1/users_list                         controllers.IAPI.APIv1.users_list
-GET         /iapi/1/management_data                    controllers.IAPI.APIv1.management_data
-GET         /iapi/1/orders_list                        controllers.IAPI.APIv1.orders_list
 GET         /iapi/1/get_docs_info                      controllers.IAPI.APIv1.get_docs_info
 GET         /iapi/1/get_log_events                     controllers.IAPI.APIv1.get_log_events
 GET         /iapi/1/balance                            controllers.IAPI.APIv1.balance
@@ -59,6 +61,7 @@ POST        /iapi/1/update_order                       controllers.IAPI.APIv1.up
 POST        /iapi/1/update_personal_info               controllers.IAPI.APIv1.update_personal_info
 POST        /iapi/1/update_bank_data                   controllers.IAPI.APIv1.update_bank_data
 POST        /iapi/1/change_manualauto                  controllers.IAPI.APIv1.change_manualauto
+POST        /iapi/1/save_admins                        controllers.IAPI.APIv1.save_admins
 POST        /dashboard                                 controllers.Application.uploadDepositImage()
 POST        /documents                                 controllers.Application.uploadDocImage()
 GET         /images/*image_id                          controllers.Application.getimage(image_id)

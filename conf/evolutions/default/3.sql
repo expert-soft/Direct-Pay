@@ -53,6 +53,8 @@ begin
       a_partner
     ) returning id into new_user_id;;
   -- create balances associated with users
+
+-- ### change to create balance only for the countries user is registered
   insert into balances (user_id, currency) select new_user_id, currency from currencies;;
   insert into users_passwords (user_id, password) values (
     new_user_id,
@@ -147,54 +149,6 @@ drop function if exists update_user (bigint, varchar(256), bool, varchar(10)) ca
 -- all of the following functions are copied from 1.sql
 
 -- NOT "security definer", must be privileged user to use this function directly
-create or replace function
-create_user (
-  a_email varchar(256),
-  a_password text,
-  a_onMailingList bool,
-  a_pgp text
-) returns bigint as $$
-declare
-  new_user_id bigint;;
-begin
-  insert into users(id, email, on_mailing_list, pgp) values (
-      generate_random_user_id(),
-      a_email,
-      a_onMailingList,
-      a_pgp
-    ) returning id into new_user_id;;
-  -- create balances associated with users
-  insert into balances (user_id, currency) select new_user_id, currency from currencies;;
-  insert into users_passwords (user_id, password) values (
-    new_user_id,
-    crypt(a_password, gen_salt('bf', 8))
-  );;
-  return new_user_id;;
-end;;
-$$ language plpgsql volatile security invoker set search_path = public, pg_temp cost 100;
-
-create or replace function
-create_user_complete (
-  a_email varchar(256),
-  a_password text,
-  a_onMailingList bool,
-  a_pgp text,
-  a_token varchar(256)
-) returns bigint as $$
-declare
-  valid_token boolean;;
-begin
-  if a_email = '' then
-    raise 'User id 0 is not allowed to use this function.';;
-  end if;;
-  select true into valid_token from tokens where token = a_token and email = a_email and is_signup = true and expiration >= current_timestamp;;
-  if valid_token is null then
-    return null;;
-  end if;;
-  delete from tokens where email = a_email and is_signup = true;;
-  return create_user(a_email, a_password, a_onMailingList, a_pgp);;
-end;;
-$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
 create or replace function
 update_user (

@@ -10,7 +10,7 @@ $(function() {
                 type: 'success',
                 text_escape: true
             });
-            window.location.href=$('#hidden_form_validation_messages').attr('dashboard_url');
+            window.location.href = '/dashboard';
         });
     }
 
@@ -24,9 +24,7 @@ $(function() {
 
     function FormValidating() {
         var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
-        var value_s = $('#value').val();
-        if (decimal_separator == ",")
-            value_s = value_s.replace(decimal_separator, ".");
+        var value_s = UnformatNumber($('#value').val());
         if ($.isNumeric(value_s)) {
             var value = parseFloat(value_s);
             if (value > 0) {
@@ -34,11 +32,11 @@ $(function() {
                 submit_tocrypto(value);
             }
             else {
-                alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+                alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
             }
         }
         else {
-            alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+            alert(Messages('directpay.formvalidation.valuemustbenumerical'));
         }
     }
 });

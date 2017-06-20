@@ -6,7 +6,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(auth.inputFieldConstructor.f(_)(messages)) }
 
 @scripts = {
-    <script src="@routes.Assets.at("js/history.js")" xmlns="http://www.w3.org/1999/html"></script>
+    <script src="@routes.Assets.at("js/history.js")"></script>
 }
 
 @exchange._chrome(Messages("chrome.exchange.navigation.history.label"), "dashboard", scripts) {
@@ -18,13 +18,13 @@
     </div>
 
 
-    <input type="hidden" id="hidden_fees_information" decimal_separator = "@globals.country_decimal_separator">
+    <input type="hidden" id="hidden_fees_information" decimal_separator = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator")">
 
     <div class="clearfix"></div>
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
+            <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-list"></i> &nbsp; @Messages("directpay.history.usersoperationshistory")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -41,7 +41,7 @@
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel" style="@globals.country_appearance_background_4">
+            <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-bookmark"></i> &nbsp; @Messages("directpay.history.loghistory")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -66,7 +66,7 @@
                 <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("directpay.legend.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("directpay.legend.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
             </div>
             <a class="popupClose" href="#">&times;</a>
-            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
+            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])">
             <p><img src="placeholder" id="the_picture"></p>
             <p><span id="popUpPictureInfo3"></span></p>
             <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
@@ -83,19 +83,23 @@
                 <tr>
                     <th>@Messages("terminology.type")</th>
                     <th>@Messages("terminology.status")</th>
-                    <th>@Messages("terminology.created")</th>
-                    <th>@Messages("terminology.requested")</th>
+                    <th width="100px">@Messages("terminology.created")</th>
+                    <th style="text-align: center" width="70px">@Messages("directpay.history.requested", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</th>
                     <th>@Messages("terminology.executed")</th>
-                    <th>@Messages("terminology.value")</th>
-                    <th>@Messages("terminology.fee")</th>
+                    <th style="text-align: center" width="70px">@Messages("directpay.history.value", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</th>
+                    <th style="text-align: center" width="70px">@Messages("directpay.history.fee", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</th>
                     <th>@Messages("terminology.comment")</th>
-                    <th>@Messages("directpay.admin.orderslist.doc")</th>
-                    <th>@Messages("directpay.history.sum", globals.country_currency_symbol)</th>
-                    <th>@Messages("directpay.history.sum", globals.country_currency_crypto)</th>
+                    <th>@Messages("directpay.admin.orderslist.document")</th>
+                    <th style="text-align: center" width="70px">@Messages("directpay.history.sum", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</th>
+                    <th style="text-align: center" width="70px">@Messages("directpay.history.hold", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</th>
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String]=="convert") {
+                        <th style="text-align: center" width="70px"> @Messages("directpay.history.sum", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]) </th>
+                    }
                 </tr>
             </thead>
             <tbody>
-                {{#each this}}
+                <tr><td colspan="9" align="right"><span class="calc_low_destak_info">@Messages("directpay.history.currentfundsposition")</span></td><td align="right"><span id="final_sum"></span></td><td align="right"><span id="final_sum_hold"></span></td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized")=="convert") {<td align="right"><span id="final_sum_c"></span></td>}</tr>
+            {{#each this}}
                 <tr id="{{order_id}}">
                     <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}</td>
                     <td {{class_status}} title="@Messages("terminology.status") = {{explained_status}}">{{status}}</td>
@@ -105,11 +109,15 @@
                     <td {{class_value}} style="text-align: right;">{{net_value_s}}</td>
                     <td style="text-align: right;">{{total_fee_s}}</td>
                     <td>{{comment}}</td>
-                    <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                    <td style="text-align: right;">###</td>
-                    <td style="text-align: right;">###</td>
+                    <td style="text-align: right;"><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
+                    <td style="text-align: right;" title="@Messages("terminology.wallet.available") = {{initial_sum}}">{{initial_sum}}</td>
+                    <td style="text-align: right;" title="@Messages("terminology.wallet.onhold") = {{initial_sum_hold}}">{{initial_sum_hold}}</td>
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized")=="convert") {
+                        <td style="text-align: right;" title="@Messages("terminology.wallet.available") = {{initial_sum_available_c}}, @Messages("terminology.wallet.onhold") = {{initial_sum_hold_c}}">{{initial_sum_c}} </td>
+                    }
                 </tr>
-                {{/each}}
+            {{/each}}
+                <tr><td colspan="9" align="right"><span class="calc_low_destak_info">@Messages("directpay.history.initialfundsposition")</span></td><td align="right"><span id="initial_sum" title=""></span></td><td align="right"><span id="initial_sum_hold"></span></td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized")=="convert") {<td align="right"><span id="initial_sum_c"></span></td>}</tr>
             </tbody>
         </table>
     </script>
@@ -118,7 +126,7 @@
 
         <!-- Instructions -->
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel" style="background: @globals.country_appearance_background_5">
+        <div class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
             <div class="x_title">
                 <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("directpay.legend")</h2>
                 <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -143,10 +151,10 @@
                             </tr>
                             <tr>
                                 <td class=center_bold>C</td>
-                                <td>@Messages("directpay.legend.convertto") @globals.country_currency_crypto</td>
+                                <td>@Messages("directpay.legend.convertto") @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</td>
                                 <td class=center_bold>F</td>
-                                <td>@Messages("directpay.legend.convertto") @globals.country_currency_symbol</td>
-                                <td class=bgn_green>DCS</td>
+                                <td>@Messages("directpay.legend.convertto") @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]</td>
+                                <td class=bgn_green>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized") == "convert"){DCS}else{DS}</td>
                                 <td>@Messages("directpay.legend.depositandsend")</td>
                             </tr>
                             <tr>
@@ -154,7 +162,7 @@
                                 <td>@Messages("directpay.legend.sendtopartner")</td>
                                 <td class=bgn_yellow>W</td>
                                 <td>@Messages("directpay.legend.withdraw")</td>
-                                <td class=bgn_yellow>RFW</td>
+                                <td class=bgn_yellow>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized") == "convert"){RFW}else{RW}</td>
                                 <td>@Messages("directpay.legend.receiveandwithdraw")</td>
                             </tr>
                         </tbody>

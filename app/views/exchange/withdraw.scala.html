@@ -21,11 +21,12 @@
         </div>
     </div>
 
+
     <div class="clearfix"></div>
     <div class="row">
             <!-- Start of form -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div id="withdraw" class="x_panel" style="@globals.country_appearance_background_4">
+            <div id="withdraw" class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-minus"></i> &nbsp; @Messages("directpay.withdraw.requestwithdrawal")</h2>
                     <div class="clearfix"></div>
@@ -33,49 +34,58 @@
                 <div class="x_content">
                     <form id="form1" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6 col-xs-12">@Messages("terminology.value") (@globals.country_currency_symbol)</label>
-                            <div class="col-md-4 col-sm-3">
-                                <input id="value" class="form-control col-md-3 col-xs-12 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
+                            <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("terminology.value") (@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</label>
+                            <div class="col-md-4 col-sm-4">
+                                <input id="value" class="form-control col-md-8 col-xs-12 triggers_fee_calculation" type="text" title="@Messages("terminology.value")" autocomplete="off">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-3 col-xs-12">@Messages("directpay.usersettings.bank.item")</label>
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                <input type="hidden" id="hidden_bank" value="{{bank}}">
-                                <select id="banks" class="form-control triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
-                                    <option value="00">@Messages("directpay.usersettings.notselected")</option>
-                                    @if(globals.country_bank1_code != "") { <option value="@globals.country_bank1_code">@globals.country_bank1_code - @globals.country_bank1_name</option> }
-                                    @if(globals.country_bank2_code != "") { <option value="@globals.country_bank2_code">@globals.country_bank2_code - @globals.country_bank2_name</option> }
-                                    @if(globals.country_bank3_code != "") { <option value="@globals.country_bank3_code">@globals.country_bank3_code - @globals.country_bank3_name</option> }
-                                    @if(globals.country_bank4_code != "") { <option value="@globals.country_bank4_code">@globals.country_bank4_code - @globals.country_bank4_name</option> }
-                                    @if(globals.country_bank5_code != "") { <option value="@globals.country_bank5_code">@globals.country_bank5_code - @globals.country_bank5_name</option> }
-                                    @if(globals.country_bank6_code != "") { <option value="@globals.country_bank6_code">@globals.country_bank6_code - @globals.country_bank6_name</option> }
-                                    @if(globals.country_bank7_code != "") { <option value="@globals.country_bank7_code">@globals.country_bank7_code - @globals.country_bank7_name</option> }
-                                    @if(globals.country_bank8_code != "") { <option value="@globals.country_bank8_code">@globals.country_bank8_code - @globals.country_bank8_name</option> }
-                                    @if(globals.country_bank9_code != "") { <option value="@globals.country_bank9_code">@globals.country_bank9_code - @globals.country_bank9_name</option> }
-                                    @if(globals.country_bank10_code != "") { <option value="@globals.country_bank10_code">@globals.country_bank10_code - @globals.country_bank10_name</option> }
-                                    @if(globals.country_bank11_code != "") { <option value="@globals.country_bank11_code">@globals.country_bank11_code - @globals.country_bank11_name</option> }
-                                    @if(globals.country_bank12_code != "") { <option value="@globals.country_bank12_code">@globals.country_bank12_code - @globals.country_bank12_name</option> }
-                                    @if(globals.country_bank13_code != "") { <option value="@globals.country_bank13_code">@globals.country_bank13_code - @globals.country_bank13_name</option> }
-                                    @if(globals.country_bank14_code != "") { <option value="@globals.country_bank14_code">@globals.country_bank14_code - @globals.country_bank14_name</option> }
-                                    @if(globals.country_bank15_code != "") { <option value="@globals.country_bank15_code">@globals.country_bank15_code - @globals.country_bank15_name</option> }
-                                    @if(globals.country_bank16_code != "") { <option value="@globals.country_bank16_code">@globals.country_bank16_code - @globals.country_bank16_name</option> }
-                                    @if(globals.country_bank17_code != "") { <option value="@globals.country_bank17_code">@globals.country_bank17_code - @globals.country_bank17_name</option> }
-                                    @if(globals.country_bank18_code != "") { <option value="@globals.country_bank18_code">@globals.country_bank18_code - @globals.country_bank18_name</option> }
-                                    @if(globals.country_bank19_code != "") { <option value="@globals.country_bank19_code">@globals.country_bank19_code - @globals.country_bank19_name</option> }
-                                    @if(globals.country_bank20_code != "") { <option value="@globals.country_bank20_code">@globals.country_bank20_code - @globals.country_bank20_name</option> }
-                                </select>
+                        @if(!globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_iban", 0).asInstanceOf[Boolean]){
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4">@Messages("directpay.usersettings.bank.item")</label>
+                                <div class="col-md-7 col-sm-7 col-xs-8">
+                                    <input type="hidden" id="hidden_bank" value="">
+                                    <select id="banks" class="form-control col-md-8 col-xs-12 triggers_fee_calculation" title="@Messages("directpay.usersettings.bank.title")">
+                                        <option value="00">@Messages("directpay.usersettings.notselected")</option>
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank1_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank1_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank1_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank1_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank2_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank2_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank2_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank2_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank3_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank3_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank3_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank3_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank4_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank4_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank4_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank4_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank5_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank5_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank5_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank5_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank6_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank6_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank6_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank6_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank7_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank7_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank7_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank7_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank8_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank8_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank8_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank8_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank9_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank9_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank9_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank9_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank10_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank10_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank10_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank10_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank11_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank11_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank11_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank11_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank12_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank12_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank12_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank12_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank13_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank13_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank13_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank13_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank14_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank14_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank14_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank14_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank15_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank15_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank15_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank15_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank16_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank16_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank16_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank16_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank17_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank17_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank17_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank17_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank18_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank18_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank18_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank18_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank19_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank19_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank19_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank19_name")</option> }
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank20_code", 2).asInstanceOf[String] != "") { <option value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank20_code", 2).asInstanceOf[String]">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank20_code", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_bank20_name")</option> }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6" for="agency">@Messages("terminology.agency")</label>
-                            <div class="col-md-5 col-sm-5"><input type="text" id="agency" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-7 col-xs-12"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-6" for="account">@Messages("terminology.account")</label>
-                            <div class="col-md-5 col-sm-5"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-7 col-xs-12"></div>
-                        </div>
-                        @if(globals.country_fee_withdrawal_percent != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4" for="agency">@Messages("terminology.agency")</label>
+                                <div class="col-md-4 col-sm-6"><input type="text" id="agency" value="" name="agency" title="@Messages("directpay.usersettings.bankagency.title")" class="form-control col-md-8 col-xs-12"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4" for="account">@Messages("terminology.account")</label>
+                                <div class="col-md-4 col-sm-6"><input type="text" id="account" value="" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-8 col-xs-12"></div>
+                            </div>
+                            <input type="hidden" id="is_iban" value="false">
+                        } else {
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5 col-xs-4" for="account">@Messages("terminology.ibancode")</label>
+                                <div class="col-md-4 col-sm-6"><input type="text" id="account" name="account" title="@Messages("directpay.usersettings.bankaccount.title")" class="form-control col-md-8 col-xs-12"></div>
+                            </div>
+                            <input type="hidden" id="is_iban" value="true"><input type="hidden" id="banks" value="IBAN"><input type="hidden" id="agency" value="">
+                        }
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_withdrawal_percent") != 0) {<p align="right">@Messages("terminology.calculatedfee"): <span class="calc_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_fee" class="calc_destak_info"></span></p>}
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
@@ -86,13 +96,16 @@
                             listofdocuments_message="@Messages("directpay.withdraw.documentsrequiredtowithdraw")"
                             first_name="@Messages("directpay.usersettings.firstname")"
                             last_name="@Messages("directpay.usersettings.lastname")"
-                            country_doc1="@Messages(globals.country_doc1_name)"
-                            country_doc2="@Messages(globals.country_doc2_name)"
-                            country_doc3="@Messages(globals.country_doc3_name)"
-                            country_doc4="@Messages(globals.country_doc4_name)"
-                            country_doc5="@Messages(globals.country_doc5_name)"
+                            country_doc1="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])"
+                            country_doc2="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])"
+                            country_doc3="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])"
+                            country_doc4="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])"
+                            country_doc5="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])"
                         >
-                        @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {<p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youarenotallowedtothisoperation")</p>}
+                        @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {
+                            <p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youarenotallowedtothisoperation")</p>
+                            <p><a href="@routes.Application.documents().url">@Messages("directpay.withdraw.uploadyourdocuments")</a> @Messages("directpay.withdraw.orwaitthemtobeverified").</p>
+                        }
                         <input type="hidden" id="total_withdraw_fee">
                     </form>
                 </div>
@@ -102,7 +115,7 @@
 
         <!-- Wallet -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div  id="wallet" class="x_panel" style="background: @globals.country_appearance_background_6">
+            <div id="wallet" class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_6")">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -110,9 +123,11 @@
                 <div class="x_content">
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
                     <table id="table_wallet" class="table-wallet">
-                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized") == "convert") {
+                            <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</td></tr>
+                        }
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
                 </div>
@@ -125,28 +140,30 @@
 
             <!-- Instructions -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel" style="background: @globals.country_appearance_background_5">
+            <div class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <p>@Messages("directpay.withdraw.shortinfo1")</p>
-                    <p>@Messages("directpay.withdraw.yourmaximumwithdrawal"): <span class="calc_destak_info">@globals.country_currency_symbol </span><span id="calc_maximum_withdraw" class="calc_destak_info"></span></p>
+                    <p>@Messages("directpay.withdraw.yourmaximumwithdrawal"): <span class="calc_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_maximum_withdraw" class="calc_destak_info"></span></p>
                     <p>@Messages("directpay.withdraw.shortinfo2")</p>
                     @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) {
-                        <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
+                        <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator") == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
                     }
 
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
-                        <p>@Messages("directpay.withdraw.explanation1") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_deposit_critical_value2">@globals.country_critical_value2</span>)</span>.</p>
-                        <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
-                        <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
+                        <p>@Messages("directpay.withdraw.explanation1") <span class="calc_low_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] <span id="calc_deposit_critical_value2">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value2", 1).asInstanceOf[Double]</span>)</span>.</p>
+                        <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_withdrawal_percent", 1).asInstanceOf[Double]) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
+                        @if(!globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_iban", 0).asInstanceOf[Boolean]) {
+                            <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
                         <p>@Messages("directpay.withdraw.preferentialbanks"): <span id="calc_list_preferential_banks"></span>. @Messages("directpay.withdraw.yougetlowerfees")</p>
-                        @if(globals.country_minimum_value != 0) {
-                            <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                            <p>@Messages("directpay.withdraw.explanation3a") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value"></span></span> @Messages("directpay.withdraw.explanation3b") <span class="calc_low_destak_info">@globals.country_currency_symbol <span id="calc_withdraw_minimum_value_extra_fee"></span></span>.</p>
+                        }
+                        <p>@Messages("directpay.withdraw.explanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol"), globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_minimum_value") != 0) {
+                            <p>@Messages("directpay.withdraw.explanation3a") <span class="calc_low_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] <span id="calc_withdraw_minimum_value"></span></span> @Messages("directpay.withdraw.explanation3b") <span class="calc_low_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] <span id="calc_withdraw_minimum_value_extra_fee"></span></span>.</p>
                         }
                     </div>
                 </div>

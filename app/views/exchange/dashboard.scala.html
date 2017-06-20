@@ -2,6 +2,7 @@
 
 @scripts = {
     <script src="@routes.Assets.at("js/dashboard.js")"></script>
+    <script src="@routes.Assets.at("js/fee_messages.js?v=1.0.0.1")"></script>
     <script src="@routes.Assets.at("js/wallet.js?v=1.0.0.1")"></script>
 }
 
@@ -19,7 +20,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                 <!-- Wallet -->
-            <div id="wallet" class="x_panel" style="background: @globals.country_appearance_background_6">
+            <div id="wallet" class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_6")">
                 <div class="x_title">
                     <h2><i class="fa fa-money"></i> &nbsp; @Messages("terminology.wallet.yourwallet")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
@@ -27,9 +28,11 @@
                 <div class="x_content">
                     <div class="wallet_destak_icon"><i class="fa fa-money"></i></div>
                     <table id="table_wallet" class="table-wallet">
-                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
-                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.country_currency_symbol &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
-                        <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.country_currency_crypto</td></tr>
+                        <tr><td>@Messages("terminology.wallet.available"): &nbsp; </td><td> &nbsp; @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] &nbsp; </td><td class="wallet_destak" style="text-align: right;"><span id="available_fiat"></span></td></tr>
+                        <tr><td>@Messages("terminology.wallet.onhold"): &nbsp; </td><td> &nbsp; @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] &nbsp; </td><td><span id="hold_fiat"></span>&nbsp;</td></tr>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert") {
+                            <tr><td>@Messages("terminology.wallet.crypto"): &nbsp; </td><td></td><td><span id="amount_crypto"></span>&nbsp;</td><td><span class="wallet_crypto_name"> &nbsp; @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</td></tr>
+                        }
                         <tr><td>@Messages("terminology.wallet.total"): &nbsp; </td><td></td><td class="wallet_destak_sum"><span id="amount_total"></span></td><t</tr>
                     </table>
                 </div>
@@ -41,7 +44,7 @@
 
 
                 <!-- Form -->
-            <div class="x_panel" style="@globals.country_appearance_background_4">
+            <div class="x_panel" style="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_4")">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-flash"></i> &nbsp; @Messages("directpay.overview.choosemanualorautomatic")</h2>
                     <div class="clearfix"></div>
@@ -63,31 +66,31 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <!-- Instructions -->
-            <div class="x_panel" style="background: @globals.country_appearance_background_5">
+            <div class="x_panel" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5", 2).asInstanceOf[String]">
                 <div class="x_title">
                     <h2 style="overflow: visible;"><i class="fa fa-book"></i> &nbsp; @Messages("terminology.instructions")</h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapseExtraInfo-link" title="@Messages("terminology.extrainformation")"><i class="fa fa-plus-square-o"></i></a></li><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <span class="text_additional_info">@Messages("directpay.overview.systemoverview")</span>
-                    <p>@Messages("directpay.overview.explanation1", globals.country_system_name, globals.country_currency_name_plural, globals.country_name)</p>
-                    <p>@Messages("directpay.overview.explanation2", globals.country_system_name, globals.country_currency_name_plural, globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.overview.explanation3", globals.country_system_name)</p>
+                    <p>@Messages("directpay.overview.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_name_plural", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_name", 2).asInstanceOf[String])</p>
+                    <p>@Messages("directpay.overview.explanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_name_plural", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                    <p>@Messages("directpay.overview.explanation3", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
                     <p>@Messages("directpay.overview.explanation4") "<span class="calc_low_destak_info">@Messages("directpay.overview.automatic")</span>".</p>
                     <input type="hidden" id="hidden_listofdocuments"
                         listofdocuments_message="@Messages("directpay.withdraw.documentsrequiredtowithdraw")"
                         first_name="@Messages("directpay.usersettings.firstname")"
                         last_name="@Messages("directpay.usersettings.lastname")"
-                        country_doc1="@Messages(globals.country_doc1_name)"
-                        country_doc2="@Messages(globals.country_doc2_name)"
-                        country_doc3="@Messages(globals.country_doc3_name)"
-                        country_doc4="@Messages(globals.country_doc4_name)"
-                        country_doc5="@Messages(globals.country_doc5_name)"
+                        country_doc1="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])"
+                        country_doc2="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])"
+                        country_doc3="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])"
+                        country_doc4="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])"
+                        country_doc5="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])"
                     >
                     @if(!securesocial.core.SecureSocial.currentUser.get.docs_verified) {<p>@Messages("directpay.withdraw.yourdocumentationis") <span id="incomplete_docs" class="red-text" title="">@Messages("directpay.withdraw.notyetverified")</span>. @Messages("directpay.withdraw.youarenotallowedtothisoperation")</p>}
                     <div class="x_extrainfo_content" style="display: none;">
                         <br><span class="text_additional_info">@Messages("directpay.overview.additionalinfo")</span>
-                        <p>@Messages("directpay.overview.extraexplanation1", globals.country_system_name,  globals.country_currency_crypto)</p>
+                        <p>@Messages("directpay.overview.extraexplanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String],  globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto"), 2).asInstanceOf[String]</p>
                         <p>@Messages("directpay.overview.extraexplanation2")</p>
                     </div>
                 </div>
@@ -97,162 +100,171 @@
     </div>
 
 
-
-
     <div class="clearfix"></div>
+    <input type="hidden" id="value" value="0">
 
+
+    <p align="center"><button type="button" id="btn_operation_panels" class="btn btn-info"><span id="btn_operation_panels_caption">@Messages("directpay.overview.showoperationstutorial")</span></button></p>
+    <div id="operation_panels" style="display: none">
             <!-- Manual Operations -->
-    <div class="row" id="manual_operations">
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> &nbsp; @Messages("chrome.exchange.navigation.deposit.label")</h2>
-                    <div class="clearfix"></div>
+        <div class="row" id="manual_operations">
+            <div class="@Messages(if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
+                <div class="x_panel variable_height" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5", 2).asInstanceOf[String]">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-plus"></i> &nbsp; @Messages("chrome.exchange.navigation.deposit.label")</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.overview.deposit.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String]) @Messages("directpay.deposit.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value2", 1).asInstanceOf[Double])</p>
+                        <p>@Messages("directpay.overview.deposit.explanation2")</p>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_deposit_percent", 1).asInstanceOf[Double] != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_deposit_percent", 1).asInstanceOf[Double]) %</span></p> }
+                        <div class="text-center">
+                            <a href="@routes.Application.deposit().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.depositpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
+                    </div>
                 </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.overview.deposit.explanation1", globals.country_system_name) @Messages("directpay.deposit.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
-                    <p>@Messages("directpay.overview.deposit.explanation2")</p>
-                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_deposit_percent) %</span></p> }
-                    <div class="text-center">
-                        <a href="@routes.Application.deposit().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.depositpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+            </div>
+
+            @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert") {
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="x_panel variable_height" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5", 2).asInstanceOf[String]">
+                        <div class="x_title">
+                            <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttocrypto.title") </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <p>@Messages("directpay.tocrypto.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                            <p>@Messages("directpay.overview.convertionrate")
+                                : <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]</span> <span class="calc_mid_destak_info">@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String] == ".") {1.00} else {1,00}</span> &nbsp; <i class="fa fa-arrow-right"></i> &nbsp; <span class="calc_mid_destak_info">@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String] == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</span>
+                                .</p>
+                            <p>@Messages("directpay.overview.nofeesarecharged")</p>
+                            <div class="text-center">
+                                <a href="@routes.Application.tocrypto().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="@Messages(if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
+                <div class="x_panel variable_height" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5", 2).asInstanceOf[String]">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.send.sendtopartner") </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.send.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_send_percent", 1).asInstanceOf[Double] != 0) {<p>@Messages("directpay.send.sendfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_send_percent", 1).asInstanceOf[Double]) %</span>}.</p>
+                        <div class="text-center">
+                            <a href="@routes.Application.send().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.sendpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="@Messages(if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
+                <div class="x_panel variable_height" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5", 2).asInstanceOf[String]">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.navigation.receivefunds.title") </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.overview.receive.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.receive.linkstopartners")</p>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_name", 2).asInstanceOf[String] != "Not Set") {
+                            <style> #box_partner1 { border-radius: 5px; background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_color", 2).asInstanceOf[String]; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
+                            <a href="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_url", 2).asInstanceOf[String]" target="_blank"><p id="box_partner1" title="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_info", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_url", 2).asInstanceOf[String]"><img src="/assets/img/carusel/@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_picture", 2).asInstanceOf[String]" height="28px"> @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_name", 2).asInstanceOf[String]</p></a> }
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_name", 2).asInstanceOf[String] != "Not Set") {
+                            <style> #box_partner2 { border-radius: 5px; background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_color", 2).asInstanceOf[String]; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
+                            <a href="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_url", 2).asInstanceOf[String]" target="_blank"><p id="box_partner2" title="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_info", 2).asInstanceOf[String] - @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_url", 2).asInstanceOf[String]"><img src="/assets/img/carusel/@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_picture", 2).asInstanceOf[String]" height="28px"> @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_name", 2).asInstanceOf[String]</p></a> }
+                        <div class="text-center">
+                            <a href="@routes.Application.receive().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.receivepage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert") {
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="x_panel variable_height" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
+                        <div class="x_title">
+                            <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttofiat.title", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <p>@Messages("directpay.tofiat.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</p>
+                            <p>@Messages("directpay.overview.convertionrate")
+                                : <span class="calc_mid_destak_info">@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String] == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</span> &nbsp; <i class="fa fa-arrow-right"></i> &nbsp; <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>
+                                .</p>
+                            <div class="text-center">
+                                <a href="@routes.Application.tofiat().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="@Messages(if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert"){ "col-md-4" }else{ "col-md-6" }) col-sm-6 col-xs-12">
+                <div class="x_panel variable_height" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-minus"></i> &nbsp; @Messages("chrome.exchange.navigation.withdraw.label")</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.withdraw.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value2", 1).asInstanceOf[Double])</p>
+                        <p>@Messages("directpay.withdraw.explanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String],  globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_withdrawal_percent", 1).asInstanceOf[Double]) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
+                        <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
+                        <div class="text-center">
+                            <a href="@routes.Application.withdraw().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.withdrawpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+            <!-- end of Manual Operations -->
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttocrypto.title") </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.tocrypto.explanation1", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>.</p>
-                    <p>@Messages("directpay.overview.nofeesarecharged")</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.tocrypto().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-upload"></i> &nbsp; @Messages("directpay.send.sendtopartner") </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.send.explanation1", globals.country_currency_crypto)</p>
-                    @if(globals.country_fee_send_percent != 0) {<p>@Messages("directpay.send.sendfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>}.</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.send().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.sendpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> &nbsp; @Messages("directpay.navigation.receivefunds.title") </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.overview.receive.explanation1", globals.country_system_name)</p>
-                    <p>@Messages("directpay.receive.linkstopartners")</p>
-                    @if(globals.country_partner1 != "Not Set") {
-                        <style> #box_partner1 { border-radius: 5px; background: @globals.country_partner1_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner1:hover { background: #67f; color: #fff;  } </style>
-                        <a href="@globals.country_partner1_url" target="_blank"><p id="box_partner1" title="@globals.country_partner1_info - @globals.country_partner1_url"><img src="/assets/img/carusel/@globals.country_partner1_picture" height="28px"> @globals.country_partner1</p></a> }
-                    @if(globals.country_partner2 != "Not Set") {
-                        <style> #box_partner2 { border-radius: 5px; background: @globals.country_partner2_color; color: #fff; font-size: 20px; vertical-align: middle; text-align: center; padding: 5px; margin: 10px; height: 40px;} #box_partner2:hover { background: #5f5; color: #fff;  } </style>
-                        <a href="@globals.country_partner2_url" target="_blank"><p id="box_partner2" title="@globals.country_partner2_info - @globals.country_partner2_url"><img src="/assets/img/carusel/@globals.country_partner2_picture" height="28px"> @globals.country_partner2</p></a> }
-                    <div class="text-center">
-                        <a href="@routes.Application.receive().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.receivepage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-random"></i> &nbsp; @Messages("directpay.navigation.converttofiat.title", globals.country_currency_symbol)</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.tofiat.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
-                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate" class="calc_mid_destak_info"></span>.</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.tofiat().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.conversionpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-minus"></i> &nbsp; @Messages("chrome.exchange.navigation.withdraw.label")</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.withdraw.explanation1", globals.country_currency_symbol, globals.country_critical_value2)</p>
-                    <p>@Messages("directpay.withdraw.explanation2", globals.country_currency_symbol,  globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee" class="calc_mid_destak_info"></span>.</p>
-                    <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.withdraw().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.withdrawpage") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-                <!-- end of Manual Operations -->
-    </div>
-
-
-    <div class="row" id="automatic_operations">
             <!-- Automatic Operations -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height2" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i> &nbsp; @Messages("directpay.depositsend.depositconvertandsend")</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.depositsend.explanation1", globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.depositsend.explanation2", globals.country_currency_symbol, globals.country_currency_crypto)</p>
-                    <p>@Messages("directpay.depositsend.explanation3")</p>
-                    @if(globals.country_fee_deposit_percent != 0) { <p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_deposit_percent) %</span></p> }
-                    @if(globals.country_fee_send_percent != 0) {<p>@Messages("directpay.send.sendfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_send_percent) %</span>}.</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.deposit().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.depositsend") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+        <div class="row" id="automatic_operations">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel variable_height2" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-plus"></i> <i class="fa fa-upload"></i> &nbsp; @Messages(if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert"){ "directpay.depositsend.depositconvertandsend" }else{ "directpay.navigation.depositsend.title" })</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.depositsend.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.depositsend.explanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.depositsend.explanation3")</p>
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_deposit_percent", 1).asInstanceOf[Double] != 0) {<p>@Messages("directpay.deposit.depositfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_deposit_percent", 1).asInstanceOf[Double]) %</span></p> }
+                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_send_percent", 1).asInstanceOf[Double] != 0) {<p>@Messages("directpay.send.sendfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_send_percent", 1).asInstanceOf[Double]) %</span>}.</p>
+                        <div class="text-center">
+                            <a href="@routes.Application.deposit().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.depositsend") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel variable_height2" style="background: @globals.country_appearance_background_5">
-                <div class="x_title">
-                    <h2 style="overflow: visible;"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> &nbsp; @Messages("directpay.receivewithdraw.receiveconvertandwithdraw") </h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p>@Messages("directpay.receivewithdraw.explanation1", globals.country_currency_crypto, globals.country_currency_symbol)</p>
-                    <p>@Messages("directpay.receivewithdraw.explanation2", globals.country_currency_crypto, globals.country_currency_symbol)</p>
-                    <p>@Messages("directpay.receivewithdraw.explanation3")</p>
-                    <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.country_decimal_separator == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.country_currency_crypto</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.country_currency_symbol</span> <span id="calc_convertion_rate2" class="calc_mid_destak_info"></span>.</p>
-                    <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.country_fee_withdrawal_percent) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_preferential_bank_fee2" class="calc_mid_destak_info"></span>.</p>
-                    <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.country_currency_symbol </span><span id="calc_withdraw_not_preferential_bank_extra_fee2" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
-                    <div class="text-center">
-                        <a href="@routes.Application.receive().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.receivewithdraw") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel variable_height2" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5")">
+                    <div class="x_title">
+                        <h2 style="overflow: visible;"><i class="fa fa-download"></i> <i class="fa fa-minus"></i> &nbsp; @Messages(if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert"){ "directpay.receivewithdraw.receiveconvertandwithdraw" }else{ "directpay.navigation.receivewithdraw.title" })</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p>@Messages("directpay.receivewithdraw.explanation1", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.receivewithdraw.explanation2", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String])</p>
+                        <p>@Messages("directpay.receivewithdraw.explanation3")</p>
+                        <p>@Messages("directpay.overview.convertionrate"): <span class="calc_mid_destak_info">@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String] == ".") {1.00} else {1,00}</span> <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</span>  &nbsp; <i class="fa fa-arrow-right"></i> &nbsp;  <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]</span> <span id="calc_convertion_rate2" class="calc_mid_destak_info"></span>.</p>
+                        <p>@Messages("directpay.withdraw.withdrawfee"): <span class="calc_mid_destak_info">@globals.numberFormat(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_withdrawal_percent", 1).asInstanceOf[Double]) %</span> @Messages("terminology.plus") <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_preferential_bank_fee2" class="calc_mid_destak_info"></span>.</p>
+                        <p>@Messages("directpay.withdraw.extrafee1") <span class="calc_mid_destak_info">@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String] </span><span id="calc_withdraw_not_preferential_bank_extra_fee2" class="calc_mid_destak_info"></span> @Messages("directpay.withdraw.extrafee2").</p>
+                        <div class="text-center">
+                            <a href="@routes.Application.receive().url"><button type="button" class="btn btn-info">@Messages("directpay.overview.receivewithdraw") &nbsp; <i class="fa fa-chevron-right"></i></button></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
             <!-- end of Automatic Operations -->
     </div>
-
 }

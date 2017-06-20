@@ -52,19 +52,19 @@
 @profileConnected(partner: String, url: String, info: String, color: String, picture: String) = {
     @if(partner!="") {
         <div class="profile_info class_automatic">
-            <span style="color: @globals.country_appearance_text_2;">@Messages("terminology.connectedto")</span>
+            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String];">@Messages("terminology.connectedto")</span>
             <br>
-            <span style="color: @globals.country_appearance_text_1; font-weight: 600;" title="@url, @info">@partner</span>
+            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_1", 2).asInstanceOf[String]; font-weight: 600;" title="@url, @info">@partner</span>
         </div>
         <div class="profile_pic class_automatic">
             <img src="@picture" title="@url, @info" class="img-circle profile_img">
         </div>
     } else {
         <div class="profile_info class_automatic" style="width: 100%;">
-            <span style="color: @globals.country_appearance_text_2;">@Messages("directpay.navigation.operatingmode")</span>
-            <span style="color: @globals.country_appearance_text_1; font-weight: 600;">@Messages("directpay.overview.automatic")</span>
+            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String];">@Messages("directpay.navigation.operatingmode")</span>
+            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_1", 2).asInstanceOf[String]; font-weight: 600;">@Messages("directpay.overview.automatic")</span>
             <br>
-            <span style="color: @globals.country_appearance_text_2;">@Messages("directpay.navigation.notconnectedtoanypartner")</span>
+            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String];">@Messages("directpay.navigation.notconnectedtoanypartner")</span>
         </div>
     }
 }
@@ -83,48 +83,48 @@
 @_global_chrome(title, Html(scripts + exchangeScripts.body), Html(styles + exchangeStyles.body)) {
 
 <style>
-    .site_title, .profile_info span { color: @globals.country_appearance_text_1 }
-    .site_title:hover { color: @globals.country_appearance_text_2 }
+    .site_title, .profile_info span { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_1", 2).asInstanceOf[String] }
+    .site_title:hover { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String] }
     .nav > li .class_manual, .class_manual { display: @if(securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
     .nav > li .class_automatic, .class_automatic { display: @if(!securesocial.core.SecureSocial.currentUser.get.manualauto_mode) { block } else { none } ;}
-    .nav.child_menu > li { background: @globals.country_appearance_background_1 !important }
-    .nav li.current-page { background: @globals.country_appearance_background_7 !important }
-    .nav li.current-page:hover { background: @globals.country_appearance_background_8 !important }
-    .nav > li > a:focus { background: @globals.country_appearance_background_7 !important }
-    .nav > li:hover, .nav > li > a:hover, .nav.child_menu li:hover, .nav li li.current-page:hover { background: @globals.country_appearance_background_8 !important }
+    .nav.child_menu > li { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_1", 2).asInstanceOf[String] !important }
+    .nav li.current-page { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_7", 2).asInstanceOf[String] !important }
+    .nav li.current-page:hover { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_8", 2).asInstanceOf[String] !important }
+    .nav > li > a:focus { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_7", 2).asInstanceOf[String] !important }
+    .nav > li:hover, .nav > li > a:hover, .nav.child_menu li:hover, .nav li li.current-page:hover { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_8", 2).asInstanceOf[String] !important }
 
-    .main_menu span.fa, .nav.navbar-nav > li > a, .nav.side-menu > li > a, .nav.child_menu > li > a { color: @globals.country_appearance_text_1 !important}
-    .nav.side-menu > li > a:hover, .nav.child_menu > li > a:hover { color: @globals.country_appearance_text_2 !important }
-    .nav.child_menu li:before { color: @globals.country_appearance_text_3 !important }
-    .nav-md ul.nav.child_menu li:before { background: @globals.country_appearance_text_2 }
-    .nav-md ul.nav.child_menu li:after { border-left: 1px solid @globals.country_appearance_text_2 }
-    div.x_title { border-bottom: 3px solid @globals.country_appearance_text_7; }
-    div.x_title > h2, h3 { color: @globals.country_appearance_text_4; }
-    .text_additional_info, .calc_destak_info, .calc_mid_destak_info, .calc_low_destak_info { color: @globals.country_appearance_text_6; }
+    .main_menu span.fa, .nav.navbar-nav > li > a, .nav.side-menu > li > a, .nav.child_menu > li > a { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_1", 2).asInstanceOf[String] !important}
+    .nav.side-menu > li > a:hover, .nav.child_menu > li > a:hover { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String] !important }
+    .nav.child_menu li:before { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_3", 2).asInstanceOf[String] !important }
+    .nav-md ul.nav.child_menu li:before { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String] }
+    .nav-md ul.nav.child_menu li:after { border-left: 1px solid @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String] }
+    div.x_title { border-bottom: 3px solid @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_7", 2).asInstanceOf[String]; }
+    #orders_list_title, div.x_title > h2, h3 { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_4", 2).asInstanceOf[String]; !important }
+    .text_additional_info, .calc_destak_info, .calc_mid_destak_info, .calc_low_destak_info { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_6", 2).asInstanceOf[String]; }
     ul.panel_toolbox > li:hover { opacity: 0.3 }
-    ul.panel_toolbox > li > a { color: @globals.country_appearance_text_5 }
-    ul.panel_toolbox > li > a:hover { background: @globals.country_appearance_background_5; }
-    .wallet_destak, .wallet_destak_sum { color: @globals.country_appearance_text_6; }
-    .table-wallet, .wallet_destak_icon { color: @globals.country_appearance_text_7; }
+    ul.panel_toolbox > li > a { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_5", 2).asInstanceOf[String] }
+    ul.panel_toolbox > li > a:hover { background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_5", 2).asInstanceOf[String]; }
+    .wallet_destak, .wallet_destak_sum { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_6", 2).asInstanceOf[String]; }
+    .table-wallet, .wallet_destak_icon { color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_7", 2).asInstanceOf[String]; }
 </style>
 
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
-                <div class="left_col scroll-view" style="background: @globals.country_appearance_background_1">
-                    <div class="navbar nav_title" style="background: @globals.country_appearance_background_1">
-                        <a href="index.html" class="site_title" style="background: @globals.country_appearance_background_1; text-decoration: none;">
-                        <i class="fa fa-play"></i> <span> @globals.country_system_name</span></a>
+                <div class="left_col scroll-view" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_1", 2).asInstanceOf[String]">
+                    <div class="navbar nav_title" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_1", 2).asInstanceOf[String]">
+                        <a href="index.html" class="site_title" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_1", 2).asInstanceOf[String]; text-decoration: none;">
+                        <i class="fa fa-play"></i> <span> @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name")</span></a>
                     </div>
                     <div class="profile">
                         <div class="profile_info class_manual" style="width: 100%;">
-                            <span style="color: @globals.country_appearance_text_2;">@Messages("directpay.navigation.operatingmode")</span>
-                            <span style="color: @globals.country_appearance_text_1; font-weight: 600;">@Messages("directpay.overview.manual")</span>
+                            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_2", 2).asInstanceOf[String];">@Messages("directpay.navigation.operatingmode")</span>
+                            <span style="color: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_text_1", 2).asInstanceOf[String]; font-weight: 600;">@Messages("directpay.overview.manual")</span>
                         </div>
 
                         @if(securesocial.core.SecureSocial.currentUser.get.partner==Option("")) {@profileConnected("", "", "", "", "")}
-                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option(globals.country_partner1)) {@profileConnected(globals.country_partner1, globals.country_partner1_url, globals.country_partner1_info, globals.country_partner1_color, globals.country_partner1_picture)}
-                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option(globals.country_partner2)) {@profileConnected(globals.country_partner2, globals.country_partner2_url, globals.country_partner2_info, globals.country_partner2_color, globals.country_partner2_picture)}
+                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_name", 2).asInstanceOf[String])) {@profileConnected(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_name", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_url", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_info", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_color", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_picture", 2).asInstanceOf[String])}
+                        @if(securesocial.core.SecureSocial.currentUser.get.partner==Option(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_name", 2).asInstanceOf[String])) {@profileConnected(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_name", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_url", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_info", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_color", 2).asInstanceOf[String], globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner2_picture", 2).asInstanceOf[String])}
                     </div>
 
 
@@ -135,22 +135,24 @@
                                 <li><a href="@routes.Application.dashboard().url"><i class="fa fa-tasks"></i> @Messages("chrome.exchange.navigation.dashboard.title") </a></li>
                                 <li><a><i class="fa fa-usd"></i> @Messages("directpay.navigation.operations.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-
-                                            <li class="class_manual"><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> @Messages("directpay.navigation.deposit.title") </a></li>
+                                        <li class="class_manual"><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i> @Messages("directpay.navigation.deposit.title") </a></li>
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized") == "convert") {
                                             <li class="class_manual"><a href="@routes.Application.tocrypto().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttocrypto.title") </a></li>
-                                            <li class="class_manual"><a href="@routes.Application.send().url"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>
-                                            <li class="class_manual"><a href="@routes.Application.receive().url"><i class="fa fa-download"></i> @Messages("directpay.navigation.receivefunds.title") </a></li>
-                                            <li class="class_manual"><a href="@routes.Application.tofiat().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title", globals.country_currency_symbol) </a></li>
-                                            <li class="class_manual"><a href="@routes.Application.withdraw().url"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label") </a></li>
-                                            <li class="class_automatic"><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i><i class="fa fa-upload"></i>@Messages("directpay.navigation.depositsend.title") </a></li>
-                                            <li class="class_automatic"><a href="@routes.Application.receive().url"><i class="fa fa-download"></i><i class="fa fa-minus"></i>@Messages("directpay.navigation.receivewithdraw.title") </a></li>
-
+                                        }
+                                        <li class="class_manual"><a href="@routes.Application.send().url"><i class="fa fa-upload"></i> @Messages("directpay.navigation.sendfunds.title") </a></li>
+                                        <li class="class_manual"><a href="@routes.Application.receive().url"><i class="fa fa-download"></i> @Messages("directpay.navigation.receivefunds.title") </a></li>
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized") == "convert") {
+                                            <li class="class_manual"><a href="@routes.Application.tofiat().url"><i class="fa fa-random"></i> @Messages("directpay.navigation.converttofiat.title", globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]) </a></li>
+                                        }
+                                        <li class="class_manual"><a href="@routes.Application.withdraw().url"><i class="fa fa-minus"></i> @Messages("chrome.exchange.navigation.withdraw.label") </a></li>
+                                        <li class="class_automatic"><a href="@routes.Application.deposit().url"><i class="fa fa-plus"></i><i class="fa fa-upload"></i>@Messages("directpay.navigation.depositsend.title") </a></li>
+                                        <li class="class_automatic"><a href="@routes.Application.receive().url"><i class="fa fa-download"></i><i class="fa fa-minus"></i>@Messages("directpay.navigation.receivewithdraw.title") </a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-edit"></i> @Messages("chrome.exchange.navigation.account.title") <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="@routes.Application.user_settings().url"><i class="fa fa-user"></i> @Messages("directpay.navigation.personalinfo.title") </a></li>
-                                        @if(globals.country_doc1_ispicture || globals.country_doc2_ispicture || globals.country_doc3_ispicture || globals.country_doc4_ispicture || globals.country_doc5_ispicture) {<li><a href="@routes.Application.documents().url"><i class="fa fa-file-text"></i> @Messages("directpay.navigation.documents.title") </a></li>}
+                                        @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_ispicture", 0).asInstanceOf[Boolean] || globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_ispicture", 0).asInstanceOf[Boolean] || globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_ispicture", 0).asInstanceOf[Boolean] || globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_ispicture", 0).asInstanceOf[Boolean] || globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_ispicture", 0).asInstanceOf[Boolean]) {<li><a href="@routes.Application.documents().url"><i class="fa fa-file-text"></i> @Messages("directpay.navigation.documents.title") </a></li>}
                                         <li><a href="@routes.Application.account().url"><i class="fa fa-key"></i> @Messages("directpay.navigation.security.title") </a></li>
                                         <li><a href="@routes.Application.history().url"><i class="fa fa-list"></i> @Messages("chrome.exchange.navigation.history.label") </a></li>
                                     </ul>
@@ -162,13 +164,15 @@
                                         <li><a href="@routes.Application.contract().url"><i class="fa fa-book"></i> @Messages("directpay.navigation.termsandcontract.title") </a></li>
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="@routes.Application.management().url"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
-                                        <li><a href="@routes.Application.users_list().url"><i class="fa fa-users"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
-                                        <li><a href="@routes.Application.orders_list().url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
-                                    </ul>
-                                </li>
+                                @if(securesocial.core.SecureSocial.currentUser.get.admin_xx!=Option("")) {
+                                    <li><a><i class="fa fa-cogs"></i> @Messages("directpay.navigation.admin.adminpanel.title") <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="@routes.Application.management().url"><i class="fa fa-line-chart"></i> @Messages("directpay.navigation.admin.management.title") </a></li>
+                                            <li><a href="@routes.Application.users_list().url"><i class="fa fa-users"></i> @Messages("directpay.navigation.admin.userslist.title") </a></li>
+                                            <li><a href="@routes.Application.orders_list("orderstatus", "pending_orders").url"><i class="fa fa-list-alt"></i> @Messages("directpay.navigation.admin.orderslist.title") </a></li>
+                                        </ul>
+                                    </li>
+                                }
                                 <li><a><i class="fa fa-flag"></i>  @Messages("terminology.language")<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                     @for(lang <- Lang.availables) {
@@ -186,7 +190,7 @@
 
             <!-- top navigation -->
             <div class="top_nav">
-                <div class="nav_menu" style="background: @globals.country_appearance_background_3">
+                <div class="nav_menu" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_3", 2).asInstanceOf[String]">
                     <nav>
                         <div class="nav toggle">
                             <a id="menu_toggle"><i class="fa fa-bars" title="@Messages("directpay.general.expandcontractsidemenu")"></i></a>
@@ -210,31 +214,34 @@
 
 
             <input type="hidden" id="hidden_fees_information"
-            currency_code="@globals.country_currency_code"
-            currency_crypto="@globals.country_currency_crypto"
+            country_code="@securesocial.core.SecureSocial.currentUser.get.user_country"
+            currency_code="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_code", 2).asInstanceOf[String]"
+            currency_crypto="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]"
             wallet_available="0"
             wallet_onhold="0"
             wallet_crypto="0"
             wallet_crypto_onhold="0"
             wallet_total="0"
-            decimal_separator = "@globals.country_decimal_separator"
-            minimum_value = "@globals.country_minimum_value.toString"
-            critical_value1 = "@globals.country_critical_value1.toString"
-            critical_value2 = "@globals.country_critical_value2.toString"
-            preferential_bank1_code = "@globals.country_preferential_bank1_code"
-            preferential_bank1_name = "@globals.country_preferential_bank1_name"
-            preferential_bank2_code = "@globals.country_preferential_bank2_code"
-            preferential_bank2_name = "@globals.country_preferential_bank2_name"
-            preferential_bank3_code = "@globals.country_preferential_bank3_code"
-            preferential_bank3_name = "@globals.country_preferential_bank3_name"
-            preferential_bank4_code = "@globals.country_preferential_bank4_code"
-            preferential_bank4_name = "@globals.country_preferential_bank4_name"
-            nominal_fee_withdrawal_preferential_bank = "@globals.country_nominal_fee_withdrawal_preferential_bank.toString"
-            nominal_fee_withdrawal_not_preferential_bank = "@globals.country_nominal_fee_withdrawal_not_preferential_bank.toString"
-            fee_withdrawal_percent = "@globals.country_fee_withdrawal_percent.toString"
-            fee_tofiat_percent = "@globals.country_fee_tofiat_percent.toString"
-            fee_deposit_percent = "@globals.country_fee_deposit_percent.toString"
-            fee_send_percent = "@globals.country_fee_send_percent.toString"
+            decimal_separator = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String]"
+            country_operations_organized = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String]"
+            minimum_value = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_minimum_value", 1).asInstanceOf[Double]"
+            critical_value1 = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value1", 1).asInstanceOf[Double]"
+            critical_value2 = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value2", 1).asInstanceOf[Double]"
+            preferential_bank1_code = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank1_code", 2).asInstanceOf[String]"
+            preferential_bank1_name = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank1_name", 2).asInstanceOf[String]"
+            preferential_bank2_code = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank2_code", 2).asInstanceOf[String]"
+            preferential_bank2_name = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank2_name", 2).asInstanceOf[String]"
+            preferential_bank3_code = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank3_code", 2).asInstanceOf[String]"
+            preferential_bank3_name = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank3_name", 2).asInstanceOf[String]"
+            preferential_bank4_code = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank4_code", 2).asInstanceOf[String]"
+            preferential_bank4_name = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_preferential_bank4_name", 2).asInstanceOf[String]"
+            nominal_fee_withdrawal_preferential_bank = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_nominal_fee_withdrawal_preferential_bank", 1).asInstanceOf[Double]"
+            nominal_fee_withdrawal_not_preferential_bank = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_nominal_fee_withdrawal_not_preferential_bank", 1).asInstanceOf[Double]"
+            fee_withdrawal_percent = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_withdrawal_percent", 1).asInstanceOf[Double]"
+            fee_tofiat_percent = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_tofiat_percent", 1).asInstanceOf[Double]"
+            fee_deposit_percent = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_deposit_percent", 1).asInstanceOf[Double]"
+            fee_send_percent = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_fee_send_percent", 1).asInstanceOf[Double]"
+            minimum_difference = "@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_minimum_difference", 1).asInstanceOf[Double]"
             >
 
             <input type="hidden" id="hidden_form_validation_messages"
@@ -246,11 +253,14 @@
             accountinformationisincomplete="@Messages("directpay.formvalidation.accountinformationisincomplete")"
             youmustselectdepositfile="@Messages("directpay.formvalidation.youmustselectdepositfile")"
             nofileselected="@Messages("directpay.formvalidation.nofileselected")"
+            bankinginformationisnotvalid="@Messages("directpay.formvalidation.bankinginformationisnotvalid")"
+            commentcannotbeempty="@Messages("directpay.formvalidation.commentcannotbeempty")"
+            confirmnewvalue="@Messages("directpay.formvalidation.confirmnewvalue")"
             >
 
 
             <!-- page content -->
-            <div class="right_col" role="main" style="background: @globals.country_appearance_background_2">
+            <div class="right_col" role="main" style="background: @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_appearance_background_2", 2).asInstanceOf[String]">
                 <div class="">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -263,7 +273,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    @globals.country_system_name
+                    @globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_system_name", 2).asInstanceOf[String]
                 </div>
                 <div class="clearfix"></div>
             </footer>

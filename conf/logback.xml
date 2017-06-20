@@ -6,10 +6,21 @@
 
     <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel" />
 
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${application.home:-.}/logs/application.log</file>
+        <encoder>
+            <pattern>%date [%level] %logger - %message%n%xException</pattern>
+        </encoder>
+    </appender>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%coloredLevel %logger{15} - %message%n%xException{10}</pattern>
         </encoder>
+    </appender>
+
+    <appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
     </appender>
 
     <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
@@ -17,16 +28,17 @@
     </appender>
 
     <logger name="play" level="INFO" />
-    <logger name="application" level="DEBUG" />
+    <logger name="application" level="INFO" />
 
     <!-- log sql statements -->
-    <logger name="com.jolbox.bonecp" level="DEBUG" />
+    <logger name="com.jolbox.bonecp" level="INFO" />
 
     <!-- Set logging for all Akka library classes to INFO -->
     <logger name="akka" level="INFO" />
 
     <root level="INFO">
         <appender-ref ref="ASYNCSTDOUT" />
+        <appender-ref ref="ASYNCFILE" />
     </root>
 
 </configuration>

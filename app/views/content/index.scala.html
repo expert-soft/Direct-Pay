@@ -24,18 +24,18 @@
                 <li data-target="#myCarousel" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
-                <div class="item active" style="background: @globals.country_appearance_background_1">
+                <div class="item active" style="background: @globals.settings(Option("br"), "country_appearance_background_1", 2).asInstanceOf[String]">
                     <img class="first-slide" src="@routes.Assets.at("img/carusel/1.png")" alt="First slide">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>@globals.country_system_name</h1><br>
+                            <h1>@globals.settings(Option("br"), "country_system_name")</h1><br>
                          <!--   <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>  -->
                             <p>@Messages("directpay.frontpage.carousel1.text1")</p>
                             <p><a class="btn btn-lg btn-primary" href="@controllers.routes.Registration.startSignUp().absoluteURL(UsernamePasswordProvider.sslEnabled)" role="button">@Messages("directpay.frontpage.carousel1.linktext1")</a></p>
                         </div>
                     </div>
                 </div>
-                <div class="item" style="background: @globals.country_appearance_background_1">
+                <div class="item" style="background: @globals.settings(Option("br"), "country_appearance_background_1", 2).asInstanceOf[String]">
                     <img class="second-slide" src="@routes.Assets.at("img/carusel/2.jpg")" alt="@Messages("directpay.frontpage.carousel2.linktext1")">
                     <div class="container">
                         <div class="carousel-caption">
@@ -45,12 +45,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="item" style="background: @globals.country_appearance_background_1">
+                <div class="item" style="background: @globals.settings(Option("br"), "country_appearance_background_1", 2).asInstanceOf[String]">
                     <img class="third-slide" src="@routes.Assets.at("img/carusel/3.jpg")" alt="@Messages("directpay.frontpage.carousel3.linktext1")">
                     <div class="container">
                         <div class="carousel-caption">
                             <h1>@Messages("directpay.frontpage.carousel3.title")</h1><br>
-                            <p>@Messages("directpay.frontpage.carousel3.text1", globals.country_system_name)</p>
+                            <p>@Messages("directpay.frontpage.carousel3.text1", globals.settings(Option("br"), "country_system_name", 2).asInstanceOf[String])</p>
                             <p><a class="btn btn-lg btn-primary" href="@controllers.routes.Registration.startSignUp().absoluteURL(UsernamePasswordProvider.sslEnabled)" role="button">@Messages("directpay.frontpage.carousel3.linktext1")</a></p>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
 
                                     <button type="submit" class="btn btn-primary" title="@Messages("terminology.login")"><i class="fa fa-sign-in" style="font-size: 16px;"></i> &nbsp; @Messages("auth.login.title")</button>
                                     <br>
-                                    <p style="color: @globals.country_appearance_background_1">@Messages("directpay.frontpage.notyetsignedup") &nbsp; <button type="submit" class="btn btn-primary" style="padding: 4px 12px;" title="@Messages("auth.signup.createAccount")"><i class="fa fa-user" style="font-size: 14px;"></i> &nbsp; @Messages("chrome.signup")</button></p>
+                                    <p style="color: @globals.settings(Option("br"), "country_appearance_background_1", 2).asInstanceOf[String]">@Messages("directpay.frontpage.notyetsignedup") &nbsp; <button type="submit" class="btn btn-primary" style="padding: 4px 12px;" title="@Messages("auth.signup.createAccount")"><i class="fa fa-user" style="font-size: 14px;"></i> &nbsp; @Messages("chrome.signup")</button></p>
                                 </form>
                             </div>
                         </div>

@@ -37,70 +37,9 @@ generate_random_user_id(
   select abs((right(b::text, 17))::bit(64)::bigint) as id from gen_random_bytes(8) as b;;
 $$ language sql volatile security invoker set search_path = public, pg_temp cost 100;
 
+
+
 -- NOT "security definer", must be privileged user to use this function directly
-create or replace function
-create_user (
-  a_email varchar(256),
-  a_password text,
-  a_onMailingList bool,
-  a_pgp text
-) returns bigint as $$
-declare
-  new_user_id bigint;;
-begin
-  insert into users(id, email, on_mailing_list, pgp) values (
-      generate_random_user_id(),
-      a_email,
-      a_onMailingList,
-      a_pgp
-    ) returning id into new_user_id;;
-  -- create balances associated with users
-  insert into balances (user_id, currency) select new_user_id, currency from currencies;;
-  insert into users_passwords (user_id, password) values (
-    new_user_id,
-    crypt(a_password, gen_salt('bf', 8))
-  );;
-  return new_user_id;;
-end;;
-$$ language plpgsql volatile security invoker set search_path = public, pg_temp cost 100;
-
-create or replace function
-create_user_complete (
-  a_email varchar(256),
-  a_password text,
-  a_onMailingList bool,
-  a_pgp text,
-  a_token varchar(256)
-) returns bigint as $$
-declare
-  valid_token boolean;;
-begin
-  if a_email = '' then
-    raise 'User id 0 is not allowed to use this function.';;
-  end if;;
-  select true into valid_token from tokens where token = a_token and email = a_email and is_signup = true and expiration >= current_timestamp;;
-  if valid_token is null then
-    return null;;
-  end if;;
-  delete from tokens where email = a_email and is_signup = true;;
-  return create_user(a_email, a_password, a_onMailingList, a_pgp);;
-end;;
-$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
-
-create or replace function
-update_user (
-  a_id bigint,
-  a_email varchar(256),
-  a_onMailingList bool
-) returns void as $$
-begin
-  if a_id = 0 then
-    raise 'User id 0 is not allowed to use this function.';;
-  end if;;
-  update users set email=a_email, on_mailing_list=a_onMailingList where id=a_id;;
-  return;;
-end;;
-$$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
 create or replace function
 check_password(
@@ -465,15 +404,63 @@ $$ language plpgsql volatile security definer set search_path = public, pg_temp 
 
 create or replace function
 find_user_by_id (
-  a_id bigint,
-  out users
-) returns setof users as $$
+    a_id bigint,
+  out id bigint,
+  out email varchar(256),
+  out verification int,
+  out language varchar(10),
+  out on_mailing_list bool,
+  out tfa_enabled bool,
+  out pgp text,
+  out manualauto_mode bool,
+  out user_country varchar(4),
+  out docs_verified bool,
+  out partner varchar(64),
+  out admin_xx varchar(2)
+) returns setof record as $$
+declare
+  a_user_country varchar(4);;
+  b_admin_g1 bigint;;
+  b_admin_g2 bigint;;
+  b_admin_l1 bigint;;
+  b_admin_l2 bigint;;
+  b_admin_o1 bigint;;
+  b_admin_o2 bigint;;
+  b_admin_xx varchar(8);;
 begin
+  a_user_country = 'br';; -- ### need to take it as argument of the function
   if a_id = 0 then
     raise 'User id 0 is not allowed to use this function.';;
   end if;;
-  return query select * from users
-  where id = a_id;;
+  select admin_g1, admin_g2, admin_l1, admin_l2, admin_o1, admin_o2 into b_admin_g1, b_admin_g2, b_admin_l1, b_admin_l2, b_admin_o1, b_admin_o2
+  from currencies where country = a_user_country;;
+
+-- support for this function: https://stackoverflow.com/questions/3097150/add-a-temporary-column-with-a-value and https://stackoverflow.com/questions/23348743/return-setof-record-with-1-row
+if b_admin_g1 = a_id then
+    return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, 'admin_g1'::varchar(8) from users u where u.id = a_id;;
+  else
+    if b_admin_g2 = a_id then
+      return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, 'admin_g2'::varchar(8) from users u where u.id = a_id;;
+    else
+      if b_admin_l1 = a_id then
+        return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, 'admin_l1'::varchar(8) from users u where u.id = a_id;;
+      else
+        if b_admin_l2 = a_id then
+          return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, 'admin_l2'::varchar(8) from users u where u.id = a_id;;
+        else
+          if b_admin_o1 = a_id then
+            return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, 'admin_o1'::varchar(8) from users u where u.id = a_id;;
+          else
+            if b_admin_o2 = a_id then
+              return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, 'admin_o2'::varchar(8) from users u where u.id = a_id;;
+            else
+              return query select u.id, u.email, u.verification, u.language, u.on_mailing_list, u.tfa_enabled, u.pgp, u.manualauto_mode, u.user_country, u.docs_verified, u.partner, ''::varchar(8) from users u where u.id = a_id;;
+            end if;;
+          end if;;
+        end if;;
+      end if;;
+    end if;;
+  end if;;
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
@@ -684,6 +671,7 @@ begin
 end;;
 $$ language plpgsql volatile security definer set search_path = public, pg_temp cost 100;
 
+
 create or replace function
 login_log (
   a_uid bigint,
@@ -783,6 +771,7 @@ end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
 
+
 create or replace function
   get_docs_info (
       a_id bigint,
@@ -805,16 +794,12 @@ create or replace function
 
 ) returns setof record as $$
 declare
-  a_user_id bigint;;
 begin
---  select un.user_id into a_user_id from users_name_info un where first_name = 'Marcelo';;
-
   return query select un.user_id, un.doc1, un.doc2, un.doc3, un.doc4, un.doc5, un.ver1, un.ver2, un.ver3, un.ver4, un.ver5
                  , un.pic1, un.pic2, un.pic3, un.pic4, un.pic5
-    from users_name_info un where un.user_id != 0 and un.first_name = 'Marcelo';;
+    from users_name_info un where un.user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
-
 
 
 create or replace function
@@ -822,10 +807,12 @@ create or replace function
       a_id bigint,
   out bank varchar (16),
   out agency varchar (16),
-  out account varchar (64)
+  out account varchar (64),
+  out partner character varying(64),
+  out partner_account character varying(256)
 ) returns setof record as $$
 begin
-  return query select uc.bank, uc.agency, uc.account from users_connections uc where user_id = a_id;;
+  return query select uc.bank, uc.agency, uc.account, uc.partner, uc.partner_account from users_connections uc where user_id = a_id;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
@@ -867,6 +854,10 @@ $$ language plpgsql stable security definer set search_path = public, pg_temp co
 
 create or replace function
 get_orders_list (
+  in a_user_id bigint,
+  in a_country_id varchar(4),
+  in a_search_criteria varchar(256),
+  in a_search_value varchar(256),
   out order_id bigint,
   out user_id bigint,
   out country_id varchar(4),
@@ -891,18 +882,100 @@ get_orders_list (
   out middle_name varchar(128),
   out last_name varchar(128)
 ) returns setof record as $$
+declare
+  b_value numeric(23,8);;
+  b_timestamp timestamp(3);;
 begin
-  return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
-  from orders o
-  left join users u on o.user_id = u.id
-  left join users_name_info un on o.user_id = un.user_id;;
+
+  if a_search_criteria = 'history' then
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and o.user_id = a_user_id order by o.created desc;;
+  end if;;
+
+  if a_search_criteria = 'orderstatus' then
+    if a_search_value = 'pending_orders' then
+      return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+      from orders o
+      left join users u on o.user_id = u.id
+      left join users_name_info un on o.user_id = un.user_id
+      where o.country_id = a_country_id and (o.status = 'Op' or o.status = 'Lk') order by o.created;;
+    else
+      return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+      from orders o
+      left join users u on o.user_id = u.id
+      left join users_name_info un on o.user_id = un.user_id
+      where o.country_id = a_country_id and o.status = a_search_value order by o.created;;
+    end if;;
+  end if;;
+
+  if a_search_criteria = 'ordertype' then
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and o.order_type = a_searched_value order by o.created;;
+  end if;;
+
+  if a_search_criteria = 'ordercreated' then
+    b_timestamp = to_timestamp(a_search_value, 'DD-MM-YYYY');;
+
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and (o.net_value >= b_value or o.initial_value >= b_value) order by o.created;;
+  end if;;
+
+  if a_search_criteria = 'processedvalue' then
+    b_value = to_number(a_search_value, 'S999999999D99');;
+    return query select o.order_id, o.user_id, o.country_id, o.order_type, o.status, o.partner, o.created, o.currency, o.initial_value, o.total_fee, o.doc1, o.doc2, o.bank, o.agency, o.account, o.closed, o.net_value, o.comment, o.image_id, u.email, un.first_name, un.middle_name, un.last_name
+    from orders o
+    left join users u on o.user_id = u.id
+    left join users_name_info un on o.user_id = un.user_id
+    where o.country_id = a_country_id and (o.net_value >= b_value or o.initial_value >= b_value) order by o.created;;
+  end if;;
 end;;
 $$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
 
 
+create or replace function
+  get_admins (
+      a_country varchar(4),
+  out admin_g1 bigint,
+  out admin_g2 bigint,
+  out admin_l1 bigint,
+  out admin_l2 bigint,
+  out admin_o1 bigint,
+  out admin_o2 bigint,
+  out email_g1 varchar (256),
+  out email_g2 varchar (256),
+  out email_l1 varchar (256),
+  out email_l2 varchar (256),
+  out email_o1 varchar (256),
+  out email_o2 varchar (256)
+) returns setof record as $$
+declare
+begin
+
+-- not working###
+return query select c.admin_g1, c.admin_g2, c.admin_l1, c.admin_l2, c.admin_o1, c.admin_o2, ug1.email as email_g1, ug2.email as email_g2, ul1.email as email_l1, ul2.email as email_l2, uo1.email as email_o1, uo2.email as email_o2
+             from currencies c
+               left join users ug1 on c.admin_g1 = ug1.id
+               left join users ug2 on c.admin_g2 = ug2.id
+               left join users ul1 on c.admin_l1 = ul1.id
+               left join users ul2 on c.admin_l2 = ul2.id
+               left join users uo1 on c.admin_o1 = uo1.id
+               left join users uo2 on c.admin_o2 = uo2.id
+             where c.country = a_country;;
+
+end;;
+$$ language plpgsql stable security definer set search_path = public, pg_temp cost 100;
+
 # --- !Downs
 
-drop function if exists create_user (varchar(256), text, bool) cascade;
 drop function if exists find_user_by_email_and_password_invoker(varchar(256), text, text, inet, bool) cascade;
 drop function if exists first_agg() cascade;
 drop function if exists last_agg() cascade;
@@ -911,7 +984,6 @@ drop aggregate if exists last(anyelement);
 drop aggregate if exists array_agg_mult(anyarray);
 
 -- security definer functions
-drop function if exists create_user_complete (varchar(256), text, bool, varchar(256)) cascade;
 drop function if exists update_user (bigint, varchar(256), bool) cascade;
 drop function if exists user_change_password (bigint, text, text) cascade;
 drop function if exists trusted_action_start (varchar(256)) cascade;
@@ -944,5 +1016,6 @@ drop function if exists get_user_name_info(bigint) cascade;
 drop function if exists get_docs_info(bigint) cascade;
 drop function if exists get_bank_data(bigint) cascade;
 drop function if exists get_users_list() cascade;
-drop function if exists get_orders_list() cascade;
+drop function if exists get_orders_list(bigint, varchar(4), varchar(256), varchar(256)) cascade;
 drop function if exists get_balance_by_id_and_currency(bigint, text, text) cascade;
+drop function if exists get_admins(varchar(4)) cascade;

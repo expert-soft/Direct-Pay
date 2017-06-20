@@ -41,10 +41,6 @@ var API;
             return $.get(iapi_prefix+'get_bank_data', 'json');
         }),
 
-        orders_list: APIWrap(function() {
-            return $.get(iapi_prefix+'orders_list', 'json');
-        }),
-
         users_list: APIWrap(function() {
             return $.get(iapi_prefix+'users_list', 'json');
         }),
@@ -63,6 +59,10 @@ var API;
 
         balance: APIWrap(function() {
             return $.get(iapi_prefix+'balance', 'json');
+        }),
+
+        get_admins: APIWrap(function() {
+            return $.get(iapi_prefix+'get_admins', 'json');
         }),
 
         get_all_img: APIWrap(function() {
@@ -174,7 +174,27 @@ var API;
                 dataType: 'json',
                 contentType: 'application/json'
             });
+        }),
+
+        save_admins: APIWrap(function(country, admin_g1, admin_g2, admin_l1, admin_l2, admin_o1, admin_o2) {
+            return $.ajax(iapi_prefix+'save_admins', {
+                type: 'POST',
+                data: JSON.stringify({country: country, admin_g1: admin_g1, admin_g2: admin_g2, admin_l1: admin_l1, admin_l2: admin_l2, admin_o1: admin_o1, admin_o2: admin_o2}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
+        }),
+
+        orders_list: APIWrap(function(search_criteria, search_value) {
+            return $.ajax(iapi_prefix+'orders_list', {
+                type: 'POST',
+                data: JSON.stringify({search_criteria: search_criteria, search_value: search_value}),
+                dataType: 'json',
+                contentType: 'application/json'
+            });
         })
+
+
 
     };
 })();

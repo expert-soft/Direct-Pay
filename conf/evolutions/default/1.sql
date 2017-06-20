@@ -9,7 +9,16 @@ revoke create on schema public from public;
 
 create table currencies (
     currency varchar(16) not null primary key,
-    position int not null
+    position int not null,
+    country varchar(4),
+-- ### the privileges and rights still not implemented
+--  global01 and local01 receive the fees
+    admin_g1 bigint, -- global administrator can define new administrators
+    admin_g2 bigint,
+    admin_l1 bigint, -- local administrators administrate only their regions
+    admin_l2 bigint,
+    admin_o1 bigint, -- operational administrators can only operate orders, no access to financial data
+    admin_o2 bigint
 );
 
 create table users (
@@ -22,7 +31,7 @@ create table users (
     pgp text,
     active bool default true not null,
     manualauto_mode bool default true not null,
-    user_country varchar(6),
+    user_country varchar(4),
     docs_verified bool default false not null,
     partner varchar(64)
 );

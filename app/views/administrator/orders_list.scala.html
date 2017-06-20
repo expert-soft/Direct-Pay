@@ -9,6 +9,11 @@
     <script src="@routes.Assets.at("js/orders_list.js")" xmlns="http://www.w3.org/1999/html"></script>
 }
 
+<style>
+.fileUpload { position: relative; overflow: hidden; margin: 10px; }
+.fileUpload input.upload { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+</style>
+
 @exchange._chrome(Messages("directpay.admin.orderslist.openorders.title"), "orders_list", scripts) {
         <!-- page content -->
     <div class="page-title">
@@ -23,11 +28,11 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div id="orders_list" class="x_panel">
                 <div class="x_title">
-                    <h2><i class="fa fa-list-alt"></i> @Messages("directpay.admin.orderslist.openorders.title")</h2>
+                    <h2><i class="fa fa-list-alt"></i> <span id="orders_list_title">@Messages("directpay.admin.orderslist.openorders.title")</span></h2>
                     <ul class="nav navbar-right panel_toolbox"><li><a class="collapse-link" title="@Messages("terminology.minimizethisboard")"><i class="fa fa-chevron-up"></i></a></li><li><a class="close-link" title="@Messages("terminology.closethisboard")"><i class="fa fa-close"></i></a></li></ul><div class="clearfix"></div>
                 <div class="x_content">
-                    <input type="hidden" id="hidden_critical_value1" value="@globals.country_critical_value1"><input type="hidden" id="hidden_critical_value2" value="@globals.country_critical_value2">
-                    <p id="orders-open"></p>  <!-- Script for open orders is called here -->
+                    <input type="hidden" id="hidden_critical_value1" value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value1")"><input type="hidden" id="hidden_critical_value2" value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value2")">
+                    <p id="orders-open"></p>    <!-- Script for open orders is called here -->
                     <br>
                     <p id="orders-search"></p>  <!-- Script for searched orders is called here -->
                 </div>
@@ -37,87 +42,56 @@
 
 
 
-        <!-- Modal page for order details -->
-    <div id="popupDetails" class="overlay">
-        <div id="popupInfoDiv" class="popup">
-            <div class="title_left">
-                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.admin.orderdetails")</h3>
-            </div>
-            <h2><span id="popUpPictureTitle"></span></h2>
-            <input type="hidden" id="hidden_order_id">
-            <div id="buttonsDiv" class="popupTopButtons">
-                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
-                <button id="btnApprove" order_id="" order_type="" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnReject" order_id="" order_type="" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
-            </div>
-            <a class="popupClose" href="#">&times;</a>
-            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
-            <table width="100%" cellpadding="10"><tr>
-                <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
-                <td><span id="popUpPictureInfo3"></span></td>
-                <td><span id="popUpMessageValue">@Messages("terminology.value"): </span><input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
-            </tr><tr>
-                <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
-                <td><span id="popUpPictureInfo4"></span></td>
-                <td>@Messages("terminology.comment"): <input id="popUpComment" value="" title="" type="text" style="width: 200px;" class="triggers_details"></td>
-            </tr></table>
-            <p><img src="placeholder" id="the_picture"></p>
-            <p><span id="popUpPictureInfo3"></span></p>
-            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
-        </div>
-    </div>
-        <!-- end of Modal page for order details -->
-
-
     <script id="orders-open-template" type="text/x-handlebars-template">
-        <div class="panel-heading">@Messages("directpay.admin.orderslist.openorders.title")</div>
-
-            <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
-                <thead>
-                    <tr>
-                        <th>@Messages("terminology.type")</th>
-                        <th>@Messages("terminology.name")<br> &nbsp; @Messages("terminology.email")</th>
-                        <th>@Messages("directpay.admin.orderslist.doc")</th>
-                        <th>@Messages("directpay.usersettings.bank.item")<br> &nbsp; @Messages("directpay.usersettings.bankagency.item"), @Messages("directpay.usersettings.bankaccount.item")</th>
-                        <th>@Messages("terminology.requested")<br> &nbsp; @Messages("terminology.fee")</th>
-                        <th>@Messages("terminology.created")</th>
-                        <th>@Messages("terminology.value")<br> &nbsp; @Messages("terminology.comment")</th>
-                        <th>@Messages("terminology.action")</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {{#each this}}
-                    <tr>
-                        <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}<input type="hidden" id="explained_type{{order_id}}" value="{{explained_type}}"></td>
-                        <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{last_name}}<br>{{email}}</td>
-                        <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" doc_type="{{doc_type}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" order_type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
-                        <td>{{bank}}, {{agency}}, {{account}}</td>
-                        <td {{class_value}} align="right">{{initial_value_s}}<br>{{total_fee_s}} <input type="hidden" id="hidden_initial_value{{order_id}}" value="{{initial_value}}"></td>
-                        <td>{{created}}</td>
-                        <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
-                        <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")">@Messages("directpay.admin.orderslist.lock")</button>
-                            <button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" style="display: {{popupButtonOKDisplay}};" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
-                            <button id="btnReject{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
+        <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
+            <thead>
+                <tr>
+                    <th>@Messages("terminology.type")</th>
+                    <th>@Messages("terminology.name")<br> &nbsp; @Messages("terminology.email")</th>
+                    <th>@Messages("directpay.admin.orderslist.document")</th>
+                    <th>@Messages("directpay.usersettings.bank.item")<br> &nbsp; @Messages("directpay.usersettings.bankagency.item"), @Messages("directpay.usersettings.bankaccount.item")</th>
+                    <th align="right">@Messages("terminology.requested")<br> &nbsp; @Messages("terminology.fee")</th>
+                    <th>@Messages("terminology.created")</th>
+                    <th align="right">@Messages("terminology.value")<br> &nbsp; @Messages("terminology.comment")</th>
+                    <th>@Messages("terminology.action")</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each this}}
+                <tr>
+                    <td {{class_type}} title="@Messages("directpay.admin.orderslist.orderID") = {{order_id}}, {{explained_type}}">{{order_type}}<input type="hidden" id="explained_type{{order_id}}" value="{{explained_type}}"></td>
+                    <td style="word-wrap:breakword" title="@Messages("directpay.admin.userslist.userID") = {{user_id}}">{{first_name}} {{middle_name}} {{last_name}}<br>{{email}}</td>
+                    <td><a href="#popupDetails" id="requestPopupDetails" popup_type="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" doc_type="{{doc_type}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" order_type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}"><i class="fa fa-upload" style="display: {{doc1_i_visible}}"></i><span style="display: {{doc1_text_visible}}; color: #0000ee">{{doc1}}</span></a></td>
+                    <td>{{bank_info}}</td>
+                    <td {{class_value}} align="right">{{initial_value_s}}<br>{{total_fee_s}} <input type="hidden" id="hidden_initial_value{{order_id}}" value="{{initial_value}}"></td>
+                    <td>{{created}}</td>
+                    <td class="right_bold">{{currency}} <input id="net_value{{order_id}}" type="text" value="{{net_value}}" title="{{net_value}}" style="width: 60px; display: {{input_visible}}"><br><input id="comment{{order_id}}" value="{{comment}}" title="{{comment}}" type="text" style="width: 100px;"></td>
+                    <td><button id="btnLock{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-success btn-xs triggers_Approval" style="display: {{popupButtonLockDisplay}};" title="@Messages("directpay.admin.orderslist.lockorder")">@Messages("directpay.admin.orderslist.lock")</button>
+                        <button id="btnOK{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-primary btn-xs triggers_Approval" style="display: {{popupButtonOKDisplay}};" title="@Messages("directpay.admin.orderslist.acceptorder")"> &nbsp; @Messages("directpay.admin.orderslist.ok") &nbsp; </button>
+                        <a href="#popupDetails"><button id="btnUpload{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" image_id="{{image_id}}" doc1="{{doc1}}" doc_type="{{doc_type}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" initial_value="{{initial_value}}" fee="{{total_fee}}"
+                            type="button" class="btn btn-primary btn-xs triggers_Upload" style="display: {{popupButtonUploadDisplay}};" title="{{doc1}}">@Messages("terminology.upload")</button>
+                        </a>
+                        <button id="btnReject{{order_id}}" order_id="{{order_id}}" order_type="{{order_type}}" type="button" class="btn btn-warning btn-xs triggers_Rejection" style="display: {{popupButtonRjDisplay}};" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
     </script>
 
 
     <script id="orders-search-template" type="text/x-handlebars-template">
-        <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
         <table id="table_orders" class="table table-striped responsive jambo_table bulk_action">
             <thead>
                 <tr>
                     <th>@Messages("terminology.type")</th>
                     <th>@Messages("terminology.status")</th>
                     <th>@Messages("terminology.email")</th>
-                    <th>@Messages("terminology.requested")</th>
-                    <th>@Messages("terminology.fee")</th>
+                    <th align="right">@Messages("terminology.requested")</th>
+                    <th align="right">@Messages("terminology.fee")</th>
                     <th>@Messages("terminology.executed")</th>
-                    <th>@Messages("terminology.value")</th>
+                    <th align="right">@Messages("terminology.value")</th>
                     <th>@Messages("terminology.comment")</th>
-                    <th>@Messages("directpay.admin.orderslist.doc")</th>
+                    <th>@Messages("directpay.admin.orderslist.document")</th>
                     <th>@Messages("terminology.revision")</th>
                 </tr>
             </thead>
@@ -130,7 +104,7 @@
                     <td align="right">{{initial_value}}</td>
                     <td align="right">{{total_fee}}</td>
                     <td>{{closed}}</td>
-                    <td {{class_value}}>{{currency}} {{net_value}}</td>
+                    <td {{class_value}} align="right">{{currency}} {{net_value}}</td>
                     <td>{{comment}}</td>
                     <td><a href="#popupDetails" id="requestPopupDetails" class="{{popupType}}" order_id="{{order_id}}" image_id="{{image_id}}" doc1="{{doc1}}" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" order_type="{{order_type}}" initial_value="{{initial_value}}" fee="{{total_fee}}" title="{{doc1}}">{{doc1}}</a></td>
                     <td><button id="btnRevise{{order_id}}" type="button" class="btn btn-info btn-xs triggers_Revision" title="revise order">Revise</button></td>
@@ -145,12 +119,12 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Orders <small>@Messages("directpay.admin.orderslist.openorders.title")</small></h2>
+                <h2>only example of timestamp alert</h2>
                 <div class="clearfix"></div>
             </div>
 
             <div class="x_content">
-                <div class="panel-heading">@Messages("directpay.admin.orderslist.ordersfromsearch.title")</div>
+                <div class="panel-heading">only example of timestamp alert</div>
                 <div class="table-responsive">
                     <table id="table_searched_orders" class="table table-striped responsive jambo_table bulk_action">
                         <thead>
@@ -189,5 +163,57 @@
             </div>
         </div>
     </div>
+
+
+        <!-- Modal page for order details -->
+    <div id="popupDetails" class="overlay">
+        <div id="popupInfoDiv" class="popup">
+            <div class="title_left">
+                <h3><i class="fa fa-newspaper-o"> &nbsp;</i> @Messages("directpay.admin.orderdetails")</h3>
+            </div>
+            <h2><span id="popUpPictureTitle"></span></h2>
+            <input type="hidden" id="hidden_order_id"><input type="hidden" id="popupType" value="">
+
+            <div id="buttonsDiv" class="popupTopButtons">
+                <button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomin")"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="@Messages("terminology.zoomout")"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp;
+                <button id="btnApprove" order_id="" order_type="" type="button" class="btn btn-primary btn-xs triggers_Approval" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnReject" order_id="" order_type="" type="button" class="btn btn-warning btn-xs triggers_Rejection" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
+            </div>
+            <a class="popupClose" href="#">&times;</a>
+            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])">
+            <table width="100%" cellpadding="10"><tr>
+                <td>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></td>
+                <td><span id="popUpPictureInfo3"></span></td>
+                <td><span id="popUpMessageValue">@Messages("terminology.value"): </span><input id="popUpNet_value" value="" title="" type="text" style="width: 60px;" class="triggers_details"></td>
+            </tr><tr>
+                <td>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></td>
+                <td><span id="popUpPictureInfo4"></span></td>
+                <td>@Messages("terminology.comment"): <input id="popUpComment" value="" title="" type="text" style="width: 200px;" class="triggers_details"></td>
+            </tr></table>
+            <p><img src="placeholder" id="the_picture"></p>
+            <p><span id="popUpPictureInfo3"></span></p>
+
+            <form id="upload_picture_form" action="@routes.Application.uploadWithdrawImage" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                @CSRF.formField
+                <div class="form-group"> <!-- http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/ -->
+                    <label class="col-sm-3 col-md-4 control-label" for="doc1">@Messages("directpay.admin.orderslist.withdrawreceipt")</label>
+                    <input type="hidden" id="uploadFile1" placeholder="Choose File" disabled="disabled" />
+                    <div id="uploadDiv1" class="fileUpload btn btn-info" style="top: -6px;">
+                        <span id="uploadButtonCaption1" style="max-width: 250px; display: block; font-size: 12px">@Messages("terminology.browse")</span>
+                        <input type="file" name="info_holder" id="uploadBtn1" class="upload"/>
+                    </div>
+                    <span id="uploadText1"></span>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
+                        <button id="btnApproveWithdraw" order_id="" order_type="" type="button" class="btn btn-primary btn-xs" title="@Messages("directpay.admin.orderslist.acceptorder")">@Messages("directpay.admin.orderslist.accept")</button><button id="btnRejectWithdraw" order_id="" order_type="" type="button" class="btn btn-warning btn-xs" title="@Messages("directpay.admin.orderslist.rejectorder")">@Messages("directpay.admin.orderslist.reject")</button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="div_details" frameborder="0" border="0" cellspacing="0" style="display: block; border-style: none; resize: both;"></div>
+        </div>
+    </div>
+        <!-- end of Modal page for order details -->
 
 }

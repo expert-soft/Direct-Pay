@@ -1,56 +1,18 @@
 
 $(function() {
-    // this function is not being used. Submission is being done through uploadImage
-/*    function submit_deposit() {
-        if ($('#partner').val() != "00" && $('#value').val() > 0) {
-            var order_type = $('#hidden_page').val();
-            var partner = '';
-            var doc1 = 'XXX';
-            submit_image();
-            if (order_type == "DCS") {
-                partner = $('#partner').val();
-            }
-            var status = "Op";
-            doc1 = $('#doc1').val();
-            var initial_value = $('#value').val();
-            API.create_order(order_type, status, partner, initial_value, '', '', '', doc1).success(function () {
-                $.pnotify({
-                    title: Messages("messages.api.success"),
-                    text: Messages("messages.api.success.ordercreatedsuccessfully"),
-                    styling: 'bootstrap',
-                    type: 'success',
-                    text_escape: true
-                });
-            });
-        }
-        else
-            alert("Choose file name and value > 0");
-    }
-*/
 
-/*
-    function submit_image() {
-        API.upload_image($('#uploadBtn1'));
-        $.pnotify({
-            title: Messages("messages.api.success"),
-            text: Messages("messages.api.success.manualautomodechanged"),
-            styling: 'bootstrap',
-            type: 'success',
-            text_escape: true
+    function show_bank_data() {
+        API.get_bank_data().success(function(data){
+            $('#partner').val(data[0].partner);
+            $('#partner_account').val(data[0].partner_account);
         });
     }
-*/
+    show_bank_data();
+
 
     $(document).ready(function () {
         fillMessages();
     });
-
-/*    $('.triggers_submit').click(function () {
-alert(3);
-        submit_deposit($('#uploadBtn1'));
-    });
-*/
-
 });
 
 
@@ -75,27 +37,37 @@ function fillInfoIntoFileObject() { $('#uploadBtn1').attr('name', $('#value').va
 $(function(){
     $('#deposit_form').on('submit',function(event){
         var decimal_separator = $('#hidden_fees_information').attr('decimal_separator');
-        var value_s = $('#value').val();
-        if (decimal_separator == ",")
-            value_s = value_s.replace(decimal_separator, ".");
+        var value_s = UnformatNumber($('#value').val());
         if ($.isNumeric(value_s)) {
             if (parseFloat(value_s) > 0 ) {
                 if($('#uploadText1').text() != "") {
-                    // accept value and submit form
+                    //(value_s + " <= " + parseFloat($('#hidden_fees_information').attr('wallet_available')) + " + " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto'))  + " - " +  parseFloat($('#hidden_fees_information').attr('wallet_crypto_onhold')) + " - " + parseFloat($('#total_send_fee').val()));
+                    if ($('#hidden_page').val() == "D" || ($('#partner').val() != "00" && $('#partner_account').val() != "")) {
+                        // calling API function:
+//if($('#hidden_page').val() == "DCS") submit_send(value);
+                    }
+                    else {
+                        event.preventDefault() ;
+                        event.stopPropagation();
+                        alert(Messages('directpay.formvalidation.accountinformationisincomplete'));
+                    }
                 } else {
                     event.preventDefault() ;
                     event.stopPropagation();
-                    alert($('#hidden_form_validation_messages').attr('youmustselectdepositfile'));
+                    alert(Messages('directpay.formvalidation.youmustselectdepositfile'));
                 }
             } else {
                 event.preventDefault() ;
                 event.stopPropagation();
-                alert($('#hidden_form_validation_messages').attr('valuemustbegreaterthanzero'));
+                alert(Messages('directpay.formvalidation.valuemustbegreaterthanzero'));
             }
         } else {
             event.preventDefault() ;
             event.stopPropagation();
-            alert($('#hidden_form_validation_messages').attr('valuemustbenumerical'));
+            alert(Messages('directpay.formvalidation.valuemustbenumerical'));
         }
     });
 });
+
+
+

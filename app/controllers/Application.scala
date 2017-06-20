@@ -27,6 +27,7 @@ import play.api.i18n.MessagesApi
 import play.i18n.Langs
 import scala.language.postfixOps
 import jsmessages.JsMessagesFactory
+import IAPI.APIv1
 
 class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesApi: MessagesApi) extends Controller with securesocial.core.SecureSocial with I18nSupport {
 
@@ -54,7 +55,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(views.html.administrator.users_list(request.user))
   }
 
-  def orders_list = SecuredAction { implicit request =>
+  def orders_list(search_criteria: String, search_value: String) = SecuredAction { implicit request =>
     Ok(views.html.administrator.orders_list(request.user))
   }
 
@@ -113,7 +114,49 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     var initial_value = 0.0
     var partner = ""
     var partner_account = ""
-    var order_type = "DCS"
+    var order_type = "DS"
+    if (globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_operations_organized", 2).asInstanceOf[String] == "convert") order_type = "DCS"
+    var local_fee = 0.1
+    var global_fee = 0.1
+    val decimal_separator = globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String]
+    val country_id = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
+    request.body.files map {
+      file =>
+        val fileName = file.filename
+        val contentType = file.contentType
+        val user_id = request.user.id
+        val position = file.key.indexOf("|")
+        val position2 = file.key.substring(position + 1, file.key.length).indexOf("|") + position + 1
+        // ### need to treat string to double exceptions. If not double value, reject order creation
+        //  = try { Some(s.toDouble) } catch { case _ => None }
+        initial_value = try {
+          ((file.key.substring(0, position)).replace(decimal_separator, ".")).toDouble
+        } catch {
+          case _ => 0.0
+        }
+        if (initial_value != 0.0) {
+          partner = file.key.substring(position + 1, position2)
+          partner_account = file.key.substring(position2 + 1, file.key.length)
+          val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+          if (partner == "undefined") {
+            order_type = "D"
+            partner = ""
+            partner_account = ""
+          }
+          local_fee = globals.calculate_local_fee(order_type, initial_value).toDouble
+          global_fee = globals.calculate_global_fee(order_type, initial_value).toDouble
+          val success = globals.userModel.create_order_with_picture(request.user.id, country_id, order_type, "Op", partner, globals.settings(Option(securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")), "country_currency_code", 2).asInstanceOf[String], initial_value, local_fee, global_fee, "", "", partner_account, fileName, image_id)
+        }
+    }
+    Ok(views.html.exchange.dashboard(request.user))
+  }
+
+  def uploadWithdrawImage = SecuredAction(parse.multipartFormData) { implicit request =>
+    var processed_value = 0.0
+    var comment = ""
+    var OK_Ch_Rj = ""
+    var order_type = "ooo"
+    var order_id = 0L
     var local_fee = 0.1
     var global_fee = 0.1
     request.body.files map {
@@ -123,24 +166,32 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val user_id = request.user.id
         val position = file.key.indexOf("|")
         val position2 = file.key.substring(position + 1, file.key.length).indexOf("|") + position + 1
-        // need to treat string to double exceptions. If not double value, reject order creation
+        val position3 = file.key.substring(position2 + 1, file.key.length).indexOf("|") + position2 + 1
+        val position4 = file.key.substring(position3 + 1, file.key.length).indexOf("|") + position3 + 1
+        val decimal_separator = globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_decimal_separator", 2).asInstanceOf[String]
+        //val country_id = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
         //  = try { Some(s.toDouble) } catch { case _ => None }
-        initial_value = try { ((file.key.substring(0, position)).replace(globals.country_decimal_separator, ".")).toDouble } catch { case _ => 0.0 }
-        if (initial_value != 0.0) {
-          partner = file.key.substring(position + 1, position2)
-          partner_account = file.key.substring(position2 + 1, file.key.length)
-          val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
-          if (partner == "undefined") {
-            order_type = "D"
-            partner = ""
-            partner_account = ""
-            local_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
-            global_fee = initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
-          } else {
-            local_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
-            global_fee = initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
-          }
-          val success = globals.userModel.create_order_with_picture(request.user.id, globals.country_code, order_type, "Op", partner, globals.country_currency_code, initial_value, local_fee, global_fee, "", "", partner_account, fileName, image_id)
+        processed_value = try {
+          ((file.key.substring(0, position)).replace(decimal_separator, ".")).toDouble
+        } catch {
+          case _ => 0.0
+        }
+
+        comment = file.key.substring(position + 1, position2)
+        OK_Ch_Rj = file.key.substring(position2 + 1, position3)
+        order_type = file.key.substring(position3 + 1, position4)
+        order_id = (file.key.substring(position4 + 1, file.key.length)).toLong
+        val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
+
+        if (processed_value != 0.0) {
+          local_fee = globals.calculate_local_fee(order_type, processed_value).toDouble
+          global_fee = globals.calculate_global_fee(order_type, processed_value).toDouble
+        } else {
+          local_fee = 0;
+          global_fee = 0;
+        }
+        if (processed_value != 0.0 || OK_Ch_Rj == "Rj") {
+          val success = globals.userModel.update_order_with_picture(order_id, order_type, OK_Ch_Rj, processed_value, local_fee, global_fee, comment, image_id, request.user.id)
         }
     }
     Ok(views.html.exchange.dashboard(request.user))
@@ -154,7 +205,7 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
         val docNumber = file.key
         val user_id = request.user.id
         val image_id = controllers.Image.saveImage(file.ref.file.getAbsolutePath, fileName, user_id)
-        var success = globals.userModel.create_order_with_picture(user_id, globals.country_code, "V", "Op", docNumber, globals.country_currency_code, 0, 0, 0, "", "", "", fileName, image_id)
+        var success = globals.userModel.create_order_with_picture(user_id, securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br"), "V", "Op", docNumber, globals.settings(Option(securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")), "country_currency_code", 2).asInstanceOf[String], 0, 0, 0, "", "", "", fileName, image_id)
         success = globals.userModel.update_user_doc(user_id, docNumber, image_id, fileName)
     }
     Ok(views.html.exchange.dashboard(request.user))
@@ -177,8 +228,3 @@ class Application @Inject() (jsMessagesFactory: JsMessagesFactory, val messagesA
     Ok(messages(Some("window.Messages")))
   }
 }
-
-/*object ManualAuto {
-
-}
-*/ 

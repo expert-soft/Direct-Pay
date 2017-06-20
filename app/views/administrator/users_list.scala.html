@@ -43,7 +43,7 @@
                             <h2><span id="popUpPictureTitle"></span></h2>
                             <div id="buttonsDiv" class="popupTopButtons"><button id="btnZoomIn" type="button" class="btn btn-default btn-xs" title="Zoom in"><i class="fa fa-search-plus"></i></button><button id="btnZoomOut" type="button" class="btn btn-default btn-xs" title="Zoom out"><i class="fa fa-search-minus"></i></button> &nbsp; &nbsp; &nbsp; <button id="btnApprove" type="button" class="btn btn-primary btn-xs" title="Approve document">Approve</button><button id="btnReject" type="button" class="btn btn-warning btn-xs" title="Reject document">Reject</button></div>
                             <a class="popupClose" href="#">&times;</a>
-                            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.country_doc1_name)"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.country_doc2_name)"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.country_doc3_name)"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.country_doc4_name)"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.country_doc5_name)">
+                            <input type="hidden" id="popUpPictureDoc1" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc2" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc3" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc4" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])"><input type="hidden" id="popUpPictureDoc5" value="@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])">
                             <div class="content">
                                 <p>@Messages("terminology.user"): <span id="popUpPictureInfo1"></span></p>
                                 <p>@Messages("terminology.email"): <span id="popUpPictureInfo2"></span></p>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" id="hidden_critical_value1" value="@globals.country_critical_value1">
+                    <input type="hidden" id="hidden_critical_value1" value="@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_critical_value1", 1).asInstanceOf[Double]">
                     <p id="users-list"></p> <!-- Script is called here -->
                 </div>
             </div>
@@ -69,13 +69,13 @@
                 <tr>
                     <th>@Messages("terminology.email")</th>
                     <th>@Messages("terminology.name")</th>
-                    <th>@globals.country_currency_symbol</th>
-                    <th>@globals.country_currency_crypto</th>
-                    @if(globals.country_doc1_required) { <th>@Messages(globals.country_doc1_name)</th> }
-                    @if(globals.country_doc2_required) { <th>@Messages(globals.country_doc2_name)</th> }
-                    @if(globals.country_doc3_required) { <th>@Messages(globals.country_doc3_name)</th> }
-                    @if(globals.country_doc4_required) { <th>@Messages(globals.country_doc4_name)</th> }
-                    @if(globals.country_doc5_required) { <th>@Messages(globals.country_doc5_name)</th> }
+                    <th>@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_symbol", 2).asInstanceOf[String]</th>
+                    <th>@globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_crypto", 2).asInstanceOf[String]</th>
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_required", 0).asInstanceOf[Boolean]) { <th>@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_name", 2).asInstanceOf[String])</th> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_required", 0).asInstanceOf[Boolean]) { <th>@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_name", 2).asInstanceOf[String])</th> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_required", 0).asInstanceOf[Boolean]) { <th>@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_name", 2).asInstanceOf[String])</th> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_required", 0).asInstanceOf[Boolean]) { <th>@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_name", 2).asInstanceOf[String])</th> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_required", 0).asInstanceOf[Boolean]) { <th>@Messages(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_name", 2).asInstanceOf[String])</th> }
                 </tr>
             </thead>
             <tbody>
@@ -85,11 +85,11 @@
                     <td title="@Messages("directpay.admin.userslist.userID") = {{id}}">{{first_name}} {{middle_name}} {{last_name}}</td>
                     <td class="{{class_fiat}}">{{balance}}</td>
                     <td class="{{class_crypto}}">{{balance_c}}</td>
-                    @if(globals.country_doc1_required) { <td>@if(globals.country_doc1_ispicture) {<a class="requestPopUp" name="{{doc1}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver1}}" doc="1" title="{{doc1}}">{{doc1}}</a>} else { {{doc1}} }<br> <i class="{{checked1}}"></i> </td> }
-                    @if(globals.country_doc2_required) { <td>@if(globals.country_doc2_ispicture) {<a class="requestPopUp" name="{{doc2}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver2}}" doc="2" title="{{doc2}}">{{doc2}}</a>} else { {{doc2}} }<br> <i class="{{checked2}}"></i> </td> }
-                    @if(globals.country_doc3_required) { <td>@if(globals.country_doc3_ispicture) {<a class="requestPopUp" name="{{doc3}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver3}}" doc="3" title="{{doc3}}">{{doc3}}</a>} else { {{doc3}} }<br> <i class="{{checked3}}"></i> </td> }
-                    @if(globals.country_doc4_required) { <td>@if(globals.country_doc4_ispicture) {<a class="requestPopUp" name="{{doc4}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver4}}" doc="4" title="{{doc4}}">{{doc4}}</a>} else { {{doc4}} }<br> <i class="{{checked4}}"></i> </td> }
-                    @if(globals.country_doc5_required) { <td>@if(globals.country_doc5_ispicture) {<a class="requestPopUp" name="{{doc5}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver5}}" doc="5" title="{{doc5}}">{{doc5}}</a>} else { {{doc5}} }<br> <i class="{{checked5}}"></i> </td> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_required", 0).asInstanceOf[Boolean]) { <td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc1_ispicture", 0).asInstanceOf[Boolean]) {<a class="requestPopUp" name="{{doc1}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver1}}" doc="1" title="{{doc1}}">{{doc1}}</a>} else { {{doc1}} }<br> <i class="{{checked1}}"></i> </td> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_required", 0).asInstanceOf[Boolean]) { <td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc2_ispicture", 0).asInstanceOf[Boolean]) {<a class="requestPopUp" name="{{doc2}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver2}}" doc="2" title="{{doc2}}">{{doc2}}</a>} else { {{doc2}} }<br> <i class="{{checked2}}"></i> </td> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_required", 0).asInstanceOf[Boolean]) { <td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc3_ispicture", 0).asInstanceOf[Boolean]) {<a class="requestPopUp" name="{{doc3}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver3}}" doc="3" title="{{doc3}}">{{doc3}}</a>} else { {{doc3}} }<br> <i class="{{checked3}}"></i> </td> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_required", 0).asInstanceOf[Boolean]) { <td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc4_ispicture", 0).asInstanceOf[Boolean]) {<a class="requestPopUp" name="{{doc4}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver4}}" doc="4" title="{{doc4}}">{{doc4}}</a>} else { {{doc4}} }<br> <i class="{{checked4}}"></i> </td> }
+                    @if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_required", 0).asInstanceOf[Boolean]) { <td>@if(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_doc5_ispicture", 0).asInstanceOf[Boolean]) {<a class="requestPopUp" name="{{doc5}}" href="#popupPic" user="{{first_name}} {{middle_name}} {{last_name}}" email="{{email}}" ver="{{ver5}}" doc="5" title="{{doc5}}">{{doc5}}</a>} else { {{doc5}} }<br> <i class="{{checked5}}"></i> </td> }
                 </tr>
             {{/each}}
             </tbody>

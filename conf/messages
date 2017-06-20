@@ -184,6 +184,7 @@ terminology.bank=Bank
 terminology.agency=Agency
 terminology.account=Account
 terminology.submit=Submit
+terminology.save=Save
 terminology.convert=Convert
 terminology.send=Send
 terminology.receive=Receive
@@ -213,6 +214,8 @@ terminology.disabled=disabled
 terminology.complete=Complete
 terminology.previous=Previous
 terminology.next=Next
+terminology.ibancode=IBAN code
+terminology.administrator=Administrator
 
 directpay.frontpage.notyetsignedup=Not yet signed up?
 directpay.frontpage.carousel1.text1=Your direct access to the best in the world!
@@ -244,7 +247,7 @@ directpay.legend.sendingtopartner=Sending to Partner
 directpay.legend.orderexecuted=Order Executed
 directpay.legend.executionmodified=Execution Modified
 directpay.legend.orderrejected=Order Rejected
-
+directpay.legend.uploadwithdrawreceipt=Upload Withdraw receipt
 
 directpay.general.expandcontractsidemenu=Expand or contract side menu
 
@@ -275,7 +278,7 @@ directpay.navigation.overview.title=Actions Overview
 directpay.admin.orderslist.openorders.title=Open Orders
 directpay.admin.orderslist.ordersfromsearch.title=Result from search:
 directpay.admin.orderslist.orderID=Order ID
-directpay.admin.orderslist.doc=doc
+directpay.admin.orderslist.document=Document
 directpay.admin.orderslist.lock=Lock
 directpay.admin.orderslist.lockorder=Lock order. Confirmation required in 48 h.
 directpay.admin.orderslist.ok=OK
@@ -288,6 +291,7 @@ directpay.admin.orderslist.status.Op=Open
 directpay.admin.orderslist.status.Ch=Changed
 directpay.admin.orderslist.status.Rj=Rejected
 directpay.admin.orderdetails=Order Details
+directpay.admin.orderslist.withdrawreceipt=Withdraw receipt
 
 directpay.admin.userslist.userID=User ID
 
@@ -300,7 +304,7 @@ directpay.management.pendingorders=Pending Orders
 
 directpay.overview.systemoverview=System Overview
 directpay.overview.explanation1={0} is a community system that manages and supports exchanges of {1} by crypto-currencies accepted by our partners. By doing that you get access to internet companies and services that do not have local presence in {2}.
-directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a save environment were you can do deposit, conversions, conections and withdraw operations.
+directpay.overview.explanation2=It is very simple to operate at {0}. You may want deposit {1}, convert it to {2} and send to one of our partners. Or, the way back, some of our partners may have to return {2} to you and you want to reconvert to {1} and withdraw to your bank account. That is exactly how {0} acts for you, providing a safe environment were you can do deposit, conversions, conections and withdraw operations.
 directpay.overview.explanation3=At boxes below you can have an overview of the operations {0} helps you to do.
 directpay.overview.explanation4=If you want the operations even simpler, you can set it to operate
 directpay.overview.extraexplanation1=You can set {0} to work in automatic or manual mode. If you choose automatic, system will understand that every deposit you do is to be immediately converted and transferred to your selected partner. It also considers that any {1} received from a partner should be automatically converted and withdrawed to your bank account, with no need to request the operations separatelly.
@@ -309,7 +313,7 @@ directpay.overview.choosemanualorautomatic=Choose Manual or Automatic Mode
 directpay.overview.chooseoptions=Choose Automatic or Manual mode and the system will change how operations are executed.
 directpay.overview.automatic=Automatic
 directpay.overview.manual=Manual
-directpay.overview.explainoptionautomatic=Any Deposit is Sent to a partner and any Receive from partner is Withdrawed to your bank account.
+directpay.overview.explainoptionautomatic=Any Deposit is Sent to a partner and any Receive from partner is automatically Withdrawed to your bank account.
 directpay.overview.explainoptionmanual=All operations executed by user.
 directpay.overview.explanationautomatic=If at "Automatic Mode", operations get grouped in two (deposit + convert to {0} + send and receive + convert to {1} + withdraw). A deposit order automatically triggers a convertion and send to partner, and any money received from partner is automaically reconverted and withdrawed to your bank account.
 directpay.overview.explanationmanual=If at "Manual Mode", all operations (deposit, convert to {0}, send, receive, convert to {1} and withdraw) must be ordered separately.  Any money you deposit is automatically converted and sent to your preferred partner and any money received from partner is reconverted and withdrawed to your bank account.
@@ -332,6 +336,8 @@ directpay.overview.nofeesarecharged=No fees are charged for this operation.
 directpay.overview.convertionrate=Convertion Rate
 directpay.overview.convertionsareperformedbypartners=The exchanges of {0} and {1} (and the way back) are, by contractual statement, performed against the resources provided by partners and at a minimum contracted rate of
 directpay.overview.convertionsareperformedbypartners2=That means you will always be able to convert your money at a competitive rate.
+directpay.overview.showoperationstutorial=Show Operations Tutorial
+directpay.overview.hideoperationstutorial=Hide Operations Tutorial
 
 directpay.deposit.depositconvertsend=Deposit, Convert and Send
 directpay.deposit.submitdepositreceipt=Submit your Deposit Receipt
@@ -352,6 +358,8 @@ directpay.deposit.disclaimer2=Deposits made at banking working time are processe
 directpay.withdraw.receiveconvertwithdraw=Receive, Convert and Withdraw
 directpay.withdraw.yourdocumentationis=Your documentation is
 directpay.withdraw.notyetverified=not yet verified
+directpay.withdraw.uploadyourdocuments=Upload your documents
+directpay.withdraw.orwaitthemtobeverified=(or wait them to be verified)
 directpay.withdraw.documentsrequiredtowithdraw=Information and documents required:
 directpay.withdraw.youarenotallowedtothisoperation=You are not allowed to perform this operation until your information and documents are verified.
 directpay.withdraw.youroperationwillonlybeexecuted=Your operation will only be completely executed if you upload the missing documents before partner returns {0} to your account.
@@ -389,7 +397,7 @@ directpay.receive.toreceivefrompartners4=But first confirm the bank account were
 directpay.receive.savebankdata=Save Bank Data
 directpay.receive.linkstopartners=Links to Partners:
 directpay.receive.explanation1=To receive money from our partners, you must go to the partner-site and request a withdraw to {0}. Partner will send {1} and it will become available at {0} in a few seconds.
-directpay.receive.explanation2=If you want to receive {0} from a Partner but doesn't want it immediately converted and withdrawn to your bank, or want to withdraw a different value, change to "Manual Mode".
+directpay.receive.explanation2=If you want to receive {0} from a Partner but doesn''t want it immediately converted and withdrawn to your bank, or want to withdraw a different value, change to "Manual Mode".
 directpay.receive.extraexplanation1=### Operaç~es manuais
 
 directpay.tocrypto.valuetobeconverted=Value to be converted
@@ -458,7 +466,7 @@ directpay.documents.extraexplanation1=Documents verification process is performe
 directpay.documents.extraexplanation2=The verification process is required in order to ensure personal information is correct and therefore activities performed inside {0} fulfill all local legal standards.
 directpay.documents.extraexplanation3=If provided information is not recognized as accurate, {0} reserves the right not to proceed to any operation, specially deposits recognition and withdrawals requests, in order to comply with the best business standards.
 directpay.documents.selectpictureofdocument=Select picture of the document
-directpay.documents.supportedfiletypes=Supported file tyes: .gif, .jpg, .png
+directpay.documents.supportedfiletypes=Supported file types: .gif, .jpg, .png
 directpay.documents.documentdetails=Document Details
 directpay.documents.verified=Verified
 directpay.documents.filename=File Name
@@ -481,17 +489,23 @@ directpay.security.step3=PGP public Key
 directpay.security.step3.explanation1=PGP key is a cryptografic method to securily send communications to you without the risk to have the message intercepted and sensitive information unintentionally revealed.
 directpay.security.step4=Mailing List
 directpay.security.step4.explanation1=If you want to receive information about {0} or our partners, let Mailing List enabled.
-directpay.security.extrainfo.explanation1=Keep your password safe and let nobody else to know it. To ensure your password is strong, that hackers can not break it, avoid using easy passwords; include numbers and dymbols, if possible.
-directpay.security.extrainfo.explanation2=2FA works like an extra password to access your account. With 2FA enabled, your access into {0} will only be granted after providing username (email) and password and an extra piece of secret information. That extra feature turns your account virtually impossible to be invaded.
+directpay.security.extrainfo.explanation1=Keep your password safe and let nobody else to know it. To ensure your password is strong, that hackers can not break it, avoid using easy passwords; include numbers and symbols, if possible.
+directpay.security.extrainfo.explanation2=2FA works like an extra password to access your account. With 2FA enabled, your access into {0} will only be granted after providing username (email) and password and that extra piece of secret information. That extra feature turns your account virtually impossible to be invaded.
 directpay.security.extrainfo.explanation3=PGP key (Pretty Good Privacy) is an internet standard used for data encryption and digital signatures, what improves security of information transfers and privacy. It is a recommended practice, specially when you are managing money through internet channels.
-directpay.security.extrainfo.explanation4=Our Mailing List is a good channel you have if you want to receive news and opportunities about {0} and about our partners. If you don't want to receive any email with general information and news, disable the option. In any case you will still receive important information (specially info related to your account access, security and sensitive operations).
+directpay.security.extrainfo.explanation4=Our Mailing List is a good channel you have if you want to receive news and opportunities about {0} and about our partners. If you don''t want to receive any email with general information and news, disable the option. In any case you will still receive important information (specially info related to your account access, security and sensitive operations).
 directpay.security.disclaimer1={0} system provides a good set of protection tools to your account. Some of the features are mandatory and others are optional, what allows user to set the account according to his needs. {0} can not be accounted for poor management of the security features provided to users.
 directpay.security.disclaimer2=All internet systems have vulnerabilities. Even banks, big exchanges or high tech systems can be target for cyber attacks. {0} implements the state of the art security practices, tested and verified. Be sure you are secured the best. Nevertheless, being known that even the best systems suffer attacks, user is advised {0} does not assume the risks and possible losses caused by others than the people directly involved with administration of the system.
 
+directpay.history.requested=Requested ({0})
+directpay.history.value=Value ({0})
+directpay.history.fee=Fees ({0})
 directpay.history.usersoperationshistory=User''s Operations History
+directpay.history.currentfundsposition=Current funds position
+directpay.history.initialfundsposition=Initial funds position
 directpay.history.loghistory=Log History
 directpay.history.imagedetails=Image Details
 directpay.history.sum=Sum ({0})
+directpay.history.hold=Hold ({0})
 
 directpay.formvalidation.valuemustbenumerical=Value must be numerical
 directpay.formvalidation.valuemustbegreaterthanzero=Value must be greater than 0
@@ -500,7 +514,25 @@ directpay.formvalidation.bankinginformationisincomplete=Banking information is i
 directpay.formvalidation.accountinformationisincomplete=Account information is incomplete
 directpay.formvalidation.youmustselectdepositfile=You must select the deposit receipt file to be uploaded
 directpay.formvalidation.nofileselected=There are no new files selected
+directpay.formvalidation.bankinginformationisnotvalid=Banking information is not valid
+directpay.formvalidation.commentcannotbeempty=Comment information can not be empty
+directpay.formvalidation.confirmnewvalue=Confirm new value
+directpay.formvalidation.thisisnotavaliddate=This is not a valid date
+directpay.formvalidation.global1andlocal1administratorsmustnotbeempty=Global-1 and Local-1 administrators must not be empty
 
+directpay.search.search=Search
+directpay.search.searchcriteria=Search Criteria
+directpay.search.searchfor=Search for
+directpay.search.valueyouaresearchingfor=Value you are searching for
+directpay.search.orderid=Order ID
+directpay.search.useridemail=User ID / email
+directpay.search.ordertype=Order Type
+directpay.search.orderstatus=Order Status
+directpay.search.ordercreatedafter=Order created after
+directpay.search.valueprocessedgreaterthan=Value processed greater than
+directpay.management.globaladministrator=Global Administrator
+directpay.management.localadministrator=Local Administrator
+directpay.management.operator=Operator
 
 directpay.faq.frequentlyaskedquestions=Frequently Asked Questions
 directpay.faq.1=O que é {0}?
@@ -686,11 +718,19 @@ messages.api.success=Success
 messages.api.success.ordercreatedsuccessfully=Order created successfully
 messages.api.success.bankinfosavedsuccessfully=Bank data saved successfully
 messages.api.success.manualautomodechanged=Manual / Automatic mode changed successfully
-messages.api.error.failedtocreateorder=Failed to create order.
-messages.api.success.orderupdatedsuccessfully=Order Updated Successfully
+messages.api.success.userdataupdated=User data updated successfully
+messages.api.success.orderupdatedsuccessfully=Order updated successfully
+messages.api.success.orderapproved=Order approved (executed)
+messages.api.success.documentapproved=Document approved
+messages.api.success.orderapprovedwithchanges=Order approved (executed) with changes
+messages.api.success.orderlockedtobeprocessed=Order locked to be processed
+messages.api.success.orderrejected=Order rejected
+messages.api.success.documentrejected=Document rejected
+messages.api.success.administratorssavedsuccessfully=Administrators saved successfully
+messages.api.error.failedtocreateorder=Failed to create order
 messages.api.error.failedtochangemanualautomode=Failed to change Manual/Auto Mode
 messages.api.error.failedtoupdateorder=Failed to update order
-
+messages.api.error.failedtosaveadministrators=Failed to save administrators
 
 
 # API error messages
@@ -890,7 +930,7 @@ getstarted.all=All
 
 getstarted.signup=Sign up
 getstarted.chooselanguage=Choose language
-getstarted.clickonthetabregistration=Click on the tab "Sing Up"
+getstarted.clickonthetabregistration=Click on the tab "Sign Up"
 getstarted.enteryouremailaddress=Enter your email address
 getstarted.choosesecuritypassword=Choose security password
 

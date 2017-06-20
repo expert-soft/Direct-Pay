@@ -74,14 +74,19 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
       Json.obj(
         "bank" -> c._1,
         "agency" -> c._2,
-        "account" -> c._3
+        "account" -> c._3,
+        "partner" -> c._4,
+        "partner_account" -> c._5
       )
     })
     ))
   }
 
-  def orders_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val orders_list_info = globals.engineModel.OrderList()
+  def orders_list = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val country = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
+    val search_criteria = (request.request.body \ "search_criteria").asOpt[String]
+    val search_value = (request.request.body \ "search_value").asOpt[String]
+    val orders_list_info = globals.engineModel.OrderList(Some(request.user.id), country, search_criteria, search_value)
     Ok(Json.toJson(orders_list_info.map({ c =>
       Json.obj(
         "order_id" -> c._1,
@@ -115,7 +120,8 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def users_list = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val users_list_info = globals.engineModel.UsersList()
+    val country = securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br")
+    val users_list_info = globals.engineModel.UsersList(country)
     Ok(Json.toJson(users_list_info.map({ c =>
       Json.obj(
         "id" -> c._1,
@@ -174,12 +180,12 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     Ok(Json.toJson(management_data_info.map({ c =>
       Json.obj(
         "country_code" -> c._1,
-        "number_users" -> c._2,
-        "fiat_funds" -> c._3,
-        "crypto_funds" -> c._4,
-        "partners_balance" -> c._5,
-        "number_pending_orders" -> c._6
-
+        "currency" -> c._2,
+        "number_users" -> c._3,
+        "fiat_funds" -> c._4,
+        "crypto_funds" -> c._5,
+        "system_balance" -> c._6,
+        "number_pending_orders" -> c._7
       )
     })
     ))
@@ -200,7 +206,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   }
 
   def balance = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
-    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.country_currency_code)
+    val balances = globals.engineModel.balance(Some(request.user.id), None, globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_code", 2).asInstanceOf[String])
     Ok(Json.toJson(balances.map({ c =>
       Json.obj(
         "currency" -> c._1,
@@ -208,6 +214,27 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
         "hold" -> c._2._2.bigDecimal.toPlainString,
         "amount_c" -> c._2._3.bigDecimal.toPlainString,
         "hold_c" -> c._2._4.bigDecimal.toPlainString
+      )
+    })
+    ))
+  }
+
+  def get_admins = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>
+    val admins = globals.engineModel.GetAdmins(securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br"))
+    Ok(Json.toJson(admins.map({ c =>
+      Json.obj(
+        "admin_g1" -> c._1,
+        "admin_g2" -> c._2,
+        "admin_l1" -> c._3,
+        "admin_l2" -> c._4,
+        "admin_o1" -> c._5,
+        "admin_o2" -> c._6,
+        "email_g1" -> c._7,
+        "email_g2" -> c._8,
+        "email_l1" -> c._9,
+        "email_l2" -> c._10,
+        "email_o1" -> c._11,
+        "email_o2" -> c._12
       )
     })
     ))
@@ -305,15 +332,17 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
   def create_order = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
     val order_type = (request.request.body \ "order_type").asOpt[String]
     val status = (request.request.body \ "status").asOpt[String]
-    val partner = (request.request.body \ "partner").asOpt[String]
+    var partner = (request.request.body \ "partner").asOpt[String]
+    if (partner == "undefined")
+      partner = Option(globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_partner1_account", 2).asInstanceOf[String]) // this is the preferred partner ### should find another way in the future, specially for F orders
     val initial_value = (request.request.body \ "initial_value").asOpt[BigDecimal]
-    val local_fee: BigDecimal = calculate_local_fee(order_type.get, initial_value.get)
-    val global_fee: BigDecimal = calculate_global_fee(order_type.get, initial_value.get)
+    val local_fee: BigDecimal = globals.calculate_local_fee(order_type.get, initial_value.get)
+    val global_fee: BigDecimal = globals.calculate_global_fee(order_type.get, initial_value.get)
     val bank = (request.request.body \ "bank").asOpt[String]
     val agency = (request.request.body \ "agency").asOpt[String]
     val account = (request.request.body \ "account").asOpt[String]
     val doc1 = (request.request.body \ "doc1").asOpt[String]
-    if (globals.userModel.create_order(request.user.id, globals.country_code, order_type, status, partner, globals.country_currency_code, initial_value, Option(local_fee), Option(global_fee), bank, agency, account, doc1)) {
+    if (globals.userModel.create_order(request.user.id, securesocial.core.SecureSocial.currentUser.get.user_country.getOrElse("br"), order_type, status, partner, globals.settings(securesocial.core.SecureSocial.currentUser.get.user_country, "country_currency_code", 2).asInstanceOf[String], initial_value, Option(local_fee), Option(global_fee), bank, agency, account, doc1)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtocreateorder")))
@@ -328,7 +357,7 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     val comment = (request.request.body \ "comment").validate[String]
     // This function updates orders, updates balance fiat, updates balance crypto, updates system balances (fees)
 
-    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, calculate_local_fee(order_type.get, net_value.get), calculate_global_fee(order_type.get, net_value.get), request.user.id)) {
+    if (globals.userModel.update_order(order_id.get, status.get, net_value.get, comment.get, globals.calculate_local_fee(order_type.get, net_value.get), globals.calculate_global_fee(order_type.get, net_value.get), request.user.id)) {
       Ok(Json.obj())
     } else {
       BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtoupdateorder")))
@@ -378,46 +407,19 @@ class APIv1 @Inject() (val messagesApi: MessagesApi) extends Controller with sec
     }
   }
 
-  def calculate_local_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
-    val percentage = (100 - globals.country_fees_global_percentage.asInstanceOf[Double]) * 0.01
-    var low_value_fee = 0.0
-    if (initial_value < globals.country_minimum_value) {
-      low_value_fee = globals.country_minimum_value * 0.02
+  def save_admins = SecuredAction(ajaxCall = true)(parse.json) { implicit request =>
+    val country = (request.request.body \ "country").asOpt[String]
+    val admin_g1 = (request.request.body \ "admin_g1").asOpt[String]
+    val admin_g2 = (request.request.body \ "admin_g2").asOpt[String]
+    val admin_l1 = (request.request.body \ "admin_l1").asOpt[String]
+    val admin_l2 = (request.request.body \ "admin_l2").asOpt[String]
+    val admin_o1 = (request.request.body \ "admin_o1").asOpt[String]
+    val admin_o2 = (request.request.body \ "admin_o2").asOpt[String]
+    if (globals.userModel.save_admins(country, admin_g1, admin_g2, admin_l1, admin_l2, admin_o1, admin_o2)) {
+      Ok(Json.obj())
+    } else {
+      BadRequest(Json.obj("message" -> Messages("messages.api.error.failedtosaveadministrators")))
     }
-    if (order_type == "D") {
-      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
-    } else if (order_type == "S") {
-      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "DCS") {
-      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
-    } else if (order_type == "W") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
-    } else if (order_type == "W.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage + low_value_fee
-    } else if (order_type == "RFW") { // withdrawal to a preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
-    } else if (order_type == "RFW.") { // withdrawal to a non preferential bank
-      return globals.country_nominal_fee_withdrawal_preferential_bank.asInstanceOf[Double] + globals.country_nominal_fee_withdrawal_not_preferential_bank.asInstanceOf[Double] + initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage + low_value_fee
-    } else if (order_type == "F") {
-      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else return 0
-  }
-
-  def calculate_global_fee(order_type: String, initial_value: BigDecimal = 0): BigDecimal = {
-    val percentage = globals.country_fees_global_percentage.asInstanceOf[Double] * 0.01
-    if (order_type == "D") {
-      return initial_value * globals.country_fee_deposit_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "S") {
-      return initial_value * globals.country_fee_send_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "DCS") {
-      return initial_value * (globals.country_fee_deposit_percent.asInstanceOf[Double] + globals.country_fee_send_percent.asInstanceOf[Double]) * 0.01 * percentage
-    } else if (order_type == "W" || order_type == "W.") {
-      return initial_value * globals.country_fee_withdrawal_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else if (order_type == "RFW" || order_type == "RFW.") {
-      return initial_value * (globals.country_fee_withdrawal_percent.asInstanceOf[Double] + globals.country_fee_tofiat_percent.asInstanceOf[Double]) * 0.01 * percentage
-    } else if (order_type == "F") {
-      return initial_value * globals.country_fee_tofiat_percent.asInstanceOf[Double] * 0.01 * percentage
-    } else return 0
   }
 
   def return_all_images = SecuredAction(ajaxCall = true)(parse.anyContent) { implicit request =>

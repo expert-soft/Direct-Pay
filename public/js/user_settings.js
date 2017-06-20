@@ -71,7 +71,7 @@ $(function(){
             API.update_personal_info(first_name, middle_name, last_name, doc1, doc2, doc3, doc4, doc5, bank, agency, account, partner, partner_account, manualauto_mode).success(function () {
                 $.pnotify({
                     title: Messages("messages.api.success"),
-                    text: Messages("messages.api.success.ordercreatedsuccessfully"),
+                    text: Messages("messages.api.success.userdataupdated"),
                     styling: 'bootstrap',
                     type: 'success',
                     text_escape: true
